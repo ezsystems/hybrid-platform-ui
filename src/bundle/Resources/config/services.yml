@@ -1,0 +1,83 @@
+parameters:
+    # prototype components
+    ezsystems.platformui.component.app.class: EzSystems\HybridPlatformUi\Components\App
+    ezsystems.platformui.component.maincontent.class: EzSystems\HybridPlatformUi\Components\MainContent
+    ezsystems.platformui.component.navigationhub.class: EzSystems\HybridPlatformUi\Components\NavigationHub
+    ezsystems.platformui.component.toolbar.class: EzSystems\HybridPlatformUi\Components\Toolbar
+    ezsystems.platformui.component.search.class: EzSystems\HybridPlatformUi\Components\Search
+    ezsystems.platformui.component.browse.class: EzSystems\HybridPlatformUi\Components\Browse
+    ezsystems.platformui.component.trash.class: EzSystems\HybridPlatformUi\Components\Trash
+
+services:
+    ezsystems.platformui.controller.proto:
+        class: "%ezsystems.platformui.controller.proto.class%"
+        arguments:
+            - "@ezsystems.platformui.component.app"
+            - "@router"
+        parent: ezsystems.platformui.controller.base
+
+    ezsystems.platformui.controller.webcomponent:
+        class: "%ezsystems.platformui.controller.webcomponent.class%"
+        arguments:
+            - "@ezsystems.platformui.application_config.aggregator"
+        parent: ezsystems.platformui.controller.base
+
+    ezsystems.platformui.hybrid.request_matcher.admin:
+        class: EzSystems\HybridPlatformUi\Http\HardcodedAdminRequestMatcher
+
+    ezsystems.platformui.hybrid.request_matcher.ajax_update:
+        class: EzSystems\HybridPlatformUi\Http\AjaxUpdateRequestMatcher
+
+    ezsystems.platformui.hybrid.event_subscriber.app_renderer:
+        class: EzSystems\HybridPlatformUi\EventSubscriber\AppRendererSubscriber
+        arguments:
+            - "@ezsystems.platformui.component.app"
+            - "@ezsystems.platform_ui.hybrid.app.request_app_response_renderer"
+            - "@ezsystems.platformui.hybrid.request_matcher.admin"
+        tags:
+            - {name: kernel.event_subscriber}
+
+    ezsystems.platformui.hybrid.event_subscriber.pjax_response_subscriber:
+        class: EzSystems\HybridPlatformUi\EventSubscriber\PjaxResponseSubscriber
+        arguments:
+            - "@ezsystems.platformui.component.app"
+            - "@ezsystems.platform_ui.hybrid.app.request_app_response_renderer"
+            - "@ezsystems.platformui.hybrid.mapper.pjax_response_to_main_content"
+            - "@ezsystems.platformui.hybrid.request_matcher.admin"
+            - "@ezsystems.platformui.pjax.request_matcher"
+        tags:
+            - {name: kernel.event_subscriber}
+
+    ezsystems.platformui.hybrid.event_subscriber.component_renderer:
+        class: EzSystems\HybridPlatformUi\EventSubscriber\ComponentRendererSubscriber
+        arguments:
+            - "@ezsystems.platformui.hybrid.request_matcher.admin"
+        tags:
+            - {name: kernel.event_subscriber}
+
+    ezsystems.platformui.hybrid.event_subscriber.core_view:
+        class: EzSystems\HybridPlatformUi\EventSubscriber\CoreViewSubscriber
+        arguments:
+            - "@ezsystems.platformui.hybrid.mapper.core_view_to_main_content"
+            - "@ezsystems.platformui.hybrid.request_matcher.ajax_update"
+        tags:
+            - {name: kernel.event_subscriber}
+
+    ezsystems.platformui.hybrid.mapper.core_view_to_main_content:
+        class: EzSystems\HybridPlatformUi\Mapper\CoreViewMainContentMapper
+        arguments:
+            - "@ezsystems.platformui.component.maincontent"
+
+    ezsystems.platformui.hybrid.mapper.pjax_response_to_main_content:
+        class: EzSystems\HybridPlatformUi\Mapper\PjaxResponseMainContentMapper
+        arguments:
+            - "@ezsystems.platformui.component.maincontent"
+
+#    ezsystems.platformui.hybrid.view.pjax_view_renderer:
+#        class: EzSystems\HybridPlatformUi\View\Renderer\PjaxViewRenderer
+#
+    ezsystems.platform_ui.hybrid.app.request_app_response_renderer:
+        class: EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer
+        arguments:
+            - '@request_stack'
+            - '@ezsystems.platformui.hybrid.request_matcher.ajax_update'

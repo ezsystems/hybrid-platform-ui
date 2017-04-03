@@ -1,0 +1,9 @@
+_ez_hybrid_platform_ui_dp:
+    resource: "@EzSystemsHybridPlatformUiBundle/Resources/config/routing_proto.yml"
+    prefix:   /proto
+
+ez_hybrid_platform_ui_dashboard:
+    path: /dashboard
+    defaults:
+        _controller: EzSystemsHybridPlatformUiBundle:ProtoBD:dashboard
+    methods: [GET]
