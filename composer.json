@@ -4,9 +4,18 @@
     "license": "GPL-2.0",
     "minimum-stability": "stable",
     "require": {
+        "ezsystems/platform-ui-bundle": "^1.9@dev",
+        "ezsystems/ezpublish-kernel": " ^6.7@dev"
     },
     "require-dev": {
+        "phpspec/phpspec": "^3.2",
+        "memio/spec-gen": "^0.6"
     },
     "autoload": {
+        "psr-4": {
+            "EzSystems\\HybridPlatformUiBundle\\": "src/bundle",
+            "EzSystems\\HybridPlatformUi\\": "src/lib",
+            "specs\\EzSystems\\HybridPlatformUi\\": "specs"
+        }
     }
 }

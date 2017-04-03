@@ -1,0 +1,25 @@
+services:
+    ezsystems.platformui.component.discoverybar:
+        class: "%ezsystems.platformui.component.toolbar.class%"
+        arguments:
+            - ~
+            - []
+        tags:
+            - {name: ezplatform.ui.toolbar, alias: "discovery"}
+
+    ezsystems.platformui.component.search:
+        class: "%ezsystems.platformui.component.search.class%"
+        tags:
+            - {name: ezplatform.ui.toolbar_item, toolbar: "discovery"}
+
+    ezsystems.platformui.component.browse:
+        class: "%ezsystems.platformui.component.browse.class%"
+        arguments: [@request_stack, @router]
+        tags:
+            - {name: ezplatform.ui.toolbar_item, toolbar: "discovery"}
+
+    ezsystems.platformui.component.trash:
+        class: "%ezsystems.platformui.component.trash.class%"
+        tags:
+            - {name: ezplatform.ui.toolbar_item, toolbar: "discovery"}
+

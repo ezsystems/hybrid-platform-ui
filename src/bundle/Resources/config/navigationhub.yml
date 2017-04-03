@@ -1,0 +1,127 @@
+parameters:
+    ezsystems.platformui.navigationhub.zone.class: EzSystems\HybridPlatformUi\NavigationHub\Zone
+    ezsystems.platformui.navigationhub.link.route.class: EzSystems\HybridPlatformUi\NavigationHub\Link\Route
+    ezsystems.platformui.navigationhub.link.subtree.class: EzSystems\HybridPlatformUi\NavigationHub\Link\Subtree
+
+services:
+    ezsystems.platformui.navigationhub.zones.content:
+        class: "%ezsystems.platformui.navigationhub.zone.class%"
+        arguments:
+            - "Content"
+            - "content"
+        tags:
+            - {name: ezplatform.ui.zone}
+
+    ezsystems.platformui.navigationhub.zones.page:
+        class: "%ezsystems.platformui.navigationhub.zone.class%"
+        arguments:
+            - "Page"
+            - "page"
+        tags:
+            - {name: ezplatform.ui.zone}
+
+    ezsystems.platformui.navigationhub.zones.performances:
+        class: "%ezsystems.platformui.navigationhub.zone.class%"
+        arguments:
+            - "Performances"
+            - "performances"
+        tags:
+            - {name: ezplatform.ui.zone}
+
+    ezsystems.platformui.navigationhub.zones.admin:
+        class: "%ezsystems.platformui.navigationhub.zone.class%"
+        arguments:
+            - "Admin Panel"
+            - "admin"
+        tags:
+            - {name: ezplatform.ui.zone}
+
+    ezsystems.platformui.navigationhub.link.contentstructure:
+        class: "%ezsystems.platformui.navigationhub.link.subtree.class%"
+        arguments:
+            - "@router"
+            # Should be Core content route
+            - "ez_urlalias"
+            - {"locationId": 2}
+            - "Content structure"
+            - "content"
+        tags:
+            - {name: ezplatform.ui.link}
+
+    ezsystems.platformui.navigationhub.link.medialibrary:
+        class: "%ezsystems.platformui.navigationhub.link.subtree.class%"
+        arguments:
+            - "@router"
+            - "ez_urlalias"
+            - {"locationId": 2}
+            - "Media Library"
+            - "content"
+        tags:
+            - {name: ezplatform.ui.link}
+
+    ezsystems.platformui.navigationhub.link.users:
+        class: "%ezsystems.platformui.navigationhub.link.subtree.class%"
+        arguments:
+            - "@router"
+            - "ez_urlalias"
+            - {"locationId": 2}
+            - "Users"
+            - "admin"
+        tags:
+            - {name: ezplatform.ui.link}
+
+    ezsystems.platformui.navigationhub.link.admin.section:
+        class: "%ezsystems.platformui.navigationhub.link.route.class%"
+        arguments:
+            - "@router"
+            - "admin_sectionlist"
+            - {}
+            - "Sections"
+            - "admin"
+        tags:
+            - {name: ezplatform.ui.link}
+
+    ezsystems.platformui.navigationhub.link.admin.languages:
+        class: "%ezsystems.platformui.navigationhub.link.route.class%"
+        arguments:
+            - "@router"
+            - "admin_languagelist"
+            - {}
+            - "Languages"
+            - "admin"
+        tags:
+            - {name: ezplatform.ui.link}
+
+    ezsystems.platformui.navigationhub.link.admin.content_types:
+        class: "%ezsystems.platformui.navigationhub.link.route.class%"
+        arguments:
+            - "@router"
+            - "admin_contenttypeGroupList"
+            - {}
+            - "Content types"
+            - "admin"
+        tags:
+            - {name: ezplatform.ui.link}
+
+    ezsystems.platformui.navigationhub.link.admin.roles:
+        class: "%ezsystems.platformui.navigationhub.link.route.class%"
+        arguments:
+            - "@router"
+            - "admin_roleList"
+            - {}
+            - "Roles"
+            - "admin"
+        tags:
+            - {name: ezplatform.ui.link}
+
+    ezsystems.platformui.navigationhub.link.admin.system_info:
+        class: "%ezsystems.platformui.navigationhub.link.route.class%"
+        arguments:
+            - "@router"
+            - "admin_systeminfo"
+            - {}
+            - "System info"
+            - "admin"
+        tags:
+            - {name: ezplatform.ui.link}
+

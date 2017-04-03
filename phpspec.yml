@@ -1,0 +1,13 @@
+extensions:
+    Memio\SpecGen\MemioSpecGenExtension: ~
+
+suites:
+    hybrid_platform_ui:
+        namespace: EzSystems\HybridPlatformUiBundle
+        psr4_prefix: EzSystems\HybridPlatformUiBundle
+        src_path: .
+
+    hybrid_platform_ui_bundle:
+        namespace: EzSystems\HybridPlatformUiBundle
+        psr4_prefix: EzSystems\HybridPlatformUiBundle
+        src_path: .
