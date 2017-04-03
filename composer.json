@@ -1,0 +1,12 @@
+{
+    "name": "ezsystems/hybrid-platform-ui",
+    "type": "symfony-bundle",
+    "license": "GPL-2.0",
+    "minimum-stability": "stable",
+    "require": {
+    },
+    "require-dev": {
+    },
+    "autoload": {
+    }
+}
