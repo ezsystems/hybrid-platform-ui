@@ -24,5 +24,6 @@ class EzSystemsHybridPlatformUiExtension extends Extension
         $loader->load('navigationhub.yml');
         $loader->load('services.yml');
         $loader->load('toolbars.yml');
+        $loader->load('components.yml');
     }
 }
