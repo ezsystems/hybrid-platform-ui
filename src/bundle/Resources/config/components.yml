@@ -1,0 +1,10 @@
+services:
+    ezsystems.platformui.component.app:
+        class: EzSystems\HybridPlatformUi\Components\App
+        arguments:
+            - "@templating"
+            - "@ezsystems.platformui.component.maincontent"
+            - "@ezsystems.platformui.component.navigationhub"
+            # @todo tag those services so that it's possible to add
+            # new toolbars
+            - ["@ezsystems.platformui.component.discoverybar"]

@@ -1,0 +1,27 @@
+{% extends "@EzSystemsHybridPlatformUi/layout.html.twig" %}
+
+{% block app %}
+
+<{{ tagName }}>
+
+    {% block navigationHub %}
+        {{ navigationHub|raw }}
+    {% endblock %}
+
+    {% block main %}
+        <main>
+            {% block toolbars %}
+                {% for toolbar in toolbars %}
+                    {{ toolbar|raw }}
+                {% endfor %}
+            {% endblock %}
+
+            {% block mainContent %}
+                {{ mainContent|raw }}
+            {% endblock %}
+        </main>
+    {% endblock %}
+
+</{{ tagName }}>
+
+{% endblock %}

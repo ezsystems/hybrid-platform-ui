@@ -4,10 +4,14 @@
     "license": "GPL-2.0",
     "minimum-stability": "stable",
     "require": {
-        "ezsystems/platform-ui-bundle": "^1.9@dev",
+        "ezsystems/platform-ui-bundle": "dev-proto_hybrid_package as 2.0.x-dev",
         "ezsystems/ezpublish-kernel": " ^6.9@dev",
         "symfony/symfony": "~2.8 | ~3.0",
-        "friendsofsymfony/jsrouting-bundle": "^1.6"
+        "friendsofsymfony/jsrouting-bundle": "^1.6",
+        "dpobel/ez-field-edit": "^1.0@dev",
+        "dpobel/ez-map": "^1.0@dev",
+        "dpobel/hybrid-platformui-assets": "^0.3",
+        "composer/installers": "^1.3@dev"
     },
     "require-dev": {
         "phpspec/phpspec": "^3.2",
