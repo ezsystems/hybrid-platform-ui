@@ -23,4 +23,3 @@ services:
         class: EzSystems\HybridPlatformUi\Components\MainContent
         arguments:
             - "@templating"
-        shared: false

@@ -16,8 +16,6 @@ interface MainContentMapper
 {
     /**
      * @param mixed $value
-     *
-     * @return \EzSystems\HybridPlatformUi\Components\MainContent
      */
     public function map($value);
 }

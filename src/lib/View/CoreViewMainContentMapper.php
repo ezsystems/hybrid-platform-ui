@@ -7,25 +7,24 @@
 namespace EzSystems\HybridPlatformUi\View;
 
 use eZ\Publish\Core\MVC\Symfony\View\View;
+use EzSystems\HybridPlatformUi\Components\App;
 use EzSystems\HybridPlatformUi\Components\MainContent;
 use EzSystems\HybridPlatformUi\Mapper\MainContentMapper;
 
 class CoreViewMainContentMapper implements MainContentMapper
 {
     /**
-     * @var MainContent
+     * @var \EzSystems\HybridPlatformUi\Components\App
      */
-    private $mainContent;
+    private $app;
 
-    public function __construct(MainContent $mainContent)
+    public function __construct(App $app)
     {
-        $this->mainContent = $mainContent;
+        $this->app = $app;
     }
 
     /**
      * @param \eZ\Publish\Core\MVC\Symfony\View\View $view
-     *
-     * @return \EzSystems\HybridPlatformUi\Components\MainContent
      */
     public function map($view)
     {
@@ -33,9 +32,11 @@ class CoreViewMainContentMapper implements MainContentMapper
             throw new \InvalidArgumentException('Expected an \eZ\Publish\Core\MVC\Symfony\View\View');
         }
 
-        $this->mainContent->setTemplate($view->getTemplateIdentifier());
-        $this->mainContent->setParameters($view->getParameters());
-
-        return $this->mainContent;
+        $this->app->setConfig([
+            'mainContent' => [
+                'template' => $view->getTemplateIdentifier(),
+                'parameters' => $view->getParameters()
+            ]
+        ]);
     }
 }
