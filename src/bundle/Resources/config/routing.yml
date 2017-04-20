@@ -1,0 +1,5 @@
+ez_hybrid_platform_ui_dashboard:
+    path: /dashboard
+    defaults:
+        _controller: EzSystemsHybridPlatformUiBundle:Dashboard:viewDashboard
+    methods: [GET]
