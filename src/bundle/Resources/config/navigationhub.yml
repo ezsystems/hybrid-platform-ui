@@ -64,3 +64,75 @@ services:
         tags:
             - {name: ezplatform.ui.link}
         public: false
+
+    ezsystems.platformui.navigationhub.link.admin.dashboard:
+        class: "%ezsystems.platformui.navigationhub.link.route.class%"
+        arguments:
+            - "@router"
+            - "admin_dashboard"
+            - {}
+            - "Dashboard"
+            - "admin"
+        tags:
+            - {name: ezplatform.ui.link}
+        public: false
+
+    ezsystems.platformui.navigationhub.link.admin.section:
+        class: "%ezsystems.platformui.navigationhub.link.route.class%"
+        arguments:
+            - "@router"
+            - "admin_sectionlist"
+            - {}
+            - "Sections"
+            - "admin"
+        tags:
+            - {name: ezplatform.ui.link}
+        public: false
+
+    ezsystems.platformui.navigationhub.link.admin.languages:
+        class: "%ezsystems.platformui.navigationhub.link.route.class%"
+        arguments:
+            - "@router"
+            - "admin_languagelist"
+            - {}
+            - "Languages"
+            - "admin"
+        tags:
+            - {name: ezplatform.ui.link}
+        public: false
+
+    ezsystems.platformui.navigationhub.link.admin.content_types:
+        class: "%ezsystems.platformui.navigationhub.link.route.class%"
+        arguments:
+            - "@router"
+            - "admin_contenttypeGroupList"
+            - {}
+            - "Content types"
+            - "admin"
+        tags:
+            - {name: ezplatform.ui.link}
+        public: false
+
+    ezsystems.platformui.navigationhub.link.admin.roles:
+        class: "%ezsystems.platformui.navigationhub.link.route.class%"
+        arguments:
+            - "@router"
+            - "admin_roleList"
+            - {}
+            - "Roles"
+            - "admin"
+        tags:
+            - {name: ezplatform.ui.link}
+        public: false
+
+    ezsystems.platformui.navigationhub.link.admin.system_info:
+        class: "%ezsystems.platformui.navigationhub.link.route.class%"
+        arguments:
+            - "@router"
+            - "admin_systeminfo"
+            - {}
+            - "System info"
+            - "admin"
+        tags:
+            - {name: ezplatform.ui.link}
+        public: false
