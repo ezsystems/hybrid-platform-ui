@@ -7,9 +7,32 @@ use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 
 class HardcodedAdminRequestMatcher implements RequestMatcherInterface
 {
+    /**
+     * @var array
+     */
+    private $excludedRoutes = [];
+
+    /**
+     * @param array $routes
+     */
+    public function setExcludedRoutesPrefixes($routes)
+    {
+        $this->excludedRoutes = $routes;
+    }
+
     public function matches(Request $request)
     {
-        // @todo can't be hardcoded
-        return strpos($request->getRequestUri(), '/admin') === 0;
+        if (strpos($request->getRequestUri(), '/admin') !== 0) {
+            return false;
+        }
+
+        $routeName = $request->attributes->get('_route');
+        foreach ($this->excludedRoutes as $prefix) {
+            if (strpos($routeName, $prefix) === 0) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

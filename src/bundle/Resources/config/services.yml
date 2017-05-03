@@ -1,6 +1,8 @@
 services:
     ezsystems.platformui.hybrid.request_matcher.admin:
         class: EzSystems\HybridPlatformUi\Http\HardcodedAdminRequestMatcher
+        calls:
+            - [setExcludedRoutesPrefixes, ['%ezpublish.default_router.non_siteaccess_aware_routes%']]
 
     ezsystems.platformui.hybrid.request_matcher.ajax_update:
         class: EzSystems\HybridPlatformUi\Http\AjaxUpdateRequestMatcher
