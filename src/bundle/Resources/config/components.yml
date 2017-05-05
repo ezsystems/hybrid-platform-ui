@@ -8,6 +8,7 @@ services:
             # @todo tag those services so that it's possible to add
             # new toolbars
             - ["@ezsystems.platformui.component.discoverybar"]
+        public: false
 
     ezsystems.platformui.component.navigationhub:
         class: EzSystems\HybridPlatformUi\Components\NavigationHub
@@ -16,6 +17,7 @@ services:
             - '@=service("request_stack").getMasterRequest()'
             - []
             - []
+        public: false
 
     ezsystems.platformui.component.maincontent:
         class: EzSystems\HybridPlatformUi\Components\MainContent

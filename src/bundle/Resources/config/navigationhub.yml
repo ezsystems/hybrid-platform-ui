@@ -11,6 +11,7 @@ services:
             - "content"
         tags:
             - {name: ezplatform.ui.zone}
+        public: false
 
     ezsystems.platformui.navigationhub.zones.page:
         class: "%ezsystems.platformui.navigationhub.zone.class%"
@@ -19,6 +20,7 @@ services:
             - "page"
         tags:
             - {name: ezplatform.ui.zone}
+        public: false
 
     ezsystems.platformui.navigationhub.zones.performances:
         class: "%ezsystems.platformui.navigationhub.zone.class%"
@@ -27,6 +29,7 @@ services:
             - "performances"
         tags:
             - {name: ezplatform.ui.zone}
+        public: false
 
     ezsystems.platformui.navigationhub.zones.admin:
         class: "%ezsystems.platformui.navigationhub.zone.class%"
@@ -35,6 +38,7 @@ services:
             - "admin"
         tags:
             - {name: ezplatform.ui.zone}
+        public: false
 
     ezsystems.platformui.navigationhub.link.contentstructure:
         class: "%ezsystems.platformui.navigationhub.link.subtree.class%"
@@ -47,6 +51,7 @@ services:
             - "content"
         tags:
             - {name: ezplatform.ui.link}
+        public: false
 
     ezsystems.platformui.navigationhub.link.medialibrary:
         class: "%ezsystems.platformui.navigationhub.link.subtree.class%"
@@ -58,3 +63,4 @@ services:
             - "content"
         tags:
             - {name: ezplatform.ui.link}
+        public: false

@@ -6,11 +6,13 @@ services:
             - []
         tags:
             - {name: ezplatform.ui.toolbar, alias: "discovery"}
+        public: false
 
     ezsystems.platformui.component.search:
         class: EzSystems\HybridPlatformUi\Components\Search
         tags:
             - {name: ezplatform.ui.toolbar_item, toolbar: "discovery"}
+        public: false
 
     ezsystems.platformui.component.browse:
         class: EzSystems\HybridPlatformUi\Components\Browse
@@ -19,9 +21,10 @@ services:
             - "@router"
         tags:
             - {name: ezplatform.ui.toolbar_item, toolbar: "discovery"}
+        public: false
 
     ezsystems.platformui.component.trash:
         class: EzSystems\HybridPlatformUi\Components\Trash
         tags:
             - {name: ezplatform.ui.toolbar_item, toolbar: "discovery"}
-
+        public: false
