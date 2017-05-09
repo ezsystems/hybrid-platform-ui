@@ -1,0 +1,7 @@
+system:
+    admin:
+        content_view:
+            full:
+                default:
+                    template: "EzSystemsHybridPlatformUiBundle::locationview.html.twig"
+                    match: true
