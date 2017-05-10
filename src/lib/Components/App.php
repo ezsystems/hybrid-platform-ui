@@ -9,7 +9,7 @@ use EzSystems\HybridPlatformUi\Components\MainContent;
 
 class App implements Component
 {
-    const TAG_NAME = 'ez-platformui-app';
+    const TAG_NAME = 'ez-platform-ui-app';
 
     protected $mainContent;
 
