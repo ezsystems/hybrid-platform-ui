@@ -62,6 +62,15 @@
 
     <link rel="import" href="{{ asset( 'bundles/ezplatformui/webcomponents/ez-subitem.html' ) }}">
     <link rel="import" href="{{ asset( 'bundles/ezplatformui/webcomponents/ez-universaldiscoverywidget.html' ) }}">
+
+    <script>
+        // FIXME:
+        // https://jira.ez.no/browse/EZP-27359
+        // this is a workaround to FOSJsRoutingBundle not generating URL for the admin SA
+        // of course, this only works when eZ Platform has one SA group and if the admin SA is not
+        // configured with a different matching strategy than URI...
+        Routing.setBaseUrl('/admin');
+    </script>
 </head>
 <body class="ez-platformui-app is-app-open">
     {% block app %}
