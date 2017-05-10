@@ -45,14 +45,9 @@
         ez-main-content {
             flex: 1 1;
         }
-        ez-subitem {
-            border: 1px solid aqua;
-        }
     </style>
 
     <script src="{{ asset('assets/ezplatform/webcomponentsjs/webcomponents-lite.js') }}"></script>
-    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
     <link rel="import" href="{{ asset( 'assets/ezplatform/hybrid-platform-ui-core-components/core-components.html' ) }}">
     {#
@@ -65,7 +60,12 @@
     <link rel="import" href="{{ asset( 'bundles/ezsystemshybridplatformui/webcomponents/ez-browse.html' ) }}">
 
     <link rel="import" href="{{ asset( 'bundles/ezplatformui/webcomponents/ez-subitem.html' ) }}">
-    <link rel="import" href="{{ asset( 'bundles/ezplatformui/webcomponents/ez-universaldiscoverywidget.html' ) }}">
+    {#
+     # FIXME:
+     # ezplatformui does not yet provide <ez-universaldiscoverywidget>
+     # the following import should be changed when https://jira.ez.no/browse/EZP-27352 is implemented
+     #}
+    <link rel="import" href="{{ asset( 'bundles/ezsystemshybridplatformui/webcomponents/ez-universaldiscoverywidget.html' ) }}">
 
     <script>
         // FIXME:

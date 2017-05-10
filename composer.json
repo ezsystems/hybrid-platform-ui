@@ -4,7 +4,7 @@
     "license": "GPL-2.0",
     "minimum-stability": "stable",
     "require": {
-        "ezsystems/platform-ui-bundle": "dev-proto_hybrid_package as 2.0.x-dev",
+        "ezsystems/platform-ui-bundle": "2.0.x-dev",
         "ezsystems/ezpublish-kernel": " ^6.9@dev",
         "symfony/symfony": "~2.8 | ~3.0",
         "friendsofsymfony/jsrouting-bundle": "^1.6",
