@@ -85,7 +85,6 @@ class App implements Component
             'update' => [
                 'attributes' => [
                     'title' => $this->title,
-                    'url' => $_SERVER['REQUEST_URI'],
                 ],
                 'children' => array_merge(
                     $this->toolbars,
