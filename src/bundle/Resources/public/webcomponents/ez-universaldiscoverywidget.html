@@ -64,6 +64,15 @@ class eZUniversalDiscoveryWidget extends Polymer.Element {
             startingLocationId: {
                 type: String,
             },
+            confirmLabel: {
+                type: String,
+            },
+            minDiscoverDepth: {
+                type: Number,
+            },
+            visibleMethod: {
+                type: String,
+            },
         };
     }
 
@@ -99,12 +108,13 @@ class eZUniversalDiscoveryWidget extends Polymer.Element {
     }
 
     _createUDWComponent() {
-        const app = eZ.YUI.app;
-        const Y = eZ.YUI.Y;
+        const {app, Y} = eZ.YUI;
         const params = {
             title: this.title,
             multiple: this.multiple,
             startingLocationId: this.startingLocationId,
+            minDiscoverDepth: this.minDiscoverDepth,
+            visibleMethod: this.visibleMethod,
             contentDiscoveredHandler: (e) => {
                 this.dispatchEvent(new CustomEvent('ez:confirm', {
                     detail: {
@@ -128,6 +138,10 @@ class eZUniversalDiscoveryWidget extends Polymer.Element {
                 }));
             },
         };
+
+        if ( this.confirmLabel ) {
+            params.confirmLabel = this.confirmLabel;
+        }
 
         app.renderSideView(
             Y.eZ.UniversalDiscoveryView,
