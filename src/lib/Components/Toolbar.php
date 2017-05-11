@@ -16,14 +16,9 @@ class Toolbar implements Component
         $this->children = $children;
     }
 
-    protected function getVisibleValue()
-    {
-        return $this->visible ? 'true' : 'false';
-    }
-
     public function __toString()
     {
-        $html = '<ez-toolbar id="' . $this->id . '" visible="' . $this->getVisibleValue() . '">';
+        $html = '<ez-toolbar id="' . $this->id . '"' . ($this->visible ? ' visible' : '') . '>';
         foreach ($this->children as $component) {
             $html .= (string)$component;
         }
@@ -47,8 +42,8 @@ class Toolbar implements Component
         return [
             'selector' => '#' . $this->id,
             'update' => [
-                'attributes' => [
-                    'visible' => $this->getVisibleValue(),
+                'properties' => [
+                    'visible' => $this->visible,
                 ],
                 'children' => $this->children,
             ],
