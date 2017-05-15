@@ -36,41 +36,52 @@ class eZBrowse extends Polymer.Element {
 
     constructor() {
         super();
-        this.addEventListener('click', function (e) {
-            e.stopImmediatePropagation();
-            this._discoverContent();
-        }.bind(this));
+        this.addEventListener('click', this._discoverContent.bind(this));
     }
 
     _discoverContent() {
-        const event = new CustomEvent('contentDiscover', {
+        const event = new CustomEvent('ez:contentDiscover', {
             detail: {
-                title: "Browse",
-                oncancel: function () {
-                    console.log('CANCEL');
+                config: {
+                    title: "Browse",
+                    startingLocationId: this.selectedLocationId !== "false" ? this.selectedLocationId : undefined,
+                    confirmLabel: "View this content",
                 },
-                onconfirm: this._browseToSelection.bind(this),
-                startingLocationId: this.selectedLocationId !== "false" ? this.selectedLocationId : undefined,
+                handlers: {
+                    /*
+                    "ez:select": function (e) {
+                        console.log('select', e);
+                        // to prevent the selection
+                        // e.detail.selection contains the selection
+                        // e.preventDefault();
+                    },
+                    "ez:cancel": function () {
+                        console.log('cancel');
+                    },
+                    */
+                    "ez:confirm": (e) => {
+                        this._browseToLocation(e.detail.selection.location);
+                    }
+                },
             },
             bubbles: true,
         });
         this.dispatchEvent(event);
     }
 
-    _browseToSelection(selection) {
-        const event = new CustomEvent('browseToContent', {
-            detail: selection,
-            bubbles: true,
+    _browseToLocation(location) {
+        const url = Routing.generate('_ez_content_view', {
+            locationId: location.locationId,
+            contentId: location.contentInfo.contentId,
         });
-        this.dispatchEvent(event);
-    }
 
-    connectedCallback() {
-        super.connectedCallback();
-    }
-
-    disconnectedCallback() {
-        super.disconnectedCallback();
+        // FIXME:
+        // in the prototype, this component was dispatching a
+        // browseToContent event and the app was responsible for
+        // generating the URI instead of directly accessing
+        // the app component. We could also implement a `navigateTo`
+        // event which would contain the URL to navigate to.
+        document.querySelector('ez-platform-ui-app').url = url;
     }
 }
 

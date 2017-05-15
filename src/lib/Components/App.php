@@ -9,7 +9,7 @@ use EzSystems\HybridPlatformUi\Components\MainContent;
 
 class App implements Component
 {
-    const TAG_NAME = 'ez-platformui-app';
+    const TAG_NAME = 'ez-platform-ui-app';
 
     protected $mainContent;
 
@@ -85,7 +85,6 @@ class App implements Component
             'update' => [
                 'attributes' => [
                     'title' => $this->title,
-                    'url' => $_SERVER['REQUEST_URI'],
                 ],
                 'children' => array_merge(
                     $this->toolbars,

@@ -1,6 +1,51 @@
 <link rel="import" href="../../../assets/ezplatform/polymer/polymer-element.html">
 <link rel="import" href="../../../webcomponents/ez-yui-app.html">
 
+<style>
+    ez-universaldiscoverywidget {
+        display: block;
+        background: rgba(0, 0, 0, 0.4);
+
+        /* taken from universaldiscovery.css .ez-universaldiscovery-container */
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        padding: 2% 3%;
+        top: 0;
+        left: 0;
+    }
+
+    ez-universaldiscoverywidget .ez-view-universaldiscoveryview {
+        background: #fff;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+    }
+
+    ez-universaldiscoverywidget a {
+        cursor: pointer;
+    }
+
+    /* missing from modules/tabs.css (and coming for theme/modules/tabs.css) */
+    ez-universaldiscoverywidget .ez-tabs-panel {
+        display: none;
+    }
+
+    ez-universaldiscoverywidget .ez-tabs-panel.is-tab-selected {
+        display: block;
+    }
+</style>
+
+<link rel="stylesheet" href="../../../bundles/ezplatformui/css/modules/tabs.css">
+<link rel="stylesheet" href="../../../bundles/ezplatformui/css/views/universaldiscovery.css">
+<link rel="stylesheet" href="../../../bundles/ezplatformui/css/views/universaldiscovery/finder.css">
+<link rel="stylesheet" href="../../../bundles/ezplatformui/css/views/universaldiscovery/explorer.css">
+<link rel="stylesheet" href="../../../bundles/ezplatformui/css/views/universaldiscovery/explorerlevel.css">
+<link rel="stylesheet" href="../../../bundles/ezplatformui/css/views/universaldiscovery/search.css">
+<link rel="stylesheet" href="../../../bundles/ezplatformui/css/views/universaldiscovery/selected.css">
+
+
 <script>
 class eZUniversalDiscoveryWidget extends Polymer.Element {
     static get is() {
@@ -9,33 +54,25 @@ class eZUniversalDiscoveryWidget extends Polymer.Element {
 
     static get properties() {
         return {
-            "title": {
+            title: {
                 type: String,
             },
-            "multiple": {
+            multiple: {
                 type: Boolean,
                 value: false,
             },
-            "onconfirm": {
-                type: Function,
-                value: function () {},
-            },
-            "oncancel": {
-                type: Function,
-                value: function () {},
-            },
-            "is-selectable": {
-                type: Function,
-                value: () => true,
-            },
-            "starting-location-id": {
+            startingLocationId: {
                 type: String,
             },
-            // is-selectable is a bad name coming from 1.x. Also, onconfirm and
-            // oncancel are a bit misleading because this suggests there are
-            // confirm` and `cancel` events behind the scene while there's none.
-            // So maybe, the UDW should actually triggers real events
-            // (confirm, cancel, select) instead of exposing such attributes.
+            confirmLabel: {
+                type: String,
+            },
+            minDiscoverDepth: {
+                type: Number,
+            },
+            visibleMethod: {
+                type: String,
+            },
         };
     }
 
@@ -71,22 +108,39 @@ class eZUniversalDiscoveryWidget extends Polymer.Element {
     }
 
     _createUDWComponent() {
-        const app = eZ.YUI.app;
-        const Y = eZ.YUI.Y;
+        const {app, Y} = eZ.YUI;
         const params = {
             title: this.title,
             multiple: this.multiple,
-            contentDiscoveredHandler: function (e) {
-                this.onconfirm.call(this, this._convertSelection(e.selection));
-            }.bind(this),
-            cancelDiscoverHandler: this.oncancel,
             startingLocationId: this.startingLocationId,
+            minDiscoverDepth: this.minDiscoverDepth,
+            visibleMethod: this.visibleMethod,
+            contentDiscoveredHandler: (e) => {
+                this.dispatchEvent(new CustomEvent('ez:confirm', {
+                    detail: {
+                        selection: this._convertSelection(e.selection),
+                    },
+                    bubbles: false,
+                }));
+            },
+            cancelDiscoverHandler: (e) => {
+                this.dispatchEvent(new CustomEvent('ez:cancel', {
+                    bubbles: false,
+                }));
+            },
+            isSelectable: (selection) => {
+                return this.dispatchEvent(new CustomEvent('ez:select', {
+                    details: {
+                        selection: this._convertSelection(selection),
+                    },
+                    bubbles: false,
+                    cancelable: true,
+                }));
+            },
         };
 
-        if ( this.isSelectable ) {
-            params.isSelectable = function (item) {
-                return this.isSelectable.call(this, this._convertItem(item));
-            }.bind(this);
+        if ( this.confirmLabel ) {
+            params.confirmLabel = this.confirmLabel;
         }
 
         app.renderSideView(
@@ -98,11 +152,12 @@ class eZUniversalDiscoveryWidget extends Polymer.Element {
     }
 
     _attachView(err, viewService, view) {
-        this.innerHTML = '';
         if ( err ) {
             this.innerHTML = 'An error occurred';
             return;
         }
+        this._view = view;
+        this.innerHTML = '';
         this.appendChild(view.get('container').getDOMNode());
         view.set('active', true);
 
@@ -115,9 +170,35 @@ class eZUniversalDiscoveryWidget extends Polymer.Element {
     }
 
     disconnectedCallback() {
+        if ( this._view ) {
+            this._view.set('active', false);
+            this._view.destroy({remove: true});
+        }
         super.disconnectedCallback();
     }
 }
 
 customElements.define(eZUniversalDiscoveryWidget.is, eZUniversalDiscoveryWidget);
+</script>
+
+<script>
+(function () {
+    document.addEventListener('ez:contentDiscover', function (e) {
+        const {config, handlers} = e.detail;
+        const udw = document.createElement('ez-universaldiscoverywidget');
+        const removeUdw = function () {
+            udw.parentNode.removeChild(udw);
+        };
+
+        Object.keys(config).forEach(function (prop) {
+            udw[prop] = config[prop];
+        });
+        Object.keys(handlers).forEach(function (event) {
+            udw.addEventListener(event, handlers[event]);
+        });
+        udw.addEventListener('ez:confirm', removeUdw);
+        udw.addEventListener('ez:cancel', removeUdw);
+        document.body.appendChild(udw);
+    });
+})();
 </script>

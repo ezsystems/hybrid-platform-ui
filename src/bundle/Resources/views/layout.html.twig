@@ -1,13 +1,9 @@
 <!doctype html>
-<html class=""><!-- empty class is needed for webcomponents polyfill with ez-yui-app.html import (?!) -->
+<html>
 <head>
     <title>{{ title|default("AdminUI prototype") }}</title>
     <meta name="viewport" content="width=device-width">
     <meta charset="utf-8">
-
-{% stylesheets '$css.files;ez_platformui$' filter='cssrewrite' %}
-    <link rel="stylesheet" href="{{ asset_url }}"/>
-{% endstylesheets %}
 
     <style>
         * {
@@ -45,25 +41,40 @@
         ez-main-content {
             flex: 1 1;
         }
-        ez-subitem {
-            border: 1px solid aqua;
-        }
     </style>
 
     <script src="{{ asset('assets/ezplatform/webcomponentsjs/webcomponents-lite.js') }}"></script>
-    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
-    <link rel="import" href="{{ asset( 'bundles/ezsystemshybridplatformui/webcomponents/ez-platformui-app.html' ) }}">
+    <link rel="import" href="{{ asset( 'assets/ezplatform/hybrid-platform-ui-core-components/ez-platform-ui-app.html' ) }}">
+    <link rel="import" href="{{ asset( 'assets/ezplatform/hybrid-platform-ui-core-components/ez-toolbar.html' ) }}">
+    {#
+     # FIXME:
+     # Remove the import of ez-navigation-hub.html when https://jira.ez.no/browse/EZP-27268 is implemented and then
+     # replace manual inclusion of ez-platform-ui-app.html and ez-toolbar.html by
+     # <link rel="import" href="{{ asset( 'assets/ezplatform/hybrid-platform-ui-core-components/core-components.html' ) }}">
+     #}
     <link rel="import" href="{{ asset( 'bundles/ezsystemshybridplatformui/webcomponents/ez-navigation-hub.html' ) }}">
-    <link rel="import" href="{{ asset( 'bundles/ezsystemshybridplatformui/webcomponents/ez-toolbar.html' ) }}">
     <link rel="import" href="{{ asset( 'bundles/ezsystemshybridplatformui/webcomponents/ez-main-content.html' ) }}">
     <link rel="import" href="{{ asset( 'bundles/ezsystemshybridplatformui/webcomponents/ez-browse.html' ) }}">
 
     <link rel="import" href="{{ asset( 'bundles/ezplatformui/webcomponents/ez-subitem.html' ) }}">
-    <link rel="import" href="{{ asset( 'bundles/ezplatformui/webcomponents/ez-universaldiscoverywidget.html' ) }}">
+    {#
+     # FIXME:
+     # ezplatformui does not yet provide <ez-universaldiscoverywidget>
+     # the following import should be changed when https://jira.ez.no/browse/EZP-27352 is implemented
+     #}
+    <link rel="import" href="{{ asset( 'bundles/ezsystemshybridplatformui/webcomponents/ez-universaldiscoverywidget.html' ) }}">
+
+    <script>
+        // FIXME:
+        // https://jira.ez.no/browse/EZP-27359
+        // this is a workaround to FOSJsRoutingBundle not generating URL for the admin SA
+        // of course, this only works when eZ Platform has one SA group and if the admin SA is not
+        // configured with a different matching strategy than URI...
+        Routing.setBaseUrl('/admin');
+    </script>
 </head>
-<body class="ez-platformui-app is-app-open">
+<body>
     {% block app %}
     {% endblock %}
 </body>
