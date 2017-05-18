@@ -44,11 +44,9 @@ services:
         class: "%ezsystems.platformui.navigationhub.link.subtree.class%"
         arguments:
             - "@router"
-            # Should be Core content route
-            - "ez_urlalias"
             - "Content structure"
             - "content"
-            - {"locationId": 2}
+            - {locationId: 2}
         tags:
             - {name: ezplatform.ui.link}
         public: false
@@ -57,10 +55,9 @@ services:
         class: "%ezsystems.platformui.navigationhub.link.subtree.class%"
         arguments:
             - "@router"
-            - "ez_urlalias"
             - "Media Library"
             - "content"
-            - {"locationId": 2}
+            - {locationId: 43}
         tags:
             - {name: ezplatform.ui.link}
         public: false
