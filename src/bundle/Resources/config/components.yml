@@ -5,8 +5,6 @@ services:
             - "@templating"
             - "@ezsystems.platformui.component.maincontent"
             - "@ezsystems.platformui.component.navigationhub"
-            # @todo tag those services so that it's possible to add
-            # new toolbars
             - ["@ezsystems.platformui.component.discoverybar"]
         public: false
 
