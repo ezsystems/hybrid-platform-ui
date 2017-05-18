@@ -13,6 +13,7 @@ class Route extends Link
     protected $urlGenerator;
 
     /**
+     * @todo remove the name, and use i18n for the human readable string.
      * @var string
      */
     protected $routeName;
