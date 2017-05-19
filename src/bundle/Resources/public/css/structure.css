@@ -1,0 +1,36 @@
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    display: flex;
+}
+
+ez-platform-ui-app {
+    display: flex;
+    flex: 1 0 100%;
+    flex-direction: column;
+}
+
+ez-navigation-hub {
+    flex: 0 0;
+}
+
+main {
+    flex: 1 0;
+    display: flex;
+}
+
+#discovery {
+    flex: 0 0 230px;
+    background: var(--ez-color-discovery-bar);
+}
+
+/* FIXME: after https://jira.ez.no/browse/EZP-27357, selector should be
+ * #ez-hybrid-app-main-content
+ */
+ez-main-content {
+    flex: 1 1;
+}
+

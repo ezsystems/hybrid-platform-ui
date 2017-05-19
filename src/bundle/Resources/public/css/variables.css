@@ -1,0 +1,37 @@
+:root {
+    --ez-base-font-family: "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    /* text colors */
+    --ez-color-text-base: #333;
+    --ez-color-text-white: #fff; /* should probably not be called text white */
+    --ez-color-text-ctype: #878787; /* bad name, as it'll probably be used elsewhere */
+    --ez-color-text-validation: #d92d42; /* bad name, as it'll probably be used elsewhere */
+    --ez-color-hyperlink: #0645ad;
+    --ez-color-breadcrumb: #0a4b67; /* bad name, as it'll probably be used elsewhere */
+    --ez-color-breadcrumb-disabled: #6b6b6b; /* bad name, as it'll probably be used elsewhere */
+    --ez-color-text-translation: #4b4b4b; /* bad name, as it'll probably be used elsewhere */
+
+    /* primary colors */
+    --ez-color-primary: #f15a10;
+    --ez-color-primary-hover: #c3480b;
+    --ez-color-secondary: #0f6d95;
+    --ez-color-secondary-hover: #0a4b67;
+    --ez-color-neutral: #757575;
+    --ez-color-neutral-hover: #5c5c5c;
+    --ez-color-negative: #cb2540;
+    --ez-color-negative-hover: #a01d32;
+
+    /* secondary colors */
+    --ez-color-action-bar: #106d95; /* bad name, as it'll probably be used elsewhere */
+    --ez-color-discovery-bar: #667076; /* bad name, as it'll probably be used elsewhere */
+    --ez-color-button-focus: #fcb700;
+    --ez-color-button-focus-alt: #2b84b1; /* TODO: focus and focus-alt are inverted, fix the style guide */
+
+    /* background colors */
+    --ez-color-bg: #fafafa;
+    --ez-color-bg-header: #e7e7e7; /* maybe okish, but would prefer a color name */
+    --ez-color-bg-content: #f3f3f3; /* bad name, as it'll probably be used elsewhere */
+    --ez-color-bg-section-main: #e3e3e3;  /* bad name, as it'll probably be used elsewhere */
+    --ez-color-bg-label: #dbdbdb; /* bad name, as it'll probably be used elsewhere */
+    --ez-color-bg-fieldtype: #bbb; /* bad name, as it'll probably be used elsewhere */
+}

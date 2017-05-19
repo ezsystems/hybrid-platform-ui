@@ -5,43 +5,9 @@
     <meta name="viewport" content="width=device-width">
     <meta charset="utf-8">
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-        a, a:visited {
-            color: #009;
-        }
-        body {
-            display: flex;
-            flex-direction: column;
-            margin: 0;
-        }
-        ez-navigation-hub {
-            border: 2px solid green;
-            flex: 0 0 8em;
-        }
-        main {
-            border: 2px solid red;
-            min-height: calc(100vh - 8em);
-            flex: 1 0;
-            display: flex;
-        }
-        ez-toolbar {
-            border: 2px solid blue;
-            flex: 0 0 230px;
-        }
-        ez-toolbar > * {
-            line-height: 3;
-            border: 1px solid purple;
-        }
-        ez-browse:after {
-            content: " (" attr(location-id) ")";
-        }
-        ez-main-content {
-            flex: 1 1;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('assets/ezplatform/normalize-css/normalize.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/ezsystemshybridplatformui/css/variables.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/ezsystemshybridplatformui/css/base.css') }}">
 
     <script src="{{ asset('assets/ezplatform/webcomponentsjs/webcomponents-lite.js') }}"></script>
 
@@ -64,6 +30,9 @@
      # the following import should be changed when https://jira.ez.no/browse/EZP-27352 is implemented
      #}
     <link rel="import" href="{{ asset( 'bundles/ezsystemshybridplatformui/webcomponents/ez-universaldiscoverywidget.html' ) }}">
+
+    <link rel="stylesheet" href="{{ asset('bundles/ezsystemshybridplatformui/css/structure.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/ezsystemshybridplatformui/css/button.css') }}">
 
     <script>
         // FIXME:
