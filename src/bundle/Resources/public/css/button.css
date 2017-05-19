@@ -1,6 +1,6 @@
 .ez-button {
     display: inline-block;
-    line-height: normal;
+    line-height: inherit;
     white-space: nowrap;
     vertical-align: middle;
     text-align: center;
