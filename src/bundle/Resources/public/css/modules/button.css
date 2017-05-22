@@ -17,7 +17,7 @@
     border: 1px solid var(--ez-color-neutral);
 }
 
-.ez-button[disabled] {
+.ez-button[disabled], .ez-button[data-disabled] {
     opacity: 0.3;
 }
 

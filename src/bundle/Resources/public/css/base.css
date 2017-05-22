@@ -11,6 +11,12 @@ a {
     color: var(--ez-color-hyperlink);
 }
 
+/* allows to disable link the same way `disabled` works on button */
+[data-disabled] {
+    pointer-events: none;
+    cursor: default;
+}
+
 h1 {
     font-size: 2.5em;
 }
