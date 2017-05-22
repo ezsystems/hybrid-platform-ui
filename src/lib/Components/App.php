@@ -52,11 +52,6 @@ class App implements Component
         }
     }
 
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
     protected function setToolbarsVisibility($config)
     {
         foreach ($this->toolbars as $toolbar) {
@@ -83,8 +78,8 @@ class App implements Component
         return [
             'selector' => self::TAG_NAME,
             'update' => [
-                'attributes' => [
-                    'title' => $this->title,
+                'properties' => [
+                    'pageTitle' => $this->title
                 ],
                 'children' => array_merge(
                     $this->toolbars,
