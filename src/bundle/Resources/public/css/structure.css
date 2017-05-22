@@ -23,14 +23,33 @@ main {
 }
 
 #discovery {
-    flex: 0 0 230px;
+    flex: 0 0 115px;
+    width: 115px;
     background: var(--ez-color-discovery-bar);
+    color: var(--ez-color-text-white);
 }
 
-/* FIXME: after https://jira.ez.no/browse/EZP-27357, selector should be
- * #ez-hybrid-app-main-content
+/* FIXME: after https://jira.ez.no/browse/EZP-27357, following selector should be
+ * by #ez-hybrid-app-main-content
  */
 ez-main-content {
     flex: 1 1;
+    display: flex;
 }
 
+/* FIXME: after https://jira.ez.no/browse/EZP-27357, this should be in a stylesheet
+ * dedicated to content view
+ */
+ez-main-content .ez-content-view-column {
+    flex: 1 0;
+}
+
+ez-main-content .ez-action-bar {
+    flex: 0 0 115px;
+    background: var(--ez-color-action-bar);
+    color: var(--ez-color-text-white);
+}
+
+ez-main-content .ez-content-field-name {
+    font-weight: bold;
+}

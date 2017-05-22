@@ -1,12 +1,23 @@
-<h1>{{ location.contentInfo.name }} (Location #{{ location.id }})</h1>
+<section class="ez-content-view-column">
+    <h1>{{ ez_content_name(content) }}</h1>
 
-{% for field in content.fieldsByLanguage(language|default(null)) %}
-    <h3>{{ field.fieldDefIdentifier }}</h3>
-    {{ ez_render_field(content, field.fieldDefIdentifier) }}
-{% endfor %}
+    {% for field in content.fieldsByLanguage(language|default(null)) %}
+        <p class="ez-content-field-name">{{ ez_field_name(content, field.fieldDefIdentifier) }}</p>
+        <div class="ez-content-field-value">
+            {% if ez_is_field_empty(content, field.fieldDefIdentifier) %}
+                <em>{{"fieldview.field.empty"|trans({}, "fieldview")}}</em>
+            {% else %}
+                {{ ez_render_field(content, field.fieldDefIdentifier) }}
+            {% endif %}
+        </div>
+    {% endfor %}
 
-<hr>
+    <hr>
 
-<ez-subitem parent-location-id="{{ location.id }}">
-    Loading subitems...
-</ez-subitem>
+    <ez-subitem parent-location-id="{{ location.id }}">
+        Loading subitems...
+    </ez-subitem>
+</section>
+<ez-toolbar class="ez-action-bar" visible>
+
+</ez-toolbar>
