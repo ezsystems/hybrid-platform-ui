@@ -44,11 +44,17 @@ ez-toolbar .ez-button {
 ez-main-content {
     flex: 1 1;
     display: flex;
+    flex-direction: column;
 }
 
 /* FIXME: after https://jira.ez.no/browse/EZP-27357, this should be in a stylesheet
  * dedicated to content view
  */
+ez-main-content .ez-content-view {
+    flex: 1 0;
+    display: flex;
+}
+
 ez-main-content .ez-content-view-column {
     flex: 1 0;
 }

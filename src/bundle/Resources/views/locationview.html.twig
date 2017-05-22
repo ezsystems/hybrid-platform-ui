@@ -1,23 +1,30 @@
-<section class="ez-content-view-column">
-    <h1>{{ ez_content_name(content) }}</h1>
+{# FIXME: remove that and fix the corresponding CSS when
+ # https://jira.ez.no/browse/EZP-27357 is implemented
+ #}
+<div class="ez-content-view">
+    <section class="ez-content-view-column">
+        <header class="ez-page-header">
+            <h1>{{ ez_content_name(content) }}</h1>
+        </header>
 
-    {% for field in content.fieldsByLanguage(language|default(null)) %}
-        <p class="ez-content-field-name">{{ ez_field_name(content, field.fieldDefIdentifier) }}</p>
-        <div class="ez-content-field-value">
-            {% if ez_is_field_empty(content, field.fieldDefIdentifier) %}
-                <em>{{"fieldview.field.empty"|trans({}, "fieldview")}}</em>
-            {% else %}
-                {{ ez_render_field(content, field.fieldDefIdentifier) }}
-            {% endif %}
-        </div>
-    {% endfor %}
+        {% for field in content.fieldsByLanguage(language|default(null)) %}
+            <p class="ez-content-field-name">{{ ez_field_name(content, field.fieldDefIdentifier) }}</p>
+            <div class="ez-content-field-value">
+                {% if ez_is_field_empty(content, field.fieldDefIdentifier) %}
+                    <em>{{"fieldview.field.empty"|trans({}, "fieldview")}}</em>
+                {% else %}
+                    {{ ez_render_field(content, field.fieldDefIdentifier) }}
+                {% endif %}
+            </div>
+        {% endfor %}
 
-    <hr>
+        <hr>
 
-    <ez-subitem parent-location-id="{{ location.id }}">
-        Loading subitems...
-    </ez-subitem>
-</section>
-<ez-toolbar class="ez-action-bar" visible>
+        <ez-subitem parent-location-id="{{ location.id }}">
+            Loading subitems...
+        </ez-subitem>
+    </section>
+    <ez-toolbar class="ez-action-bar" visible>
 
-</ez-toolbar>
+    </ez-toolbar>
+</div>
