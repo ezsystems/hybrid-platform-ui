@@ -47,8 +47,13 @@ class Browse implements Component
     {
         $selected = $this->getLocationRestId();
         $id = $this->getLocationId();
-        // could be rendered with a twig template
-        return '<ez-browse selected-location-id="' . $selected . '" location-id="' . $id . '">Browse</ez-browse>';
+        // should be rendered with a twig template
+        return '<ez-browse
+            class="ez-button"
+            selected-location-id="' . $selected . '"
+            location-id="' . $id . '">
+                Browse
+            </ez-browse>';
     }
 
     public function jsonSerialize()

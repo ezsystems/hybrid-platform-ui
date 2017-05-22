@@ -29,6 +29,15 @@ main {
     color: var(--ez-color-text-white);
 }
 
+ez-toolbar .ez-button {
+    white-space: normal;
+    width: 100%;
+    text-align: center;
+
+    background: transparent;
+    border-color: transparent;
+}
+
 /* FIXME: after https://jira.ez.no/browse/EZP-27357, following selector should be
  * by #ez-hybrid-app-main-content
  */
