@@ -1,5 +1,5 @@
 :root {
-    --ez-base-font-family: "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --ez-base-font-family: "Noto Sans", Arial, Helvetica, sans-serif;
 
     /* text colors */
     --ez-color-text-base: #333;
