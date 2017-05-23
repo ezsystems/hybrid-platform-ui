@@ -6,6 +6,7 @@ use eZ\Publish\Core\MVC\Symfony\View\View;
 use EzSystems\HybridPlatformUi\Mapper\MainContentMapper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -47,6 +48,7 @@ class CoreViewSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $event->setControllerResult($this->mapper->map($view));
+        $this->mapper->map($view);
+        $event->setResponse(new Response());
     }
 }

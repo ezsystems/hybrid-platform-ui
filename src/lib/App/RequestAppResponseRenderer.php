@@ -7,6 +7,7 @@
 namespace EzSystems\HybridPlatformUi\App;
 
 use EzSystems\HybridPlatformUi\Components\App;
+use EzSystems\HybridPlatformUi\Components\MainContent;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
@@ -35,7 +36,6 @@ class RequestAppResponseRenderer implements AppResponseRenderer
 
     public function render(Response $response, App $app)
     {
-        $app->setConfig(['mainContent' => ['result' => $response->getContent()]]);
         $this->configureToolbars($app);
 
         $appResponse = $this->ajaxUpdateRequestMatcher->matches($this->request)
@@ -50,7 +50,7 @@ class RequestAppResponseRenderer implements AppResponseRenderer
     /**
      * Configures the toolbars.
      *
-     * @todo Depends on the Request. Must be triggered by another event.
+     * @todo Depends on the Request. See http://github.com/ezsystems/hybrid-platform-ui/pull/4
      */
     private function configureToolbars(App $app)
     {

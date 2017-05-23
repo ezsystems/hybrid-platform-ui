@@ -12,6 +12,7 @@ use stdClass;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -83,8 +84,8 @@ class CoreViewSubscriberSpec extends ObjectBehavior
     ) {
         $event->getControllerResult()->willReturn($view);
 
-        $mapper->map($view)->willReturn($mainContent);
-        $event->setControllerResult($mainContent)->shouldBeCalled();
+        $mapper->map($view)->shouldBeCalled();
+        $event->setResponse(Argument::type(Response::class))->shouldBeCalled();
 
         $this->mapAdminViewToMainComponent($event);
     }

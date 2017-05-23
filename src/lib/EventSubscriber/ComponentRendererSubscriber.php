@@ -30,10 +30,8 @@ class ComponentRendererSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $response = $this->ajaxUpdateRequestMatcher->matches($event->getRequest()) ?
-            new JsonResponse($component) :
-            new Response($component);
-
-        $event->setResponse($response);
+        // This is necessary to avoid an error because there is no Response.
+        // The actual Response will be rendered from the App.
+        $event->setResponse(new Response());
     }
 }

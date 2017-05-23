@@ -44,11 +44,9 @@ services:
         class: "%ezsystems.platformui.navigationhub.link.subtree.class%"
         arguments:
             - "@router"
-            # Should be Core content route
-            - "ez_urlalias"
-            - {"locationId": 2}
             - "Content structure"
             - "content"
+            - {locationId: 2}
         tags:
             - {name: ezplatform.ui.link}
         public: false
@@ -57,10 +55,83 @@ services:
         class: "%ezsystems.platformui.navigationhub.link.subtree.class%"
         arguments:
             - "@router"
-            - "ez_urlalias"
-            - {"locationId": 2}
             - "Media Library"
             - "content"
+            - {locationId: 43}
+        tags:
+            - {name: ezplatform.ui.link}
+        public: false
+
+    ezsystems.platformui.navigationhub.link.admin.dashboard:
+        class: "%ezsystems.platformui.navigationhub.link.route.class%"
+        arguments:
+            - "@router"
+            - "admin_dashboard"
+            - "Dashboard"
+            - "admin"
+        tags:
+            - {name: ezplatform.ui.link}
+        public: false
+
+    ezsystems.platformui.navigationhub.link.admin.section:
+        class: "%ezsystems.platformui.navigationhub.link.route.class%"
+        arguments:
+            - "@router"
+            - "admin_sectionlist"
+            - "Sections"
+            - "admin"
+        calls:
+            - [setRoutePrefix, ["admin_section"]]
+        tags:
+            - {name: ezplatform.ui.link}
+        public: false
+
+    ezsystems.platformui.navigationhub.link.admin.languages:
+        class: "%ezsystems.platformui.navigationhub.link.route.class%"
+        arguments:
+            - "@router"
+            - "admin_languagelist"
+            - "Languages"
+            - "admin"
+        calls:
+            - [setRoutePrefix, ["admin_language"]]
+        tags:
+            - {name: ezplatform.ui.link}
+        public: false
+
+    ezsystems.platformui.navigationhub.link.admin.content_types:
+        class: "%ezsystems.platformui.navigationhub.link.route.class%"
+        arguments:
+            - "@router"
+            - "admin_contenttypeGroupList"
+            - "Content types"
+            - "admin"
+        calls:
+            - [setRoutePrefix, ["admin_contenttype"]]
+        tags:
+            - {name: ezplatform.ui.link}
+        public: false
+
+    ezsystems.platformui.navigationhub.link.admin.roles:
+        class: "%ezsystems.platformui.navigationhub.link.route.class%"
+        arguments:
+            - "@router"
+            - "admin_roleList"
+            - "Roles"
+            - "admin"
+        calls:
+            - [setRoutePrefix, ["admin_role"]]
+        tags:
+            - {name: ezplatform.ui.link}
+        public: false
+
+    ezsystems.platformui.navigationhub.link.admin.system_info:
+        class: "%ezsystems.platformui.navigationhub.link.route.class%"
+        arguments:
+            - "@router"
+            - "admin_systeminfo"
+            - "System info"
+            - "admin"
         tags:
             - {name: ezplatform.ui.link}
         public: false
