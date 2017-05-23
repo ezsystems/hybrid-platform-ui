@@ -1,12 +1,16 @@
 .ez-table-data {
     width: 100%;
     border-collapse: collapse;
-    table-layout: fixed;
+
+    background: var(--ez-color-bg-content);
 }
 
-.ez-table-data td,
-.ez-table-data th {
+.ez-table-data td {
     padding: 0.5em 0;
+}
+
+.ez-table-data th {
+    padding: 1em 0;
     text-align: left;
 }
 
@@ -26,7 +30,6 @@
 
 .ez-table-data form {
     display: inline-block;
-    white-space: nowrap;
 }
 
 .ez-table-data td:last-of-type {
@@ -34,6 +37,6 @@
 }
 
 .ez-table-data td:first-of-type {
-    /* so that, if there's only one td, it's left aligned */
+    /* so that, if there's only one td (Role pages), it's left aligned */
     text-align: left;
 }
