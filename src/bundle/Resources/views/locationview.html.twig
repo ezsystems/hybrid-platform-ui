@@ -8,6 +8,7 @@
         </header>
 
         {% for field in content.fieldsByLanguage(language|default(null)) %}
+        <div class="ez-content-field">
             <p class="ez-content-field-name">{{ ez_field_name(content, field.fieldDefIdentifier) }}</p>
             <div class="ez-content-field-value">
                 {% if ez_is_field_empty(content, field.fieldDefIdentifier) %}
@@ -16,6 +17,7 @@
                     {{ ez_render_field(content, field.fieldDefIdentifier) }}
                 {% endif %}
             </div>
+        </div>
         {% endfor %}
 
         <hr>
