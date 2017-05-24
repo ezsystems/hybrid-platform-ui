@@ -15,6 +15,7 @@ services:
             - "@ezsystems.platformui.component.app"
             - "@ezsystems.platform_ui.hybrid.app.request_app_response_renderer"
             - "@ezsystems.hybrid_platform_ui.http.request_matcher.hybrid"
+            - "@ez_hybrid_platform_ui.main_content_mapper.http_response_to_main_content"
         tags:
             - {name: kernel.event_subscriber}
 
