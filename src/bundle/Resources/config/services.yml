@@ -25,10 +25,14 @@ services:
             - '@ezsystems.platformui.hybrid.request_matcher.ajax_update'
         public: false
 
+    ez_hybrid_platform_ui.main_content_mapper.http_response_to_main_content:
+        class: EzSystems\HybridPlatformUi\Mapper\FullHtmlToMainContentMapper
+        arguments:
+            - "@ezsystems.platformui.component.maincontent"
+        public: false
+
     ezsystems.platformui.hybrid.event_subscriber.component_renderer:
         class: EzSystems\HybridPlatformUi\EventSubscriber\ComponentRendererSubscriber
-        arguments:
-            - "@ezsystems.platformui.pjax.request_matcher"
         tags:
             - {name: kernel.event_subscriber}
 
