@@ -31,13 +31,13 @@ class PjaxSubscriber implements EventSubscriberInterface
     private $pjaxRequestMatcher;
 
     /**
-     * @var \EzSystems\HybridPlatformUi\Pjax\PjaxResponseMainContentMapper
+     * @var \EzSystems\HybridPlatformUi\Mapper\PjaxHtmlToMainContentMapper
      */
     private $responseMapper;
 
     public static function getSubscribedEvents()
     {
-        return [KernelEvents::RESPONSE => ['mapPjaxResponseToMainContent', 10]];
+        return [KernelEvents::RESPONSE => ['mapPjaxResponseToMainContent', 20]];
     }
 
     public function __construct(
@@ -64,13 +64,12 @@ class PjaxSubscriber implements EventSubscriberInterface
 
         $response = $event->getResponse();
 
-        // If AJAX update, follow the redirection and return the update for it.
-        // If not an AJAX update, send the redirection.
         if ($response instanceof RedirectResponse) {
             $event->stopPropagation();
             return;
         }
 
-        $this->responseMapper->map($response);
+        $this->responseMapper->map($response->getContent());
+        $response->setContent('');
     }
 }
