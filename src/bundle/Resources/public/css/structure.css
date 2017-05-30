@@ -26,7 +26,7 @@ main {
     flex: 0 0 115px;
     width: 115px;
     background: var(--ez-color-discovery-bar);
-    color: var(--ez-color-text-white);
+    color: var(--ez-color-text-base-inverted);
 }
 
 ez-toolbar .ez-button {
@@ -62,7 +62,7 @@ ez-main-content .ez-content-view-column {
 ez-main-content .ez-action-bar {
     flex: 0 0 115px;
     background: var(--ez-color-action-bar);
-    color: var(--ez-color-text-white);
+    color: var(--ez-color-text-base-inverted);
 }
 
 /* FIXME: this is a bad name in Hybrid Platform UI */

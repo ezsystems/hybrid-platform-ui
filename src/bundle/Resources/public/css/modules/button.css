@@ -12,7 +12,7 @@
     text-decoration: none;
     padding: 0.5em 1em;
     border-radius: 4px;
-    color: var(--ez-color-text-white);
+    color: var(--ez-color-text-base-inverted);
     background: var(--ez-color-neutral); /* TODO: neutral by default, fix the style guide accordingly */
     border: 1px solid var(--ez-color-neutral);
 }
@@ -79,5 +79,5 @@
 
 .ez-button-ghost:hover:not([disabled]) {
     background: var(--ez-color-secondary);
-    color: var(--ez-color-text-white);
+    color: var(--ez-color-text-base-inverted);
 }

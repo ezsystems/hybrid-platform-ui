@@ -2,7 +2,7 @@
     width: 100%;
     border-collapse: collapse;
 
-    background: var(--ez-color-bg-content);
+    background: var(--ez-color-ground-base-light);
 }
 
 .ez-table-data td {

@@ -3,7 +3,7 @@ html {
 }
 
 body {
-    background: var(--ez-color-bg);
+    background: var(--ez-color-ground-base);
     color: var(--ez-color-text-base);
 }
 
