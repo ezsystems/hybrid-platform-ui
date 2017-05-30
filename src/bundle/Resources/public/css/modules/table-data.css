@@ -1,0 +1,42 @@
+.ez-table-data {
+    width: 100%;
+    border-collapse: collapse;
+
+    background: var(--ez-color-ground-base-light);
+}
+
+.ez-table-data td {
+    padding: 0.5em 0;
+}
+
+.ez-table-data th {
+    padding: 1em 0;
+    text-align: left;
+}
+
+.ez-table-data td:first-of-type,
+.ez-table-data th:first-of-type {
+    padding-left: 1em;
+}
+
+.ez-table-data td:last-of-type,
+.ez-table-data th:last-of-type {
+    padding-right: 1em;
+}
+
+.ez-table-data tbody td {
+    border-top: 1px solid #a8c8d5;  /* TODO missing color in ui-guideline */
+}
+
+.ez-table-data form {
+    display: inline-block;
+}
+
+.ez-table-data td:last-of-type {
+    text-align: right;
+}
+
+.ez-table-data td:first-of-type {
+    /* so that, if there's only one td (Role pages), it's left aligned */
+    text-align: left;
+}

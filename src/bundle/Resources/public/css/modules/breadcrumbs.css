@@ -1,0 +1,20 @@
+.ez-breadcrumbs {
+    list-style-type: none;
+    padding: 0;
+}
+
+.ez-breadcrumbs .ez-breadcrumbs-item {
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.ez-breadcrumbs .ez-breadcrumbs-item:after {
+    content: " / ";
+}
+
+.ez-breadcrumbs .ez-breadcrumbs-item:last-of-type:after {
+    content: "";
+}

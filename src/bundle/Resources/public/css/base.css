@@ -1,0 +1,38 @@
+html {
+    font-family: var(--ez-base-font-family); 
+}
+
+body {
+    background: var(--ez-color-ground-base);
+    color: var(--ez-color-text-base);
+}
+
+a {
+    color: var(--ez-color-hyperlink);
+}
+
+/* allows to disable link the same way `disabled` works on button */
+[data-disabled] {
+    pointer-events: none;
+    cursor: default;
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+h2 {
+    font-size: 2em;
+}
+
+h3 {
+    font-size: 1.75em;
+}
+
+h4 {
+    font-size: 1.5em;
+}
+
+h5 {
+    font-size: 1.25em;
+}

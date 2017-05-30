@@ -1,0 +1,12 @@
+.ez-content-field {
+    margin: 1em;
+}
+
+.ez-content-field .ez-content-field-name {
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+.ez-content-field .ezrichtext-field > p:first-of-type {
+    margin-top: 0;
+}

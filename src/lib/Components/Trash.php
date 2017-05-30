@@ -6,14 +6,13 @@ class Trash implements Component
 {
     public function __toString()
     {
-        return '<div class="ez-trash-button">Server side updated at <b>' . date('H:i:s') . '</b></div>';
+        return '<button class="ez-button" disabled>
+            Trash
+        </button>';
     }
 
     public function jsonSerialize()
     {
-        return [
-            'selector' => '.ez-trash-button',
-            'update' => (string)$this,
-        ];
+        return false;
     }
 }

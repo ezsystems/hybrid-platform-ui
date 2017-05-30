@@ -6,7 +6,7 @@ class Search implements Component
 {
     public function __toString()
     {
-        return '<div>Dumb thing, never updated</div>';
+        return '<button class="ez-button" disabled>Search</button>';
     }
 
     public function jsonSerialize()

@@ -1,0 +1,8 @@
+.ez-page-header {
+    background: var(--ez-color-ground-base-header);
+    padding: 1em 0;
+}
+
+.ez-page-header > h1 {
+    margin: 0;
+}

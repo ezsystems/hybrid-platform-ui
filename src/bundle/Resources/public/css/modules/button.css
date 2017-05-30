@@ -1,0 +1,83 @@
+.ez-button {
+    display: inline-block;
+    line-height: inherit;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    -webkit-user-drag: none;
+    user-select: none;
+    box-sizing: border-box;
+
+    text-decoration: none;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    color: var(--ez-color-text-base-inverted);
+    background: var(--ez-color-neutral); /* TODO: neutral by default, fix the style guide accordingly */
+    border: 1px solid var(--ez-color-neutral);
+}
+
+.ez-button[disabled], .ez-button[data-disabled] {
+    opacity: 0.3;
+}
+
+.ez-button:focus,
+.ez-button:active {
+    box-shadow: 0 0 4px 2px var(--ez-color-button-focus);
+}
+
+.ez-button:hover:not([disabled]) {
+    background: var(--ez-color-neutral-hover);
+}
+
+.ez-button-primary {
+    font-weight: bold;
+    background: var(--ez-color-primary);
+    border: 1px solid var(--ez-color-primary);
+}
+
+.ez-button-primary:hover:not([disabled]) {
+    background: var(--ez-color-primary-hover);
+    border: 1px solid var(--ez-color-primary-hover);
+}
+
+.ez-button-secondary {
+    font-weight: bold;
+    background: var(--ez-color-secondary);
+    border: 1px solid var(--ez-color-secondary);
+}
+
+.ez-button-secondary:hover:not([disabled]) {
+    background: var(--ez-color-secondary-hover);
+    border: 1px solid var(--ez-color-secondary-hover);
+}
+
+.ez-button-negative {
+    font-weight: bold;
+    background: var(--ez-color-negative);
+    border: 1px solid var(--ez-color-negative);
+}
+
+.ez-button-negative:hover:not([disabled]) {
+    background: var(--ez-color-negative-hover);
+    border: 1px solid var(--ez-color-negative-hover);
+}
+
+.ez-button-primary:focus,
+.ez-button-primary:active,
+.ez-button-primary:focus,
+.ez-button-primary:active {
+    box-shadow: 0 0 4px 2px var(--ez-color-button-focus-alt);
+}
+
+.ez-button-ghost {
+    border: 2px solid var(--ez-color-secondary);
+    background-color: transparent;
+    color: var(--ez-color-secondary);
+    font-weight: bold;
+}
+
+.ez-button-ghost:hover:not([disabled]) {
+    background: var(--ez-color-secondary);
+    color: var(--ez-color-text-base-inverted);
+}
