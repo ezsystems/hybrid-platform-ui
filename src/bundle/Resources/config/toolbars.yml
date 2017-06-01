@@ -18,7 +18,6 @@ services:
         class: EzSystems\HybridPlatformUi\Components\Browse
         arguments:
             - '@=service("request_stack").getMasterRequest()'
-            - "@router"
         tags:
             - {name: ezplatform.ui.toolbar_item, toolbar: "discovery"}
         public: false

@@ -9,19 +9,14 @@ use Symfony\Component\Routing\RouterInterface;
 
 class Browse implements Component
 {
-    protected $urlGenerator;
-
     /**
      * @var \Symfony\Component\HttpFoundation\Request
      */
     protected $request;
 
-    // passing the router is needed because at the moment the UDW only supports
-    // a REST Location id as the starting Location id, so this id is build there
-    public function __construct(Request $request, UrlGeneratorInterface $urlGenerator)
+    public function __construct(Request $request)
     {
         $this->request = $request;
-        $this->urlGenerator = $urlGenerator;
     }
 
     protected function getLocationId()
@@ -32,26 +27,13 @@ class Browse implements Component
         return "false";
     }
 
-    protected function getLocationRestId()
-    {
-        if ($this->request->attributes->get('location')) {
-            return $this->urlGenerator->generate(
-                'ezpublish_rest_loadLocation',
-                ['locationPath' => trim($this->request->attributes->get('location')->pathString, '/')]
-            );
-        }
-        return "false";
-    }
-
     public function __toString()
     {
-        $selected = $this->getLocationRestId();
-        $id = $this->getLocationId();
+        $selected = $this->getLocationId();
         // should be rendered with a twig template
         return '<ez-browse
             class="ez-button"
-            selected-location-id="' . $selected . '"
-            location-id="' . $id . '">
+            selected-location-id="' . $selected . '">
                 Browse
             </ez-browse>';
     }
@@ -62,8 +44,7 @@ class Browse implements Component
             'selector' => 'ez-browse',
             'update' => [
                 'attributes' => [
-                    'selected-location-id' => $this->getLocationRestId(),
-                    'location-id' => $this->getLocationId(),
+                    'selected-location-id' => $this->getLocationId(),
                 ],
             ],
         ];
