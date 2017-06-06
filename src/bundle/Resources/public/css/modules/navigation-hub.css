@@ -1,0 +1,69 @@
+ez-navigation-hub {
+    --ez-color-ground-hub: #f7f7f7;
+    --ez-color-ground-hub-selected: #fff;
+
+    --ez-logo-item-hub-size: 130px;
+
+    background: var(--ez-color-ground-hub);
+}
+
+ez-navigation-hub a {
+    color: var(--ez-color-text-base);
+    text-decoration: none;
+}
+
+ez-navigation-hub .ez-zone-list {
+    display: inline-block;
+    font-size: 1.1em;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ez-navigation-hub .ez-zone-list li {
+    display: inline-block;
+}
+
+ez-navigation-hub .ez-zone-list a {
+    display: inline-block;
+    padding: 1em 2em;
+}
+
+ez-navigation-hub .ez-logo a {
+    padding: 0;
+    text-align: center;
+    width: var(--ez-logo-item-hub-size);
+}
+
+ez-navigation-hub .ez-logo img {
+    vertical-align: middle;
+}
+
+ez-navigation-hub .is-active-zone {
+    background: var(--ez-color-ground-hub-selected);
+}
+
+ez-navigation-hub .ez-zone-list a {
+    display: inline-block;
+}
+
+ez-navigation-hub .ez-navigation {
+    margin: 0;
+    padding: 0 0 0 var(--ez-logo-item-hub-size);
+    background: var(--ez-color-ground-hub-selected);
+}
+
+ez-navigation-hub .ez-zone-link {
+    text-align: center;
+    border-bottom: 3px solid var(--ez-color-ground-hub-selected);
+}
+
+ez-navigation-hub .ez-zone-link.is-matched-link {
+    font-weight: bold;
+    border-bottom: 3px solid var(--ez-color-primary);
+}
+
+ez-navigation-hub .ez-navigation a {
+    display: inline-block;
+    padding: 0.8em 1.5em;
+}

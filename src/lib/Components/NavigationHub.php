@@ -9,9 +9,9 @@ class NavigationHub implements Component
 {
     const TAG_NAME = 'ez-navigation-hub';
 
-    const ACTIVE_ZONE_CLASS = 'ez-active-zone';
+    const ACTIVE_ZONE_CLASS = 'is-active-zone';
 
-    const MATCHED_LINK_CLASS = 'ez-matched-link';
+    const MATCHED_LINK_CLASS = 'is-matched-link';
 
     /**
      * @var \Twig_Environment
