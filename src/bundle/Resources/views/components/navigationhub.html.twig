@@ -10,9 +10,7 @@
     <nav>
         <ul class="ez-navigation">
         {% for link in links %}
-        <li data-zone="{{ link.zone }}"
-            {% if link.match(app.request) %}class="{{ matchedLinkClass }}"{% endif %}
-            {% if link.zone != activeZone %}style="display: none;"{% endif %}>
+        <li data-zone="{{ link.zone }}" class="ez-zone-link {% if link.match(app.request) %} {{ matchedLinkClass }}{% endif %}">
             <a href="{{ link.url }}">{{ link.name }}</a>
         </li>
         {% endfor %}

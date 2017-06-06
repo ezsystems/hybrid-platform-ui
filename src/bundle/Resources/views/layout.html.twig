@@ -11,15 +11,7 @@
 
     <script src="{{ asset('assets/ezplatform/webcomponentsjs/webcomponents-lite.js') }}"></script>
 
-    <link rel="import" href="{{ asset( 'assets/ezplatform/hybrid-platform-ui-core-components/ez-platform-ui-app.html' ) }}">
-    <link rel="import" href="{{ asset( 'assets/ezplatform/hybrid-platform-ui-core-components/ez-toolbar.html' ) }}">
-    {#
-     # FIXME:
-     # Remove the import of ez-navigation-hub.html when https://jira.ez.no/browse/EZP-27268 is implemented and then
-     # replace manual inclusion of ez-platform-ui-app.html and ez-toolbar.html by
-     # <link rel="import" href="{{ asset( 'assets/ezplatform/hybrid-platform-ui-core-components/core-components.html' ) }}">
-     #}
-    <link rel="import" href="{{ asset( 'bundles/ezsystemshybridplatformui/webcomponents/ez-navigation-hub.html' ) }}">
+    <link rel="import" href="{{ asset( 'assets/ezplatform/hybrid-platform-ui-core-components/core-components.html' ) }}">
     <link rel="import" href="{{ asset( 'bundles/ezsystemshybridplatformui/webcomponents/ez-main-content.html' ) }}">
     <link rel="import" href="{{ asset( 'bundles/ezsystemshybridplatformui/webcomponents/ez-browse.html' ) }}">
 
