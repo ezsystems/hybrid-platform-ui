@@ -1,7 +1,7 @@
 <{{ tag }}{% for name, value in attributes %} {{ name }}="{{ value }}"{% endfor %}>
     <ul class="ez-zone-list">
         <li class="ez-logo">
-            <a href="{{ path( 'ez_hybrid_platform_ui_dashboard' ) }}" class="ez-logo"><img src="{{ asset( 'bundles/ezplatformui/img/logo.png' ) }}" alt="eZ Platform logo"></a>
+            <a href="{{ path( 'ez_hybrid_platform_ui_dashboard' ) }}" class="ez-logo"><img src="{{ asset( 'bundles/ezsystemshybridplatformui/img/logo.svg' ) }}" alt="eZ Systems logo"></a>
         </li>
     {% for zone in zones %}
         <li{% if activeZone == zone.identifier %} class="{{ activeZoneClass }}"{% endif %} data-zone-identifier="{{ zone.identifier }}">

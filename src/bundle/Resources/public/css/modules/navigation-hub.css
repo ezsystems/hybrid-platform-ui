@@ -2,7 +2,8 @@ ez-navigation-hub {
     --ez-color-ground-hub: #f7f7f7;
     --ez-color-ground-hub-selected: #fff;
 
-    --ez-logo-item-hub-size: 130px;
+    --ez-logo-size: 70px;
+    --ez-logo-item-hub-size: 120px;
 
     background: var(--ez-color-ground-hub);
 }
@@ -36,7 +37,8 @@ ez-navigation-hub .ez-logo a {
 }
 
 ez-navigation-hub .ez-logo img {
-    vertical-align: middle;
+    vertical-align: bottom;
+    width: var(--ez-logo-size);
 }
 
 ez-navigation-hub .is-active-zone {
