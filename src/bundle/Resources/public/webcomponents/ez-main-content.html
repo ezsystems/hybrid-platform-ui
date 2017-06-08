@@ -1,4 +1,5 @@
 <link rel="import" href="../../../assets/ezplatform/polymer/polymer-element.html">
+<link rel="import" href="../../../assets/ezplatform/hybrid-platform-ui-core-components/mixins/ez-tabs.html">
 
 <style>
 ez-main-content {
@@ -8,8 +9,7 @@ ez-main-content {
 
 <script>
 (function () {
-    // this is where we could detect the markup structure to enhance it (tabs, selection table, ...)
-    class eZMainContent extends Polymer.Element {
+    class eZMainContent extends eZ.TabsMixin(Polymer.Element) {
         static get is() {
             return 'ez-main-content';
         }
