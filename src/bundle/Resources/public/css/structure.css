@@ -64,8 +64,3 @@ ez-main-content .ez-action-bar {
     background: var(--ez-color-action-bar);
     color: var(--ez-color-text-base-inverted);
 }
-
-/* FIXME: this is a bad name in Hybrid Platform UI */
-ez-main-content .ez-serverside-content {
-    padding: 2em;
-}

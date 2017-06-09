@@ -1,7 +1,29 @@
-.ez-tabs .ez-tabs-label a {
-    padding: 0.5em 1.2em;
+.ez-tabs {
+    --ez-color-tab-hover: #ccc;
 }
 
-.ez-tabs .ez-tabs-label.is-tab-selected {
+.ez-tabs .ez-tabs-list {
+    padding-left: 2em; /* FIXME: remove that once we handle correctly the size of the main column */
+    background: var(--ez-color-ground-base-medium);
+}
+
+.ez-tabs .ez-tabs-label a {
+    text-decoration: none;
+    color: var(--ez-color-text-base-pale);
+    border-radius: 4px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    transition: all ease 0.3s;
+
+    padding: 0.8em 2.4em;
+}
+
+.ez-tabs .ez-tabs-label a:hover {
+    background: var(--ez-color-tab-hover);
+}
+
+.ez-tabs .ez-tabs-label.is-tab-selected a {
+    color: var(--ez-color-text-base);
+    background: var(--ez-color-ground-base);
     font-weight: bold;
 }
