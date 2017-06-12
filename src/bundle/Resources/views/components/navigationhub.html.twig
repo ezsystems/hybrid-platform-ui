@@ -13,7 +13,7 @@
         <ul class="ez-navigation">
         {% for link in links %}
         <li data-zone="{{ link.zone }}" class="ez-zone-link {% if link.match(app.request) %} {{ matchedLinkClass }}{% endif %}">
-            <a href="{{ link.url }}">{{ link.name }}</a>
+            {{ link|raw }}
         </li>
         {% endfor %}
         </ul>
