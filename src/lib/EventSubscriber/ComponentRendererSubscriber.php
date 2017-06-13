@@ -12,13 +12,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class ComponentRendererSubscriber implements EventSubscriberInterface
 {
-    private $ajaxUpdateRequestMatcher;
-
-    public function __construct(RequestMatcherInterface $ajaxUpdateRequestMatcher)
-    {
-        $this->ajaxUpdateRequestMatcher = $ajaxUpdateRequestMatcher;
-    }
-
     public static function getSubscribedEvents()
     {
         return [KernelEvents::VIEW => ['renderComponent']];

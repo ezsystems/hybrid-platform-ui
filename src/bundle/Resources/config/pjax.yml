@@ -9,7 +9,8 @@ services:
             - {name: kernel.event_subscriber}
 
     ezsystems.platformui.hybrid.mapper.pjax_response_to_main_content:
-        class: EzSystems\HybridPlatformUi\Pjax\PjaxResponseMainContentMapper
+        class: EzSystems\HybridPlatformUi\Mapper\PjaxHtmlToMainContentMapper
         arguments:
             - "@ezsystems.platformui.component.app"
+            - "@ezsystems.platformui.component.maincontent"
         public: false
