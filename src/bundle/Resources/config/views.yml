@@ -5,3 +5,8 @@ system:
                 default:
                     template: "EzSystemsHybridPlatformUiBundle::locationview.html.twig"
                     match: true
+            versions:
+                default:
+                    template: "EzSystemsHybridPlatformUiBundle:content/tabs:versions.html.twig"
+                    controller: "EzSystemsHybridPlatformUiBundle:ContentView:versionsTab"
+                    match: true

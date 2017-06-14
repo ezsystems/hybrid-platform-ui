@@ -56,3 +56,6 @@ services:
         arguments:
             - "@ezsystems.platformui.component.app"
         public: false
+
+    ezsystems.platform_ui.hybrid.filter.version_filter:
+        class: EzSystems\HybridPlatformUi\Filter\VersionFilter
