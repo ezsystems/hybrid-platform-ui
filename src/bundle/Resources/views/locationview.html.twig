@@ -44,15 +44,13 @@
         </div>
         {% endblock contentview_details %}
 
-        <hr>
-
         {% block subitems %}
         <ez-subitem parent-location-id="{{ location.id }}">
             Loading subitems...
         </ez-subitem>
         {% endblock %}
     </section>
-    <ez-toolbar class="ez-action-bar" id="action" visible>
+    <ez-toolbar class="ez-action-bar" visible>
         {% block content_action_toolbar %}
         {% endblock %}
     </ez-toolbar>
