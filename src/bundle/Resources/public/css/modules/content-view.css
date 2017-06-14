@@ -1,0 +1,13 @@
+.ez-content-view {
+    display: flex;
+}
+
+.ez-content-view .ez-content-view-column {
+    flex: 1 0;
+}
+
+.ez-content-view .ez-action-bar {
+    flex: 0 0 115px;
+    background: var(--ez-color-action-bar);
+    color: var(--ez-color-text-base-inverted);
+}
