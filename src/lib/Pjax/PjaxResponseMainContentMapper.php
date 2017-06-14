@@ -54,7 +54,7 @@ class PjaxResponseMainContentMapper implements MainContentMapper
         $this->app->setConfig([
             'title' => $title,
             'toolbars' => ['discovery' => 1],
-            'mainContent' => ['result' => $content]
+            'mainContent' => ['result' => "<ez-serverside-content>" . $content . "</ez-serverside-content>"]
         ]);
     }
 

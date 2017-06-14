@@ -1,8 +1,7 @@
-{# FIXME: remove that and fix the corresponding CSS when
- # https://jira.ez.no/browse/EZP-27357 is implemented
- #}
-<div class="ez-content-view">
+<ez-server-side-content class="ez-content-view">
     <section class="ez-content-view-column ez-tabs">
+    {% block contentview %}
+        {% block contentview_details %}
         <header class="ez-page-header">
             <h1>{{ ez_content_name(content) }}</h1>
         </header>
@@ -43,12 +42,18 @@
                 <p>Relation and reverse relation list should be generated here</p>
             </div>
         </div>
+        {% endblock contentview_details %}
 
+        {% block subitems %}
         <ez-subitem parent-location-id="{{ location.id }}">
             Loading subitems...
         </ez-subitem>
+        {% endblock %}
     </section>
     <ez-toolbar class="ez-action-bar" visible>
-
+        {% block content_action_toolbar %}
+        {% endblock %}
     </ez-toolbar>
-</div>
+    {% endblock %}
+    </section>
+</ez-server-side-content>

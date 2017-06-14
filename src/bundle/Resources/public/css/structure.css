@@ -17,7 +17,7 @@ ez-navigation-hub {
     flex: 0 0;
 }
 
-main {
+div#app-content {
     flex: 1 0;
     display: flex;
 }
@@ -38,29 +38,12 @@ ez-toolbar .ez-button {
     border-color: transparent;
 }
 
-/* FIXME: after https://jira.ez.no/browse/EZP-27357, following selector should be
- * by #ez-hybrid-app-main-content
- */
-ez-main-content {
+main {
     flex: 1 1;
     display: flex;
     flex-direction: column;
 }
 
-/* FIXME: after https://jira.ez.no/browse/EZP-27357, this should be in a stylesheet
- * dedicated to content view
- */
-ez-main-content .ez-content-view {
-    flex: 1 0;
-    display: flex;
-}
-
-ez-main-content .ez-content-view-column {
-    flex: 1 0;
-}
-
-ez-main-content .ez-action-bar {
-    flex: 0 0 115px;
-    background: var(--ez-color-action-bar);
-    color: var(--ez-color-text-base-inverted);
+main > *:first-child {
+    flex: 1 1;
 }
