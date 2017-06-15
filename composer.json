@@ -11,7 +11,8 @@
         "friendsofsymfony/jsrouting-bundle": "^1.6",
         "ezsystems/hybrid-platform-ui-assets": "^0.3",
         "ezsystems/hybrid-platform-ui-core-components": "^0.1@dev",
-        "composer/installers": "dev-ezplatform_assets as 1.3.x-dev"
+        "composer/installers": "dev-ezplatform_assets as 1.3.x-dev",
+        "jms/translation-bundle": "^1.3"
     },
     "require-dev": {
         "phpspec/phpspec": "^3.2",
