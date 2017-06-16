@@ -1,30 +1,30 @@
 <table class="ez-table-data">
     <thead>
         <tr>
-            <th>{{'locationview.versions.version'|trans({}, 'locationview')}}</th>
-            <th>{{'locationview.versions.modified.language'|trans({}, 'locationview')}}</th>
-            <th>{{'locationview.versions.author'|trans({}, 'locationview')}}</th>
-            <th>{{'locationview.versions.created'|trans({}, 'locationview')}}</th>
-            <th>{{'locationview.versions.last.saved'|trans({}, 'locationview')}}</th>
+            <th>{{ 'locationview.versions.version'|trans({}, 'locationview') }}</th>
+            <th>{{ 'locationview.versions.modified.language'|trans({}, 'locationview')|desc('Modified language') }}</th>
+            <th>{{ 'locationview.versions.author'|trans({}, 'locationview') }}</th>
+            <th>{{ 'locationview.versions.created'|trans({}, 'locationview') }}</th>
+            <th>{{ 'locationview.versions.last.saved'|trans({}, 'locationview') }}</th>
         </tr>
     </thead>
     <tbody>
     {% for version in versions %}
         <tr>
             <td>
-                {{ version.versionNo}}
+                {{ version.versionNo }}
             </td>
             <td>
-                {{ version.getContentInfo().mainLanguageCode }}
+                {{ version.contentInfo.mainLanguageCode }}
             </td>
             <td>
-                {{ ez_render_field(authors[version.id], 'first_name') }} {{ ez_render_field(authors[version.id], 'last_name') }}
+                {{ authors[version.id].contentInfo.name }}
             </td>
             <td>
-                {{ version.creationDate|localizeddate('medium', 'short', app.request.locale)}}
+                {{ version.creationDate|localizeddate('medium', 'short', app.request.locale) }}
             </td>
             <td>
-                {{ version.modificationDate|localizeddate('medium', 'short', app.request.locale)}}
+                {{ version.modificationDate|localizeddate('medium', 'short', app.request.locale) }}
             </td>
         </tr>
     {% endfor %}
