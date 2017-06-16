@@ -6,8 +6,11 @@
 namespace EzSystems\HybridPlatformUi\EventSubscriber;
 
 use EzSystems\HybridPlatformUi\Mapper\MainContentMapper;
+use EzSystems\HybridPlatformUi\Pjax\PjaxResponseMatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -33,6 +36,11 @@ class PjaxSubscriber implements EventSubscriberInterface
      */
     private $responseMapper;
 
+    /**
+     * @var \EzSystems\HybridPlatformUi\Pjax\PjaxResponseMatcher
+     */
+    private $pjaxResponseMatcher;
+
     public static function getSubscribedEvents()
     {
         return [KernelEvents::RESPONSE => ['mapPjaxResponseToMainContent', 10]];
@@ -41,26 +49,27 @@ class PjaxSubscriber implements EventSubscriberInterface
     public function __construct(
         MainContentMapper $responseMapper,
         RequestMatcherInterface $adminRequestMatcher,
-        RequestMatcherInterface $pjaxRequestMatcher
+        RequestMatcherInterface $pjaxRequestMatcher,
+        PjaxResponseMatcher $pjaxResponseMatcher
     ) {
         $this->responseMapper = $responseMapper;
         $this->adminRequestMatcher = $adminRequestMatcher;
         $this->pjaxRequestMatcher = $pjaxRequestMatcher;
+        $this->pjaxResponseMatcher = $pjaxResponseMatcher;
     }
 
     public function mapPjaxResponseToMainContent(FilterResponseEvent $event)
     {
         $request = $event->getRequest();
+        $response = $event->getResponse();
 
         if (
             $event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST ||
             !$this->adminRequestMatcher->matches($request) ||
-            !$this->pjaxRequestMatcher->matches($request)
+            !$this->isPjax($request, $response)
         ) {
             return;
         }
-
-        $response = $event->getResponse();
 
         // If AJAX update, follow the redirection and return the update for it.
         // If not an AJAX update, send the redirection.
@@ -71,5 +80,11 @@ class PjaxSubscriber implements EventSubscriberInterface
         }
 
         $this->responseMapper->map($response);
+    }
+
+    private function isPjax(Request $request, Response $response)
+    {
+        return $this->pjaxRequestMatcher->matches($request)
+            || $this->pjaxResponseMatcher->matches($response);
     }
 }
