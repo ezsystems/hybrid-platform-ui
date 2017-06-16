@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -42,7 +43,10 @@ class AppRendererSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return [KernelEvents::RESPONSE => ['renderApp', 5]];
+        return [
+            KernelEvents::RESPONSE => ['renderApp', 5],
+            KernelEvents::EXCEPTION => ['renderException']
+        ];
     }
 
     public function renderApp(FilterResponseEvent $event)
@@ -58,5 +62,20 @@ class AppRendererSubscriber implements EventSubscriberInterface
         }
 
         $this->appRenderer->render($event->getResponse(), $this->app);
+    }
+
+    public function renderException(GetResponseForExceptionEvent $event)
+    {
+        if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
+            return;
+        }
+
+        $request = $event->getRequest();
+
+        if (!$this->hybridRequestMatcher->matches($request)) {
+            return;
+        }
+
+        $this->appRenderer->renderException($event->getResponse(), $event->getException());
     }
 }

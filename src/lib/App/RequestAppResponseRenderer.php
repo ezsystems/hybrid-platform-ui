@@ -6,12 +6,11 @@
 
 namespace EzSystems\HybridPlatformUi\App;
 
+use Exception;
 use EzSystems\HybridPlatformUi\Components\App;
-use EzSystems\HybridPlatformUi\Components\MainContent;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
 class RequestAppResponseRenderer implements AppResponseRenderer
@@ -55,5 +54,16 @@ class RequestAppResponseRenderer implements AppResponseRenderer
     private function configureToolbars(App $app)
     {
         $app->setConfig(['toolbars' => ['discovery' => 1]]);
+    }
+
+    /**
+     * Renders the app with an exception into a given Response.
+     *
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     * @param \Exception $exception
+     * @param \EzSystems\HybridPlatformUi\Components\App $app
+     */
+    public function renderException(Response $response, Exception $exception, App $app)
+    {
     }
 }

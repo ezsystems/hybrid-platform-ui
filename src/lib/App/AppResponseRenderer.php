@@ -6,6 +6,7 @@
 
 namespace EzSystems\HybridPlatformUi\App;
 
+use Exception;
 use EzSystems\HybridPlatformUi\Components\App;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,4 +24,15 @@ interface AppResponseRenderer
      * @return void
      */
     public function render(Response $response, App $app);
+
+    /**
+     * Renders the app with an exception into a given Response.
+     *
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     * @param \Exception $exception
+     * @param \EzSystems\HybridPlatformUi\Components\App $app
+     *
+     * @return
+     */
+    public function renderException(Response $response, Exception $exception, App $app);
 }
