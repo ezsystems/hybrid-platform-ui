@@ -7,14 +7,20 @@
         <tr>
             <th>{{ 'locationview.details.creator'|trans({}, 'locationview') }}</th>
             <th>{{ 'locationview.details.lastcontributor'|trans({}, 'locationview') }}</th>
-            <th>{{ 'locationview.details.versions'|trans({}, 'locationview') }}</th>
+            <th>{{ 'locationview.details.publishedversion'|trans({}, 'locationview') }}</th>
             <th>{{ 'locationview.details.translations'|trans({}, 'locationview') }}</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>{{ ez_render_field(creator, 'first_name') }} {{ ez_render_field(creator, 'last_name') }} ({{ contentInfo.publishedDate|localizeddate('medium', 'short', app.request.locale) }})</td>
-            <td>{{ ez_render_field(lastContributor, 'first_name') }} {{ ez_render_field(lastContributor, 'last_name') }} ({{ versionInfo.modificationDate|localizeddate('medium', 'short', app.request.locale) }})</td>
+            <td>
+                {% if creator is not empty  %} {{ ez_content_name(creator) }} {% endif %}
+                ({{ contentInfo.publishedDate|localizeddate('medium', 'short', app.request.locale) }})
+            </td>
+            <td>
+                {% if lastContributor is not empty  %}{{ ez_content_name(lastContributor) }} {% endif %}
+                ({{ versionInfo.modificationDate|localizeddate('medium', 'short', app.request.locale) }})
+            </td>
             <td>{{ versionInfo.versionNo }}</td>
             <td>{{ translations|length }}
                 {% for translation in translations %}

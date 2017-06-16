@@ -9,6 +9,7 @@
 
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
@@ -33,6 +34,8 @@ class ContentViewController extends Controller
 
     public function detailsTabAction(ContentView $view)
     {
+        $repository = $this->getRepository();
+
         $versionInfo = $view->getContent()->getVersionInfo();
         $contentInfo = $versionInfo->getContentInfo();
 
@@ -40,8 +43,22 @@ class ContentViewController extends Controller
         $section = $sectionService->loadSection($contentInfo->sectionId);
 
         $userService = $this->getRepository()->getUserService();
-        $creator = $userService->loadUser($contentInfo->ownerId);
-        $lastContributor = $userService->loadUser($versionInfo->creatorId);
+
+        $creator = $repository->sudo(function () use ($contentInfo, $userService) {
+            try {
+                return $userService->loadUser($contentInfo->ownerId);
+            } catch (NotFoundException $e) {
+                return null;
+            }
+        });
+
+        $lastContributor = $repository->sudo(function () use ($versionInfo, $userService) {
+            try {
+                return $userService->loadUser($versionInfo->creatorId);
+            } catch (NotFoundException $e) {
+                return null;
+            }
+        });
 
         $location = $view->getLocation();
 
