@@ -18,18 +18,18 @@ use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 class ContentViewController extends Controller
 {
     protected $defaultSortFields = [
-        Location::SORT_FIELD_NAME => 'sort.name',
-        Location::SORT_FIELD_PRIORITY => 'sort.priority',
-        Location::SORT_FIELD_MODIFIED => 'sort.modified',
-        Location::SORT_FIELD_PUBLISHED => 'sort.published'
+        Location::SORT_FIELD_NAME => ['key' => 'sort.name', 'default' => 'Content name'],
+        Location::SORT_FIELD_PRIORITY => ['key' => 'sort.priority', 'default' => 'Priority'],
+        Location::SORT_FIELD_MODIFIED => ['key' => 'sort.modified', 'default' => 'Modification date'],
+        Location::SORT_FIELD_PUBLISHED => ['key' => 'sort.published', 'default' => 'Publication date']
     ];
 
     protected $otherSortFields = [
-        Location::SORT_FIELD_PATH => 'sort.path',
-        Location::SORT_FIELD_CLASS_IDENTIFIER => 'sort.content.type.identifier',
-        Location::SORT_FIELD_SECTION => 'sort.section',
-        Location::SORT_FIELD_DEPTH => 'sort.depth',
-        Location::SORT_FIELD_CLASS_NAME => 'sort.content.type.name',
+        Location::SORT_FIELD_PATH => ['key' => 'sort.path', 'default' => 'Location path'],
+        Location::SORT_FIELD_CLASS_IDENTIFIER => ['key' => 'sort.content.type.identifier', 'default' => 'Content type identifier'],
+        Location::SORT_FIELD_SECTION => ['key' => 'sort.section', 'default' => 'Section'],
+        Location::SORT_FIELD_DEPTH => ['key' => 'sort.depth', 'default' => 'Location depth'],
+        Location::SORT_FIELD_CLASS_NAME => ['key' => 'sort.content.type.name', 'default' => 'Content type name']
     ];
 
     public function detailsTabAction(ContentView $view)
@@ -104,8 +104,8 @@ class ContentViewController extends Controller
     protected function getSortOrders()
     {
         return [
-            Location::SORT_ORDER_ASC => 'locationview.details.ascending',
-            Location::SORT_ORDER_DESC => 'locationview.details.descending'
+            Location::SORT_ORDER_ASC => ['key' => 'locationview.details.ascending', 'default' => 'Ascending'],
+            Location::SORT_ORDER_DESC => ['key' => 'locationview.details.descending', 'default' => 'Descending'],
         ];
     }
 }

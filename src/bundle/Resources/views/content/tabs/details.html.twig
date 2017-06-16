@@ -1,14 +1,14 @@
 <div class="ez-list-toolbar">
-    <h2 class="ez-list-toolbar-label">{{ 'locationview.details.title'|trans({}, 'locationview') }}</h2>
+    <h2 class="ez-list-toolbar-label">{{ 'locationview.details.title'|trans({}, 'locationview')|desc('Content details') }}</h2>
 </div>
 
 <table class="ez-table-data">
     <thead>
         <tr>
-            <th>{{ 'locationview.details.creator'|trans({}, 'locationview') }}</th>
-            <th>{{ 'locationview.details.lastcontributor'|trans({}, 'locationview') }}</th>
+            <th>{{ 'locationview.details.creator'|trans({}, 'locationview')|desc('Creator') }}</th>
+            <th>{{ 'locationview.details.lastcontributor'|trans({}, 'locationview')|desc('Last contributor') }}</th>
             <th>{{ 'locationview.details.publishedversion'|trans({}, 'locationview')|desc('Published version') }}</th>
-            <th>{{ 'locationview.details.translations'|trans({}, 'locationview') }}</th>
+            <th>{{ 'locationview.details.translations'|trans({}, 'locationview')|desc('Translations') }}</th>
         </tr>
     </thead>
     <tbody>
@@ -32,16 +32,16 @@
 </table>
 
 <div class="ez-list-toolbar">
-    <h2 class="ez-list-toolbar-label">{{ 'locationview.details.technicaldetails'|trans({}, 'locationview') }}</h2>
+    <h2 class="ez-list-toolbar-label">{{ 'locationview.details.technicaldetails'|trans({}, 'locationview')|desc('Technical details') }}</h2>
 </div>
 
 <table class="ez-table-data">
     <thead>
         <tr>
-            <th>{{ 'locationview.details.contentid'|trans({}, 'locationview') }}</th>
-            <th>{{ 'locationview.details.locationid'|trans({}, 'locationview') }}</th>
-            <th>{{ 'locationview.details.contentremoteid'|trans({}, 'locationview') }}</th>
-            <th>{{ 'locationview.details.remoteid'|trans({}, 'locationview') }}</th>
+            <th>{{ 'locationview.details.contentid'|trans({}, 'locationview')|desc('Content Id') }}</th>
+            <th>{{ 'locationview.details.locationid'|trans({}, 'locationview')|desc('Location Id') }}</th>
+            <th>{{ 'locationview.details.contentremoteid'|trans({}, 'locationview')|desc('Content remote Id') }}</th>
+            <th>{{ 'locationview.details.remoteid'|trans({}, 'locationview')|desc('Location remote Id') }}</th>
         </tr>
     </thead>
     <tbody>
@@ -56,15 +56,15 @@
 
 
 <div class="ez-list-toolbar">
-    <h2 class="ez-list-toolbar-label">{{ 'locationview.details.sectiondetails'|trans({}, 'locationview') }}</h2>
+    <h2 class="ez-list-toolbar-label">{{ 'locationview.details.sectiondetails'|trans({}, 'locationview')|desc('Section details') }}</h2>
 </div>
 
 <table class="ez-table-data">
     <thead>
         <tr>
-            <th>{{ 'locationview.details.sectionName'|trans({}, 'locationview') }}</th>
-            <th>{{ 'locationview.details.sectionIdentifier'|trans({}, 'locationview') }}</th>
-            <th>{{ 'locationview.details.sectionId'|trans({}, 'locationview') }}</th>
+            <th>{{ 'locationview.details.sectionName'|trans({}, 'locationview')|desc('Section name') }}</th>
+            <th>{{ 'locationview.details.sectionIdentifier'|trans({}, 'locationview')|desc('Section identifier') }}</th>
+            <th>{{ 'locationview.details.sectionId'|trans({}, 'locationview')|desc('Section Id') }}</th>
         </tr>
     </thead>
     <tbody>
@@ -77,19 +77,19 @@
 </table>
 
 <div class="ez-list-toolbar">
-    <h2 class="ez-list-toolbar-label">{{ 'locationview.details.subitems.default.ordering'|trans({}, 'locationview') }}</h2>
+    <h2 class="ez-list-toolbar-label">{{ 'locationview.details.subitems.default.ordering'|trans({}, 'locationview')|desc('Sub-items default ordering') }}</h2>
 </div>
 
-<p class="ez-subitem-ordering-details">{{ 'locationview.details.default.listing.of.subitems.by'|trans({}, 'locationview') }}
+<p class="ez-subitem-ordering-details">{{ 'locationview.details.default.listing.of.subitems.by'|trans({}, 'locationview')|desc('Default listing of sub-items by') }}
     <select class="ez-subitems-ordering-sort-type" disabled>
         {% for fieldId, fieldLabel in ordering.sortFields %}
-        <option {% if location.sortField == fieldId %}selected{% endif %} value="{{ fieldId }}">{{ fieldLabel|trans({}, 'locationview') }}</option>
+        <option {% if location.sortField == fieldId %}selected{% endif %} value="{{ fieldId }}">{{ fieldLabel.key|trans({}, 'locationview')|desc(fieldLabel.default) }}</option>
         {% endfor %}
     </select>
     in
     <select class="ez-subitems-sorting-order" disabled>
         {% for orderId, orderLabel in ordering.sortOrders %}
-        <option {% if location.sortOrder == orderId %}selected{% endif %} value="{{ orderId }}">{{ orderLabel|trans({}, 'locationview') }}</option>
+        <option {% if location.sortOrder == orderId %}selected{% endif %} value="{{ orderId }}">{{ orderLabel.key|trans({}, 'locationview')|desc(orderLabel.default) }}</option>
         {% endfor %}
     </select>
 </p>
