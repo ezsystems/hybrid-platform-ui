@@ -11,4 +11,27 @@ abstract class Link
     public $name;
 
     abstract public function match(Request $request);
+
+    /**
+     * Returns the URL for the link.
+     *
+     * @return string|null The URL, or null if it could not be generated.
+     */
+    abstract public function getUrl();
+
+    public function __toString()
+    {
+        $disabled = '';
+        $url = $this->getUrl();
+
+        if ($url === null) {
+            $url = '#';
+            $disabled = ' data-disabled';
+        }
+
+        return sprintf(
+            '<a href="%s"%s>%s</a>',
+            $url, $disabled, htmlentities($this->name, ENT_HTML5)
+        );
+    }
 }

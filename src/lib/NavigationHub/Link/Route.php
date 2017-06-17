@@ -1,6 +1,7 @@
 <?php
 namespace EzSystems\HybridPlatformUi\NavigationHub\Link;
 
+use eZ\Publish\API\Repository\Exceptions\UnauthorizedException;
 use EzSystems\HybridPlatformUi\NavigationHub\Link;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -44,7 +45,11 @@ class Route extends Link
 
     public function getUrl()
     {
-        return $this->urlGenerator->generate($this->routeName, $this->routeParams);
+        try {
+            return $this->urlGenerator->generate($this->routeName, $this->routeParams);
+        } catch (UnauthorizedException $e) {
+            return null;
+        }
     }
 
     public function match(Request $request)
