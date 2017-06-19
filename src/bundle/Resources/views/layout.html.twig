@@ -12,7 +12,7 @@
     <script src="{{ asset('assets/ezplatform/webcomponentsjs/webcomponents-lite.js') }}"></script>
 
     <link rel="import" href="{{ asset( 'assets/ezplatform/hybrid-platform-ui-core-components/core-components.html' ) }}">
-    <link rel="import" href="{{ asset( 'bundles/ezsystemshybridplatformui/webcomponents/ez-main-content.html' ) }}">
+    <link rel="import" href="{{ asset( 'bundles/ezsystemshybridplatformui/webcomponents/ez-server-side-content.html' ) }}">
     <link rel="import" href="{{ asset( 'bundles/ezsystemshybridplatformui/webcomponents/ez-browse.html' ) }}">
 
     <link rel="import" href="{{ asset( 'bundles/ezplatformui/webcomponents/ez-subitem.html' ) }}">
@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="{{ asset('bundles/ezsystemshybridplatformui/css/modules/button.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/ezsystemshybridplatformui/css/modules/tabs.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/ezsystemshybridplatformui/css/modules/navigation-hub.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/ezsystemshybridplatformui/css/modules/content-view.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/ezsystemshybridplatformui/css/modules/page-header.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/ezsystemshybridplatformui/css/modules/breadcrumbs.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/ezsystemshybridplatformui/css/modules/table-data.css') }}">
@@ -34,13 +35,30 @@
     <link rel="stylesheet" href="{{ asset('bundles/ezsystemshybridplatformui/css/modules/content-field.css') }}">
 
     <script>
-        // FIXME:
-        // https://jira.ez.no/browse/EZP-27359
-        // this is a workaround to FOSJsRoutingBundle not generating URL for the admin SA
-        // of course, this only works when eZ Platform has one SA group and if the admin SA is not
-        // configured with a different matching strategy than URI...
+        {#
+            FIXME:
+            // https://jira.ez.no/browse/EZP-27359
+            // this is a workaround to FOSJsRoutingBundle not generating URL for the admin SA
+            // of course, this only works when eZ Platform has one SA group and if the admin SA is not
+            // configured with a different matching strategy than URI...
+        #}
         Routing.setBaseUrl('/admin');
     </script>
+
+{% if app.debug %}
+    <script>
+    document.addEventListener('ez:app:updated', function (e) {
+        if (!Sfjs || !e.detail.response.headers.has('x-debug-token')) {
+            return;
+        }
+
+        Sfjs.load(
+            document.querySelector('.sf-toolbar').id,
+            Routing.generate('_wdt', {token: e.detail.response.headers.get('x-debug-token')})
+        );
+    });
+    </script>
+{% endif %}
 </head>
 <body>
     {% block app %}

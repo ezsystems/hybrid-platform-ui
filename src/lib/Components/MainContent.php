@@ -2,11 +2,8 @@
 
 namespace EzSystems\HybridPlatformUi\Components;
 
-// TODO find a better name
 class MainContent implements Component
 {
-    const TAG_NAME = 'ez-main-content';
-
     protected $templating;
 
     protected $template = null;
@@ -37,24 +34,23 @@ class MainContent implements Component
 
     public function __toString()
     {
-        $str = '<' . self::TAG_NAME . '>';
+        $string = '';
         if ($this->result) {
-            $str .= $this->result;
+            $string =$this->result;
         } elseif ($this->template) {
-            $str .= $this->templating->render(
+            $string = $this->templating->render(
                 $this->template,
                 $this->parameters
             );
         }
-        $str .= '</' . self::TAG_NAME . '>';
 
-        return $str;
+        return $string;
     }
 
     public function jsonSerialize()
     {
         return [
-            'selector' => self::TAG_NAME,
+            'selector' => 'main',
             'update' => (string)$this,
         ];
     }

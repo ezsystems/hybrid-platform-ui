@@ -2,19 +2,20 @@
 <link rel="import" href="../../../assets/ezplatform/hybrid-platform-ui-core-components/mixins/ez-tabs.html">
 
 <style>
-ez-main-content {
+ez-server-side-content {
     display: block;
 }
 </style>
 
 <script>
 (function () {
-    class eZMainContent extends eZ.TabsMixin(Polymer.Element) {
+    // this is where we could detect the markup structure to enhance it (tabs, selection table, ...)
+    class ServerSideContent extends eZ.TabsMixin(Polymer.Element) {
         static get is() {
-            return 'ez-main-content';
+            return 'ez-server-side-content';
         }
     }
 
-    customElements.define(eZMainContent.is, eZMainContent);
+    customElements.define(ServerSideContent.is, ServerSideContent);
 })();
 </script>
