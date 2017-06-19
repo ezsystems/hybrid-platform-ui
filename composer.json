@@ -5,7 +5,7 @@
     "minimum-stability": "stable",
     "require": {
         "ezsystems/platform-ui-bundle": "2.0.x-dev",
-        "ezsystems/ezpublish-kernel": " ^6.9@dev",
+        "ezsystems/ezpublish-kernel": " ^6.11@dev",
         "symfony/symfony": "~2.8 | ~3.0",
         "friendsofsymfony/jsrouting-bundle": "^1.6",
         "ezsystems/hybrid-platform-ui-assets": "^0.3",
