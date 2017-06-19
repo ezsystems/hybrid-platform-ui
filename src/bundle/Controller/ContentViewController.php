@@ -9,43 +9,120 @@
 
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
-use eZ\Publish\API\Repository\Repository;
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
+use eZ\Publish\API\Repository\Values\Content\Location;
+use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 
 class ContentViewController extends Controller
 {
-    public function versionsTabAction(ContentView $view)
-    {
-        $repository = $this->getRepository();
-        $contentInfo = $view->getContent()->getVersionInfo()->getContentInfo();
-        $contentService = $repository->getContentService();
-        $versions = $contentService->loadVersions($contentInfo);
+    protected $defaultSortFields = [
+        Location::SORT_FIELD_NAME => ['key' => 'sort.name', 'default' => 'Content name'],
+        Location::SORT_FIELD_PRIORITY => ['key' => 'sort.priority', 'default' => 'Priority'],
+        Location::SORT_FIELD_MODIFIED => ['key' => 'sort.modified', 'default' => 'Modification date'],
+        Location::SORT_FIELD_PUBLISHED => ['key' => 'sort.published', 'default' => 'Publication date']
+    ];
 
-        $versionFilter = $this->container->get('ezsystems.platform_ui.hybrid.filter.version_filter');
+    protected $otherSortFields = [
+        Location::SORT_FIELD_PATH => ['key' => 'sort.path', 'default' => 'Location path'],
+        Location::SORT_FIELD_CLASS_IDENTIFIER => [
+            'key' => 'sort.content.type.identifier',
+            'default' => 'Content type identifier'
+        ],
+        Location::SORT_FIELD_SECTION => ['key' => 'sort.section', 'default' => 'Section'],
+        Location::SORT_FIELD_DEPTH => ['key' => 'sort.depth', 'default' => 'Location depth'],
+        Location::SORT_FIELD_CLASS_NAME => ['key' => 'sort.content.type.name', 'default' => 'Content type name']
+    ];
+
+    public function detailsTabAction(ContentView $view)
+    {
+        $versionInfo = $view->getContent()->getVersionInfo();
+        $contentInfo = $versionInfo->getContentInfo();
+
+        $sectionService = $this->getRepository()->getSectionService();
+        $section = $sectionService->loadSection($contentInfo->sectionId);
 
         $view->addParameters([
-            'draftVersions' => $versionFilter->filterDrafts($versions),
-            'publishedVersions' => $versionFilter->filterPublished($versions),
-            'archivedVersions' => $versionFilter->filterArchived($versions),
-            'authors' => $this->loadUsersForVersions($repository, $versions)
+            'section' => $section,
+            'contentInfo' => $contentInfo,
+            'versionInfo' => $versionInfo,
+            'creator' => $this->loadUser($contentInfo->ownerId),
+            'lastContributor' => $this->loadUser($versionInfo->creatorId),
+            'translations' => $this->getTranslations($versionInfo),
+            'ordering' => [
+                'sortFields' => $this->getSortFields($view->getLocation()->sortField),
+                'sortOrders' => $this->getSortOrders()
+            ]
         ]);
 
         return $view;
     }
 
-    private function loadUsersForVersions(Repository $repository, array $versions)
+    public function versionsTabAction(ContentView $view)
     {
+        $contentInfo = $view->getContent()->getVersionInfo()->getContentInfo();
+        $contentService = $this->getRepository()->getContentService();
+        $versions = $contentService->loadVersions($contentInfo);
+
+        $versionFilter = $this->container->get('ezsystems.platform_ui.hybrid.filter.version_filter');
+
         $authors = [];
-        $userService = $repository->getUserService();
         foreach ($versions as $version) {
-            $authors[$version->id] = $repository->sudo(
-                function () use ($version, $userService) {
-                    return $userService->loadUser($version->creatorId);
-                }
-            );
+            $authors[$version->id] = $this->loadUser($version->creatorId);
         }
 
-        return $authors;
+        $view->addParameters([
+            'draftVersions' => $versionFilter->filterDrafts($versions),
+            'publishedVersions' => $versionFilter->filterPublished($versions),
+            'archivedVersions' => $versionFilter->filterArchived($versions),
+            'authors' => $authors
+        ]);
+
+        return $view;
+    }
+
+    protected function loadUser($userId)
+    {
+        $userService = $this->getRepository()->getUserService();
+
+        return $this->getRepository()->sudo(function () use ($userId, $userService) {
+            try {
+                return $userService->loadUser($userId);
+            } catch (NotFoundException $e) {
+                return null;
+            }
+        });
+    }
+
+    protected function getTranslations(VersionInfo $versionInfo)
+    {
+        $languageRepository = $this->getRepository()->getContentLanguageService();
+
+        $translations = [];
+        foreach ($versionInfo->languageCodes as $languageCode) {
+            $translations[] = $languageRepository->loadLanguage($languageCode);
+        }
+
+        return $translations;
+    }
+
+    protected function getSortFields($currentSortField)
+    {
+        $sortFields = $this->defaultSortFields;
+
+        if (array_key_exists($currentSortField, $this->otherSortFields)) {
+            $sortFields[$currentSortField] = $this->otherSortFields[$currentSortField];
+        }
+
+        return $sortFields;
+    }
+
+    protected function getSortOrders()
+    {
+        return [
+            Location::SORT_ORDER_ASC => ['key' => 'locationview.details.ascending', 'default' => 'Ascending'],
+            Location::SORT_ORDER_DESC => ['key' => 'locationview.details.descending', 'default' => 'Descending'],
+        ];
     }
 }
