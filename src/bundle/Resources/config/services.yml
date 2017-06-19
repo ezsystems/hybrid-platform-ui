@@ -76,3 +76,9 @@ services:
     EzSystems\HybridPlatformUi\Repository\UiLocationService:
         arguments:
             - "@ezpublish.api.service.location"
+
+    EzSystems\HybridPlatformUi\Repository\UiRelationService:
+        arguments:
+            - "@ezpublish.api.service.content"
+            - "@ezpublish.api.service.content_type"
+            - "@ezpublish.api.service.location"

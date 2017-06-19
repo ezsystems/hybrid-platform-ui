@@ -1,0 +1,40 @@
+{% trans_default_domain "locationview" %}
+
+{% if relationList %}
+    <table class="ez-table-data">
+        <thead>
+            <tr>
+                <th>{{ 'locationview.relations.name'|trans()|desc('Name') }}</th>
+                <th>{{ 'locationview.relations.content.type'|trans()|desc('Content type') }}</th>
+                <th>{{ 'locationview.relations.relation.type'|trans()|desc('Relation type') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for relation in relationList %}
+            <tr>
+                <td><a href="{{ path(relation.destinationLocation) }}">{{ relation.destinationContentInfo.name }}</a></td>
+                <td>{{ relation.destinationContentType }}</td>
+                <td>
+                    {% if relation.type == constant('eZ\\Publish\\API\\Repository\\Values\\Content\\Relation::COMMON') %}
+                        {{ 'locationview.relations.type.content_level_relation'|trans()|desc('Content level relation') }}
+                    {% endif %}
+                    {% if relation.type == constant('eZ\\Publish\\API\\Repository\\Values\\Content\\Relation::EMBED') %}
+                        {{ 'locationview.relations.type.embed'|trans()|desc('Embed') }}
+                    {% endif %}
+                    {% if relation.type == constant('eZ\\Publish\\API\\Repository\\Values\\Content\\Relation::LINK') %}
+                        {{ 'locationview.relations.type.link'|trans()|desc('Link') }}
+                    {% endif %}
+                    {% if relation.type == constant('eZ\\Publish\\API\\Repository\\Values\\Content\\Relation::FIELD') %}
+                        {{ 'locationview.relations.type.attribute'|trans()|desc('Attribute') }}
+                    {% endif %}
+                    ({{ relation.fieldDefinition }})
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p class="ez-relations-box-list-no-content">
+        {{ 'locationview.relations.no.related.content'|trans()|desc('This content has no related content.') }}
+    </p>
+{% endif %}
