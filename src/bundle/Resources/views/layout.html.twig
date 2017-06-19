@@ -34,16 +34,7 @@
     <link rel="stylesheet" href="{{ asset('bundles/ezsystemshybridplatformui/css/modules/list-toolbar.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/ezsystemshybridplatformui/css/modules/content-field.css') }}">
 
-    <script>
-        {#
-            FIXME:
-            // https://jira.ez.no/browse/EZP-27359
-            // this is a workaround to FOSJsRoutingBundle not generating URL for the admin SA
-            // of course, this only works when eZ Platform has one SA group and if the admin SA is not
-            // configured with a different matching strategy than URI...
-        #}
-        Routing.setBaseUrl('/admin');
-    </script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
 {% if app.debug %}
     <script>
