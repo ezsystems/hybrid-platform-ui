@@ -34,7 +34,7 @@
                 <p>Some details should be generated here</p>
             </div>
             <div class="ez-tabs-panel" id="ez-tab-versions">
-                {{ render(controller('ez_content:viewContent', {'contentId': contentId, 'viewType': 'versions'})) }}
+                {{ render(controller('ez_content:viewAction', {'contentId': contentId, 'locationId': locationId, 'viewType': 'versions_tab'})) }}
             </div>
             <div class="ez-tabs-panel" id="ez-tab-locations">
                 <p>Locations list should be generated here</p>
