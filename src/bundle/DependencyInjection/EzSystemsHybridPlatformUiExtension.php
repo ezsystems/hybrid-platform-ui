@@ -29,6 +29,7 @@ class EzSystemsHybridPlatformUiExtension extends Extension implements PrependExt
         $loader->load('toolbars.yml');
         $loader->load('components.yml');
         $loader->load('pjax.yml');
+        $loader->load('templating.yml');
     }
 
     public function prepend(ContainerBuilder $container)

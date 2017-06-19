@@ -10,3 +10,8 @@ system:
                     template: "EzSystemsHybridPlatformUiBundle:content/tabs:details.html.twig"
                     controller: "EzSystemsHybridPlatformUiBundle:ContentView:detailsTab"
                     match: true
+            locations_tab:
+                default:
+                    template: "EzSystemsHybridPlatformUiBundle:content/tabs:locations.html.twig"
+                    controller: "EzSystemsHybridPlatformUiBundle:ContentView:locationsTab"
+                    match: true

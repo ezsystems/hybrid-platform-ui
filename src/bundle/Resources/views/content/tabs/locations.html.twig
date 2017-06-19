@@ -1,0 +1,41 @@
+{% trans_default_domain "locationview" %}
+
+<div class="ez-list-toolbar">
+    <h2 class="ez-list-toolbar-label">{{ 'locationview.locations.content.locations'|trans()|desc('Content locations') }}</h2>
+</div>
+
+<table class="ez-table-data">
+    <thead>
+        <tr>
+            <th></th>
+            <th>{{ 'locationview.locations.path'|trans()|desc('Path') }}</th>
+            <th>{{ 'locationview.locations.subitems'|trans()|desc('Sub-items') }}</th>
+            <th colspan="2">{{ 'locationview.locations.visibility'|trans()|desc('Visibility') }}</th>
+            <th>{{ 'locationview.locations.main'|trans()|desc('Main') }}</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if locations is defined %}
+        {% for location in locations %}
+        <tr>
+            <td></td>
+            <td>{{ ez_ui_location_path(location.valueObject) }}</td>
+            <td>{{ location.childCount }}</td>
+            <td>
+                {% if location.hidden %}
+                    {{ 'locationview.locations.hidden'|trans()|desc('Hidden') }}
+                {% else %}
+                    {% if location.invisible %}
+                        {{ 'locationview.locations.hidden.by.superior'|trans()|desc('Hidden by superior') }}
+                    {% else %}
+                        {{ 'locationview.locations.visible'|trans()|desc('Visible') }}
+                    {% endif %}
+                {% endif %}
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
+</table>
