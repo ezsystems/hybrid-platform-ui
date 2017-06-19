@@ -30,7 +30,7 @@
                 {% endfor %}
             </div>
             <div class="ez-tabs-panel" id="ez-tab-details">
-                {{ render(controller('ez_content:viewContent', {'contentId': contentId, 'viewType': 'details_tab'})) }}
+                {{ render(controller('ez_content:viewAction', {'contentId': contentId, 'locationId': locationId, 'viewType': 'details_tab'})) }}
             </div>
             <div class="ez-tabs-panel" id="ez-tab-versions">
                 <p>Versions list should be generated here</p>

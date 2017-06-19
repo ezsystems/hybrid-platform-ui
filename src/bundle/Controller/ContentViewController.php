@@ -26,7 +26,10 @@ class ContentViewController extends Controller
 
     protected $otherSortFields = [
         Location::SORT_FIELD_PATH => ['key' => 'sort.path', 'default' => 'Location path'],
-        Location::SORT_FIELD_CLASS_IDENTIFIER => ['key' => 'sort.content.type.identifier', 'default' => 'Content type identifier'],
+        Location::SORT_FIELD_CLASS_IDENTIFIER => [
+            'key' => 'sort.content.type.identifier',
+            'default' => 'Content type identifier'
+        ],
         Location::SORT_FIELD_SECTION => ['key' => 'sort.section', 'default' => 'Section'],
         Location::SORT_FIELD_DEPTH => ['key' => 'sort.depth', 'default' => 'Location depth'],
         Location::SORT_FIELD_CLASS_NAME => ['key' => 'sort.content.type.name', 'default' => 'Content type name']
@@ -34,48 +37,39 @@ class ContentViewController extends Controller
 
     public function detailsTabAction(ContentView $view)
     {
-        $repository = $this->getRepository();
-
         $versionInfo = $view->getContent()->getVersionInfo();
         $contentInfo = $versionInfo->getContentInfo();
 
         $sectionService = $this->getRepository()->getSectionService();
         $section = $sectionService->loadSection($contentInfo->sectionId);
 
-        $userService = $this->getRepository()->getUserService();
-
-        $creator = $repository->sudo(function () use ($contentInfo, $userService) {
-            try {
-                return $userService->loadUser($contentInfo->ownerId);
-            } catch (NotFoundException $e) {
-                return null;
-            }
-        });
-
-        $lastContributor = $repository->sudo(function () use ($versionInfo, $userService) {
-            try {
-                return $userService->loadUser($versionInfo->creatorId);
-            } catch (NotFoundException $e) {
-                return null;
-            }
-        });
-
-        $location = $view->getLocation();
-
         $view->addParameters([
             'section' => $section,
             'contentInfo' => $contentInfo,
             'versionInfo' => $versionInfo,
-            'creator' => $creator,
-            'lastContributor' => $lastContributor,
+            'creator' => $this->loadUser($contentInfo->ownerId),
+            'lastContributor' => $this->loadUser($versionInfo->creatorId),
             'translations' => $this->getTranslations($versionInfo),
             'ordering' => [
-                'sortFields' => $this->getSortFields($location->sortField),
+                'sortFields' => $this->getSortFields($view->getLocation()->sortField),
                 'sortOrders' => $this->getSortOrders()
             ]
         ]);
 
         return $view;
+    }
+
+    protected function loadUser($userId)
+    {
+        $userService = $this->getRepository()->getUserService();
+
+        return $this->getRepository()->sudo(function () use ($userId, $userService) {
+            try {
+                return $userService->loadUser($userId);
+            } catch (NotFoundException $e) {
+                return null;
+            }
+        });
     }
 
     protected function getTranslations(VersionInfo $versionInfo)
