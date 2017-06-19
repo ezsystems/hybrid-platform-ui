@@ -20,7 +20,7 @@
                 {{ version.contentInfo.mainLanguageCode }}
             </td>
             <td>
-                {{ authors[version.id].contentInfo.name }}
+                {% if authors[version.id] is defined and authors[version.id] is not empty %} {{ ez_content_name(authors[version.id]) }} {% endif %}
             </td>
             <td>
                 {{ version.creationDate|localizeddate('medium', 'short', app.request.locale) }}
