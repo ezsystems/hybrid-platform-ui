@@ -1,11 +1,13 @@
+{% trans_default_domain "locationview" %}
+
 <table class="ez-table-data">
     <thead>
         <tr>
-            <th>{{ 'locationview.versions.version'|trans({}, 'locationview') }}</th>
-            <th>{{ 'locationview.versions.modified.language'|trans({}, 'locationview')|desc('Modified language') }}</th>
-            <th>{{ 'locationview.versions.author'|trans({}, 'locationview') }}</th>
-            <th>{{ 'locationview.versions.created'|trans({}, 'locationview') }}</th>
-            <th>{{ 'locationview.versions.last.saved'|trans({}, 'locationview') }}</th>
+            <th>{{ 'locationview.versions.version'|trans()|desc('Version') }}</th>
+            <th>{{ 'locationview.versions.modified.language'|trans()|desc('Modified language') }}</th>
+            <th>{{ 'locationview.versions.author'|trans()|desc('Author') }}</th>
+            <th>{{ 'locationview.versions.created'|trans()|desc('Created') }}</th>
+            <th>{{ 'locationview.versions.last.saved'|trans()|desc('Last saved') }}</th>
         </tr>
     </thead>
     <tbody>

@@ -1,21 +1,23 @@
-{%  if draftVersions %}
+{% trans_default_domain "locationview" %}
+
+{% if draftVersions %}
     <div class="ez-list-toolbar">
-        <h2 class="ez-list-toolbar-label">{{'locationview.versions.draft.under.edit'|trans({}, 'locationview')}}</h2>
+        <h2 class="ez-list-toolbar-label">{{ 'locationview.versions.draft.under.edit'|trans()|desc('Draft under edit') }}</h2>
     </div>
     {% include '@EzSystemsHybridPlatformUi/content/tabs/versions/table.html.twig' with {'versions': draftVersions} %}
 
 {% endif %}
 
-{%  if publishedVersions %}
+{% if publishedVersions %}
     <div class="ez-list-toolbar">
-        <h2 class="ez-list-toolbar-label">{{'locationview.versions.published.version'|trans({}, 'locationview')}}</h2>
+        <h2 class="ez-list-toolbar-label">{{ 'locationview.versions.published.version'|trans()|desc('Published version') }}</h2>
     </div>
     {% include '@EzSystemsHybridPlatformUi/content/tabs/versions/table.html.twig' with {'versions': publishedVersions} %}
 {% endif %}
 
-{%  if archivedVersions %}
+{% if archivedVersions %}
     <div class="ez-list-toolbar">
-        <h2 class="ez-list-toolbar-label">{{'locationview.versions.archived.versions'|trans({}, 'locationview')}}</h2>
+        <h2 class="ez-list-toolbar-label">{{ 'locationview.versions.archived.versions'|trans()|desc('Archived versions') }}</h2>
     </div>
     {% include '@EzSystemsHybridPlatformUi/content/tabs/versions/table.html.twig' with {'versions': archivedVersions} %}
 
