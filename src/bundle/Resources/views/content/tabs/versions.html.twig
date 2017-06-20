@@ -4,7 +4,7 @@
     <div class="ez-list-toolbar">
         <h2 class="ez-list-toolbar-label">{{ 'locationview.versions.draft.under.edit'|trans()|desc('Draft under edit') }}</h2>
     </div>
-    {% include '@EzSystemsHybridPlatformUi/content/tabs/versions/table.html.twig' with {'versions': draftVersions} %}
+    {{ include('@EzSystemsHybridPlatformUi/content/tabs/versions/table.html.twig', {'versions': draftVersions}) }}
 
 {% endif %}
 
@@ -12,13 +12,13 @@
     <div class="ez-list-toolbar">
         <h2 class="ez-list-toolbar-label">{{ 'locationview.versions.published.version'|trans()|desc('Published version') }}</h2>
     </div>
-    {% include '@EzSystemsHybridPlatformUi/content/tabs/versions/table.html.twig' with {'versions': publishedVersions} %}
+    {{ include('@EzSystemsHybridPlatformUi/content/tabs/versions/table.html.twig', {'versions': publishedVersions}) }}
 {% endif %}
 
 {% if archivedVersions %}
     <div class="ez-list-toolbar">
         <h2 class="ez-list-toolbar-label">{{ 'locationview.versions.archived.versions'|trans()|desc('Archived versions') }}</h2>
     </div>
-    {% include '@EzSystemsHybridPlatformUi/content/tabs/versions/table.html.twig' with {'versions': archivedVersions} %}
+    {{ include('@EzSystemsHybridPlatformUi/content/tabs/versions/table.html.twig', {'versions': archivedVersions}) }}
 
 {% endif %}
