@@ -12,6 +12,8 @@ use eZ\Publish\API\Repository\Values\Content\Location;
 class LocationDecorator extends ValueObjectDecorator
 {
     /**
+     * Externally calculated and set child count.
+     *
      * @var int
      */
     public $childCount;
