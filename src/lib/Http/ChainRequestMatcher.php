@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Matches a request using a set of request matchers
+ * Matches a request using a set of request matchers.
  */
 class ChainRequestMatcher implements RequestMatcherInterface
 {
@@ -15,7 +15,7 @@ class ChainRequestMatcher implements RequestMatcherInterface
      */
     private $requestMatchers;
 
-    public function __construct(RequestMatcherInterface...$requestMatchers)
+    public function __construct(RequestMatcherInterface ...$requestMatchers)
     {
         $this->requestMatchers = $requestMatchers;
     }

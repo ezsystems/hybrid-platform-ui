@@ -36,7 +36,7 @@ class MainContent implements Component
     {
         $string = '';
         if ($this->result) {
-            $string =$this->result;
+            $string = $this->result;
         } elseif ($this->template) {
             $string = $this->templating->render(
                 $this->template,

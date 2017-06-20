@@ -4,11 +4,9 @@ namespace spec\EzSystems\HybridPlatformUi\EventSubscriber;
 
 use EzSystems\HybridPlatformUi\App\AppResponseRenderer;
 use EzSystems\HybridPlatformUi\Components\App;
-use EzSystems\HybridPlatformUi\Components\Component;
 use EzSystems\HybridPlatformUi\EventSubscriber\AppRendererSubscriber;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use stdClass;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -85,7 +83,6 @@ class AppRendererSubscriberSpec extends ObjectBehavior
         $renderer->render(Argument::type(Response::class), $app)->shouldBeCalled();
 
         $this->renderApp($event);
-
     }
 
     public function getMatchers()
@@ -98,12 +95,14 @@ class AppRendererSubscriberSpec extends ObjectBehavior
             },
             'havePriorityHigherThan' => function (array $subscribedEvents, $priority) {
                 $event = $subscribedEvents[KernelEvents::VIEW];
+
                 return isset($event[1]) && $event[1] > $priority;
             },
             'havePriorityLowerThan' => function (array $subscribedEvents, $priority) {
                 $event = $subscribedEvents[KernelEvents::VIEW];
+
                 return isset($event[1]) && $event[1] < $priority;
-            }
+            },
         ];
     }
 }

@@ -4,3 +4,4 @@ bin/doctrine-dbal
 bin/php-parse
 bin/phpspec
 bin/security-checker
+.php_cs.cache

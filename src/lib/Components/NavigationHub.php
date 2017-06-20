@@ -3,7 +3,6 @@
 namespace EzSystems\HybridPlatformUi\Components;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class NavigationHub implements Component
 {
@@ -74,6 +73,7 @@ class NavigationHub implements Component
         if ($link) {
             return $link->zone;
         }
+
         return '';
     }
 
@@ -84,6 +84,7 @@ class NavigationHub implements Component
         if ($link) {
             return $link->getUrl();
         }
+
         return '';
     }
 
@@ -103,7 +104,7 @@ class NavigationHub implements Component
             'selector' => self::TAG_NAME,
             'update' => [
                 'attributes' => $this->getAttributes(),
-            ]
+            ],
         ];
     }
 }

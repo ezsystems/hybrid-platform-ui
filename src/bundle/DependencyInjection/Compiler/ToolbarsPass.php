@@ -3,7 +3,6 @@
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
-
 namespace EzSystems\HybridPlatformUiBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -34,7 +33,7 @@ class ToolbarsPass implements CompilerPassInterface
         foreach ($container->findTaggedServiceIds('ezplatform.ui.toolbar') as $serviceId => $tags) {
             foreach ($tags as $tag) {
                 if (!isset($tag['alias'])) {
-                    throw new LogicException("Missing mandatory tag attribute 'toolbar' for service ". $serviceId);
+                    throw new LogicException("Missing mandatory tag attribute 'toolbar' for service " . $serviceId);
                 }
 
                 $toolbarDefinition = $container->findDefinition($serviceId);

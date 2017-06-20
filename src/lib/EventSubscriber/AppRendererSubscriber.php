@@ -4,12 +4,10 @@ namespace EzSystems\HybridPlatformUi\EventSubscriber;
 
 use EzSystems\HybridPlatformUi\App\AppResponseRenderer;
 use EzSystems\HybridPlatformUi\Components\App;
-use EzSystems\HybridPlatformUi\Components\Component;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
