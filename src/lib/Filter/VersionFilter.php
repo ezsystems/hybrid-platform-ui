@@ -11,11 +11,11 @@ use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 class VersionFilter
 {
     /**
-     * Filters a list of versions to retrieve only the draft versions
+     * Filters a list of versions to retrieve only the draft versions.
      *
-     * @param array $versions
+     * @param VersionInfo[] $versions
      *
-     * @return array
+     * @return VersionInfo[]
      */
     public function filterDrafts(array $versions)
     {
@@ -25,11 +25,11 @@ class VersionFilter
     }
 
     /**
-     * Filters a list of versions to retrieve only the published versions
+     * Filters a list of versions to retrieve only the published versions.
      *
-     * @param array $versions
+     * @param VersionInfo[] $versions
      *
-     * @return array
+     * @return VersionInfo[]
      */
     public function filterPublished(array $versions)
     {
@@ -39,11 +39,11 @@ class VersionFilter
     }
 
     /**
-     * Filters a list of versions to retrieve only the archived versions
+     * Filters a list of versions to retrieve only the archived versions.
      *
-     * @param array $versions
+     * @param VersionInfo[] $versions
      *
-     * @return array
+     * @return VersionInfo[]
      */
     public function filterArchived(array $versions)
     {
