@@ -26,7 +26,9 @@ class DecoratedLocationRepository
 
         return array_map(function (Location $location) use ($locationService) {
             $decoratedLocation = new LocationDecorator($location);
-            $decoratedLocation->childCount = $locationService->getLocationChildCount($decoratedLocation->getValueObject());
+            $decoratedLocation->childCount = $locationService->getLocationChildCount(
+                $decoratedLocation->getValueObject()
+            );
 
             return $decoratedLocation;
         }, $locations);
