@@ -3,10 +3,8 @@
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
-
 namespace EzSystems\HybridPlatformUi\EventSubscriber;
 
-use EzSystems\HybridPlatformUi\Components\App;
 use EzSystems\HybridPlatformUi\Mapper\MainContentMapper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -68,6 +66,7 @@ class PjaxSubscriber implements EventSubscriberInterface
         // If not an AJAX update, send the redirection.
         if ($response instanceof RedirectResponse) {
             $event->stopPropagation();
+
             return;
         }
 

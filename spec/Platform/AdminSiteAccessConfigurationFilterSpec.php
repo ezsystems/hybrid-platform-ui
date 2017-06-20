@@ -5,7 +5,6 @@ namespace spec\EzSystems\HybridPlatformUi\Platform;
 use eZ\Bundle\EzPublishCoreBundle\SiteAccess\SiteAccessConfigurationFilter;
 use EzSystems\HybridPlatformUi\Platform\AdminSiteAccessConfigurationFilter;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class AdminSiteAccessConfigurationFilterSpec extends ObjectBehavior
 {
@@ -60,7 +59,7 @@ class AdminSiteAccessConfigurationFilterSpec extends ObjectBehavior
                     in_array($expectedSiteAccess, $configuration['list']) &&
                     isset($configuration['groups'][$group]) &&
                     in_array($expectedSiteAccess, $configuration['groups'][$group]);
-            }
+            },
         ];
     }
 }

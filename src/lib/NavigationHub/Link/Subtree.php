@@ -7,7 +7,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class Subtree extends Route
 {
-    public function __construct(UrlGeneratorInterface $urlGenerator, $name, $zone, array $routeParams = []) {
+    public function __construct(UrlGeneratorInterface $urlGenerator, $name, $zone, array $routeParams = [])
+    {
         parent::__construct($urlGenerator, 'ez_urlalias', $name, $zone, $routeParams);
     }
 

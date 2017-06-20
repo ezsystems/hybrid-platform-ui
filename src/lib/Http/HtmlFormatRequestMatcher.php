@@ -11,6 +11,7 @@ class HtmlFormatRequestMatcher extends RequestMatcher
     {
         parent::__construct(null, null, null, null, ['_format' => '^(?!js).*$']);
     }
+
     public function match(Request $request)
     {
         return parent::matches($request);

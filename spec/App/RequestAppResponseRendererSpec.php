@@ -4,7 +4,6 @@ namespace spec\EzSystems\HybridPlatformUi\App;
 
 use EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 

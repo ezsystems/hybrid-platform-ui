@@ -101,7 +101,7 @@ class CoreViewSubscriberSpec extends ObjectBehavior
             'havePriorityHigherThan' => function (array $subscribedEvents, $priority) {
                 return isset($subscribedEvents[KernelEvents::VIEW][1])
                     && $subscribedEvents[KernelEvents::VIEW][1] > $priority;
-            }
+            },
         ];
     }
 }
