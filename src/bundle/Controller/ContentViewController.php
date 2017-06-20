@@ -14,6 +14,7 @@ use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
+use EzSystems\HybridPlatformUi\Filter\VersionFilter;
 
 class ContentViewController extends Controller
 {
@@ -34,6 +35,16 @@ class ContentViewController extends Controller
         Location::SORT_FIELD_DEPTH => ['key' => 'sort.depth', 'default' => 'Location depth'],
         Location::SORT_FIELD_CLASS_NAME => ['key' => 'sort.content.type.name', 'default' => 'Content type name']
     ];
+
+    /**
+     * @var VersionFilter
+     */
+    private $versionFilter;
+
+    public function __construct(VersionFilter $versionFilter)
+    {
+        $this->versionFilter = $versionFilter;
+    }
 
     public function detailsTabAction(ContentView $view)
     {
@@ -65,17 +76,15 @@ class ContentViewController extends Controller
         $contentService = $this->getRepository()->getContentService();
         $versions = $contentService->loadVersions($contentInfo);
 
-        $versionFilter = $this->container->get('ezsystems.platform_ui.hybrid.filter.version_filter');
-
         $authors = [];
         foreach ($versions as $version) {
             $authors[$version->id] = $this->loadUser($version->creatorId);
         }
 
         $view->addParameters([
-            'draftVersions' => $versionFilter->filterDrafts($versions),
-            'publishedVersions' => $versionFilter->filterPublished($versions),
-            'archivedVersions' => $versionFilter->filterArchived($versions),
+            'draftVersions' => $this->versionFilter->filterDrafts($versions),
+            'publishedVersions' => $this->versionFilter->filterPublished($versions),
+            'archivedVersions' => $this->versionFilter->filterArchived($versions),
             'authors' => $authors
         ]);
 

@@ -1,4 +1,14 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    EzSystems\HybridPlatformUiBundle\Controller\:
+        resource: '../../Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
     ezsystems.platformui.hybrid.request_matcher.admin:
         class: EzSystems\HybridPlatformUi\Http\HardcodedAdminRequestMatcher
         calls:
