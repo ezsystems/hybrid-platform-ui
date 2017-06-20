@@ -35,6 +35,8 @@ class LocationDecorator extends ValueObjectDecorator
     }
 
     /**
+     * Get value object.
+     *
      * @return Location
      */
     public function getValueObject()

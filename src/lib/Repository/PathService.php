@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
 namespace EzSystems\HybridPlatformUi\Repository;
 
 use eZ\Publish\API\Repository\SearchService;
@@ -20,6 +24,13 @@ class PathService
         $this->searchService = $searchService;
     }
 
+    /**
+     * Load path locations.
+     *
+     * @param Location $location
+     *
+     * @return Location[]
+     */
     public function loadPathLocations(Location $location)
     {
         $locationQuery = new LocationQuery([
