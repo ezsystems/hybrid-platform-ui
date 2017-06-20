@@ -19,7 +19,7 @@
         {% for location in locations %}
         <tr>
             <td></td>
-            <td>{{ ez_ui_location_path(location.valueObject) }}</td>
+            <td>{{ include('@EzSystemsHybridPlatformUi/fields/location/path.html.twig', {'locations': location.pathLocations}) }}</td>
             <td>{{ location.childCount }}</td>
             <td>
                 {% if location.hidden %}

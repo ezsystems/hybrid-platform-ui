@@ -66,7 +66,7 @@ class ContentViewController extends Controller
 
         if ($contentInfo->published) {
             $locationService = $this->container->get(
-                'ezsystems.platformui.hybrid.repository.decorated_location_repository'
+                'ezsystems.platformui.hybrid.repository.decorated_location_service'
             );
             $locations = $locationService->loadLocations($contentInfo);
 

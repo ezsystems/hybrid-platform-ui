@@ -19,6 +19,13 @@ class LocationDecorator extends ValueObjectDecorator
     public $childCount;
 
     /**
+     * Externally loaded and set path locations.
+     *
+     * @var Location[]
+     */
+    public $pathLocations;
+
+    /**
      * @var Location
      */
     protected $location;
