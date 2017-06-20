@@ -29,7 +29,6 @@ class DecoratedLocationServiceSpec extends ObjectBehavior
         $this->loadLocations($contentInfo)->shouldBeLike([$locationDecorator]);
     }
 
-
     function it_loads_and_decorates_with_a_path_location(LocationService $locationService, PathService $pathService, ContentInfo $contentInfo)
     {
         $location = new Location();

@@ -20,7 +20,7 @@ class PathServiceSpec extends ObjectBehavior
     function it_loads_path_locations(SearchService $searchService)
     {
         $location = new Location([
-            'pathString' => '/2/3/'
+            'pathString' => '/2/3/',
         ]);
 
         $searchHit = new SearchHit(['valueObject' => $location]);
@@ -28,8 +28,8 @@ class PathServiceSpec extends ObjectBehavior
         $searchResults = new SearchResult([
             'searchHits' => [
                 $searchHit,
-                $searchHit
-            ]
+                $searchHit,
+            ],
         ]);
 
         $searchService->findLocations(Argument::type(LocationQuery::class))->willReturn($searchResults);

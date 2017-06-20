@@ -23,7 +23,7 @@ class PathService
     public function loadPathLocations(Location $location)
     {
         $locationQuery = new LocationQuery([
-            'filter' => new Ancestor($location->pathString)
+            'filter' => new Ancestor($location->pathString),
         ]);
 
         return array_map(function (SearchHit $searchHit) {

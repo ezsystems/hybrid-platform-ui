@@ -70,7 +70,7 @@ class ContentViewController extends Controller
             $locations = $locationService->loadLocations($contentInfo);
 
             $view->addParameters([
-                'locations' => $locations
+                'locations' => $locations,
             ]);
         }
 
