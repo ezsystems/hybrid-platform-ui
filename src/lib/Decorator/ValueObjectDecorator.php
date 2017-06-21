@@ -8,6 +8,9 @@ namespace EzSystems\HybridPlatformUi\Decorator;
 
 use eZ\Publish\API\Repository\Values\ValueObject;
 
+/**
+ * Facilitate decoration of value objects by proxying all magic methods to them.
+ */
 abstract class ValueObjectDecorator
 {
     /**

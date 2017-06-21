@@ -8,6 +8,10 @@ namespace EzSystems\HybridPlatformUi\Decorator;
 
 use eZ\Publish\API\Repository\Values\Content\Location;
 
+/**
+ * Decorates original value object in order to provide additional fields that can be dynamically set.
+ * Proxies public location value object methods to the original object.
+ */
 class LocationDecorator extends ValueObjectDecorator
 {
     /**

@@ -11,6 +11,10 @@ use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use EzSystems\HybridPlatformUi\Decorator\LocationDecorator;
 
+/**
+ * Service for loading locations with additional data not provided by the original API.
+ * Returns decorated location objects to facilitate storing the additional data without modifying the original object.
+ */
 class DecoratedLocationService
 {
     /**

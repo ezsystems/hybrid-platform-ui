@@ -12,6 +12,9 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion\Ancestor;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 
+/**
+ * Service for loading path information.
+ */
 class PathService
 {
     /**
