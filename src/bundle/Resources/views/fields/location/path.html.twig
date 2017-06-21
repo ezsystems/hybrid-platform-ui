@@ -1,8 +1,5 @@
-{% spaceless %}
+<ul class="ez-breadcrumbs">
     {% for location in locations %}
-        <a href="{{ path('_ezpublishLocation', {'locationId': location.id}) }}">{{ ez_content_name(location.contentInfo) }}</a>
-        {% if not loop.last %}
-        /
-        {% endif %}
+    <li class="ez-breadcrumbs-item"><a href="{{ path(location) }}">{{ ez_content_name(location.contentInfo) }}</a></li>
     {% endfor %}
-{% endspaceless %}
+</ul>
