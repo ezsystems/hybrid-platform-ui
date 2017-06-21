@@ -34,7 +34,9 @@ class DecoratedLocationService
     }
 
     /**
-     * Load decorated locations.
+     * Loads all locations for $contentInfo with each location wrapped by a decorator.
+     * Additionally retrieves and sets child count, path locations and whether a location is main.
+     * Intended usage is admin only, where we display information that isn't provided by the standard location service.
      *
      * @param ContentInfo $contentInfo
      *

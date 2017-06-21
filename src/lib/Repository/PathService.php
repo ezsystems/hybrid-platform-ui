@@ -40,8 +40,10 @@ class PathService
             'filter' => new Ancestor($location->pathString),
         ]);
 
+        $searchResult = $this->searchService->findLocations($locationQuery);
+
         return array_map(function (SearchHit $searchHit) {
             return $searchHit->valueObject;
-        }, ($this->searchService->findLocations($locationQuery))->searchHits);
+        }, $searchResult->searchHits);
     }
 }
