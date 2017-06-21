@@ -29,6 +29,13 @@ class LocationDecorator extends ValueObjectDecorator
     public $pathLocations;
 
     /**
+     * Externally set main flag.
+     *
+     * @var bool
+     */
+    public $main;
+
+    /**
      * @var Location
      */
     protected $location;

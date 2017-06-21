@@ -46,18 +46,32 @@ class DecoratedLocationService
         $pathService = $this->pathService;
         $locations = $locationService->loadLocations($contentInfo);
 
-        return array_map(function (Location $location) use ($locationService, $pathService) {
-            $decoratedLocation = new LocationDecorator($location);
+        $decoratedLocations = array_map(
+            function (Location $location) use ($locationService, $pathService, $contentInfo) {
+                $decoratedLocation = new LocationDecorator($location);
 
-            $decoratedLocation->childCount = $locationService->getLocationChildCount(
-                $decoratedLocation->getValueObject()
-            );
+                $decoratedLocation->childCount = $locationService->getLocationChildCount(
+                    $location
+                );
 
-            $decoratedLocation->pathLocations = $pathService->loadPathLocations(
-                $decoratedLocation->getValueObject()
-            );
+                $decoratedLocation->pathLocations = $pathService->loadPathLocations(
+                    $location
+                );
 
-            return $decoratedLocation;
-        }, $locations);
+                $decoratedLocation->main = ($location->id === $contentInfo->mainLocationId);
+
+                return $decoratedLocation;
+            },
+            $locations
+        );
+
+        foreach ($decoratedLocations as $key => $decoratedLocation) {
+            if ($decoratedLocation->main) {
+                unset($decoratedLocations[$key]);
+                array_unshift($decoratedLocations, $decoratedLocation);
+            }
+        }
+
+        return $decoratedLocations;
     }
 }

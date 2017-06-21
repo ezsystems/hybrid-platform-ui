@@ -21,21 +21,26 @@ class DecoratedLocationServiceSpec extends ObjectBehavior
         $this->beConstructedWith($locationService, $pathService);
     }
 
-    function it_loads_and_decorates_locations_with_a_child_count(LocationService $locationService, ContentInfo $contentInfo)
+    function it_loads_and_decorates_locations_with_a_child_count(LocationService $locationService)
     {
-        $location = new Location();
+        $contentInfo = new ContentInfo(['mainLocationId' => 1]);
+
+        $location = new Location(['id' => 2]);
         $locationService->loadLocations($contentInfo)->willReturn([$location]);
         $locationService->getLocationChildCount($location)->willReturn(1);
 
         $locationDecorator = new LocationDecorator($location);
         $locationDecorator->childCount = 1;
+        $locationDecorator->main = false;
 
         $this->loadLocations($contentInfo)->shouldBeLike([$locationDecorator]);
     }
 
-    function it_loads_and_decorates_with_a_path_location(LocationService $locationService, PathService $pathService, ContentInfo $contentInfo)
+    function it_loads_and_decorates_locations_with_a_path_location(LocationService $locationService, PathService $pathService)
     {
-        $location = new Location();
+        $contentInfo = new ContentInfo(['mainLocationId' => 1]);
+
+        $location = new Location(['id' => 2]);
         $locationService->loadLocations($contentInfo)->willReturn([$location]);
         $locationService->getLocationChildCount($location)->willReturn(1);
         $pathService->loadPathLocations(Argument::type(Location::class))->willReturn([$location]);
@@ -43,7 +48,45 @@ class DecoratedLocationServiceSpec extends ObjectBehavior
         $locationDecorator = new LocationDecorator($location);
         $locationDecorator->childCount = 1;
         $locationDecorator->pathLocations = [$location];
+        $locationDecorator->main = false;
 
         $this->loadLocations($contentInfo)->shouldBeLike([$locationDecorator]);
+    }
+
+    function it_loads_and_decorates_locations_with_a_main_flag(LocationService $locationService)
+    {
+        $contentInfo = new ContentInfo(['mainLocationId' => 1]);
+
+        $location = new Location(['id' => 1]);
+        $locationService->loadLocations($contentInfo)->willReturn([$location]);
+        $locationService->getLocationChildCount($location)->willReturn(1);
+
+        $locationDecorator = new LocationDecorator($location);
+        $locationDecorator->childCount = 1;
+        $locationDecorator->main = true;
+
+        $this->loadLocations($contentInfo)->shouldBeLike([$locationDecorator]);
+    }
+
+    function it_puts_the_main_location_first(LocationService $locationService)
+    {
+        $contentInfo = new ContentInfo(['mainLocationId' => 1]);
+
+        $location = new Location(['id' => 2]);
+        $mainLocation = new Location(['id' => 1]);
+
+        $locationService->loadLocations($contentInfo)->willReturn([$location, $mainLocation, $location]);
+        $locationService->getLocationChildCount($location)->willReturn(1);
+        $locationService->getLocationChildCount($mainLocation)->willReturn(1);
+
+        $locationDecorator = new LocationDecorator($location);
+        $locationDecorator->childCount = 1;
+        $locationDecorator->main = false;
+
+        $mainLocationDecorator = new LocationDecorator($mainLocation);
+        $mainLocationDecorator->childCount = 1;
+        $mainLocationDecorator->main = true;
+
+        $this->loadLocations($contentInfo)->shouldBeLike([$mainLocationDecorator, $locationDecorator, $locationDecorator]);
     }
 }
