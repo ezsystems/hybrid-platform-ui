@@ -10,3 +10,8 @@ system:
                     template: "EzSystemsHybridPlatformUiBundle:content/tabs:details.html.twig"
                     controller: "EzSystemsHybridPlatformUiBundle:ContentView:detailsTab"
                     match: true
+            versions_tab:
+                default:
+                    template: "EzSystemsHybridPlatformUiBundle:content/tabs:versions.html.twig"
+                    controller: "EzSystemsHybridPlatformUiBundle:ContentView:versionsTab"
+                    match: true
