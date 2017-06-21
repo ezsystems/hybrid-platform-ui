@@ -7,7 +7,7 @@
 }
 
 .ez-content-view .ez-action-bar {
-    flex: 0 0 115px;
+    flex: 0 0 var(--ez-toolbar-width);
     background: var(--ez-color-action-bar);
     color: var(--ez-color-text-base-inverted);
 }

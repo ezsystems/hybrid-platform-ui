@@ -1,6 +1,8 @@
 :root {
     --ez-base-font-family: "Noto Sans", Arial, Helvetica, sans-serif;
 
+    --ez-toolbar-width: 115px;
+
     /* text colors */
     --ez-color-text-base: #333;
     --ez-color-text-base-inverted: #fff;
@@ -33,4 +35,9 @@
     --ez-color-ground-base: #fafafa;
     --ez-color-ground-base-light: #f3f3f3;
     --ez-color-ground-base-medium: #e5e3e3;
+
+    /* notifications */
+    --ez-color-positive-feedback: #00825c;
+    --ez-color-processing-feedback: #f7d000;
+    --ez-color-negative-feedback: #d6194a;
 }
