@@ -19,9 +19,9 @@ class VersionFilter
      */
     public function filterDrafts(array $versions)
     {
-        return array_values(array_filter($versions, function (VersionInfo $version) {
+        return $this->filterVersions($versions, function (VersionInfo $version) {
             return $version->isDraft();
-        }));
+        });
     }
 
     /**
@@ -33,9 +33,9 @@ class VersionFilter
      */
     public function filterPublished(array $versions)
     {
-        return array_values(array_filter($versions, function (VersionInfo $version) {
+        return $this->filterVersions($versions, function (VersionInfo $version) {
             return $version->isPublished();
-        }));
+        });
     }
 
     /**
@@ -47,8 +47,13 @@ class VersionFilter
      */
     public function filterArchived(array $versions)
     {
-        return array_values(array_filter($versions, function (VersionInfo $version) {
+        return $this->filterVersions($versions, function (VersionInfo $version) {
             return $version->isArchived();
-        }));
+        });
+    }
+
+    private function filterVersions(array $versions, callable $functionUsedToFilter)
+    {
+        return array_values(array_filter($versions, $functionUsedToFilter));
     }
 }
