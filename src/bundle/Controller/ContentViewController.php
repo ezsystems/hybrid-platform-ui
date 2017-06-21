@@ -81,11 +81,17 @@ class ContentViewController extends Controller
             $authors[$version->id] = $this->loadUser($version->creatorId);
         }
 
+        $translations = [];
+        foreach ($versions as $version) {
+            $translations[$version->id] = $this->getTranslations($version);
+        }
+
         $view->addParameters([
             'draftVersions' => $this->versionFilter->filterDrafts($versions),
             'publishedVersions' => $this->versionFilter->filterPublished($versions),
             'archivedVersions' => $this->versionFilter->filterArchived($versions),
-            'authors' => $authors
+            'authors' => $authors,
+            'translations' => $translations,
         ]);
 
         return $view;

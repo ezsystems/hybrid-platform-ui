@@ -5,7 +5,7 @@
         <tr>
             <th>{{ 'locationview.versions.version'|trans()|desc('Version') }}</th>
             <th>{{ 'locationview.versions.modified.language'|trans()|desc('Modified language') }}</th>
-            <th>{{ 'locationview.versions.author'|trans()|desc('Author') }}</th>
+            <th>{{ 'locationview.versions.contributor'|trans()|desc('Contributor') }}</th>
             <th>{{ 'locationview.versions.created'|trans()|desc('Created') }}</th>
             <th>{{ 'locationview.versions.last.saved'|trans()|desc('Last saved') }}</th>
         </tr>
@@ -17,7 +17,11 @@
                 {{ version.versionNo }}
             </td>
             <td>
-                {{ version.contentInfo.mainLanguageCode }}
+                {% if translations[version.id] is defined %}
+                    {% for translation in translations[version.id] %}
+                        {{ translation.name }}<br>
+                    {% endfor %}
+                {% endif %}
             </td>
             <td>
                 {% if authors[version.id] is defined and authors[version.id] is not empty %} {{ ez_content_name(authors[version.id]) }} {% endif %}
