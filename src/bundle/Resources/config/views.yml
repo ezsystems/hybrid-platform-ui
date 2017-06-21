@@ -13,10 +13,10 @@ system:
             versions_tab:
                 default:
                     template: "EzSystemsHybridPlatformUiBundle:content/tabs:versions.html.twig"
-                    controller: "EzSystemsHybridPlatformUiBundle:ContentView:versionsTab"
+                    controller: 'EzSystems\HybridPlatformUiBundle\Controller\ContentViewController:versionsTabAction'
                     match: true
             locations_tab:
                 default:
                     template: "EzSystemsHybridPlatformUiBundle:content/tabs:locations.html.twig"
-                    controller: "EzSystemsHybridPlatformUiBundle:ContentView:locationsTab"
+                    controller: 'EzSystems\HybridPlatformUiBundle\Controller\ContentViewController:locationsTabAction'
                     match: true

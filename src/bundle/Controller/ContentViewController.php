@@ -36,22 +36,6 @@ class ContentViewController extends Controller
         Location::SORT_FIELD_CLASS_NAME => ['key' => 'sort.content.type.name', 'default' => 'Content type name'],
     ];
 
-    /**
-     * @var VersionFilter
-     */
-    private $versionFilter;
-
-    /**
-     * @var DecoratedLocationService
-     */
-    private $decoratedLocationService;
-
-    public function __construct(VersionFilter $versionFilter, DecoratedLocationService $decoratedLocationService)
-    {
-        $this->versionFilter = $versionFilter;
-        $this->decoratedLocationService = $decoratedLocationService;
-    }
-
     public function detailsTabAction(ContentView $view)
     {
         $versionInfo = $view->getContent()->getVersionInfo();
@@ -76,7 +60,23 @@ class ContentViewController extends Controller
         return $view;
     }
 
-    public function versionsTabAction(ContentView $view)
+    public function locationsTabAction(ContentView $view, DecoratedLocationService $locationService)
+    {
+        $versionInfo = $view->getContent()->getVersionInfo();
+        $contentInfo = $versionInfo->getContentInfo();
+
+        if ($contentInfo->published) {
+            $locations = $locationService->loadLocations($contentInfo);
+
+            $view->addParameters([
+                'locations' => $locations,
+            ]);
+        }
+
+        return $view;
+    }
+
+    public function versionsTabAction(ContentView $view, VersionFilter $versionFilter)
     {
         $contentInfo = $view->getContent()->getVersionInfo()->getContentInfo();
         $contentService = $this->getRepository()->getContentService();
@@ -93,9 +93,9 @@ class ContentViewController extends Controller
         }
 
         $view->addParameters([
-            'draftVersions' => $this->versionFilter->filterDrafts($versions),
-            'publishedVersions' => $this->versionFilter->filterPublished($versions),
-            'archivedVersions' => $this->versionFilter->filterArchived($versions),
+            'draftVersions' => $versionFilter->filterDrafts($versions),
+            'publishedVersions' => $versionFilter->filterPublished($versions),
+            'archivedVersions' => $versionFilter->filterArchived($versions),
             'authors' => $authors,
             'translations' => $translations,
         ]);
@@ -103,13 +103,13 @@ class ContentViewController extends Controller
         return $view;
     }
 
-    public function locationsTabAction(ContentView $view)
+    public function locationsTabAction(ContentView $view, DecoratedLocationService $locationService)
     {
         $versionInfo = $view->getContent()->getVersionInfo();
         $contentInfo = $versionInfo->getContentInfo();
 
         if ($contentInfo->published) {
-            $locations = $this->decoratedLocationService->loadLocations($contentInfo);
+            $locations = $locationService->loadLocations($contentInfo);
 
             $view->addParameters([
                 'locations' => $locations,
