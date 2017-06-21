@@ -4,6 +4,7 @@
     "license": "GPL-2.0",
     "minimum-stability": "stable",
     "require": {
+        "php": "^7.0",
         "ezsystems/platform-ui-bundle": "2.0.x-dev",
         "ezsystems/ezpublish-kernel": " ^6.9@dev",
         "symfony/symfony": "~2.8 | ~3.0",
