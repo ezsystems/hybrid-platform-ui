@@ -5,7 +5,6 @@ namespace spec\EzSystems\HybridPlatformUi\Filter;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use EzSystems\HybridPlatformUi\Filter\VersionFilter;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class VersionFilterSpec extends ObjectBehavior
 {
@@ -22,7 +21,7 @@ class VersionFilterSpec extends ObjectBehavior
         $versions = [
             $versionInfo1,
             $versionInfo2,
-            $versionInfo3
+            $versionInfo3,
         ];
 
         $versionInfo1->isDraft()->willReturn(true)->shouldBeCalled();
@@ -40,7 +39,7 @@ class VersionFilterSpec extends ObjectBehavior
         $versions = [
             $versionInfo1,
             $versionInfo2,
-            $versionInfo3
+            $versionInfo3,
         ];
 
         $versionInfo1->isPublished()->willReturn(false)->shouldBeCalled();
@@ -58,7 +57,7 @@ class VersionFilterSpec extends ObjectBehavior
         $versions = [
             $versionInfo1,
             $versionInfo2,
-            $versionInfo3
+            $versionInfo3,
         ];
 
         $versionInfo1->isArchived()->willReturn(false)->shouldBeCalled();
