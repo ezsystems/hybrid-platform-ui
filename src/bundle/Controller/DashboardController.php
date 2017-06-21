@@ -8,15 +8,8 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
-use EzSystems\HybridPlatformUi\Components\App;
 use EzSystems\HybridPlatformUi\Components\MainContent;
 use EzSystems\PlatformUIBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Routing\RouterInterface;
-use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\API\Repository\Values\Content\Location;
 
 class DashboardController extends Controller
 {

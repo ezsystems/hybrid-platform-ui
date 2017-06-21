@@ -6,7 +6,6 @@
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
-
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
@@ -22,18 +21,18 @@ class ContentViewController extends Controller
         Location::SORT_FIELD_NAME => ['key' => 'sort.name', 'default' => 'Content name'],
         Location::SORT_FIELD_PRIORITY => ['key' => 'sort.priority', 'default' => 'Priority'],
         Location::SORT_FIELD_MODIFIED => ['key' => 'sort.modified', 'default' => 'Modification date'],
-        Location::SORT_FIELD_PUBLISHED => ['key' => 'sort.published', 'default' => 'Publication date']
+        Location::SORT_FIELD_PUBLISHED => ['key' => 'sort.published', 'default' => 'Publication date'],
     ];
 
     protected $otherSortFields = [
         Location::SORT_FIELD_PATH => ['key' => 'sort.path', 'default' => 'Location path'],
         Location::SORT_FIELD_CLASS_IDENTIFIER => [
             'key' => 'sort.content.type.identifier',
-            'default' => 'Content type identifier'
+            'default' => 'Content type identifier',
         ],
         Location::SORT_FIELD_SECTION => ['key' => 'sort.section', 'default' => 'Section'],
         Location::SORT_FIELD_DEPTH => ['key' => 'sort.depth', 'default' => 'Location depth'],
-        Location::SORT_FIELD_CLASS_NAME => ['key' => 'sort.content.type.name', 'default' => 'Content type name']
+        Location::SORT_FIELD_CLASS_NAME => ['key' => 'sort.content.type.name', 'default' => 'Content type name'],
     ];
 
     /**
@@ -63,8 +62,8 @@ class ContentViewController extends Controller
             'translations' => $this->getTranslations($versionInfo),
             'ordering' => [
                 'sortFields' => $this->getSortFields($view->getLocation()->sortField),
-                'sortOrders' => $this->getSortOrders()
-            ]
+                'sortOrders' => $this->getSortOrders(),
+            ],
         ]);
 
         return $view;

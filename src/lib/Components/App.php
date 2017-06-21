@@ -2,11 +2,6 @@
 
 namespace EzSystems\HybridPlatformUi\Components;
 
-use Symfony\Component\HttpFoundation\Request;
-use EzSystems\HybridPlatformUi\Components\Component;
-use EzSystems\HybridPlatformUi\Components\NavigationHub;
-use EzSystems\HybridPlatformUi\Components\MainContent;
-
 class App implements Component
 {
     const TAG_NAME = 'ez-platform-ui-app';
@@ -79,13 +74,13 @@ class App implements Component
             'selector' => self::TAG_NAME,
             'update' => [
                 'properties' => [
-                    'pageTitle' => $this->title
+                    'pageTitle' => $this->title,
                 ],
                 'children' => array_merge(
                     $this->toolbars,
                     [$this->navigationHub, $this->mainContent]
                 ),
-            ]
+            ],
         ];
     }
 }

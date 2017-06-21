@@ -57,10 +57,10 @@ class Route extends Link
         $routeName = $request->attributes->get('_route');
         $routeParams = $request->attributes->get('_routeParams', []);
 
-        return (
+        return
             ($this->matchRoute($routeName) && $this->matchRouteParams($routeParams))
             || $this->matchRoutePrefix($routeName)
-        );
+        ;
     }
 
     protected function matchRoute($routeName)
@@ -78,6 +78,7 @@ class Route extends Link
                 return false;
             }
         }
+
         return true;
     }
 

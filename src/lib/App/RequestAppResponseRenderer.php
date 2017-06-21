@@ -3,15 +3,12 @@
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
-
 namespace EzSystems\HybridPlatformUi\App;
 
 use EzSystems\HybridPlatformUi\Components\App;
-use EzSystems\HybridPlatformUi\Components\MainContent;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
 class RequestAppResponseRenderer implements AppResponseRenderer

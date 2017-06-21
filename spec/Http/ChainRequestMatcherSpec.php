@@ -4,7 +4,6 @@ namespace spec\EzSystems\HybridPlatformUi\Http;
 
 use EzSystems\HybridPlatformUi\Http\ChainRequestMatcher;
 use PhpSpec\ObjectBehavior;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 

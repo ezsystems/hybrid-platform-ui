@@ -2,8 +2,6 @@
 
 namespace spec\EzSystems\HybridPlatformUi\EventSubscriber;
 
-use EzSystems\HybridPlatformUi\Components\App;
-use EzSystems\HybridPlatformUi\Components\MainContent;
 use EzSystems\HybridPlatformUi\EventSubscriber\PjaxSubscriber;
 use EzSystems\HybridPlatformUi\Mapper\MainContentMapper;
 use PhpSpec\ObjectBehavior;
@@ -13,7 +11,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
