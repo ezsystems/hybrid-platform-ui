@@ -3,16 +3,25 @@
 <table class="ez-table-data">
     <thead>
         <tr>
+            {% if form is defined %}
+                <th></th>
+            {% endif %}
             <th>{{ 'locationview.versions.version'|trans()|desc('Version') }}</th>
             <th>{{ 'locationview.versions.modified.language'|trans()|desc('Modified language') }}</th>
             <th>{{ 'locationview.versions.contributor'|trans()|desc('Contributor') }}</th>
             <th>{{ 'locationview.versions.created'|trans()|desc('Created') }}</th>
             <th>{{ 'locationview.versions.last.saved'|trans()|desc('Last saved') }}</th>
+            {% if isDraft is defined %}
+                <th></th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
     {% for version in versions %}
         <tr>
+            {% if form is defined %}
+                <td>{{ form_widget(form.versionIds[version.versionNo]) }}</td>
+            {% endif %}
             <td>
                 {{ version.versionNo }}
             </td>
@@ -32,6 +41,15 @@
             <td>
                 {{ version.modificationDate|localizeddate('medium', 'short', app.request.locale) }}
             </td>
+            {% if isDraft is defined %}
+                <td>
+                    <a href="#" class="table-iconbutton">
+                        <div class="table-iconbutton-edit">
+                            <span class="ez-icon-edit"></span>
+                        </div>
+                    </a>
+                </td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>

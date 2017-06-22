@@ -68,3 +68,10 @@ services:
         public: false
 
     EzSystems\HybridPlatformUi\Filter\VersionFilter: ~
+
+    EzSystems\HybridPlatformUi\Mapper\Form\VersionMapper: ~
+
+    EzSystems\HybridPlatformUi\Repository\VersionService:
+        arguments:
+            - "@ezpublish.api.service.content"
+

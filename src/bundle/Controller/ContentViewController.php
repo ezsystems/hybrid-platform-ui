@@ -14,6 +14,11 @@ use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Filter\VersionFilter;
+use EzSystems\HybridPlatformUi\Mapper\Form\VersionMapper;
+use EzSystems\HybridPlatformUi\Repository\VersionService;
+use EzSystems\HybridPlatformUiBundle\Form\Versions\ArchivedActions;
+use EzSystems\HybridPlatformUiBundle\Form\Versions\DraftActions;
+use Symfony\Component\HttpFoundation\Request;
 
 class ContentViewController extends Controller
 {
@@ -59,8 +64,11 @@ class ContentViewController extends Controller
         return $view;
     }
 
-    public function versionsTabAction(ContentView $view, VersionFilter $versionFilter)
-    {
+    public function versionsTabAction(
+        ContentView $view,
+        VersionFilter $versionFilter,
+        VersionMapper $versionMapper
+    ) {
         $contentInfo = $view->getContent()->getVersionInfo()->getContentInfo();
         $contentService = $this->getRepository()->getContentService();
         $versions = $contentService->loadVersions($contentInfo);
@@ -75,15 +83,44 @@ class ContentViewController extends Controller
             $translations[$version->id] = $this->getTranslations($version);
         }
 
+        $draftVersions = $versionFilter->filterDrafts($versions);
+        $draftActionsForm = $this->createForm(DraftActions::class);
+        $draftActionsForm->setData($versionMapper->mapToForm($draftVersions, $contentInfo));
+
+        $archivedVersions = $versionFilter->filterArchived($versions);
+        $archivedActionsForm = $this->createForm(ArchivedActions::class);
+        $archivedActionsForm->setData($versionMapper->mapToForm($archivedVersions, $contentInfo));
+
         $view->addParameters([
-            'draftVersions' => $versionFilter->filterDrafts($versions),
+            'draftVersions' => $draftVersions,
             'publishedVersions' => $versionFilter->filterPublished($versions),
-            'archivedVersions' => $versionFilter->filterArchived($versions),
+            'archivedVersions' => $archivedVersions,
             'authors' => $authors,
             'translations' => $translations,
+            'draftActionsForm' => $draftActionsForm->createView(),
+            'archivedActionsForm' => $archivedActionsForm->createView(),
         ]);
 
         return $view;
+    }
+
+    public function draftActionsAction(Request $request, VersionService $versionService)
+    {
+        $draftActionsForm = $this->createForm(DraftActions::class);
+        $draftActionsForm->handleRequest($request);
+
+        if ($draftActionsForm->isValid()) {
+            $selectedIds = $draftActionsForm->get('versionIds')->getData();
+            $contentId = (int) $draftActionsForm->get('contentId')->getData();
+
+            if ($draftActionsForm->get('delete')->isClicked()) {
+                foreach (array_keys($selectedIds) as $versionId) {
+                    $versionService->deleteVersion($contentId, $versionId);
+                }
+            }
+        }
+        //@TODO Show success/fail message to user
+        return $this->redirectToRoute('ez_hybrid_platform_ui_dashboard');
     }
 
     protected function loadUser($userId)
