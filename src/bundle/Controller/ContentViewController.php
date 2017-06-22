@@ -103,22 +103,6 @@ class ContentViewController extends Controller
         return $view;
     }
 
-    public function locationsTabAction(ContentView $view, DecoratedLocationService $locationService)
-    {
-        $versionInfo = $view->getContent()->getVersionInfo();
-        $contentInfo = $versionInfo->getContentInfo();
-
-        if ($contentInfo->published) {
-            $locations = $locationService->loadLocations($contentInfo);
-
-            $view->addParameters([
-                'locations' => $locations,
-            ]);
-        }
-
-        return $view;
-    }
-
     protected function loadUser($userId)
     {
         $userService = $this->getRepository()->getUserService();

@@ -1,11 +1,11 @@
 <?php
 
-namespace EzSystems\HybridPlatformUi\Http;
+namespace EzSystems\HybridPlatformUi\Http\AdminRequestMatcher;
 
+use EzSystems\HybridPlatformUi\Http\AdminRequestMatcher;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 
-class HardcodedAdminRequestMatcher implements RequestMatcherInterface
+class HardcodedAdminRequestMatcher implements AdminRequestMatcher
 {
     /**
      * @var array

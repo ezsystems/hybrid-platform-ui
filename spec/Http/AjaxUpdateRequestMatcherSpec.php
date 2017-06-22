@@ -2,7 +2,7 @@
 
 namespace spec\EzSystems\HybridPlatformUi\Http;
 
-use EzSystems\HybridPlatformUi\Http\AjaxUpdateRequestMatcher;
+use EzSystems\HybridPlatformUi\Http\HeaderAjaxUpdateRequestMatcher;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\HttpFoundation\HeaderBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +19,7 @@ class AjaxUpdateRequestMatcherSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType(AjaxUpdateRequestMatcher::class);
+        $this->shouldHaveType(HeaderAjaxUpdateRequestMatcher::class);
         $this->shouldHaveType(RequestMatcherInterface::class);
     }
 

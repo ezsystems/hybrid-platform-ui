@@ -1,4 +1,8 @@
 services:
+    EzSystems\HybridPlatformUi\Components\App: "@ezsystems.platformui.component.app"
+    EzSystems\HybridPlatformUi\Components\NavigationHub: "@ezsystems.platformui.component.navigationhub"
+    EzSystems\HybridPlatformUi\Components\MainContent: "@ezsystems.platformui.component.maincontent"
+
     ezsystems.platformui.component.app:
         class: EzSystems\HybridPlatformUi\Components\App
         arguments:

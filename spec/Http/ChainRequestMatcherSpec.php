@@ -2,7 +2,7 @@
 
 namespace spec\EzSystems\HybridPlatformUi\Http;
 
-use EzSystems\HybridPlatformUi\Http\ChainRequestMatcher;
+use EzSystems\HybridPlatformUi\Http\ChainHybridRequestMatcher;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
@@ -18,7 +18,7 @@ class ChainRequestMatcherSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType(ChainRequestMatcher::class);
+        $this->shouldHaveType(ChainHybridRequestMatcher::class);
         $this->shouldHaveType(RequestMatcherInterface::class);
     }
 

@@ -2,7 +2,7 @@
 
 namespace spec\EzSystems\HybridPlatformUi\Http;
 
-use EzSystems\HybridPlatformUi\Http\HtmlFormatRequestMatcher;
+use EzSystems\HybridPlatformUi\Http\FormatHeaderHtmlFormatRequestMatcher;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +19,7 @@ class HtmlFormatRequestMatcherSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType(HtmlFormatRequestMatcher::class);
+        $this->shouldHaveType(FormatHeaderHtmlFormatRequestMatcher::class);
         $this->shouldHaveType(RequestMatcherInterface::class);
     }
 

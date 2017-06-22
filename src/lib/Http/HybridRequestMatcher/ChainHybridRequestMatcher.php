@@ -1,23 +1,25 @@
 <?php
 
-namespace EzSystems\HybridPlatformUi\Http;
+namespace EzSystems\HybridPlatformUi\Http\HybridRequestMatcher;
 
-use Symfony\Component\HttpFoundation\RequestMatcherInterface;
+use EzSystems\HybridPlatformUi\Http\AdminRequestMatcher;
+use EzSystems\HybridPlatformUi\Http\HtmlFormatRequestMatcher;
+use EzSystems\HybridPlatformUi\Http\HybridRequestMatcher;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Matches a request using a set of request matchers.
  */
-class ChainRequestMatcher implements RequestMatcherInterface
+class ChainHybridRequestMatcher implements HybridRequestMatcher
 {
     /**
      * @var \Symfony\Component\HttpFoundation\RequestMatcherInterface[]
      */
     private $requestMatchers;
 
-    public function __construct(RequestMatcherInterface ...$requestMatchers)
+    public function __construct(AdminRequestMatcher $adminRequestMatcher, HtmlFormatRequestMatcher $htmlFormatRequestMatcher)
     {
-        $this->requestMatchers = $requestMatchers;
+        $this->requestMatchers = func_get_args();
     }
 
     /**

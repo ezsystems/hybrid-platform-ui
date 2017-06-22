@@ -3,7 +3,7 @@
 namespace spec\EzSystems\HybridPlatformUi\Pjax;
 
 use EzSystems\HybridPlatformUi\Components\App;
-use EzSystems\HybridPlatformUi\Pjax\PjaxResponseMainContentMapper;
+use EzSystems\HybridPlatformUi\Pjax\XpathPjaxResponseMainContentMapper;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +23,7 @@ class PjaxResponseMainContentMapperSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType(PjaxResponseMainContentMapper::class);
+        $this->shouldHaveType(XpathPjaxResponseMainContentMapper::class);
     }
 
     function it_maps_to_a_PjaxView(

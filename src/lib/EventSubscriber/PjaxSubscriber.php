@@ -5,11 +5,12 @@
  */
 namespace EzSystems\HybridPlatformUi\EventSubscriber;
 
-use EzSystems\HybridPlatformUi\Mapper\MainContentMapper;
+use EzSystems\HybridPlatformUi\Http\AdminRequestMatcher;
+use EzSystems\HybridPlatformUi\Pjax\PjaxResponseMainContentMapper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
+use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -29,9 +30,9 @@ class PjaxSubscriber implements EventSubscriberInterface
     private $pjaxRequestMatcher;
 
     /**
-     * @var \EzSystems\HybridPlatformUi\Pjax\PjaxResponseMainContentMapper
+     * @var \EzSystems\HybridPlatformUi\Pjax\XpathPjaxResponseMainContentMapper
      */
-    private $responseMapper;
+    private $pjaxResponseMapper;
 
     public static function getSubscribedEvents()
     {
@@ -39,11 +40,11 @@ class PjaxSubscriber implements EventSubscriberInterface
     }
 
     public function __construct(
-        MainContentMapper $responseMapper,
-        RequestMatcherInterface $adminRequestMatcher,
+        PjaxResponseMainContentMapper $pjaxResponseMapper,
+        AdminRequestMatcher $adminRequestMatcher,
         RequestMatcherInterface $pjaxRequestMatcher
     ) {
-        $this->responseMapper = $responseMapper;
+        $this->pjaxResponseMapper = $pjaxResponseMapper;
         $this->adminRequestMatcher = $adminRequestMatcher;
         $this->pjaxRequestMatcher = $pjaxRequestMatcher;
     }
@@ -70,6 +71,6 @@ class PjaxSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $this->responseMapper->map($response);
+        $this->pjaxResponseMapper->map($response);
     }
 }
