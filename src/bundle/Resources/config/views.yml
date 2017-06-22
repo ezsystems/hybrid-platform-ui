@@ -18,5 +18,5 @@ system:
             locations_tab:
                 default:
                     template: "EzSystemsHybridPlatformUiBundle:content/tabs:locations.html.twig"
-                    controller: "EzSystemsHybridPlatformUiBundle:ContentView:locationsTab"
+                    controller: 'EzSystems\HybridPlatformUiBundle\Controller\ContentViewController:locationsTabAction'
                     match: true

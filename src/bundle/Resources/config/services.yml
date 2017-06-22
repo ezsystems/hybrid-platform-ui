@@ -69,13 +69,10 @@ services:
 
     EzSystems\HybridPlatformUi\Filter\VersionFilter: ~
 
-    ezsystems.platformui.hybrid.repository.path_service:
-        class: EzSystems\HybridPlatformUi\Repository\PathService
+    EzSystems\HybridPlatformUi\Repository\PathService:
         arguments:
             - "@ezpublish.api.service.inner_search"
 
-    ezsystems.platformui.hybrid.repository.decorated_location_service:
-        class: EzSystems\HybridPlatformUi\Repository\DecoratedLocationService
+    EzSystems\HybridPlatformUi\Repository\DecoratedLocationService:
         arguments:
             - "@ezpublish.api.service.inner_location"
-            - "@ezsystems.platformui.hybrid.repository.path_service"
