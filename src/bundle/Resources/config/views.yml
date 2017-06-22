@@ -20,3 +20,8 @@ system:
                     template: "EzSystemsHybridPlatformUiBundle:content/tabs:locations.html.twig"
                     controller: 'EzSystems\HybridPlatformUiBundle\Controller\ContentViewController:locationsTabAction'
                     match: true
+            translations_tab:
+                default:
+                    template: "EzSystemsHybridPlatformUiBundle:content/tabs:translations.html.twig"
+                    controller: 'EzSystems\HybridPlatformUiBundle\Controller\ContentViewController:translationsTabAction'
+                    match: true
