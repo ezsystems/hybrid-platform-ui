@@ -1,7 +1,7 @@
 {% extends "@EzSystemsHybridPlatformUi/layout.html.twig" %}
 
 {% block app %}
-<{{ tagName }}
+<{{ tagName }}>
 
 {% block navigationHub %}
     {{ navigationHub|raw }}
@@ -20,6 +20,6 @@
         {% endblock %}
     </main>
 </div>
-
-</{{ tagName }}
+<aside id="ez-notification-bar"></aside>
+</{{ tagName }}>
 {% endblock %}

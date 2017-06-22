@@ -23,8 +23,8 @@ div#app-content {
 }
 
 #discovery {
-    flex: 0 0 115px;
-    width: 115px;
+    flex: 0 0 var(--ez-toolbar-width);
+    width: var(--ez-toolbar-width);
     background: var(--ez-color-discovery-bar);
     color: var(--ez-color-text-base-inverted);
 }
