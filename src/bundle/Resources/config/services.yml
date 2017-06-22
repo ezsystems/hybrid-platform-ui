@@ -68,3 +68,11 @@ services:
         public: false
 
     EzSystems\HybridPlatformUi\Filter\VersionFilter: ~
+
+    EzSystems\HybridPlatformUi\Repository\PathService:
+        arguments:
+            - "@ezpublish.api.service.inner_search"
+
+    EzSystems\HybridPlatformUi\Repository\DecoratedLocationService:
+        arguments:
+            - "@ezpublish.api.service.inner_location"

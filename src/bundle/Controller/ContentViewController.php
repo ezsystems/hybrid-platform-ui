@@ -14,6 +14,7 @@ use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Filter\VersionFilter;
+use EzSystems\HybridPlatformUi\Repository\DecoratedLocationService;
 
 class ContentViewController extends Controller
 {
@@ -82,6 +83,22 @@ class ContentViewController extends Controller
             'authors' => $authors,
             'translations' => $translations,
         ]);
+
+        return $view;
+    }
+
+    public function locationsTabAction(ContentView $view, DecoratedLocationService $decoratedLocationService)
+    {
+        $versionInfo = $view->getContent()->getVersionInfo();
+        $contentInfo = $versionInfo->getContentInfo();
+
+        if ($contentInfo->published) {
+            $locations = $decoratedLocationService->loadLocations($contentInfo);
+
+            $view->addParameters([
+                'locations' => $locations,
+            ]);
+        }
 
         return $view;
     }
