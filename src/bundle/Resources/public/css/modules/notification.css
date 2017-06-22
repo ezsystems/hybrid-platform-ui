@@ -1,0 +1,25 @@
+#ez-notification-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+ez-notification {
+    padding: 0.5em var(--ez-toolbar-width);
+    color: var(--ez-color-text-base-inverted);
+}
+
+ez-notification[type="error"] {
+    background: var(--ez-color-negative-feedback);
+}
+
+ez-notification[type="positive"] {
+    background: var(--ez-color-positive-feedback);
+}
+
+ez-notification[type="processing"] {
+    background: var(--ez-color-processing-feedback);
+    color: var(--ez-color-text-base);
+}
+
