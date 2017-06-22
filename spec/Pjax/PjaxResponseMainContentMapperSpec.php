@@ -49,6 +49,65 @@ class PjaxResponseMainContentMapperSpec extends ObjectBehavior
         $this->map($response);
     }
 
+    function it_parses_notifications_and_sets_them_as_the_app_notifications(
+        App $app,
+        Response $response
+    ) {
+        $app->setConfig(Argument::that(function ($value) {
+            return
+                is_array($value) &&
+                isset($value['notifications']) &&
+                count($value['notifications']) === 4;
+        }))->shouldBeCalled();
+
+        $this->map($response);
+    }
+
+    function it_parses_notifications_and_sets_type_timeout_and_content(
+        App $app,
+        Response $response
+    ) {
+        $app->setConfig(Argument::that(function ($value) {
+            $unknown = $value['notifications'][0];
+
+            return
+                $unknown['type'] === 'unknown' &&
+                $unknown['timeout'] === 10 &&
+                $unknown['content'] = 'notification unknown';
+        }))->shouldBeCalled();
+
+        $this->map($response);
+    }
+
+    function it_parses_notifications_and_maps_done_and_processing_state_to_positive_and_processing_type(
+        App $app,
+        Response $response
+    ) {
+        $app->setConfig(Argument::that(function ($value) {
+            $stateDone = $value['notifications'][1];
+            $stateStarted = $value['notifications'][2];
+
+            return
+                $stateDone['type'] === 'positive' &&
+                $stateStarted['type'] === 'processing';
+        }))->shouldBeCalled();
+
+        $this->map($response);
+    }
+
+    function it_parses_notifications_and_sets_timeout_to_0_for_error(
+        App $app,
+        Response $response
+    ) {
+        $app->setConfig(Argument::that(function ($value) {
+            $error = $value['notifications'][3];
+
+            return $error['timeout'] === 0;
+        }))->shouldBeCalled();
+
+        $this->map($response);
+    }
+
     function it_parses_the_content_and_sets_it_as_the_app_MainContent_result(
         App $app,
         Response $response
