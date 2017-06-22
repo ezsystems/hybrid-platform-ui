@@ -13,5 +13,5 @@ system:
             versions_tab:
                 default:
                     template: "EzSystemsHybridPlatformUiBundle:content/tabs:versions.html.twig"
-                    controller: "EzSystemsHybridPlatformUiBundle:ContentView:versionsTab"
+                    controller: 'EzSystems\HybridPlatformUiBundle\Controller\ContentViewController:versionsTabAction'
                     match: true
