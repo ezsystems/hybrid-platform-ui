@@ -71,8 +71,8 @@ class eZBrowse extends Polymer.Element {
 
     _browseToLocation(location) {
         const url = Routing.generate('_ez_content_view', {
-            locationId: location.locationId,
-            contentId: location.contentInfo.contentId,
+            locationId: location.id,
+            contentId: location.contentInfo.id,
         });
 
         // FIXME:
