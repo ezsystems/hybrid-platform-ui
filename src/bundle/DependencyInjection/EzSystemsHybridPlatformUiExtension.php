@@ -34,6 +34,7 @@ class EzSystemsHybridPlatformUiExtension extends Extension implements PrependExt
     public function prepend(ContainerBuilder $container)
     {
         $this->prependViewsConfiguration($container);
+        $this->prependFosJsRoutingConfiguration($container);
     }
 
     private function prependViewsConfiguration(ContainerBuilder $container)
@@ -41,6 +42,14 @@ class EzSystemsHybridPlatformUiExtension extends Extension implements PrependExt
         $configFile = __DIR__ . '/../Resources/config/views.yml';
         $config = Yaml::parse(file_get_contents($configFile));
         $container->prependExtensionConfig('ezpublish', $config);
+        $container->addResource(new FileResource($configFile));
+    }
+
+    private function prependFosJsRoutingConfiguration(ContainerBuilder $container)
+    {
+        $configFile = __DIR__ . '/../Resources/config/fos_js_routing.yml';
+        $config = Yaml::parse(file_get_contents($configFile));
+        $container->prependExtensionConfig('fos_js_routing', $config);
         $container->addResource(new FileResource($configFile));
     }
 }
