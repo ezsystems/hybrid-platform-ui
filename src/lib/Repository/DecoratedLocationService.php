@@ -44,11 +44,20 @@ class DecoratedLocationService
      */
     public function loadLocations(ContentInfo $contentInfo)
     {
+        $locations = $this->locationService->loadLocations($contentInfo);
+
+        $decoratedLocations = $this->decorateLocations($locations, $contentInfo);
+        $decoratedLocations = $this->prioritizeMainLocation($decoratedLocations);
+
+        return $decoratedLocations;
+    }
+
+    private function decorateLocations(array $locations, ContentInfo $contentInfo)
+    {
         $locationService = $this->locationService;
         $pathService = $this->pathService;
-        $locations = $locationService->loadLocations($contentInfo);
 
-        $decoratedLocations = array_map(
+        return array_map(
             function (Location $location) use ($locationService, $pathService, $contentInfo) {
                 $decoratedLocation = new LocationDecorator($location);
 
@@ -66,7 +75,10 @@ class DecoratedLocationService
             },
             $locations
         );
+    }
 
+    private function prioritizeMainLocation(array $decoratedLocations)
+    {
         foreach ($decoratedLocations as $key => $decoratedLocation) {
             if ($decoratedLocation->main) {
                 unset($decoratedLocations[$key]);
