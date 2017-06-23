@@ -19,18 +19,7 @@
 
         <div class="ez-tabs-panels">
             <div class="ez-tabs-panel is-tab-selected" id="ez-tab-view">
-                {% for field in content.fieldsByLanguage(language|default(null)) %}
-                <div class="ez-content-field">
-                    <p class="ez-content-field-name">{{ ez_field_name(content, field.fieldDefIdentifier) }}</p>
-                    <div class="ez-content-field-value">
-                        {% if ez_is_field_empty(content, field.fieldDefIdentifier) %}
-                            <em>{{"fieldview.field.empty"|trans({}, "fieldview")|desc('This field is empty')}}</em>
-                        {% else %}
-                            {{ ez_render_field(content, field.fieldDefIdentifier) }}
-                        {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
+                {{ render(controller('ez_content:viewAction', {'contentId': contentId, 'locationId': locationId, 'viewType': 'content_tab'})) }}
             </div>
             <div class="ez-tabs-panel" id="ez-tab-details">
                 {{ render(controller('ez_content:viewAction', {'contentId': contentId, 'locationId': locationId, 'viewType': 'details_tab'})) }}

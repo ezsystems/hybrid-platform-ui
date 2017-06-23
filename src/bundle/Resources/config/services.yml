@@ -76,3 +76,8 @@ services:
     EzSystems\HybridPlatformUi\Repository\UiLocationService:
         arguments:
             - "@ezpublish.api.service.location"
+
+    EzSystems\HybridPlatformUi\Repository\UiFieldGroupService:
+        arguments:
+            - "@ezpublish.api.service.content_type"
+            - "@ezpublish.fields_groups.list"
