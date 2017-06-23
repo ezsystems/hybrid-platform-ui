@@ -29,7 +29,7 @@ class UiLocationServiceSpec extends ObjectBehavior
         $locationService->loadLocations($contentInfo)->willReturn([$location]);
         $locationService->getLocationChildCount($location)->willReturn(1);
 
-        $uiLocation = new UiLocation(['childCount' => 1], $location);
+        $uiLocation = new UiLocation($location, ['childCount' => 1]);
 
         $this->loadLocations($contentInfo)->shouldBeLike([$uiLocation]);
     }
@@ -43,7 +43,7 @@ class UiLocationServiceSpec extends ObjectBehavior
         $locationService->getLocationChildCount($location)->willReturn(1);
         $pathService->loadPathLocations(Argument::type(Location::class))->willReturn([$location]);
 
-        $uiLocation = new UiLocation(['childCount' => 1, 'pathLocations' => [$location]], $location);
+        $uiLocation = new UiLocation($location, ['childCount' => 1, 'pathLocations' => [$location]]);
 
         $this->loadLocations($contentInfo)->shouldBeLike([$uiLocation]);
     }
@@ -56,7 +56,7 @@ class UiLocationServiceSpec extends ObjectBehavior
         $locationService->loadLocations($contentInfo)->willReturn([$location]);
         $locationService->getLocationChildCount($location)->willReturn(1);
 
-        $uiLocation = new UiLocation(['childCount' => 1, 'main' => true], $location);
+        $uiLocation = new UiLocation($location, ['childCount' => 1, 'main' => true]);
 
         $this->loadLocations($contentInfo)->shouldBeLike([$uiLocation]);
     }
@@ -72,9 +72,9 @@ class UiLocationServiceSpec extends ObjectBehavior
         $locationService->getLocationChildCount($location)->willReturn(1);
         $locationService->getLocationChildCount($mainLocation)->willReturn(1);
 
-        $uiLocation = new UiLocation(['childCount' => 1, 'main' => false], $location);
+        $uiLocation = new UiLocation($location, ['childCount' => 1, 'main' => false]);
 
-        $mainLocationDecorator = new UiLocation(['childCount' => 1, 'main' => true], $mainLocation);
+        $mainLocationDecorator = new UiLocation($mainLocation, ['childCount' => 1, 'main' => true]);
 
         $this->loadLocations($contentInfo)->shouldBeLike([$mainLocationDecorator, $uiLocation, $uiLocation]);
     }

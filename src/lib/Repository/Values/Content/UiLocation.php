@@ -35,7 +35,7 @@ class UiLocation extends Location
      */
     protected $main;
 
-    public function __construct(array $properties = [], Location $location)
+    public function __construct(Location $location, array $properties = [])
     {
         parent::__construct(get_object_vars($location) + $properties);
     }

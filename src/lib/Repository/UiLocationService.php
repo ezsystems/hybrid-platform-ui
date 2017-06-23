@@ -65,7 +65,7 @@ class UiLocationService
                     'main' => ($location->id === $contentInfo->mainLocationId),
                 ];
 
-                $uiLocation = new UiLocation($properties, $location);
+                $uiLocation = new UiLocation($location, $properties);
 
                 return $uiLocation;
             },
