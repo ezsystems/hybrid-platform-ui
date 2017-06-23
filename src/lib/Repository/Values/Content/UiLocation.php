@@ -7,6 +7,7 @@
 namespace EzSystems\HybridPlatformUi\Repository\Values\Content;
 
 use eZ\Publish\Core\Repository\Values\Content\Location;
+use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 
 /**
  * Extends original value object in order to provide additional fields.
@@ -24,7 +25,7 @@ class UiLocation extends Location
     /**
      * Path locations.
      *
-     * @var Location[]
+     * @var \eZ\Publish\API\Repository\Values\Content\Location[]
      */
     protected $pathLocations;
 
@@ -35,7 +36,7 @@ class UiLocation extends Location
      */
     protected $main;
 
-    public function __construct(Location $location, array $properties = [])
+    public function __construct(APILocation $location, array $properties = [])
     {
         parent::__construct(get_object_vars($location) + $properties);
     }
