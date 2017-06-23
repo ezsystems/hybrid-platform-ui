@@ -54,14 +54,11 @@ class UiLocationService
 
     private function makeUiLocations(array $locations, ContentInfo $contentInfo)
     {
-        $locationService = $this->locationService;
-        $pathService = $this->pathService;
-
         return array_map(
-            function (Location $location) use ($locationService, $pathService, $contentInfo) {
+            function (Location $location) use ($contentInfo) {
                 $properties = [
-                    'childCount' => $locationService->getLocationChildCount($location),
-                    'pathLocations' => $pathService->loadPathLocations($location),
+                    'childCount' => $this->locationService->getLocationChildCount($location),
+                    'pathLocations' => $this->pathService->loadPathLocations($location),
                     'main' => ($location->id === $contentInfo->mainLocationId),
                 ];
 
