@@ -14,6 +14,7 @@ use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Filter\VersionFilter;
+use EzSystems\HybridPlatformUi\Repository\ContentTypeService;
 use EzSystems\HybridPlatformUi\Repository\DecoratedLocationService;
 
 class ContentViewController extends Controller
@@ -35,6 +36,19 @@ class ContentViewController extends Controller
         Location::SORT_FIELD_DEPTH => ['key' => 'sort.depth', 'default' => 'Location depth'],
         Location::SORT_FIELD_CLASS_NAME => ['key' => 'sort.content.type.name', 'default' => 'Content type name'],
     ];
+
+    public function contentTabAction(ContentView $view, ContentTypeService $contentTypeService)
+    {
+        $versionInfo = $view->getContent()->getVersionInfo();
+        $contentType = $contentTypeService->loadContentType($versionInfo->getContentInfo());
+
+        $view->addParameters([
+            'contentType' => $contentType,
+            'translations' => $this->getTranslations($versionInfo),
+        ]);
+
+        return $view;
+    }
 
     public function detailsTabAction(ContentView $view)
     {

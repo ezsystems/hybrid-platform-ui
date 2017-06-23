@@ -1,0 +1,22 @@
+{% set languageCode = content.versionInfo.contentInfo.mainLanguageCode %}
+
+{% for contentTypeGroup in contentType.contentTypeGroups %}
+    {% set contentTypeName = contentTypeGroup.name(languageCode) %}
+
+    <section class="ez-fieldgroups ez-fieldgroup ez-fieldgroup">
+        <h3 class="ez-fieldgroup-name"><a href="#" class="ez-collapse-toggle">{{ contentTypeName }}</a></h3>
+
+        {% for fieldDefintion in contentType.fieldDefinitionsByFieldGroup(contentTypeName) %}
+            <div class="ez-content-field">
+                <p class="ez-content-field-name">{{ ez_field_name(content, fieldDefintion.identifier) }}:</p>
+                <div class="ez-content-field-value">
+                    {% if ez_is_field_empty(content, fieldDefintion.identifier) %}
+                        <em>{{"fieldview.field.empty"|trans({}, "fieldview")}}</em>
+                    {% else %}
+                        {{ ez_render_field(content, fieldDefintion.identifier) }}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+{% endfor %}

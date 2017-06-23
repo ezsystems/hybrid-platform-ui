@@ -76,3 +76,7 @@ services:
     EzSystems\HybridPlatformUi\Repository\DecoratedLocationService:
         arguments:
             - "@ezpublish.api.service.inner_location"
+
+    EzSystems\HybridPlatformUi\Repository\ContentTypeService:
+        arguments:
+            - "@ezpublish.signalslot.service.content_type"
