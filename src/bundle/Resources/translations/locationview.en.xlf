@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2017-06-23T10:41:58Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+  <file date="2017-06-26T08:39:22Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -199,34 +199,34 @@
         <jms:reference-file line="6">src/bundle/Resources/views/content/tabs/versions/table.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="4de030e5fc78006e68749536dd9725ae58efc2a3" resname="tab.details">
-        <source>tab.details</source>
+        <source>Details</source>
         <target>tab.details</target>
         <note>key: tab.details</note>
-        <jms:reference-file line="11">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
-      </trans-unit>
-      <trans-unit id="eb9d8fcea3c517851502006e163eb0725ec183f0" resname="tab.locations">
-        <source>tab.locations</source>
-        <target>tab.locations</target>
-        <note>key: tab.locations</note>
         <jms:reference-file line="13">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
       </trans-unit>
+      <trans-unit id="eb9d8fcea3c517851502006e163eb0725ec183f0" resname="tab.locations">
+        <source>Locations</source>
+        <target>tab.locations</target>
+        <note>key: tab.locations</note>
+        <jms:reference-file line="15">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
+      </trans-unit>
       <trans-unit id="20043ee647633fb1c639869bce609c568c195de1" resname="tab.related.content">
-        <source>tab.related.content</source>
+        <source>Related content</source>
         <target>tab.related.content</target>
         <note>key: tab.related.content</note>
-        <jms:reference-file line="14">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
+        <jms:reference-file line="16">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="5d768a9bb2d1a42f98c5af3016c1019497d8ac62" resname="tab.versions">
-        <source>tab.versions</source>
+        <source>Versions</source>
         <target>tab.versions</target>
         <note>key: tab.versions</note>
-        <jms:reference-file line="12">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
+        <jms:reference-file line="14">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="946cdac35638dc1a2cda2d50e1e8af3ee27f2545" resname="tab.view">
-        <source>tab.view</source>
+        <source>View</source>
         <target>tab.view</target>
         <note>key: tab.view</note>
-        <jms:reference-file line="10">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
+        <jms:reference-file line="12">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
       </trans-unit>
     </body>
   </file>
