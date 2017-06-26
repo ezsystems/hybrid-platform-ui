@@ -103,6 +103,15 @@ class ContentViewController extends Controller
         return $view;
     }
 
+    public function translationsTabAction(ContentView $view)
+    {
+        $view->addParameters([
+            'translations' => $this->getTranslations($view->getContent()->getVersionInfo()),
+        ]);
+
+        return $view;
+    }
+
     protected function loadUser($userId)
     {
         $userService = $this->getRepository()->getUserService();
