@@ -6,5 +6,5 @@ ez_hybrid_platform_ui_dashboard:
 ez_hybrid_platform_ui_content_view_draft_actions:
     path: /content-view/draft-actions
     defaults:
-        _controller: EzSystemsHybridPlatformUiBundle:ContentView:draftActions
+        _controller: EzSystemsHybridPlatformUiBundle:Version:draftActions
     methods: [POST]

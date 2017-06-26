@@ -8,17 +8,15 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
+use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
-use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Filter\VersionFilter;
 use EzSystems\HybridPlatformUi\Mapper\Form\VersionMapper;
-use EzSystems\HybridPlatformUi\Repository\VersionService;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\ArchivedActions;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\DraftActions;
-use Symfony\Component\HttpFoundation\Request;
 use EzSystems\HybridPlatformUi\Repository\DecoratedLocationService;
 
 class ContentViewController extends Controller
@@ -103,25 +101,6 @@ class ContentViewController extends Controller
         ]);
 
         return $view;
-    }
-
-    public function draftActionsAction(Request $request, VersionService $versionService)
-    {
-        $draftActionsForm = $this->createForm(DraftActions::class);
-        $draftActionsForm->handleRequest($request);
-
-        if ($draftActionsForm->isValid()) {
-            $selectedIds = $draftActionsForm->get('versionIds')->getData();
-            $contentId = (int)$draftActionsForm->get('contentId')->getData();
-
-            if ($draftActionsForm->get('delete')->isClicked()) {
-                foreach (array_keys($selectedIds) as $versionId) {
-                    $versionService->deleteVersion($contentId, $versionId);
-                }
-            }
-        }
-        //@TODO Show success/fail message to user
-        return $this->redirectToRoute('ez_hybrid_platform_ui_dashboard');
     }
 
     public function locationsTabAction(ContentView $view, DecoratedLocationService $decoratedLocationService)
