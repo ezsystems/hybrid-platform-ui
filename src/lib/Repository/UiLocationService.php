@@ -46,13 +46,13 @@ class UiLocationService
     {
         $locations = $this->locationService->loadLocations($contentInfo);
 
-        $uiLocations = $this->makeUiLocations($locations, $contentInfo);
+        $uiLocations = $this->buildUiLocations($locations, $contentInfo);
         $uiLocations = $this->prioritizeMainLocation($uiLocations);
 
         return $uiLocations;
     }
 
-    private function makeUiLocations(array $locations, ContentInfo $contentInfo)
+    private function buildUiLocations(array $locations, ContentInfo $contentInfo)
     {
         return array_map(
             function (Location $location) use ($contentInfo) {
