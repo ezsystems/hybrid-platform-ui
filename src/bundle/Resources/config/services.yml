@@ -75,3 +75,10 @@ services:
         arguments:
             - "@ezpublish.api.service.content"
 
+    EzSystems\HybridPlatformUi\Repository\PathService:
+        arguments:
+            - "@ezpublish.api.service.search"
+
+    EzSystems\HybridPlatformUi\Repository\DecoratedLocationService:
+        arguments:
+            - "@ezpublish.api.service.location"

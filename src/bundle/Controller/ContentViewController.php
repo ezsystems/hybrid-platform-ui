@@ -19,6 +19,7 @@ use EzSystems\HybridPlatformUi\Repository\VersionService;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\ArchivedActions;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\DraftActions;
 use Symfony\Component\HttpFoundation\Request;
+use EzSystems\HybridPlatformUi\Repository\DecoratedLocationService;
 
 class ContentViewController extends Controller
 {
@@ -111,7 +112,7 @@ class ContentViewController extends Controller
 
         if ($draftActionsForm->isValid()) {
             $selectedIds = $draftActionsForm->get('versionIds')->getData();
-            $contentId = (int) $draftActionsForm->get('contentId')->getData();
+            $contentId = (int)$draftActionsForm->get('contentId')->getData();
 
             if ($draftActionsForm->get('delete')->isClicked()) {
                 foreach (array_keys($selectedIds) as $versionId) {
@@ -121,6 +122,22 @@ class ContentViewController extends Controller
         }
         //@TODO Show success/fail message to user
         return $this->redirectToRoute('ez_hybrid_platform_ui_dashboard');
+    }
+
+    public function locationsTabAction(ContentView $view, DecoratedLocationService $decoratedLocationService)
+    {
+        $versionInfo = $view->getContent()->getVersionInfo();
+        $contentInfo = $versionInfo->getContentInfo();
+
+        if ($contentInfo->published) {
+            $locations = $decoratedLocationService->loadLocations($contentInfo);
+
+            $view->addParameters([
+                'locations' => $locations,
+            ]);
+        }
+
+        return $view;
     }
 
     protected function loadUser($userId)

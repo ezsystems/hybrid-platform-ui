@@ -1,0 +1,5 @@
+<ul class="ez-breadcrumbs">
+    {% for location in locations %}
+    <li class="ez-breadcrumbs-item"><a href="{{ path(location) }}">{{ ez_content_name(location.contentInfo) }}</a></li>
+    {% endfor %}
+</ul>

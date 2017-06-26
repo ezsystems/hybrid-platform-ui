@@ -36,7 +36,7 @@
                 {{ render(controller('ez_content:viewAction', {'contentId': contentId, 'locationId': locationId, 'viewType': 'versions_tab'})) }}
             </div>
             <div class="ez-tabs-panel" id="ez-tab-locations">
-                <p>Locations list should be generated here</p>
+                {{ render(controller('ez_content:viewAction', {'contentId': contentId, 'locationId': locationId, 'viewType': 'locations_tab'})) }}
             </div>
             <div class="ez-tabs-panel" id="ez-tab-relations">
                 <p>Relation and reverse relation list should be generated here</p>
