@@ -25,7 +25,7 @@
                         {{ 'locationview.relations.type.link'|trans()|desc('Link') }}
                     {% endif %}
                     {% if relation.type == constant('eZ\\Publish\\API\\Repository\\Values\\Content\\Relation::FIELD') %}
-                        {{ 'locationview.relations.type.attribute'|trans()|desc('Attribute') }}
+                        {{ 'locationview.relations.type.field'|trans()|desc('Field') }}
                     {% endif %}
                     ({{ relation.fieldDefinition }})
                 </td>
