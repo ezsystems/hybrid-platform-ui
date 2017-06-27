@@ -79,6 +79,6 @@ services:
         arguments:
             - "@ezpublish.api.service.search"
 
-    EzSystems\HybridPlatformUi\Repository\DecoratedLocationService:
+    EzSystems\HybridPlatformUi\Repository\UiLocationService:
         arguments:
             - "@ezpublish.api.service.location"

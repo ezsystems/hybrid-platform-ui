@@ -1,3 +1,5 @@
+{% trans_default_domain 'locationview' %}
+
 <ez-server-side-content class="ez-content-view">
     <section class="ez-content-view-column ez-tabs">
     {% block contentview %}
@@ -7,11 +9,12 @@
         </header>
 
         <ul class="ez-tabs-list">
-            <li class="ez-tabs-label is-tab-selected"><a href="#ez-tab-view">{{'tab.view'|trans({}, 'locationview')}}</a></li>
-            <li class="ez-tabs-label"><a href="#ez-tab-details">{{'tab.details'|trans({}, 'locationview')}}</a></li>
-            <li class="ez-tabs-label"><a href="#ez-tab-versions">{{'tab.versions'|trans({}, 'locationview')}}</a></li>
-            <li class="ez-tabs-label"><a href="#ez-tab-locations">{{'tab.locations'|trans({}, 'locationview')}}</a></li>
-            <li class="ez-tabs-label"><a href="#ez-tab-relations">{{'tab.related.content'|trans({}, 'locationview')}}</a></li>
+            <li class="ez-tabs-label is-tab-selected"><a href="#ez-tab-view">{{ 'tab.view'|trans|desc('View') }}</a></li>
+            <li class="ez-tabs-label"><a href="#ez-tab-details">{{ 'tab.details'|trans|desc('Details') }}</a></li>
+            <li class="ez-tabs-label"><a href="#ez-tab-versions">{{ 'tab.versions'|trans|desc('Versions') }}</a></li>
+            <li class="ez-tabs-label"><a href="#ez-tab-locations">{{ 'tab.locations'|trans|desc('Locations') }}</a></li>
+            <li class="ez-tabs-label"><a href="#ez-tab-relations">{{ 'tab.related.content'|trans|desc('Related content') }}</a></li>
+            <li class="ez-tabs-label"><a href="#ez-tab-translations">{{ 'tab.translations'|trans|desc('Translations') }}</a></li>
         </ul>
 
         <div class="ez-tabs-panels">
@@ -21,7 +24,7 @@
                     <p class="ez-content-field-name">{{ ez_field_name(content, field.fieldDefIdentifier) }}</p>
                     <div class="ez-content-field-value">
                         {% if ez_is_field_empty(content, field.fieldDefIdentifier) %}
-                            <em>{{"fieldview.field.empty"|trans({}, "fieldview")}}</em>
+                            <em>{{"fieldview.field.empty"|trans({}, "fieldview")|desc('This field is empty')}}</em>
                         {% else %}
                             {{ ez_render_field(content, field.fieldDefIdentifier) }}
                         {% endif %}
@@ -40,6 +43,9 @@
             </div>
             <div class="ez-tabs-panel" id="ez-tab-relations">
                 <p>Relation and reverse relation list should be generated here</p>
+            </div>
+            <div class="ez-tabs-panel" id="ez-tab-translations">
+                {{ render(controller('ez_content:viewAction', {'contentId': contentId, 'locationId': locationId, 'viewType': 'translations_tab'})) }}
             </div>
         </div>
         {% endblock contentview_details %}

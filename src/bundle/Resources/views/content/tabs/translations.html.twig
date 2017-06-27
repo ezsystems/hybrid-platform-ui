@@ -1,0 +1,24 @@
+{% trans_default_domain "locationview" %}
+
+<div class="ez-list-toolbar">
+    <h2 class="ez-list-toolbar-label">{{ 'locationview.translations.title'|trans|desc('Translation manager') }}</h2>
+</div>
+
+<table class="ez-table-data">
+    <thead>
+        <tr>
+            <th></th>
+            <th>{{ 'locationview.translations.languagename'|trans|desc('Language name') }}</th>
+            <th>{{ 'locationview.translations.languagecode'|trans|desc('Language code') }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for translation in translations %}
+        <tr>
+            <td></td>
+            <td>{{ translation.name }}</td>
+            <td>{{ translation.languageCode }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

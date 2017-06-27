@@ -17,7 +17,7 @@ use EzSystems\HybridPlatformUi\Filter\VersionFilter;
 use EzSystems\HybridPlatformUi\Mapper\Form\VersionMapper;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\ArchivedActions;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\DraftActions;
-use EzSystems\HybridPlatformUi\Repository\DecoratedLocationService;
+use EzSystems\HybridPlatformUi\Repository\UiLocationService;
 
 class ContentViewController extends Controller
 {
@@ -103,18 +103,27 @@ class ContentViewController extends Controller
         return $view;
     }
 
-    public function locationsTabAction(ContentView $view, DecoratedLocationService $decoratedLocationService)
+    public function locationsTabAction(ContentView $view, UiLocationService $uiLocationService)
     {
         $versionInfo = $view->getContent()->getVersionInfo();
         $contentInfo = $versionInfo->getContentInfo();
 
         if ($contentInfo->published) {
-            $locations = $decoratedLocationService->loadLocations($contentInfo);
+            $locations = $uiLocationService->loadLocations($contentInfo);
 
             $view->addParameters([
                 'locations' => $locations,
             ]);
         }
+
+        return $view;
+    }
+
+    public function translationsTabAction(ContentView $view)
+    {
+        $view->addParameters([
+            'translations' => $this->getTranslations($view->getContent()->getVersionInfo()),
+        ]);
 
         return $view;
     }
