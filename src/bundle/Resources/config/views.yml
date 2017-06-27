@@ -20,6 +20,11 @@ system:
                     template: "EzSystemsHybridPlatformUiBundle:content/tabs:locations.html.twig"
                     controller: 'EzSystems\HybridPlatformUiBundle\Controller\ContentViewController:locationsTabAction'
                     match: true
+            urls_tab:
+                default:
+                    template: "EzSystemsHybridPlatformUiBundle:content/tabs:urls.html.twig"
+                    controller: 'EzSystems\HybridPlatformUiBundle\Controller\ContentViewController:urlsTabAction'
+                    match: true
             translations_tab:
                 default:
                     template: "EzSystemsHybridPlatformUiBundle:content/tabs:translations.html.twig"

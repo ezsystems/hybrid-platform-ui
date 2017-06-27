@@ -14,6 +14,7 @@
             <li class="ez-tabs-label"><a href="#ez-tab-versions">{{ 'tab.versions'|trans|desc('Versions') }}</a></li>
             <li class="ez-tabs-label"><a href="#ez-tab-locations">{{ 'tab.locations'|trans|desc('Locations') }}</a></li>
             <li class="ez-tabs-label"><a href="#ez-tab-relations">{{ 'tab.related.content'|trans|desc('Related content') }}</a></li>
+            <li class="ez-tabs-label"><a href="#ez-tab-urls">{{ 'tab.related.urls'|trans|desc('URLs') }}</a></li>
             <li class="ez-tabs-label"><a href="#ez-tab-translations">{{ 'tab.translations'|trans|desc('Translations') }}</a></li>
         </ul>
 
@@ -43,6 +44,9 @@
             </div>
             <div class="ez-tabs-panel" id="ez-tab-relations">
                 <p>Relation and reverse relation list should be generated here</p>
+            </div>
+            <div class="ez-tabs-panel" id="ez-tab-urls">
+                {{ render(controller('ez_content:viewAction', {'contentId': contentId, 'locationId': locationId, 'viewType': 'urls_tab'})) }}
             </div>
             <div class="ez-tabs-panel" id="ez-tab-translations">
                 {{ render(controller('ez_content:viewAction', {'contentId': contentId, 'locationId': locationId, 'viewType': 'translations_tab'})) }}

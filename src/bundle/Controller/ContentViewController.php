@@ -103,6 +103,18 @@ class ContentViewController extends Controller
         return $view;
     }
 
+    public function urlsTabAction(ContentView $view)
+    {
+        $urlAliasService = $this->getRepository()->getURLAliasService();
+
+        $view->addParameters([
+            'system_urls' => $urlAliasService->listLocationAliases($view->getLocation(), false),
+            'url_aliases' => $urlAliasService->listLocationAliases($view->getLocation()),
+        ]);
+
+        return $view;
+    }
+
     public function translationsTabAction(ContentView $view)
     {
         $view->addParameters([
