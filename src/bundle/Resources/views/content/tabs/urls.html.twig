@@ -1,0 +1,13 @@
+{% trans_default_domain "locationview" %}
+
+<div class="ez-list-toolbar">
+    <h2 class="ez-list-toolbar-label">{{ 'locationview.urls.alias.title'|trans()|desc('URL aliases for') }} "{{ ez_content_name(content) }}"</h2>
+</div>
+
+{{ include('@EzSystemsHybridPlatformUi/content/tabs/urls/table.html.twig', {'urls': url_aliases}) }}
+
+<div class="ez-list-toolbar">
+    <h2 class="ez-list-toolbar-label">{{ 'locationview.urls.system.title'|trans()|desc('System URLs') }}</h2>
+</div>
+
+{{ include('@EzSystemsHybridPlatformUi/content/tabs/urls/table.html.twig', {'urls': system_urls}) }}
