@@ -15,18 +15,18 @@ use eZ\Publish\API\Repository\Values\Content\Relation as APIRelation;
 class UiRelation extends Relation
 {
     /**
-     * Field definition.
+     * Field definition name.
      *
      * @var string
      */
-    protected $fieldDefinition;
+    protected $fieldDefinitionName;
 
     /**
-     * The content type for the destination.
+     * The content type name for the destination.
      *
      * @var string
      */
-    protected $destinationContentType;
+    protected $destinationContentTypeName;
 
     /**
      * The location for the destination.

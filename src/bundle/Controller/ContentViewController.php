@@ -110,7 +110,7 @@ class ContentViewController extends Controller
         $contentInfo = $versionInfo->getContentInfo();
 
         $view->addParameters([
-            'relationList' => $relationService->loadRelations($versionInfo),
+            'relations' => $relationService->loadRelations($versionInfo),
             'reverseRelations' => $relationService->loadReverseRelations($contentInfo),
         ]);
 

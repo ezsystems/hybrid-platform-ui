@@ -71,8 +71,8 @@ class UiRelationServiceSpec extends ObjectBehavior
         $uiRelation = new UiRelation(
             $relation,
             [
-                'fieldDefinition' => Relation::FIELD,
-                'destinationContentType' => $relationContentTypeName,
+                'fieldDefinitionName' => Relation::FIELD,
+                'destinationContentTypeName' => $relationContentTypeName,
                 'destinationLocation' => $location,
             ]
         );

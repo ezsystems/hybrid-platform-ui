@@ -22,10 +22,12 @@ class UiRelationService
      * @var ContentService
      */
     private $contentService;
+
     /**
      * @var ContentTypeService
      */
     private $contentTypeService;
+
     /**
      * @var LocationService
      */
@@ -82,8 +84,8 @@ class UiRelationService
                 $destinationContentType = $this->loadContentType($destinationContentInfo);
 
                 $properties = [
-                    'fieldDefinition' => $fieldDefinition->getName(),
-                    'destinationContentType' => $destinationContentType->getName(),
+                    'fieldDefinitionName' => $fieldDefinition->getName(),
+                    'destinationContentTypeName' => $destinationContentType->getName(),
                     'destinationLocation' => $this->locationService->loadLocation($destinationContentInfo->mainLocationId),
                 ];
 
