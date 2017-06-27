@@ -7,16 +7,16 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
-use eZ\Bundle\EzPublishCoreBundle\Controller;
+use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
+use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\VersionService;
-use EzSystems\HybridPlatformUiBundle\Form\Versions\DraftActions;
 use Symfony\Component\HttpFoundation\Request;
 
 class VersionController extends Controller
 {
-    public function draftActionsAction(Request $request, VersionService $versionService)
+    public function draftActionsAction(Request $request, VersionService $versionService, UiFormFactory $formFactory)
     {
-        $draftActionsForm = $this->createForm(DraftActions::class);
+        $draftActionsForm = $formFactory->createVersionsDraftActionForm();
         $draftActionsForm->handleRequest($request);
 
         if ($draftActionsForm->isValid()) {

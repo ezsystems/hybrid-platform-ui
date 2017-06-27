@@ -8,15 +8,14 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
-use eZ\Bundle\EzPublishCoreBundle\Controller;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
+use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Filter\VersionFilter;
+use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Mapper\Form\VersionMapper;
-use EzSystems\HybridPlatformUiBundle\Form\Versions\ArchivedActions;
-use EzSystems\HybridPlatformUiBundle\Form\Versions\DraftActions;
 use EzSystems\HybridPlatformUi\Repository\UiLocationService;
 
 class ContentViewController extends Controller
@@ -66,7 +65,8 @@ class ContentViewController extends Controller
     public function versionsTabAction(
         ContentView $view,
         VersionFilter $versionFilter,
-        VersionMapper $versionMapper
+        VersionMapper $versionMapper,
+        UiFormFactory $formFactory
     ) {
         $contentInfo = $view->getContent()->getVersionInfo()->getContentInfo();
         $contentService = $this->getRepository()->getContentService();
@@ -83,11 +83,11 @@ class ContentViewController extends Controller
         }
 
         $draftVersions = $versionFilter->filterDrafts($versions);
-        $draftActionsForm = $this->createForm(DraftActions::class);
+        $draftActionsForm = $formFactory->createVersionsDraftActionForm();
         $draftActionsForm->setData($versionMapper->mapToForm($draftVersions, $contentInfo));
 
         $archivedVersions = $versionFilter->filterArchived($versions);
-        $archivedActionsForm = $this->createForm(ArchivedActions::class);
+        $archivedActionsForm = $formFactory->createVersionsArchivedActionForm();
         $archivedActionsForm->setData($versionMapper->mapToForm($archivedVersions, $contentInfo));
 
         $view->addParameters([

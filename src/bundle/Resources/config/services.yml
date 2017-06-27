@@ -82,3 +82,7 @@ services:
     EzSystems\HybridPlatformUi\Repository\UiLocationService:
         arguments:
             - "@ezpublish.api.service.location"
+
+    EzSystems\HybridPlatformUi\Form\UiFormFactory:
+            arguments:
+                - "@form.factory"
