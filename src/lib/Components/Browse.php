@@ -22,7 +22,7 @@ class Browse implements Component
             return $this->request->attributes->get('location')->id;
         }
 
-        return 'false';
+        return null;
     }
 
     public function __toString()
@@ -31,7 +31,7 @@ class Browse implements Component
         // should be rendered with a twig template
         return '<ez-browse
             class="ez-button"
-            selected-location-id="' . $selected . '">
+            ' . ($selected ? 'selected-location-id="' . $selected . '"' : '') . '>
                 Browse
             </ez-browse>';
     }
@@ -41,8 +41,8 @@ class Browse implements Component
         return [
             'selector' => 'ez-browse',
             'update' => [
-                'attributes' => [
-                    'selected-location-id' => $this->getLocationId(),
+                'property' => [
+                    'selectedLocationId' => $this->getLocationId(),
                 ],
             ],
         ];
