@@ -45,10 +45,7 @@ class UiFieldGroupService
 
         $fieldGroups = [];
         foreach ($this->fieldsGroupsList->getGroups() as $groupId => $groupName) {
-            $fieldsInGroup = array_filter($fields, function (FieldDefinition $field) use ($groupId) {
-                return ($field->fieldGroup === $groupId)
-                    || (empty($field->fieldGroup) && $groupId === $this->fieldsGroupsList->getDefaultGroup());
-            });
+            $fieldsInGroup = $this->filterFieldDefinitionsByGroup($fields, $groupId);
 
             if ($fieldsInGroup) {
                 $fieldGroups[] = new UiFieldGroup([
@@ -60,5 +57,15 @@ class UiFieldGroupService
         }
 
         return $fieldGroups;
+    }
+
+    private function filterFieldDefinitionsByGroup(array $fields, $groupId)
+    {
+        $filterByGroupIdOrDefault = function (FieldDefinition $field) use ($groupId) {
+            return ($field->fieldGroup === $groupId)
+                || (empty($field->fieldGroup) && $groupId === $this->fieldsGroupsList->getDefaultGroup());
+        };
+
+        return array_filter($fields, $filterByGroupIdOrDefault);
     }
 }
