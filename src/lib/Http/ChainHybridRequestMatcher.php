@@ -7,4 +7,10 @@ namespace EzSystems\HybridPlatformUi\Http;
 
 class ChainHybridRequestMatcher extends ChainRequestMatcher implements HybridRequestMatcher
 {
+    public function __construct(
+        AdminRequestMatcher $adminRequestMatcher,
+        HtmlFormatRequestMatcher $htmlFormatRequestMatcher
+    ) {
+        parent::__construct($adminRequestMatcher, $htmlFormatRequestMatcher);
+    }
 }

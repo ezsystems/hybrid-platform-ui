@@ -21,7 +21,6 @@ services:
 
     EzSystems\HybridPlatformUi\EventSubscriber\PjaxSubscriber:
         arguments:
-            $responseMapper: "@ezsystems.platformui.hybrid.mapper.pjax_response_to_main_content"
             $pjaxRequestMatcher: "@ezsystems.platformui.pjax.request_matcher"
 
     EzSystems\HybridPlatformUi\Http\AdminRequestMatcher:
@@ -55,10 +54,7 @@ services:
     EzSystems\HybridPlatformUi\Http\HybridRequestMatcher:
         alias: EzSystems\HybridPlatformUi\Http\ChainHybridRequestMatcher
 
-    EzSystems\HybridPlatformUi\Http\ChainHybridRequestMatcher:
-        arguments:
-            - '@EzSystems\HybridPlatformUi\Http\AdminRequestMatcher'
-            - '@EzSystems\HybridPlatformUi\Http\HtmlFormatRequestMatcher'
+    EzSystems\HybridPlatformUi\Http\ChainHybridRequestMatcher: ~
 
     EzSystems\HybridPlatformUi\EventSubscriber\CoreViewSubscriber: ~
 

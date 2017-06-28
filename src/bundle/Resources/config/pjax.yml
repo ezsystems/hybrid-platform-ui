@@ -4,8 +4,10 @@ services:
         autoconfigure: true
         public: false
 
-    ezsystems.platformui.hybrid.mapper.pjax_response_to_main_content:
-        class: EzSystems\HybridPlatformUi\Pjax\PjaxResponseMainContentMapper
+    EzSystems\HybridPlatformUi\Pjax\PjaxResponseMainContentMapper:
+        alias: EzSystems\HybridPlatformUi\Pjax\DomXpathPjaxResponseMainContentMapper
+
+    EzSystems\HybridPlatformUi\Pjax\DomXpathPjaxResponseMainContentMapper:
         arguments:
             - "@ezsystems.platformui.component.app"
 
