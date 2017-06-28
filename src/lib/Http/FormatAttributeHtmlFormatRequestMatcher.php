@@ -1,19 +1,22 @@
 <?php
-
+/**
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
 namespace EzSystems\HybridPlatformUi\Http;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcher;
 
-class HtmlFormatRequestMatcher extends RequestMatcher
+/**
+ * Matches an HTML request using the _format request attribute.
+ */
+class FormatAttributeHtmlFormatRequestMatcher extends RequestMatcher implements HtmlFormatRequestMatcher
 {
-    public function __construct()
+    public function matches(Request $request)
     {
-        parent::__construct(null, null, null, null, ['_format' => '^(?!js).*$']);
-    }
+        $this->matchAttribute('_format', '^(?!js).*$');
 
-    public function match(Request $request)
-    {
         return parent::matches($request);
     }
 }

@@ -5,6 +5,7 @@
  */
 namespace EzSystems\HybridPlatformUi\EventSubscriber;
 
+use EzSystems\HybridPlatformUi\Http\AdminRequestMatcher;
 use EzSystems\HybridPlatformUi\Mapper\MainContentMapper;
 use EzSystems\HybridPlatformUi\Pjax\PjaxResponseMatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -48,7 +49,7 @@ class PjaxSubscriber implements EventSubscriberInterface
 
     public function __construct(
         MainContentMapper $responseMapper,
-        RequestMatcherInterface $adminRequestMatcher,
+        AdminRequestMatcher $adminRequestMatcher,
         RequestMatcherInterface $pjaxRequestMatcher,
         PjaxResponseMatcher $pjaxResponseMatcher
     ) {

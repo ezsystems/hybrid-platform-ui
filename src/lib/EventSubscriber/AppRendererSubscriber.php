@@ -4,8 +4,8 @@ namespace EzSystems\HybridPlatformUi\EventSubscriber;
 
 use EzSystems\HybridPlatformUi\App\AppResponseRenderer;
 use EzSystems\HybridPlatformUi\Components\App;
+use EzSystems\HybridPlatformUi\Http\HybridRequestMatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class AppRendererSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\RequestMatcherInterface
+     * @var \EzSystems\HybridPlatformUi\Http\HybridRequestMatcher
      */
     private $hybridRequestMatcher;
 
@@ -31,7 +31,7 @@ class AppRendererSubscriber implements EventSubscriberInterface
     public function __construct(
         App $app,
         AppResponseRenderer $appRenderer,
-        RequestMatcherInterface $hybridRequestMatcher
+        HybridRequestMatcher $hybridRequestMatcher
     ) {
         $this->hybridRequestMatcher = $hybridRequestMatcher;
         $this->app = $app;

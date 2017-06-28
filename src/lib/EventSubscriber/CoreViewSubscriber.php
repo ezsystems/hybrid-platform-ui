@@ -3,9 +3,9 @@
 namespace EzSystems\HybridPlatformUi\EventSubscriber;
 
 use eZ\Publish\Core\MVC\Symfony\View\View;
+use EzSystems\HybridPlatformUi\Http\AdminRequestMatcher;
 use EzSystems\HybridPlatformUi\View\CoreViewMainContentMapper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -27,7 +27,7 @@ class CoreViewSubscriber implements EventSubscriberInterface
 
     public function __construct(
         CoreViewMainContentMapper $coreViewMapper,
-        RequestMatcherInterface $adminRequestMatcher
+        AdminRequestMatcher $adminRequestMatcher
     ) {
         $this->mapper = $coreViewMapper;
         $this->adminRequestMatcher = $adminRequestMatcher;

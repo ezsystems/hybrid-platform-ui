@@ -21,48 +21,49 @@ services:
 
     EzSystems\HybridPlatformUi\EventSubscriber\PjaxSubscriber:
         arguments:
-            - "@ezsystems.platformui.hybrid.mapper.pjax_response_to_main_content"
-            - "@ezsystems.platformui.hybrid.request_matcher.admin"
-            - "@ezsystems.platformui.pjax.request_matcher"
+            $responseMapper: "@ezsystems.platformui.hybrid.mapper.pjax_response_to_main_content"
+            $pjaxRequestMatcher: "@ezsystems.platformui.pjax.request_matcher"
 
-    ezsystems.platformui.hybrid.request_matcher.admin:
-        class: EzSystems\HybridPlatformUi\Http\HardcodedAdminRequestMatcher
+    EzSystems\HybridPlatformUi\Http\AdminRequestMatcher:
+        alias: EzSystems\HybridPlatformUi\Http\HardcodedAdminRequestMatcher
+
+    EzSystems\HybridPlatformUi\Http\HardcodedAdminRequestMatcher:
         calls:
             - [setExcludedRoutesPrefixes, ['%ezpublish.default_router.non_siteaccess_aware_routes%']]
 
-    ezsystems.platformui.hybrid.request_matcher.ajax_update:
-        class: EzSystems\HybridPlatformUi\Http\AjaxUpdateRequestMatcher
+    EzSystems\HybridPlatformUi\Http\AjaxUpdateRequestMatcher: ~
 
     EzSystems\HybridPlatformUi\EventSubscriber\AppRendererSubscriber:
         arguments:
-            - "@ezsystems.platformui.component.app"
-            - "@ezsystems.platform_ui.hybrid.app.request_app_response_renderer"
-            - "@ezsystems.hybrid_platform_ui.http.request_matcher.hybrid"
+            $app: "@ezsystems.platformui.component.app"
+            $appRenderer: '@EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer'
 
-    ezsystems.platform_ui.hybrid.app.request_app_response_renderer:
-        class: EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer
+    EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer:
         arguments:
             - '@=service("request_stack").getMasterRequest()'
-            - '@ezsystems.platformui.hybrid.request_matcher.ajax_update'
+            - '@EzSystems\HybridPlatformUi\Http\AjaxUpdateRequestMatcher'
 
     EzSystems\HybridPlatformUi\EventSubscriber\ComponentRendererSubscriber:
         arguments:
             - "@ezsystems.platformui.hybrid.request_matcher.admin"
 
-    ezsystems.hybrid_platform_ui.http.request_matcher.html_format:
-        class: EzSystems\HybridPlatformUi\Http\HtmlFormatRequestMatcher
+    EzSystems\HybridPlatformUi\Http\HtmlFormatRequestMatcher:
+        alias: EzSystems\HybridPlatformUi\Http\FormatAttributeHtmlFormatRequestMatcher
 
-    ezsystems.hybrid_platform_ui.http.request_matcher.hybrid:
-        class: EzSystems\HybridPlatformUi\Http\ChainRequestMatcher
+    EzSystems\HybridPlatformUi\Http\FormatAttributeHtmlFormatRequestMatcher: ~
+
+    EzSystems\HybridPlatformUi\Http\HybridRequestMatcher:
+        alias: EzSystems\HybridPlatformUi\Http\ChainHybridRequestMatcher
+
+    EzSystems\HybridPlatformUi\Http\ChainHybridRequestMatcher:
         arguments:
-            - "@ezsystems.platformui.hybrid.request_matcher.admin"
-            - "@ezsystems.hybrid_platform_ui.http.request_matcher.html_format"
+            - '@EzSystems\HybridPlatformUi\Http\AdminRequestMatcher'
+            - '@EzSystems\HybridPlatformUi\Http\HtmlFormatRequestMatcher'
 
-    EzSystems\HybridPlatformUi\EventSubscriber\CoreViewSubscriber:
-        arguments:
-            $adminRequestMatcher: "@ezsystems.platformui.hybrid.request_matcher.admin"
+    EzSystems\HybridPlatformUi\EventSubscriber\CoreViewSubscriber: ~
 
-    EzSystems\HybridPlatformUi\View\CoreViewMainContentMapper: '@EzSystems\HybridPlatformUi\View\AppConfigCoreViewMainContentMapper'
+    EzSystems\HybridPlatformUi\View\CoreViewMainContentMapper:
+        alias: 'EzSystems\HybridPlatformUi\View\AppConfigCoreViewMainContentMapper'
 
     EzSystems\HybridPlatformUi\View\AppConfigCoreViewMainContentMapper:
         arguments:
