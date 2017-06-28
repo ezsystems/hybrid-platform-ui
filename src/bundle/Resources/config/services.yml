@@ -18,11 +18,9 @@ services:
         class: EzSystems\HybridPlatformUi\Http\HardcodedAdminRequestMatcher
         calls:
             - [setExcludedRoutesPrefixes, ['%ezpublish.default_router.non_siteaccess_aware_routes%']]
-        public: false
 
     ezsystems.platformui.hybrid.request_matcher.ajax_update:
         class: EzSystems\HybridPlatformUi\Http\AjaxUpdateRequestMatcher
-        public: false
 
     ezsystems.platformui.hybrid.event_subscriber.app_renderer:
         class: EzSystems\HybridPlatformUi\EventSubscriber\AppRendererSubscriber
@@ -38,7 +36,6 @@ services:
         arguments:
             - '@=service("request_stack").getMasterRequest()'
             - '@ezsystems.platformui.hybrid.request_matcher.ajax_update'
-        public: false
 
     ezsystems.platformui.hybrid.event_subscriber.component_renderer:
         class: EzSystems\HybridPlatformUi\EventSubscriber\ComponentRendererSubscriber
@@ -49,14 +46,12 @@ services:
 
     ezsystems.hybrid_platform_ui.http.request_matcher.html_format:
         class: EzSystems\HybridPlatformUi\Http\HtmlFormatRequestMatcher
-        public: false
 
     ezsystems.hybrid_platform_ui.http.request_matcher.hybrid:
         class: EzSystems\HybridPlatformUi\Http\ChainRequestMatcher
         arguments:
             - "@ezsystems.platformui.hybrid.request_matcher.admin"
             - "@ezsystems.hybrid_platform_ui.http.request_matcher.html_format"
-        public: false
 
     ezsystems.platformui.hybrid.event_subscriber.core_view:
         class: EzSystems\HybridPlatformUi\EventSubscriber\CoreViewSubscriber

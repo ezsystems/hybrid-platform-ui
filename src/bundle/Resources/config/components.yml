@@ -1,4 +1,9 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
     ezsystems.platformui.component.app:
         class: EzSystems\HybridPlatformUi\Components\App
         arguments:

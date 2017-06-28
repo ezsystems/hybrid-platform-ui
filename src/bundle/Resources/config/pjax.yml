@@ -12,12 +12,12 @@ services:
             - "@ezsystems.platformui.pjax.request_matcher"
         tags:
             - {name: kernel.event_subscriber}
+        public: true
 
     ezsystems.platformui.hybrid.mapper.pjax_response_to_main_content:
         class: EzSystems\HybridPlatformUi\Pjax\PjaxResponseMainContentMapper
         arguments:
             - "@ezsystems.platformui.component.app"
-        public: false
 
     EzSystems\HybridPlatformUi\Pjax\PjaxResponseMatcher: '@EzSystems\HybridPlatformUi\Pjax\MarkupPjaxResponseMatcher'
 
