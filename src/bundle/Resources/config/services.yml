@@ -35,7 +35,9 @@ services:
     EzSystems\HybridPlatformUi\EventSubscriber\AppRendererSubscriber:
         arguments:
             $app: "@ezsystems.platformui.component.app"
-            $appRenderer: '@EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer'
+
+    EzSystems\HybridPlatformUi\App\AppResponseRenderer:
+        alias: EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer
 
     EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer:
         arguments:
