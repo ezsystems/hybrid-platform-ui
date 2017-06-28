@@ -32,9 +32,7 @@ services:
 
     EzSystems\HybridPlatformUi\Http\AjaxUpdateRequestMatcher: ~
 
-    EzSystems\HybridPlatformUi\EventSubscriber\AppRendererSubscriber:
-        arguments:
-            $app: "@ezsystems.platformui.component.app"
+    EzSystems\HybridPlatformUi\EventSubscriber\AppRendererSubscriber: ~
 
     EzSystems\HybridPlatformUi\App\AppResponseRenderer:
         alias: EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer
@@ -63,9 +61,7 @@ services:
     EzSystems\HybridPlatformUi\View\CoreViewMainContentMapper:
         alias: 'EzSystems\HybridPlatformUi\View\AppConfigCoreViewMainContentMapper'
 
-    EzSystems\HybridPlatformUi\View\AppConfigCoreViewMainContentMapper:
-        arguments:
-            - "@ezsystems.platformui.component.app"
+    EzSystems\HybridPlatformUi\View\AppConfigCoreViewMainContentMapper: ~
 
     EzSystems\HybridPlatformUi\Filter\VersionFilter: ~
 

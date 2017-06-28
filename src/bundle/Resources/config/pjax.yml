@@ -7,10 +7,9 @@ services:
     EzSystems\HybridPlatformUi\Pjax\PjaxResponseMainContentMapper:
         alias: EzSystems\HybridPlatformUi\Pjax\DomXpathPjaxResponseMainContentMapper
 
-    EzSystems\HybridPlatformUi\Pjax\DomXpathPjaxResponseMainContentMapper:
-        arguments:
-            - "@ezsystems.platformui.component.app"
-
-    EzSystems\HybridPlatformUi\Pjax\PjaxResponseMatcher: '@EzSystems\HybridPlatformUi\Pjax\MarkupPjaxResponseMatcher'
+    EzSystems\HybridPlatformUi\Pjax\PjaxResponseMatcher:
+        alias: EzSystems\HybridPlatformUi\Pjax\MarkupPjaxResponseMatcher
 
     EzSystems\HybridPlatformUi\Pjax\MarkupPjaxResponseMatcher: ~
+
+    EzSystems\HybridPlatformUi\Pjax\DomXpathPjaxResponseMainContentMapper: ~
