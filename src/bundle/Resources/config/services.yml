@@ -61,16 +61,15 @@ services:
     ezsystems.platformui.hybrid.event_subscriber.core_view:
         class: EzSystems\HybridPlatformUi\EventSubscriber\CoreViewSubscriber
         arguments:
-            - "@ezsystems.platformui.hybrid.mapper.core_view_to_main_content"
-            - "@ezsystems.platformui.hybrid.request_matcher.admin"
+            $adminRequestMatcher: "@ezsystems.platformui.hybrid.request_matcher.admin"
         tags:
             - {name: kernel.event_subscriber}
 
-    ezsystems.platformui.hybrid.mapper.core_view_to_main_content:
-        class: EzSystems\HybridPlatformUi\View\CoreViewMainContentMapper
+    EzSystems\HybridPlatformUi\View\CoreViewMainContentMapper: '@EzSystems\HybridPlatformUi\View\AppConfigCoreViewMainContentMapper'
+
+    EzSystems\HybridPlatformUi\View\AppConfigCoreViewMainContentMapper:
         arguments:
             - "@ezsystems.platformui.component.app"
-        public: false
 
     EzSystems\HybridPlatformUi\Filter\VersionFilter: ~
 

@@ -3,7 +3,7 @@
 namespace EzSystems\HybridPlatformUi\EventSubscriber;
 
 use eZ\Publish\Core\MVC\Symfony\View\View;
-use EzSystems\HybridPlatformUi\Mapper\MainContentMapper;
+use EzSystems\HybridPlatformUi\View\CoreViewMainContentMapper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +26,7 @@ class CoreViewSubscriber implements EventSubscriberInterface
     private $mapper;
 
     public function __construct(
-        MainContentMapper $coreViewMapper,
+        CoreViewMainContentMapper $coreViewMapper,
         RequestMatcherInterface $adminRequestMatcher
     ) {
         $this->mapper = $coreViewMapper;

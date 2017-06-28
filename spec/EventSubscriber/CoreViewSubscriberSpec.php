@@ -5,7 +5,7 @@ namespace spec\EzSystems\HybridPlatformUi\EventSubscriber;
 use eZ\Publish\Core\MVC\Symfony\View\View;
 use EzSystems\HybridPlatformUi\Components;
 use EzSystems\HybridPlatformUi\EventSubscriber\CoreViewSubscriber;
-use EzSystems\HybridPlatformUi\Mapper\MainContentMapper;
+use EzSystems\HybridPlatformUi\View\CoreViewMainContentMapper;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use stdClass;
@@ -24,7 +24,7 @@ class CoreViewSubscriberSpec extends ObjectBehavior
 {
     function let(
         GetResponseForControllerResultEvent $event,
-        MainContentMapper $mapper,
+        CoreViewMainContentMapper $mapper,
         Request $request,
         RequestMatcherInterface $adminRequestMatcher,
         View $view
@@ -54,7 +54,7 @@ class CoreViewSubscriberSpec extends ObjectBehavior
 
     function it_does_not_map_requests_without_a_view_as_controller_result(
         GetResponseForControllerResultEvent $event,
-        MainContentMapper $mapper,
+        CoreViewMainContentMapper $mapper,
         Request $request
     ) {
         $event->getControllerResult()->willReturn(new stdClass());
@@ -79,7 +79,7 @@ class CoreViewSubscriberSpec extends ObjectBehavior
     function it_maps_controller_results_that_are_views_to_the_MainContent_component(
         GetResponseForControllerResultEvent $event,
         Components\MainContent $mainContent,
-        MainContentMapper $mapper,
+        CoreViewMainContentMapper $mapper,
         View $view
     ) {
         $event->getControllerResult()->willReturn($view);
