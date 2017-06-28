@@ -7,6 +7,7 @@ namespace EzSystems\HybridPlatformUi\Repository;
 
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
+use eZ\Publish\API\Repository\Exceptions\UnauthorizedException;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Relation;
@@ -68,7 +69,11 @@ class UiRelationService
      */
     public function loadReverseRelations(ContentInfo $contentInfo)
     {
-        $reverseRelations = $this->contentService->loadReverseRelations($contentInfo);
+        try {
+            $reverseRelations = $this->contentService->loadReverseRelations($contentInfo);
+        } catch (UnauthorizedException $e) {
+            return [];
+        }
 
         return $this->buildUiRelations($reverseRelations, $contentInfo);
     }

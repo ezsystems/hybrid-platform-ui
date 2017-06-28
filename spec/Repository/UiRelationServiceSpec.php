@@ -11,6 +11,7 @@ use eZ\Publish\API\Repository\Values\ContentType\ContentType;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\Core\Repository\Values\Content\Relation;
+use eZ\Publish\Core\REST\Client\Exceptions\UnauthorizedException;
 use EzSystems\HybridPlatformUi\Repository\Values\Content\UiRelation;
 use PhpSpec\ObjectBehavior;
 
@@ -78,5 +79,11 @@ class UiRelationServiceSpec extends ObjectBehavior
         );
 
         $this->loadRelations($versionInfo)->shouldBeLike([$uiRelation]);
+    }
+
+    function it_handles_user_not_having_correct_permissions(ContentService $contentService, ContentInfo $contentInfo)
+    {
+        $contentService->loadReverseRelations($contentInfo)->willThrow(new UnauthorizedException());
+        $this->loadReverseRelations($contentInfo)->shouldBe([]);
     }
 }
