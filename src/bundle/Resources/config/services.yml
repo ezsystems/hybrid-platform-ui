@@ -14,6 +14,17 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    EzSystems\HybridPlatformUi\EventSubscriber\:
+        resource: '../../../lib/EventSubscriber'
+        public: true
+        tags: ['kernel.event_subscriber']
+
+    EzSystems\HybridPlatformUi\EventSubscriber\PjaxSubscriber:
+        arguments:
+            - "@ezsystems.platformui.hybrid.mapper.pjax_response_to_main_content"
+            - "@ezsystems.platformui.hybrid.request_matcher.admin"
+            - "@ezsystems.platformui.pjax.request_matcher"
+
     ezsystems.platformui.hybrid.request_matcher.admin:
         class: EzSystems\HybridPlatformUi\Http\HardcodedAdminRequestMatcher
         calls:
@@ -22,14 +33,11 @@ services:
     ezsystems.platformui.hybrid.request_matcher.ajax_update:
         class: EzSystems\HybridPlatformUi\Http\AjaxUpdateRequestMatcher
 
-    ezsystems.platformui.hybrid.event_subscriber.app_renderer:
-        class: EzSystems\HybridPlatformUi\EventSubscriber\AppRendererSubscriber
+    EzSystems\HybridPlatformUi\EventSubscriber\AppRendererSubscriber:
         arguments:
             - "@ezsystems.platformui.component.app"
             - "@ezsystems.platform_ui.hybrid.app.request_app_response_renderer"
             - "@ezsystems.hybrid_platform_ui.http.request_matcher.hybrid"
-        tags:
-            - {name: kernel.event_subscriber}
 
     ezsystems.platform_ui.hybrid.app.request_app_response_renderer:
         class: EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer
@@ -37,12 +45,9 @@ services:
             - '@=service("request_stack").getMasterRequest()'
             - '@ezsystems.platformui.hybrid.request_matcher.ajax_update'
 
-    ezsystems.platformui.hybrid.event_subscriber.component_renderer:
-        class: EzSystems\HybridPlatformUi\EventSubscriber\ComponentRendererSubscriber
+    EzSystems\HybridPlatformUi\EventSubscriber\ComponentRendererSubscriber:
         arguments:
             - "@ezsystems.platformui.hybrid.request_matcher.admin"
-        tags:
-            - {name: kernel.event_subscriber}
 
     ezsystems.hybrid_platform_ui.http.request_matcher.html_format:
         class: EzSystems\HybridPlatformUi\Http\HtmlFormatRequestMatcher
@@ -53,12 +58,9 @@ services:
             - "@ezsystems.platformui.hybrid.request_matcher.admin"
             - "@ezsystems.hybrid_platform_ui.http.request_matcher.html_format"
 
-    ezsystems.platformui.hybrid.event_subscriber.core_view:
-        class: EzSystems\HybridPlatformUi\EventSubscriber\CoreViewSubscriber
+    EzSystems\HybridPlatformUi\EventSubscriber\CoreViewSubscriber:
         arguments:
             $adminRequestMatcher: "@ezsystems.platformui.hybrid.request_matcher.admin"
-        tags:
-            - {name: kernel.event_subscriber}
 
     EzSystems\HybridPlatformUi\View\CoreViewMainContentMapper: '@EzSystems\HybridPlatformUi\View\AppConfigCoreViewMainContentMapper'
 
