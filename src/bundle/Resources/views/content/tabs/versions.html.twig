@@ -6,7 +6,7 @@
     <div class="ez-list-toolbar">
         <h2 class="ez-list-toolbar-label">{{ 'locationview.versions.draft.under.edit'|trans()|desc('Draft under edit') }}</h2>
         <div class="ez-list-toolbar-tools">
-            {{ form_row(draftActionsForm.delete, {'label': 'locationview.versions.delete.selected.draft'|trans()|desc('Delete selected draft'), 'attr': {'class': 'ez-button ez-button-negative'}}) }}
+            {{ form_row(draftActionsForm.delete, {'label': 'locationview.versions.delete'|trans()|desc('Delete'), 'attr': {'class': 'ez-button ez-button-negative'}}) }}
         </div>
     </div>
 
@@ -30,7 +30,7 @@
         <h2 class="ez-list-toolbar-label">{{ 'locationview.versions.archived.versions'|trans()|desc('Archived versions') }}</h2>
         <div class="ez-list-toolbar-tools">
             {{ form_row(archivedActionsForm.new_draft, {'label': 'locationview.versions.new.draft.selected.version'|trans()|desc('New draft based on selected version'), 'attr': {'class': 'ez-button ez-button-secondary'}}) }}
-            {{ form_row(archivedActionsForm.delete, {'label': 'locationview.versions.remove.selected.archived.version'|trans()|desc('Remove selected archived version(s)'), 'attr': {'class': 'ez-button ez-button-negative'}}) }}
+            {{ form_row(archivedActionsForm.delete, {'label': 'locationview.versions.delete'|trans()|desc('Delete'), 'attr': {'class': 'ez-button ez-button-negative'}}) }}
         </div>
     </div>
 
