@@ -65,15 +65,8 @@ services:
 
     EzSystems\HybridPlatformUi\Filter\VersionFilter: ~
 
-    EzSystems\HybridPlatformUi\Repository\PathService:
-        arguments:
-            - "@ezpublish.api.service.search"
+    EzSystems\HybridPlatformUi\Repository\PathService: ~
 
-    EzSystems\HybridPlatformUi\Repository\UiLocationService:
-        arguments:
-            - "@ezpublish.api.service.location"
+    EzSystems\HybridPlatformUi\Repository\UiLocationService: ~
 
-    EzSystems\HybridPlatformUi\Repository\UiFieldGroupService:
-        arguments:
-            - "@ezpublish.api.service.content_type"
-            - "@ezpublish.fields_groups.list"
+    EzSystems\HybridPlatformUi\Repository\UiFieldGroupService: ~
