@@ -86,3 +86,9 @@ services:
     EzSystems\HybridPlatformUi\Form\UiFormFactory:
             arguments:
                 - "@form.factory"
+
+    EzSystems\HybridPlatformUi\Repository\UiFieldGroupService:
+        arguments:
+            - "@ezpublish.api.service.content_type"
+            - "@ezpublish.fields_groups.list"
+
