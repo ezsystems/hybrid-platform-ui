@@ -5,7 +5,6 @@
  */
 namespace EzSystems\HybridPlatformUi\Mapper\Form;
 
-use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 
 /**
@@ -17,13 +16,12 @@ class VersionMapper
      * Map versions and content to data required in form.
      *
      * @param VersionInfo[] $versions
-     * @param ContentInfo $contentInfo
      *
      * @return array
      */
-    public function mapToForm(array $versions, ContentInfo $contentInfo)
+    public function mapToForm(array $versions)
     {
-        $data = ['versionIds' => [], 'contentId' => $contentInfo->id];
+        $data = ['versionIds' => []];
         foreach ($versions as $version) {
             $data['versionIds'][$version->versionNo] = false;
         }

@@ -1,7 +1,7 @@
 {% trans_default_domain "locationview" %}
 
 {% if draftVersions %}
-    {{ form_start(draftActionsForm, {"action": path("ez_hybrid_platform_ui_content_view_draft_actions")}) }}
+    {{ form_start(draftActionsForm, {"action": path("ez_hybrid_platform_ui_version_draft_actions", {'contentId': content.contentInfo.id})}) }}
 
     <div class="ez-list-toolbar">
         <h2 class="ez-list-toolbar-label">{{ 'locationview.versions.draft.under.edit'|trans()|desc('Draft under edit') }}</h2>

@@ -17,6 +17,7 @@ use Symfony\Component\Routing\RouterInterface;
 class VersionController extends Controller
 {
     public function draftActionsAction(
+        $contentId,
         Request $request,
         VersionService $versionService,
         UiFormFactory $formFactory,
@@ -27,11 +28,10 @@ class VersionController extends Controller
 
         if ($draftActionsForm->isValid()) {
             $selectedIds = $draftActionsForm->get('versionIds')->getData();
-            $contentId = (int) $draftActionsForm->get('contentId')->getData();
 
             if ($draftActionsForm->get('delete')->isClicked()) {
                 foreach (array_keys($selectedIds) as $versionId) {
-                    $versionService->deleteVersion($contentId, $versionId);
+                    $versionService->deleteVersion((int) $contentId, $versionId);
                 }
             }
         }

@@ -8,7 +8,6 @@ namespace EzSystems\HybridPlatformUiBundle\Form\Versions;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 abstract class Data extends AbstractType
@@ -20,7 +19,6 @@ abstract class Data extends AbstractType
                 'entry_type' => CheckboxType::class,
                 'allow_add' => true,
                 'required' => false,
-            ))
-            ->add('contentId', HiddenType::class);
+            ));
     }
 }
