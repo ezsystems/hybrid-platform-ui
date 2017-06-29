@@ -1,0 +1,7 @@
+services:
+    ezpublish.twig.extension.relation_type:
+        class: EzSystems\HybridPlatformUi\Templating\Twig\RelationTypeExtension
+        arguments:
+            - "@translator"
+        tags:
+            - { name: twig.extension }

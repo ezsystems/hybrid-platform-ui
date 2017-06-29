@@ -15,18 +15,7 @@
                 <td><a href="{{ path(relation.destinationLocation) }}">{{ relation.destinationContentInfo.name }}</a></td>
                 <td>{{ relation.destinationContentTypeName }}</td>
                 <td>
-                    {% if relation.type == constant('eZ\\Publish\\API\\Repository\\Values\\Content\\Relation::COMMON') %}
-                        {{ 'locationview.relations.type.content_level_relation'|trans()|desc('Content level relation') }}
-                    {% endif %}
-                    {% if relation.type == constant('eZ\\Publish\\API\\Repository\\Values\\Content\\Relation::EMBED') %}
-                        {{ 'locationview.relations.type.embed'|trans()|desc('Embed') }}
-                    {% endif %}
-                    {% if relation.type == constant('eZ\\Publish\\API\\Repository\\Values\\Content\\Relation::LINK') %}
-                        {{ 'locationview.relations.type.link'|trans()|desc('Link') }}
-                    {% endif %}
-                    {% if relation.type == constant('eZ\\Publish\\API\\Repository\\Values\\Content\\Relation::FIELD') %}
-                        {{ 'locationview.relations.type.field'|trans()|desc('Field') }}
-                    {% endif %}
+                    {{ ez_ui_relation_type(relation) }}
                     ({{ relation.fieldDefinitionName }})
                 </td>
             </tr>
