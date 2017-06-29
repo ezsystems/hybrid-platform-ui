@@ -12,11 +12,13 @@
         <tbody>
         {% for relation in relationList %}
             <tr>
-                <td><a href="{{ path(relation.destinationLocation) }}">{{ relation.destinationContentInfo.name }}</a></td>
-                <td>{{ relation.destinationContentTypeName }}</td>
+                <td><a href="{{ path(relation.relationLocation) }}">{{ relation.relationName }}</a></td>
+                <td>{{ relation.relationContentTypeName }}</td>
                 <td>
                     {{ ez_ui_relation_type(relation) }}
-                    ({{ relation.fieldDefinitionName }})
+                    {% if (relation.relationFieldDefinitionName) %}
+                        ({{ relation.relationFieldDefinitionName }})
+                    {% endif %}
                 </td>
             </tr>
         {% endfor %}

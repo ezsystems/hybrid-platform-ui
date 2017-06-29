@@ -56,7 +56,7 @@ class UiRelationService
     {
         $relations = $this->contentService->loadRelations($versionInfo);
 
-        return $this->buildUiRelations($relations, $versionInfo->getContentInfo());
+        return $this->buildDestinationUiRelations($relations);
     }
 
     /**
@@ -75,29 +75,44 @@ class UiRelationService
             return [];
         }
 
-        return $this->buildUiRelations($reverseRelations, $contentInfo);
+        return $this->buildSourceUiRelations($reverseRelations);
     }
 
-    private function buildUiRelations(array $relations, ContentInfo $contentInfo)
+    private function buildDestinationUiRelations(array $relations)
     {
         return array_map(
-            function (Relation $relation) use ($contentInfo) {
-                $contentType = $this->loadContentType($contentInfo);
-                $destinationContentInfo = $relation->getDestinationContentInfo();
-
-                $fieldDefinition = $contentType->getFieldDefinition($relation->sourceFieldDefinitionIdentifier);
-                $destinationContentType = $this->loadContentType($destinationContentInfo);
-
-                $properties = [
-                    'fieldDefinitionName' => $fieldDefinition->getName(),
-                    'destinationContentTypeName' => $destinationContentType->getName(),
-                    'destinationLocation' => $this->locationService->loadLocation($destinationContentInfo->mainLocationId),
-                ];
-
-                return new UiRelation($relation, $properties);
+            function (Relation $relation) {
+                return $this->buildUiRelation($relation, $relation->getDestinationContentInfo());
             },
             $relations
         );
+    }
+
+    private function buildSourceUiRelations(array $relations)
+    {
+        return array_map(
+            function (Relation $relation) {
+                return $this->buildUiRelation($relation, $relation->getSourceContentInfo());
+            },
+            $relations
+        );
+    }
+
+    private function buildUiRelation(Relation $relation, ContentInfo $contentInfo)
+    {
+        $contentType = $this->loadContentType($contentInfo);
+
+        $fieldDefinition = $contentType->getFieldDefinition($relation->sourceFieldDefinitionIdentifier);
+        $destinationContentType = $this->loadContentType($contentInfo);
+
+        $properties = [
+            'relationFieldDefinitionName' => $fieldDefinition ? $fieldDefinition->getName() : '',
+            'relationContentTypeName' => $destinationContentType->getName(),
+            'relationLocation' => $this->locationService->loadLocation($contentInfo->mainLocationId),
+            'relationName' => $contentInfo->name,
+        ];
+
+        return new UiRelation($relation, $properties);
     }
 
     private function loadContentType(ContentInfo $contentInfo)

@@ -15,25 +15,36 @@ use eZ\Publish\API\Repository\Values\Content\Relation as APIRelation;
 class UiRelation extends Relation
 {
     /**
-     * Field definition name.
+     * Field definition name for the relation.
+     * This will either come from destinationContentInfo OR sourceContentInfo depending upon if reverse relation or normal relation.
      *
      * @var string
      */
-    protected $fieldDefinitionName;
+    protected $relationFieldDefinitionName;
 
     /**
-     * The content type name for the destination.
+     * The content type name for the relation.
+     * This will either come from destinationContentInfo OR sourceContentInfo depending upon if reverse relation or normal relation.
      *
      * @var string
      */
-    protected $destinationContentTypeName;
+    protected $relationContentTypeName;
 
     /**
-     * The location for the destination.
+     * Main location for the relation.
+     * This will either come from destinationContentInfo OR sourceContentInfo depending upon if reverse relation or normal relation.
      *
      * @var Location
      */
-    protected $destinationLocation;
+    protected $relationLocation;
+
+    /**
+     * The name for the relation.
+     * This will either come from destinationContentInfo OR sourceContentInfo depending upon if reverse relation or normal relation.
+     *
+     * @var Location
+     */
+    protected $relationName;
 
     public function __construct(APIRelation $relation, array $properties = [])
     {
