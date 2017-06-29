@@ -10,12 +10,18 @@ namespace EzSystems\HybridPlatformUiBundle\Controller;
 use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\VersionService;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RouterInterface;
 
 class VersionController extends Controller
 {
-    public function draftActionsAction(Request $request, VersionService $versionService, UiFormFactory $formFactory)
-    {
+    public function draftActionsAction(
+        Request $request,
+        VersionService $versionService,
+        UiFormFactory $formFactory,
+        RouterInterface $router
+    ) {
         $draftActionsForm = $formFactory->createVersionsDraftActionForm();
         $draftActionsForm->handleRequest($request);
 
@@ -30,6 +36,11 @@ class VersionController extends Controller
             }
         }
         //@TODO Show success/fail message to user
-        return $this->redirectToRoute('ez_hybrid_platform_ui_dashboard');
+        return new RedirectResponse(
+            $router->generate(
+                '_ez_content_view',
+                ['contentId' => $contentId]
+            )
+        );
     }
 }
