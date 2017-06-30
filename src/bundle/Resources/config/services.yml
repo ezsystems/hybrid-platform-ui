@@ -4,6 +4,11 @@ services:
         autoconfigure: true
         public: false
 
+    _instanceof:
+        Symfony\Component\DependencyInjection\ContainerAwareInterface:
+            calls:
+                - [setContainer, ['@service_container']]
+
     EzSystems\HybridPlatformUiBundle\Controller\:
         resource: '../../Controller'
         public: true
