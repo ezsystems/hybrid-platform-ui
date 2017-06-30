@@ -3,8 +3,9 @@
 namespace spec\EzSystems\HybridPlatformUi\EventSubscriber;
 
 use EzSystems\HybridPlatformUi\EventSubscriber\PjaxSubscriber;
-use EzSystems\HybridPlatformUi\Mapper\MainContentMapper;
+use EzSystems\HybridPlatformUi\Http\AdminRequestMatcher;
 use EzSystems\HybridPlatformUi\Pjax\PjaxResponseMatcher;
+use EzSystems\HybridPlatformUi\Pjax\PjaxResponseMainContentMapper;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -19,11 +20,11 @@ class PjaxSubscriberSpec extends ObjectBehavior
 {
     function let(
         FilterResponseEvent $event,
-        MainContentMapper $mapper,
-        RequestMatcherInterface $adminRequestMatcher,
+        PjaxResponseMainContentMapper $mapper,
+        Request $request,
+        AdminRequestMatcher $adminRequestMatcher,
         RequestMatcherInterface $pjaxRequestMatcher,
         PjaxResponseMatcher $pjaxResponseMatcher,
-        Request $request,
         Response $response
     ) {
         $event->getRequest()->willReturn($request);
@@ -52,7 +53,7 @@ class PjaxSubscriberSpec extends ObjectBehavior
     function it_ignores_non_admin_requests(
         FilterResponseEvent $event,
         Request $request,
-        RequestMatcherInterface $adminRequestMatcher
+        AdminRequestMatcher $adminRequestMatcher
     ) {
         $adminRequestMatcher->matches($request)->willReturn(false);
 
@@ -82,7 +83,7 @@ class PjaxSubscriberSpec extends ObjectBehavior
 
     function it_sets_the_app_maincontent_result_with_the_value_returned_by_the_mapper(
         FilterResponseEvent $event,
-        MainContentMapper $mapper,
+        PjaxResponseMainContentMapper $mapper,
         Response $response
     ) {
         $mapper->map($response)->shouldBeCalled();

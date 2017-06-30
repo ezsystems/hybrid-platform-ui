@@ -6,9 +6,9 @@
 namespace EzSystems\HybridPlatformUi\App;
 
 use EzSystems\HybridPlatformUi\Components\App;
+use EzSystems\HybridPlatformUi\Http\AjaxUpdateRequestMatcher;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class RequestAppResponseRenderer implements AppResponseRenderer
@@ -25,7 +25,7 @@ class RequestAppResponseRenderer implements AppResponseRenderer
 
     public function __construct(
         Request $request,
-        RequestMatcherInterface $ajaxUpdateRequestMatcher
+        AjaxUpdateRequestMatcher $ajaxUpdateRequestMatcher
     ) {
         $this->request = $request;
         $this->ajaxUpdateRequestMatcher = $ajaxUpdateRequestMatcher;

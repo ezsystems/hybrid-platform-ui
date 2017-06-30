@@ -2,6 +2,8 @@
 
 namespace EzSystems\HybridPlatformUi\Components;
 
+use Symfony\Component\Templating\EngineInterface;
+
 class App implements Component
 {
     const TAG_NAME = 'ez-platform-ui-app';
@@ -19,7 +21,7 @@ class App implements Component
     protected $notifications = [];
 
     public function __construct(
-        $templating,
+        EngineInterface $templating,
         MainContent $content,
         NavigationHub $navigationHub,
         array $toolbars

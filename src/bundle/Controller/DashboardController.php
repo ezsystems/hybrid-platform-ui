@@ -13,9 +13,8 @@ use EzSystems\PlatformUIBundle\Controller\Controller;
 
 class DashboardController extends Controller
 {
-    public function viewDashboardAction()
+    public function viewDashboardAction(MainContent $mainContent)
     {
-        $mainContent = $this->container->get('ezsystems.platformui.component.maincontent');
         $mainContent->setTemplate('EzSystemsHybridPlatformUiBundle::dashboard.html.twig');
 
         return $mainContent;

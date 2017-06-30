@@ -5,8 +5,9 @@
  */
 namespace EzSystems\HybridPlatformUi\EventSubscriber;
 
-use EzSystems\HybridPlatformUi\Mapper\MainContentMapper;
+use EzSystems\HybridPlatformUi\Http\AdminRequestMatcher;
 use EzSystems\HybridPlatformUi\Pjax\PjaxResponseMatcher;
+use EzSystems\HybridPlatformUi\Pjax\PjaxResponseMainContentMapper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,7 +35,7 @@ class PjaxSubscriber implements EventSubscriberInterface
     /**
      * @var \EzSystems\HybridPlatformUi\Pjax\PjaxResponseMainContentMapper
      */
-    private $responseMapper;
+    private $pjaxResponseMapper;
 
     /**
      * @var \EzSystems\HybridPlatformUi\Pjax\PjaxResponseMatcher
@@ -47,12 +48,12 @@ class PjaxSubscriber implements EventSubscriberInterface
     }
 
     public function __construct(
-        MainContentMapper $responseMapper,
-        RequestMatcherInterface $adminRequestMatcher,
+        PjaxResponseMainContentMapper $pjaxResponseMapper,
+        AdminRequestMatcher $adminRequestMatcher,
         RequestMatcherInterface $pjaxRequestMatcher,
         PjaxResponseMatcher $pjaxResponseMatcher
     ) {
-        $this->responseMapper = $responseMapper;
+        $this->pjaxResponseMapper = $pjaxResponseMapper;
         $this->adminRequestMatcher = $adminRequestMatcher;
         $this->pjaxRequestMatcher = $pjaxRequestMatcher;
         $this->pjaxResponseMatcher = $pjaxResponseMatcher;
@@ -79,7 +80,7 @@ class PjaxSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $this->responseMapper->map($response);
+        $this->pjaxResponseMapper->map($response);
     }
 
     private function isPjax(Request $request, Response $response)

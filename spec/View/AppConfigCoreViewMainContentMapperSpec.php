@@ -4,11 +4,11 @@ namespace spec\EzSystems\HybridPlatformUi\View;
 
 use eZ\Publish\Core\MVC\Symfony\View\View;
 use EzSystems\HybridPlatformUi\Components\App;
-use EzSystems\HybridPlatformUi\View\CoreViewMainContentMapper;
+use EzSystems\HybridPlatformUi\View\AppConfigCoreViewMainContentMapper;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class CoreViewMainContentMapperSpec extends ObjectBehavior
+class AppConfigCoreViewMainContentMapperSpec extends ObjectBehavior
 {
     function let(App $app)
     {
@@ -17,7 +17,7 @@ class CoreViewMainContentMapperSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType(CoreViewMainContentMapper::class);
+        $this->shouldHaveType(AppConfigCoreViewMainContentMapper::class);
     }
 
     function it_throws_an_exception_on_map_if_the_argument_is_not_a_view()

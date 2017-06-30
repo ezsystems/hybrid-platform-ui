@@ -3,15 +3,15 @@
 namespace spec\EzSystems\HybridPlatformUi\App;
 
 use EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer;
+use EzSystems\HybridPlatformUi\Http\AjaxUpdateRequestMatcher;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 
 class RequestAppResponseRendererSpec extends ObjectBehavior
 {
     function let(
         Request $request,
-        RequestMatcherInterface $ajaxUpdateRequestMatcher
+        AjaxUpdateRequestMatcher $ajaxUpdateRequestMatcher
     ) {
         $this->beConstructedWith($request, $ajaxUpdateRequestMatcher);
     }

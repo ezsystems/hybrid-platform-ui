@@ -5,6 +5,7 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\DependencyInjection\Compiler;
 
+use EzSystems\HybridPlatformUi\Components\NavigationHub;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -13,12 +14,12 @@ class NavigationHubPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('ezsystems.platformui.component.navigationhub')) {
+        if (!$container->hasDefinition(NavigationHub::class)) {
             return;
         }
 
-        $this->processNavigationHubTag($container, 'ezplatform.ui.zone', 2);
-        $this->processNavigationHubTag($container, 'ezplatform.ui.link', 3);
+        $this->processNavigationHubTag($container, 'ezplatform.ui.zone', '$zones');
+        $this->processNavigationHubTag($container, 'ezplatform.ui.link', '$links');
     }
 
     private function processNavigationHubTag(ContainerBuilder $container, $tag, $index)
@@ -30,7 +31,7 @@ class NavigationHubPass implements CompilerPassInterface
         }
 
         $container
-            ->findDefinition('ezsystems.platformui.component.navigationhub')
+            ->findDefinition(NavigationHub::class)
             ->replaceArgument($index, $items);
     }
 }

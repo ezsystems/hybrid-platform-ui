@@ -2,6 +2,8 @@
 
 namespace EzSystems\HybridPlatformUi\Components;
 
+use Symfony\Component\Templating\EngineInterface;
+
 class MainContent implements Component
 {
     protected $templating;
@@ -12,7 +14,7 @@ class MainContent implements Component
 
     protected $result = false;
 
-    public function __construct($templating)
+    public function __construct(EngineInterface $templating)
     {
         $this->templating = $templating;
     }

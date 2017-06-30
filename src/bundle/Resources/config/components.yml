@@ -1,23 +1,15 @@
 services:
-    ezsystems.platformui.component.app:
-        class: EzSystems\HybridPlatformUi\Components\App
-        arguments:
-            - "@templating"
-            - "@ezsystems.platformui.component.maincontent"
-            - "@ezsystems.platformui.component.navigationhub"
-            - ["@ezsystems.platformui.component.discoverybar"]
+    _defaults:
+        autowire: true
+        autoconfigure: true
         public: false
 
-    ezsystems.platformui.component.navigationhub:
-        class: EzSystems\HybridPlatformUi\Components\NavigationHub
+    EzSystems\HybridPlatformUi\Components\App:
         arguments:
-            - "@templating"
-            - '@=service("request_stack").getMasterRequest()'
-            - []
-            - []
-        public: false
+            $toolbars: ["@ezsystems.platformui.component.discoverybar"]
 
-    ezsystems.platformui.component.maincontent:
-        class: EzSystems\HybridPlatformUi\Components\MainContent
+    EzSystems\HybridPlatformUi\Components\NavigationHub:
         arguments:
-            - "@templating"
+            $request: '@=service("request_stack").getMasterRequest()'
+            $zones: []
+            $links: []
