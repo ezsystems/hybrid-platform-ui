@@ -1,0 +1,5 @@
+system:
+    admin_group:
+        pagelayout: 'EzSystemsHybridPlatformUiBundle::pjax_layout.html.twig'
+        user:
+            layout: 'EzSystemsHybridPlatformUiBundle::pjax_layout.html.twig'

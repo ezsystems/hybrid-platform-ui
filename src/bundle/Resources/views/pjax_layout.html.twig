@@ -1,0 +1,15 @@
+<div data-name="title">{% block title %}{{ title|default('') }}{% endblock %}</div>
+
+<div data-name="html">
+    {% block content %}{% endblock %}
+</div>
+
+<ul data-name="notification">
+    {% block notification %}
+        {% set notifications = app.session.flashBag.get("notification") %}
+        {% for notification in notifications %}
+            <li data-state="{{ notification.state }}">{{ notification.message }}</li>
+
+        {% endfor %}
+    {% endblock %}
+</ul>

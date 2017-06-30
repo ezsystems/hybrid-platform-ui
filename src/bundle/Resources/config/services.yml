@@ -43,7 +43,7 @@ services:
     ezsystems.platformui.hybrid.event_subscriber.component_renderer:
         class: EzSystems\HybridPlatformUi\EventSubscriber\ComponentRendererSubscriber
         arguments:
-            - "@ezsystems.platformui.pjax.request_matcher"
+            - "@ezsystems.platformui.hybrid.request_matcher.admin"
         tags:
             - {name: kernel.event_subscriber}
 
