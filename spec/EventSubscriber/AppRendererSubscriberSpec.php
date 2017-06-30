@@ -39,6 +39,7 @@ class AppRendererSubscriberSpec extends ObjectBehavior
         $event->getRequest()->willReturn($request);
         $event->getRequestType()->willReturn(HttpKernelInterface::MASTER_REQUEST);
         $event->getResponse()->willReturn($response);
+        $response->isRedirect()->willReturn(false);
 
         $this->beConstructedWith($app, $renderer, $adminRequestMatcher);
     }
@@ -72,6 +73,17 @@ class AppRendererSubscriberSpec extends ObjectBehavior
     {
         $event->getRequestType()->willReturn(HttpKernelInterface::SUB_REQUEST);
         $event->getRequest()->shouldNotBeCalled();
+        $this->renderApp($event);
+    }
+
+    function it_ignores_redirect_responses(
+        FilterResponseEvent $event,
+        AppResponseRenderer $renderer,
+        Response $response
+    ) {
+        $response->isRedirect()->willReturn(true);
+        $renderer->render(Argument::any())->shouldNotBeCalled();
+
         $this->renderApp($event);
     }
 
