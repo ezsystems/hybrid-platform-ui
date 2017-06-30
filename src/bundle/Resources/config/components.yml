@@ -13,5 +13,3 @@ services:
             $request: '@=service("request_stack").getMasterRequest()'
             $zones: []
             $links: []
-
-    EzSystems\HybridPlatformUi\Components\MainContent: ~

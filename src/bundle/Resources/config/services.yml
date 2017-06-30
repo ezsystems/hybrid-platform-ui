@@ -9,6 +9,10 @@ services:
             calls:
                 - [setContainer, ['@service_container']]
 
+    EzSystems\HybridPlatformUi\:
+        resource: '../../../lib/*'
+        exclude: '../../../lib/{Components,NavigationHub,Repository/Values}'
+
     EzSystems\HybridPlatformUiBundle\Controller\:
         resource: '../../Controller'
         public: true
@@ -30,43 +34,18 @@ services:
         calls:
             - [setExcludedRoutesPrefixes, ['%ezpublish.default_router.non_siteaccess_aware_routes%']]
 
-    EzSystems\HybridPlatformUi\Http\AjaxUpdateRequestMatcher: ~
-
-    EzSystems\HybridPlatformUi\EventSubscriber\AppRendererSubscriber: ~
-
     EzSystems\HybridPlatformUi\App\AppResponseRenderer:
         alias: EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer
 
     EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer:
         arguments:
             - '@=service("request_stack").getMasterRequest()'
-            - '@EzSystems\HybridPlatformUi\Http\AjaxUpdateRequestMatcher'
-
-    EzSystems\HybridPlatformUi\EventSubscriber\ComponentRendererSubscriber:
-        arguments:
-            - "@ezsystems.platformui.hybrid.request_matcher.admin"
 
     EzSystems\HybridPlatformUi\Http\HtmlFormatRequestMatcher:
         alias: EzSystems\HybridPlatformUi\Http\FormatAttributeHtmlFormatRequestMatcher
 
-    EzSystems\HybridPlatformUi\Http\FormatAttributeHtmlFormatRequestMatcher: ~
-
     EzSystems\HybridPlatformUi\Http\HybridRequestMatcher:
         alias: EzSystems\HybridPlatformUi\Http\ChainHybridRequestMatcher
 
-    EzSystems\HybridPlatformUi\Http\ChainHybridRequestMatcher: ~
-
-    EzSystems\HybridPlatformUi\EventSubscriber\CoreViewSubscriber: ~
-
     EzSystems\HybridPlatformUi\View\CoreViewMainContentMapper:
         alias: 'EzSystems\HybridPlatformUi\View\AppConfigCoreViewMainContentMapper'
-
-    EzSystems\HybridPlatformUi\View\AppConfigCoreViewMainContentMapper: ~
-
-    EzSystems\HybridPlatformUi\Filter\VersionFilter: ~
-
-    EzSystems\HybridPlatformUi\Repository\PathService: ~
-
-    EzSystems\HybridPlatformUi\Repository\UiLocationService: ~
-
-    EzSystems\HybridPlatformUi\Repository\UiFieldGroupService: ~

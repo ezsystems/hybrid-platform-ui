@@ -9,7 +9,3 @@ services:
 
     EzSystems\HybridPlatformUi\Pjax\PjaxResponseMatcher:
         alias: EzSystems\HybridPlatformUi\Pjax\MarkupPjaxResponseMatcher
-
-    EzSystems\HybridPlatformUi\Pjax\MarkupPjaxResponseMatcher: ~
-
-    EzSystems\HybridPlatformUi\Pjax\DomXpathPjaxResponseMainContentMapper: ~
