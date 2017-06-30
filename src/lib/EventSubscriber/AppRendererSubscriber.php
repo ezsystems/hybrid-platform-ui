@@ -49,12 +49,18 @@ class AppRendererSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $response = $event->getResponse();
+
+        if ($response->isRedirect()) {
+            return;
+        }
+
         $request = $event->getRequest();
 
         if (!$this->hybridRequestMatcher->matches($request)) {
             return;
         }
 
-        $this->appRenderer->render($event->getResponse(), $this->app);
+        $this->appRenderer->render($response, $this->app);
     }
 }
