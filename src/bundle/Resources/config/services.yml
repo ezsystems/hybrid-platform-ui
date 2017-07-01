@@ -52,7 +52,3 @@ services:
 
     EzSystems\HybridPlatformUi\Toolbars\ToolbarsConfigurator:
         alias: EzSystems\HybridPlatformUi\Toolbars\RouteBasedConfigurator
-
-    EzSystems\HybridPlatformUi\Toolbars\RouteBasedConfigurator:
-        calls:
-            - [addRoutesMappings, [{'ez_urlalias': {'discovery': 1}}]]

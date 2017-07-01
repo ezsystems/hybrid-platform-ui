@@ -68,7 +68,6 @@ class DomXpathPjaxResponseMainContentMapper implements PjaxResponseMainContentMa
 
         $this->app->setConfig([
             'title' => $title,
-            'toolbars' => ['discovery' => 1],
             'mainContent' => ['result' => '<ez-server-side-content>' . $content . '</ez-server--side-content>'],
             'notifications' => $this->buildNotifications($notificationElements),
         ]);

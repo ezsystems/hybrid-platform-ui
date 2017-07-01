@@ -3,6 +3,7 @@
 namespace EzSystems\HybridPlatformUi\EventSubscriber;
 
 use EzSystems\HybridPlatformUi\Components\App;
+use EzSystems\HybridPlatformUi\Http\HybridRequestMatcher;
 use EzSystems\HybridPlatformUi\Toolbars\ToolbarsConfigurator;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
@@ -24,14 +25,14 @@ class AppToolbarsSubscriber implements EventSubscriberInterface
     /**
      * @var \Symfony\Component\HttpFoundation\RequestMatcherInterface
      */
-    private $requestMatcher;
+    private $hybridRequestMatcher;
 
     public function __construct(
-        RequestMatcherInterface $requestMatcher,
+        HybridRequestMatcher $hybridRequestMatcher,
         ToolbarsConfigurator $configurator
     ) {
         $this->configurator = $configurator;
-        $this->requestMatcher = $requestMatcher;
+        $this->hybridRequestMatcher = $hybridRequestMatcher;
     }
 
     public static function getSubscribedEvents()
@@ -41,7 +42,7 @@ class AppToolbarsSubscriber implements EventSubscriberInterface
 
     public function configureAppToolbars(GetResponseEvent $event)
     {
-        if (!$this->requestMatcher->matches($event->getRequest())) {
+        if (!$this->hybridRequestMatcher->matches($event->getRequest())) {
             return false;
         }
 

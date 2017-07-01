@@ -20,6 +20,9 @@ class RouteBasedConfigurator implements ToolbarsConfigurator
     public function __construct(App $app)
     {
         $this->app = $app;
+        $this->mappings = [
+            'ez_urlalias' => ['discovery' => 1],
+        ];
     }
 
     public function addRoutesMappings(array $mappings)
