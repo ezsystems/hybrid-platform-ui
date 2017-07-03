@@ -41,8 +41,6 @@ class LocationController extends Controller
                 '_ez_content_view',
                 [
                     'contentId' => $content->id,
-                    'layout' => 'true',
-                    'viewType' => 'full',
                 ]
             )
         );
