@@ -50,6 +50,4 @@ services:
     EzSystems\HybridPlatformUi\View\CoreViewMainContentMapper:
         alias: 'EzSystems\HybridPlatformUi\View\AppConfigCoreViewMainContentMapper'
 
-    EzSystems\HybridPlatformUi\Mapper\Form\LocationMapper: ~
-
     Symfony\Component\Routing\RouterInterface: '@router'
