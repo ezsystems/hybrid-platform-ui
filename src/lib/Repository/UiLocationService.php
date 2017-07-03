@@ -6,9 +6,11 @@
  */
 namespace EzSystems\HybridPlatformUi\Repository;
 
+use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Location;
+use eZ\Publish\Core\Base\Exceptions\ForbiddenException;
 use EzSystems\HybridPlatformUi\Repository\Values\Content\UiLocation;
 
 /**
@@ -23,14 +25,23 @@ class UiLocationService
     private $locationService;
 
     /**
+     * @var ContentService
+     */
+    private $contentService;
+
+    /**
      * @var PathService
      */
     private $pathService;
 
-    public function __construct(LocationService $locationService, PathService $pathService)
-    {
+    public function __construct(
+        LocationService $locationService,
+        ContentService $contentService,
+        PathService $pathService
+    ) {
         $this->locationService = $locationService;
         $this->pathService = $pathService;
+        $this->contentService = $contentService;
     }
 
     /**
@@ -52,6 +63,30 @@ class UiLocationService
         return $uiLocations;
     }
 
+    /**
+     * Deletes locations.
+     * Throws exception if there is an attempt to delete the main location.
+     *
+     * @param array $locationIds
+     * @param int $contentId
+     *
+     * @throws ForbiddenException
+     */
+    public function deleteLocations(array $locationIds, int $contentId)
+    {
+        $contentInfo = $this->contentService->loadContentInfo($contentId);
+
+        foreach ($locationIds as $locationId) {
+            $location = $this->locationService->loadLocation($locationId);
+
+            if ($this->isMainLocation($location, $contentInfo)) {
+                throw new ForbiddenException('Main location cannot be deleted.');
+            }
+
+            $this->locationService->deleteLocation($location);
+        }
+    }
+
     private function buildUiLocations(array $locations, ContentInfo $contentInfo)
     {
         return array_map(
@@ -59,7 +94,7 @@ class UiLocationService
                 $properties = [
                     'childCount' => $this->locationService->getLocationChildCount($location),
                     'pathLocations' => $this->pathService->loadPathLocations($location),
-                    'main' => ($location->id === $contentInfo->mainLocationId),
+                    'main' => $this->isMainLocation($location, $contentInfo),
                 ];
 
                 $uiLocation = new UiLocation($location, $properties);
@@ -68,6 +103,11 @@ class UiLocationService
             },
             $locations
         );
+    }
+
+    private function isMainLocation(Location $location, ContentInfo $contentInfo)
+    {
+        return $location->id === $contentInfo->mainLocationId;
     }
 
     private function prioritizeMainLocation(array $locations)
