@@ -14,6 +14,7 @@ use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Filter\VersionFilter;
+use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiFieldGroupService;
 use EzSystems\HybridPlatformUi\Repository\UiLocationService;
 
@@ -72,8 +73,11 @@ class ContentViewController extends Controller
         return $view;
     }
 
-    public function versionsTabAction(ContentView $view, VersionFilter $versionFilter)
-    {
+    public function versionsTabAction(
+        ContentView $view,
+        VersionFilter $versionFilter,
+        UiFormFactory $formFactory
+    ) {
         $contentInfo = $view->getContent()->getVersionInfo()->getContentInfo();
         $contentService = $this->getRepository()->getContentService();
         $versions = $contentService->loadVersions($contentInfo);
@@ -88,12 +92,20 @@ class ContentViewController extends Controller
             $translations[$version->id] = $this->getTranslations($version);
         }
 
+        $draftVersions = $versionFilter->filterDrafts($versions);
+        $draftActionsForm = $formFactory->createVersionsDraftActionForm($draftVersions);
+
+        $archivedVersions = $versionFilter->filterArchived($versions);
+        $archivedActionsForm = $formFactory->createVersionsArchivedActionForm($archivedVersions);
+
         $view->addParameters([
-            'draftVersions' => $versionFilter->filterDrafts($versions),
+            'draftVersions' => $draftVersions,
             'publishedVersions' => $versionFilter->filterPublished($versions),
-            'archivedVersions' => $versionFilter->filterArchived($versions),
+            'archivedVersions' => $archivedVersions,
             'authors' => $authors,
             'translations' => $translations,
+            'draftActionsForm' => $draftActionsForm->createView(),
+            'archivedActionsForm' => $archivedActionsForm->createView(),
         ]);
 
         return $view;

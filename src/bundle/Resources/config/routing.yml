@@ -3,3 +3,8 @@ ez_hybrid_platform_ui_dashboard:
     defaults:
         _controller: EzSystemsHybridPlatformUiBundle:Dashboard:viewDashboard
     methods: [GET]
+ez_hybrid_platform_ui_version_draft_actions:
+    path: /version/draft-actions/{contentId}
+    defaults:
+        _controller: EzSystemsHybridPlatformUiBundle:Version:draftActions
+    methods: [POST]
