@@ -10,7 +10,7 @@ use eZ\Publish\API\Repository\ContentService;
 /**
  * Service for allowing deletion of versions.
  */
-class VersionService
+class UiVersionService
 {
     /**
      * @var ContentService

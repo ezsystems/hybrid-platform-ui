@@ -5,10 +5,10 @@ namespace spec\EzSystems\HybridPlatformUi\Repository;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
-use EzSystems\HybridPlatformUi\Repository\VersionService;
+use EzSystems\HybridPlatformUi\Repository\UiVersionService;
 use PhpSpec\ObjectBehavior;
 
-class VersionServiceSpec extends ObjectBehavior
+class UiVersionServiceSpec extends ObjectBehavior
 {
     function let(ContentService $contentService)
     {
@@ -17,7 +17,7 @@ class VersionServiceSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType(VersionService::class);
+        $this->shouldHaveType(UiVersionService::class);
     }
 
     function it_should_delete_versions(

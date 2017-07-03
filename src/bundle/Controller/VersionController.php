@@ -9,7 +9,7 @@ namespace EzSystems\HybridPlatformUiBundle\Controller;
 
 use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
-use EzSystems\HybridPlatformUi\Repository\VersionService;
+use EzSystems\HybridPlatformUi\Repository\UiVersionService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
@@ -19,7 +19,7 @@ class VersionController extends Controller
     public function draftActionsAction(
         $contentId,
         Request $request,
-        VersionService $versionService,
+        UiVersionService $versionService,
         UiFormFactory $formFactory,
         RouterInterface $router
     ) {
