@@ -2,18 +2,8 @@
 
 namespace EzSystems\HybridPlatformUi\Http;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestMatcher;
+use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 
-class HtmlFormatRequestMatcher extends RequestMatcher
+interface HtmlFormatRequestMatcher extends RequestMatcherInterface
 {
-    public function __construct()
-    {
-        parent::__construct(null, null, null, null, ['_format' => '^(?!js).*$']);
-    }
-
-    public function match(Request $request)
-    {
-        return parent::matches($request);
-    }
 }

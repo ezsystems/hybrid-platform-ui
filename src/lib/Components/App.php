@@ -2,6 +2,8 @@
 
 namespace EzSystems\HybridPlatformUi\Components;
 
+use Symfony\Component\Templating\EngineInterface;
+
 class App implements Component
 {
     const TAG_NAME = 'ez-platform-ui-app';
@@ -16,8 +18,10 @@ class App implements Component
 
     protected $title;
 
+    protected $notifications = [];
+
     public function __construct(
-        $templating,
+        EngineInterface $templating,
         MainContent $content,
         NavigationHub $navigationHub,
         array $toolbars
@@ -35,6 +39,9 @@ class App implements Component
         }
         if (isset($config['toolbars'])) {
             $this->setToolbarsVisibility($config['toolbars']);
+        }
+        if (isset($config['notifications'])) {
+            $this->notifications = $config['notifications'];
         }
 
         if (isset($config['mainContent']) && $config['mainContent'] instanceof Component) {
@@ -75,6 +82,7 @@ class App implements Component
             'update' => [
                 'properties' => [
                     'pageTitle' => $this->title,
+                    'notifications' => $this->notifications,
                 ],
                 'children' => array_merge(
                     $this->toolbars,

@@ -4,86 +4,48 @@ services:
         autoconfigure: true
         public: false
 
+    _instanceof:
+        Symfony\Component\DependencyInjection\ContainerAwareInterface:
+            calls:
+                - [setContainer, ['@service_container']]
+
+    EzSystems\HybridPlatformUi\:
+        resource: '../../../lib/*'
+        exclude: '../../../lib/{Components,NavigationHub,Repository/Values}'
+
     EzSystems\HybridPlatformUiBundle\Controller\:
         resource: '../../Controller'
         public: true
         tags: ['controller.service_arguments']
 
-    ezsystems.platformui.hybrid.request_matcher.admin:
-        class: EzSystems\HybridPlatformUi\Http\HardcodedAdminRequestMatcher
+    EzSystems\HybridPlatformUi\EventSubscriber\:
+        resource: '../../../lib/EventSubscriber'
+        public: true
+        tags: ['kernel.event_subscriber']
+
+    EzSystems\HybridPlatformUi\EventSubscriber\PjaxSubscriber:
+        arguments:
+            $pjaxRequestMatcher: "@ezsystems.platformui.pjax.request_matcher"
+
+    EzSystems\HybridPlatformUi\Http\AdminRequestMatcher:
+        alias: EzSystems\HybridPlatformUi\Http\HardcodedAdminRequestMatcher
+
+    EzSystems\HybridPlatformUi\Http\HardcodedAdminRequestMatcher:
         calls:
             - [setExcludedRoutesPrefixes, ['%ezpublish.default_router.non_siteaccess_aware_routes%']]
-        public: false
 
-    ezsystems.platformui.hybrid.request_matcher.ajax_update:
-        class: EzSystems\HybridPlatformUi\Http\AjaxUpdateRequestMatcher
-        public: false
+    EzSystems\HybridPlatformUi\App\AppResponseRenderer:
+        alias: EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer
 
-    ezsystems.platformui.hybrid.event_subscriber.app_renderer:
-        class: EzSystems\HybridPlatformUi\EventSubscriber\AppRendererSubscriber
-        arguments:
-            - "@ezsystems.platformui.component.app"
-            - "@ezsystems.platform_ui.hybrid.app.request_app_response_renderer"
-            - "@ezsystems.hybrid_platform_ui.http.request_matcher.hybrid"
-        tags:
-            - {name: kernel.event_subscriber}
-
-    ezsystems.platform_ui.hybrid.app.request_app_response_renderer:
-        class: EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer
+    EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer:
         arguments:
             - '@=service("request_stack").getMasterRequest()'
-            - '@ezsystems.platformui.hybrid.request_matcher.ajax_update'
-        public: false
 
-    ezsystems.platformui.hybrid.event_subscriber.component_renderer:
-        class: EzSystems\HybridPlatformUi\EventSubscriber\ComponentRendererSubscriber
-        arguments:
-            - "@ezsystems.platformui.pjax.request_matcher"
-        tags:
-            - {name: kernel.event_subscriber}
+    EzSystems\HybridPlatformUi\Http\HtmlFormatRequestMatcher:
+        alias: EzSystems\HybridPlatformUi\Http\FormatAttributeHtmlFormatRequestMatcher
 
-    ezsystems.hybrid_platform_ui.http.request_matcher.html_format:
-        class: EzSystems\HybridPlatformUi\Http\HtmlFormatRequestMatcher
-        public: false
+    EzSystems\HybridPlatformUi\Http\HybridRequestMatcher:
+        alias: EzSystems\HybridPlatformUi\Http\ChainHybridRequestMatcher
 
-    ezsystems.hybrid_platform_ui.http.request_matcher.hybrid:
-        class: EzSystems\HybridPlatformUi\Http\ChainRequestMatcher
-        arguments:
-            - "@ezsystems.platformui.hybrid.request_matcher.admin"
-            - "@ezsystems.hybrid_platform_ui.http.request_matcher.html_format"
-        public: false
-
-    ezsystems.platformui.hybrid.event_subscriber.core_view:
-        class: EzSystems\HybridPlatformUi\EventSubscriber\CoreViewSubscriber
-        arguments:
-            - "@ezsystems.platformui.hybrid.mapper.core_view_to_main_content"
-            - "@ezsystems.platformui.hybrid.request_matcher.admin"
-        tags:
-            - {name: kernel.event_subscriber}
-
-    ezsystems.platformui.hybrid.mapper.core_view_to_main_content:
-        class: EzSystems\HybridPlatformUi\View\CoreViewMainContentMapper
-        arguments:
-            - "@ezsystems.platformui.component.app"
-        public: false
-
-    EzSystems\HybridPlatformUi\Filter\VersionFilter: ~
-
-    EzSystems\HybridPlatformUi\Repository\PathService:
-        arguments:
-            - "@ezpublish.api.service.search"
-
-    EzSystems\HybridPlatformUi\Repository\UiLocationService:
-        arguments:
-            - "@ezpublish.api.service.location"
-
-    EzSystems\HybridPlatformUi\Repository\UiFieldGroupService:
-        arguments:
-            - "@ezpublish.api.service.content_type"
-            - "@ezpublish.fields_groups.list"
-
-    EzSystems\HybridPlatformUi\Repository\UiRelationService:
-        arguments:
-            - "@ezpublish.api.service.content"
-            - "@ezpublish.api.service.content_type"
-            - "@ezpublish.api.service.location"
+    EzSystems\HybridPlatformUi\View\CoreViewMainContentMapper:
+        alias: 'EzSystems\HybridPlatformUi\View\AppConfigCoreViewMainContentMapper'

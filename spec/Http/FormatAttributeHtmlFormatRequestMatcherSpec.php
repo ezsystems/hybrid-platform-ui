@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 
-class HtmlFormatRequestMatcherSpec extends ObjectBehavior
+class FormatAttributeHtmlFormatRequestMatcherSpec extends ObjectBehavior
 {
     function let(
         ParameterBag $attributes,
@@ -28,7 +28,7 @@ class HtmlFormatRequestMatcherSpec extends ObjectBehavior
         Request $request
     ) {
         $attributes->get('_format')->willReturn('html');
-        $this->match($request)->shouldBe(true);
+        $this->matches($request)->shouldBe(true);
     }
 
     function it_does_not_match_requests_with_html_format(
@@ -37,6 +37,6 @@ class HtmlFormatRequestMatcherSpec extends ObjectBehavior
     ) {
         $attributes->get('_format')->willReturn('js');
 
-        $this->match($request)->shouldBe(false);
+        $this->matches($request)->shouldBe(false);
     }
 }

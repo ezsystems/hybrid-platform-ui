@@ -4,6 +4,11 @@ parameters:
     ezsystems.platformui.navigationhub.link.subtree.class: EzSystems\HybridPlatformUi\NavigationHub\Link\Subtree
 
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
     ezsystems.platformui.navigationhub.zones.content:
         class: "%ezsystems.platformui.navigationhub.zone.class%"
         arguments:
@@ -11,7 +16,6 @@ services:
             - "content"
         tags:
             - {name: ezplatform.ui.zone}
-        public: false
 
     ezsystems.platformui.navigationhub.zones.page:
         class: "%ezsystems.platformui.navigationhub.zone.class%"
@@ -20,7 +24,6 @@ services:
             - "page"
         tags:
             - {name: ezplatform.ui.zone}
-        public: false
 
     ezsystems.platformui.navigationhub.zones.performances:
         class: "%ezsystems.platformui.navigationhub.zone.class%"
@@ -29,7 +32,6 @@ services:
             - "performances"
         tags:
             - {name: ezplatform.ui.zone}
-        public: false
 
     ezsystems.platformui.navigationhub.zones.admin:
         class: "%ezsystems.platformui.navigationhub.zone.class%"
@@ -38,7 +40,6 @@ services:
             - "admin"
         tags:
             - {name: ezplatform.ui.zone}
-        public: false
 
     ezsystems.platformui.navigationhub.link.contentstructure:
         class: "%ezsystems.platformui.navigationhub.link.subtree.class%"
@@ -49,7 +50,6 @@ services:
             - {locationId: 2}
         tags:
             - {name: ezplatform.ui.link}
-        public: false
 
     ezsystems.platformui.navigationhub.link.medialibrary:
         class: "%ezsystems.platformui.navigationhub.link.subtree.class%"
@@ -60,7 +60,6 @@ services:
             - {locationId: 43}
         tags:
             - {name: ezplatform.ui.link}
-        public: false
 
     ezsystems.platformui.navigationhub.link.admin.dashboard:
         class: "%ezsystems.platformui.navigationhub.link.route.class%"
@@ -71,7 +70,6 @@ services:
             - "admin"
         tags:
             - {name: ezplatform.ui.link}
-        public: false
 
     ezsystems.platformui.navigationhub.link.admin.section:
         class: "%ezsystems.platformui.navigationhub.link.route.class%"
@@ -84,7 +82,6 @@ services:
             - [setRoutePrefix, ["admin_section"]]
         tags:
             - {name: ezplatform.ui.link}
-        public: false
 
     ezsystems.platformui.navigationhub.link.admin.languages:
         class: "%ezsystems.platformui.navigationhub.link.route.class%"
@@ -97,7 +94,6 @@ services:
             - [setRoutePrefix, ["admin_language"]]
         tags:
             - {name: ezplatform.ui.link}
-        public: false
 
     ezsystems.platformui.navigationhub.link.admin.content_types:
         class: "%ezsystems.platformui.navigationhub.link.route.class%"
@@ -110,7 +106,6 @@ services:
             - [setRoutePrefix, ["admin_contenttype"]]
         tags:
             - {name: ezplatform.ui.link}
-        public: false
 
     ezsystems.platformui.navigationhub.link.admin.roles:
         class: "%ezsystems.platformui.navigationhub.link.route.class%"
@@ -123,7 +118,6 @@ services:
             - [setRoutePrefix, ["admin_role"]]
         tags:
             - {name: ezplatform.ui.link}
-        public: false
 
     ezsystems.platformui.navigationhub.link.admin.system_info:
         class: "%ezsystems.platformui.navigationhub.link.route.class%"
@@ -134,4 +128,3 @@ services:
             - "admin"
         tags:
             - {name: ezplatform.ui.link}
-        public: false
