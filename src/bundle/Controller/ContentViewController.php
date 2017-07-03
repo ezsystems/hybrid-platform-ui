@@ -15,7 +15,6 @@ use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Filter\VersionFilter;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
-use EzSystems\HybridPlatformUi\Mapper\Form\VersionMapper;
 use EzSystems\HybridPlatformUi\Repository\UiFieldGroupService;
 use EzSystems\HybridPlatformUi\Repository\UiLocationService;
 
@@ -77,7 +76,6 @@ class ContentViewController extends Controller
     public function versionsTabAction(
         ContentView $view,
         VersionFilter $versionFilter,
-        VersionMapper $versionMapper,
         UiFormFactory $formFactory
     ) {
         $contentInfo = $view->getContent()->getVersionInfo()->getContentInfo();
@@ -95,12 +93,10 @@ class ContentViewController extends Controller
         }
 
         $draftVersions = $versionFilter->filterDrafts($versions);
-        $draftActionsForm = $formFactory->createVersionsDraftActionForm();
-        $draftActionsForm->setData($versionMapper->mapToForm($draftVersions, $contentInfo));
+        $draftActionsForm = $formFactory->createVersionsDraftActionForm($draftVersions);
 
         $archivedVersions = $versionFilter->filterArchived($versions);
-        $archivedActionsForm = $formFactory->createVersionsArchivedActionForm();
-        $archivedActionsForm->setData($versionMapper->mapToForm($archivedVersions, $contentInfo));
+        $archivedActionsForm = $formFactory->createVersionsArchivedActionForm($archivedVersions);
 
         $view->addParameters([
             'draftVersions' => $draftVersions,

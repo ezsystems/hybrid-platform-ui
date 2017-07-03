@@ -15,10 +15,10 @@ abstract class Data extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('versionIds', CollectionType::class, array(
+            ->add('versionIds', CollectionType::class, [
                 'entry_type' => CheckboxType::class,
                 'allow_add' => true,
                 'required' => false,
-            ));
+            ]);
     }
 }

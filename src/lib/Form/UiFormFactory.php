@@ -5,6 +5,7 @@
  */
 namespace EzSystems\HybridPlatformUi\Form;
 
+use EzSystems\HybridPlatformUi\Mapper\Form\VersionMapper;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\ArchivedActions;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\DraftActions;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -19,28 +20,42 @@ class UiFormFactory
      */
     private $formFactory;
 
-    public function __construct(FormFactoryInterface $formFactory)
+    /**
+     * @var VersionMapper
+     */
+    private $versionMapper;
+
+    public function __construct(FormFactoryInterface $formFactory, VersionMapper $versionMapper)
     {
         $this->formFactory = $formFactory;
+        $this->versionMapper = $versionMapper;
     }
 
     /**
      * Create form to be used for draft actions on versions tab.
      *
+     * @param array $versions
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createVersionsDraftActionForm()
+    public function createVersionsDraftActionForm(array $versions = [])
     {
-        return $this->formFactory->create(DraftActions::class);
+        $data = $this->versionMapper->mapToForm($versions);
+
+        return $this->formFactory->create(DraftActions::class, $data);
     }
 
     /**
      * Create form to be used for archived actions on versions tab.
      *
+     * @param array $versions
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createVersionsArchivedActionForm()
+    public function createVersionsArchivedActionForm(array $versions = [])
     {
-        return $this->formFactory->create(ArchivedActions::class);
+        $data = $this->versionMapper->mapToForm($versions);
+
+        return $this->formFactory->create(ArchivedActions::class, $data);
     }
 }
