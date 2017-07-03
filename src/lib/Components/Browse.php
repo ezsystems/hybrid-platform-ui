@@ -41,7 +41,7 @@ class Browse implements Component
         return [
             'selector' => 'ez-browse',
             'update' => [
-                'property' => [
+                'properties' => [
                     'selectedLocationId' => $this->getLocationId(),
                 ],
             ],
