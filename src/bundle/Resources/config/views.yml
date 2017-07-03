@@ -13,7 +13,7 @@ system:
             details_tab:
                 default:
                     template: "EzSystemsHybridPlatformUiBundle:content/tabs:details.html.twig"
-                    controller: "EzSystemsHybridPlatformUiBundle:ContentView:detailsTab"
+                    controller: 'EzSystems\HybridPlatformUiBundle\Controller\ContentViewController:detailsTabAction'
                     match: true
             versions_tab:
                 default:

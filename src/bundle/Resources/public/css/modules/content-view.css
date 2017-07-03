@@ -11,3 +11,12 @@
     background: var(--ez-color-action-bar);
     color: var(--ez-color-text-base-inverted);
 }
+
+.ez-content-view .ez-tabs-panel .ez-table-data {
+    margin-bottom: 3em;
+}
+
+.ez-content-view .ez-tabs-panel,
+.ez-content-view ez-subitem {
+    margin: 2em;
+}

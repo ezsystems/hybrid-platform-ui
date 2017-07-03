@@ -32,7 +32,7 @@
     display: inline-block;
 }
 
-.ez-table-data td:last-of-type {
+.ez-table-data-row-tool td:last-of-type {
     text-align: right;
 }
 

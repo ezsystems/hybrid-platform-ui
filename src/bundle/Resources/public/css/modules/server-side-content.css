@@ -1,0 +1,13 @@
+/* this applies only to PlatformUI pjax generated page */
+ez-server-side-content .ez-serverside-content {
+    margin: 2em;
+}
+
+/* system info */
+ez-server-side-content .ez-tabs.ez-serverside-content {
+    margin: 0;
+}
+
+ez-server-side-content .ez-tabs.ez-serverside-content .ez-tabs-panel {
+    margin: 2em;
+}

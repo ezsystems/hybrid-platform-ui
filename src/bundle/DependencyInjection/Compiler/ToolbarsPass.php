@@ -5,6 +5,7 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\DependencyInjection\Compiler;
 
+use EzSystems\HybridPlatformUi\Components\App;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -14,7 +15,7 @@ class ToolbarsPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (!$container->hasDefinition('ezsystems.platformui.component.app')) {
+        if (!$container->hasDefinition(App::class)) {
             return;
         }
 
@@ -57,7 +58,7 @@ class ToolbarsPass implements CompilerPassInterface
         }
 
         $container
-            ->findDefinition('ezsystems.platformui.component.app')
-            ->replaceArgument(3, $toolbars);
+            ->findDefinition(App::class)
+            ->replaceArgument('$toolbars', $toolbars);
     }
 }

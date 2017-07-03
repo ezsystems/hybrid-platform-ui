@@ -3,7 +3,9 @@
 namespace spec\EzSystems\HybridPlatformUi\EventSubscriber;
 
 use EzSystems\HybridPlatformUi\EventSubscriber\PjaxSubscriber;
-use EzSystems\HybridPlatformUi\Mapper\MainContentMapper;
+use EzSystems\HybridPlatformUi\Http\AdminRequestMatcher;
+use EzSystems\HybridPlatformUi\Pjax\PjaxResponseMatcher;
+use EzSystems\HybridPlatformUi\Pjax\PjaxResponseMainContentMapper;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -18,19 +20,21 @@ class PjaxSubscriberSpec extends ObjectBehavior
 {
     function let(
         FilterResponseEvent $event,
-        MainContentMapper $mapper,
+        PjaxResponseMainContentMapper $mapper,
         Request $request,
-        RequestMatcherInterface $adminRequestMatcher,
+        AdminRequestMatcher $adminRequestMatcher,
         RequestMatcherInterface $pjaxRequestMatcher,
+        PjaxResponseMatcher $pjaxResponseMatcher,
         Response $response
     ) {
-        $this->beConstructedWith($mapper, $adminRequestMatcher, $pjaxRequestMatcher);
-
         $event->getRequest()->willReturn($request);
         $event->getResponse()->willReturn($response);
+        $event->getRequestType()->willReturn(HttpKernelInterface::MASTER_REQUEST);
+
         $adminRequestMatcher->matches($request)->willReturn(true);
         $pjaxRequestMatcher->matches($request)->willReturn(true);
-        $event->getRequestType()->willReturn(HttpKernelInterface::MASTER_REQUEST);
+
+        $this->beConstructedWith($mapper, $adminRequestMatcher, $pjaxRequestMatcher, $pjaxResponseMatcher);
     }
 
     function it_is_initializable()
@@ -42,7 +46,6 @@ class PjaxSubscriberSpec extends ObjectBehavior
     function it_ignores_sub_requests(FilterResponseEvent $event)
     {
         $event->getRequestType()->willReturn(HttpKernelInterface::SUB_REQUEST);
-        $event->getResponse()->shouldNotBeCalled();
 
         $this->mapPjaxResponseToMainContent($event);
     }
@@ -50,10 +53,9 @@ class PjaxSubscriberSpec extends ObjectBehavior
     function it_ignores_non_admin_requests(
         FilterResponseEvent $event,
         Request $request,
-        RequestMatcherInterface $adminRequestMatcher
+        AdminRequestMatcher $adminRequestMatcher
     ) {
         $adminRequestMatcher->matches($request)->willReturn(false);
-        $event->getResponse()->shouldNotBeCalled();
 
         $this->mapPjaxResponseToMainContent($event);
     }
@@ -64,7 +66,6 @@ class PjaxSubscriberSpec extends ObjectBehavior
         RequestMatcherInterface $pjaxRequestMatcher
     ) {
         $pjaxRequestMatcher->matches($request)->willReturn(false);
-        $event->getResponse()->shouldNotBeCalled();
 
         $this->mapPjaxResponseToMainContent($event);
     }
@@ -82,7 +83,7 @@ class PjaxSubscriberSpec extends ObjectBehavior
 
     function it_sets_the_app_maincontent_result_with_the_value_returned_by_the_mapper(
         FilterResponseEvent $event,
-        MainContentMapper $mapper,
+        PjaxResponseMainContentMapper $mapper,
         Response $response
     ) {
         $mapper->map($response)->shouldBeCalled();

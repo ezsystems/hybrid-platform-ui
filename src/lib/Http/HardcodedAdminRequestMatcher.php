@@ -3,9 +3,11 @@
 namespace EzSystems\HybridPlatformUi\Http;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 
-class HardcodedAdminRequestMatcher implements RequestMatcherInterface
+/**
+ * Matches admin requests using the siteaccess URI part.
+ */
+class HardcodedAdminRequestMatcher implements AdminRequestMatcher
 {
     /**
      * @var array

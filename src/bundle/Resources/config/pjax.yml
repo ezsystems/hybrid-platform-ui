@@ -1,15 +1,11 @@
 services:
-    ezsystems.platformui.hybrid.event_subscriber.pjax_subscriber:
-        class: EzSystems\HybridPlatformUi\EventSubscriber\PjaxSubscriber
-        arguments:
-            - "@ezsystems.platformui.hybrid.mapper.pjax_response_to_main_content"
-            - "@ezsystems.platformui.hybrid.request_matcher.admin"
-            - "@ezsystems.platformui.pjax.request_matcher"
-        tags:
-            - {name: kernel.event_subscriber}
-
-    ezsystems.platformui.hybrid.mapper.pjax_response_to_main_content:
-        class: EzSystems\HybridPlatformUi\Pjax\PjaxResponseMainContentMapper
-        arguments:
-            - "@ezsystems.platformui.component.app"
+    _defaults:
+        autowire: true
+        autoconfigure: true
         public: false
+
+    EzSystems\HybridPlatformUi\Pjax\PjaxResponseMainContentMapper:
+        alias: EzSystems\HybridPlatformUi\Pjax\DomXpathPjaxResponseMainContentMapper
+
+    EzSystems\HybridPlatformUi\Pjax\PjaxResponseMatcher:
+        alias: EzSystems\HybridPlatformUi\Pjax\MarkupPjaxResponseMatcher

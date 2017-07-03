@@ -5,12 +5,12 @@ namespace spec\EzSystems\HybridPlatformUi\EventSubscriber;
 use EzSystems\HybridPlatformUi\App\AppResponseRenderer;
 use EzSystems\HybridPlatformUi\Components\App;
 use EzSystems\HybridPlatformUi\EventSubscriber\AppRendererSubscriber;
+use EzSystems\HybridPlatformUi\Http\HybridRequestMatcher;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
@@ -30,17 +30,18 @@ class AppRendererSubscriberSpec extends ObjectBehavior
         Request $request,
         Response $response,
         ParameterBag $requestAttributes,
-        RequestMatcherInterface $adminRequestMatcher
+        HybridRequestMatcher $hybridRequestMatcher
     ) {
-        $adminRequestMatcher->matches(Argument::type(Request::class))->willReturn(true);
+        $hybridRequestMatcher->matches(Argument::type(Request::class))->willReturn(true);
         $request->attributes = $requestAttributes;
         $request->duplicate(Argument::cetera())->willReturn(new Request());
 
         $event->getRequest()->willReturn($request);
         $event->getRequestType()->willReturn(HttpKernelInterface::MASTER_REQUEST);
         $event->getResponse()->willReturn($response);
+        $response->isRedirect()->willReturn(false);
 
-        $this->beConstructedWith($app, $renderer, $adminRequestMatcher);
+        $this->beConstructedWith($app, $renderer, $hybridRequestMatcher);
     }
 
     function it_is_initializable()
@@ -59,10 +60,10 @@ class AppRendererSubscriberSpec extends ObjectBehavior
         AppResponseRenderer $renderer,
         FilterResponseEvent $event,
         Request $request,
-        RequestMatcherInterface $adminRequestMatcher,
+        HybridRequestMatcher $hybridRequestMatcher,
         Response $response
     ) {
-        $adminRequestMatcher->matches($request)->willReturn(false);
+        $hybridRequestMatcher->matches($request)->willReturn(false);
         $renderer->render($response)->shouldNotBeCalled();
 
         $this->renderApp($event);
@@ -72,6 +73,17 @@ class AppRendererSubscriberSpec extends ObjectBehavior
     {
         $event->getRequestType()->willReturn(HttpKernelInterface::SUB_REQUEST);
         $event->getRequest()->shouldNotBeCalled();
+        $this->renderApp($event);
+    }
+
+    function it_ignores_redirect_responses(
+        FilterResponseEvent $event,
+        AppResponseRenderer $renderer,
+        Response $response
+    ) {
+        $response->isRedirect()->willReturn(true);
+        $renderer->render(Argument::any())->shouldNotBeCalled();
+
         $this->renderApp($event);
     }
 
