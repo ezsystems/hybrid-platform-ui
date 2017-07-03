@@ -24,7 +24,7 @@
 {% endif %}
 
 {% if archivedVersions %}
-    {{ form_start(archivedActionsForm, {'attr': {'class': 'ez-js-standard-form'}}) }}
+    {{ form_start(archivedActionsForm) }}
 
     <div class="ez-list-toolbar">
         <h2 class="ez-list-toolbar-label">{{ 'locationview.versions.archived.versions'|trans()|desc('Archived versions') }}</h2>
