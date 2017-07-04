@@ -22,16 +22,21 @@ class VersionController extends Controller
      */
     private $uiVersionService;
 
-    public function __construct(UiVersionService $uiVersionService)
+    /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    public function __construct(UiVersionService $uiVersionService, RouterInterface $router)
     {
         $this->uiVersionService = $uiVersionService;
+        $this->router = $router;
     }
 
     public function draftActionsAction(
         $contentId,
         Request $request,
-        UiFormFactory $formFactory,
-        RouterInterface $router
+        UiFormFactory $formFactory
     ) {
         $draftActionsForm = $formFactory->createVersionsDraftActionForm();
         $draftActionsForm->handleRequest($request);
@@ -40,14 +45,13 @@ class VersionController extends Controller
             $this->deleteVersionsBasedOnFormSubmit($draftActionsForm, $contentId);
         }
 
-        return $this->redirectUser($router, $contentId);
+        return $this->redirectToContentView($contentId);
     }
 
     public function archiveActionsAction(
         $contentId,
         Request $request,
-        UiFormFactory $formFactory,
-        RouterInterface $router
+        UiFormFactory $formFactory
     ) {
         $archiveActionsForm = $formFactory->createVersionsArchivedActionForm();
         $archiveActionsForm->handleRequest($request);
@@ -56,7 +60,7 @@ class VersionController extends Controller
             $this->deleteVersionsBasedOnFormSubmit($archiveActionsForm, $contentId);
         }
 
-        return $this->redirectUser($router, $contentId);
+        return $this->redirectToContentView($contentId);
     }
 
     private function deleteVersionsBasedOnFormSubmit(FormInterface $form, $contentId)
@@ -70,11 +74,11 @@ class VersionController extends Controller
         }
     }
 
-    protected function redirectUser(RouterInterface $router, $contentId)
+    protected function redirectToContentView($contentId)
     {
         //@TODO Show success/fail message to user
         return new RedirectResponse(
-            $router->generate(
+            $this->router->generate(
                 '_ez_content_view',
                 ['contentId' => $contentId]
             )
