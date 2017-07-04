@@ -8,6 +8,7 @@ namespace EzSystems\HybridPlatformUi\Form;
 use EzSystems\HybridPlatformUi\Mapper\Form\VersionMapper;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\ArchivedActions;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\DraftActions;
+use EzSystems\HybridPlatformUiBundle\Form\Versions\LocationSwap;
 use Symfony\Component\Form\FormFactoryInterface;
 
 /**
@@ -57,5 +58,15 @@ class UiFormFactory
         $data = $this->versionMapper->mapToForm($versions);
 
         return $this->formFactory->create(ArchivedActions::class, $data);
+    }
+
+    /**
+     * Create a form to be used for swapping contents location.
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createLocationsContentSwapForm()
+    {
+        return $this->formFactory->create(LocationSwap::class);
     }
 }

@@ -39,3 +39,14 @@
     {% endif %}
     </tbody>
 </table>
+
+<div class="ez-locations-box">
+    <h2 class="ez-locations-box-title">{{ 'locationview.locations.swap.title'|trans()|desc('Location Content Swap') }}</h2>
+    {{ form_start(swapLocationsForm, {"action": path("ez_hybrid_platform_ui_location_swap_location", {'contentId': content.id, 'locationId': locationId})}) }}
+    <p>
+        {{ 'locationview.locations.swap.with.another'|trans()|desc('Swap the content item at this location with another') }}
+
+        {{ form_widget(swapLocationsForm.swap, {'label': 'locationview.locations.select.content.item'|trans()|desc('Select content item'), 'attr': {'class': 'ez-button ez-button-primary'}}) }}
+    </p>
+    {{ form_end(swapLocationsForm) }}
+</div>

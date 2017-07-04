@@ -111,16 +111,21 @@ class ContentViewController extends Controller
         return $view;
     }
 
-    public function locationsTabAction(ContentView $view, UiLocationService $uiLocationService)
-    {
+    public function locationsTabAction(
+        ContentView $view,
+        UiLocationService $uiLocationService,
+        UiFormFactory $formFactory
+    ) {
         $versionInfo = $view->getContent()->getVersionInfo();
         $contentInfo = $versionInfo->getContentInfo();
 
         if ($contentInfo->published) {
             $locations = $uiLocationService->loadLocations($contentInfo);
+            $swapLocationsForm = $formFactory->createLocationsContentSwapForm();
 
             $view->addParameters([
                 'locations' => $locations,
+                'swapLocationsForm' => $swapLocationsForm->createView(),
             ]);
         }
 

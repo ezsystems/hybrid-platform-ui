@@ -6,9 +6,11 @@
  */
 namespace EzSystems\HybridPlatformUi\Repository;
 
+use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Location;
+use eZ\Publish\Core\Base\Exceptions\ForbiddenException;
 use EzSystems\HybridPlatformUi\Repository\Values\Content\UiLocation;
 
 /**
@@ -27,10 +29,19 @@ class UiLocationService
      */
     private $pathService;
 
-    public function __construct(LocationService $locationService, PathService $pathService)
-    {
+    /**
+     * @var ContentTypeService
+     */
+    private $contentTypeService;
+
+    public function __construct(
+        LocationService $locationService,
+        PathService $pathService,
+        ContentTypeService $contentTypeService
+    ) {
         $this->locationService = $locationService;
         $this->pathService = $pathService;
+        $this->contentTypeService = $contentTypeService;
     }
 
     /**
@@ -50,6 +61,26 @@ class UiLocationService
         $uiLocations = $this->prioritizeMainLocation($uiLocations);
 
         return $uiLocations;
+    }
+
+    /**
+     * Swaps locations.
+     *
+     * @param int $locationId
+     * @param int $newLocationId
+     */
+    public function swapLocations(int $locationId, int $newLocationId)
+    {
+        $currentLocation = $this->locationService->loadLocation($locationId);
+        $newLocation = $this->locationService->loadLocation($newLocationId);
+
+        $childCount = $this->locationService->getLocationChildCount($currentLocation);
+        $contentType = $this->contentTypeService->loadContentType($newLocation->getContentInfo()->contentTypeId);
+
+        if (!$contentType->isContainer && $childCount) {
+            throw new ForbiddenException('Cannot swap location that has sub items with a location that is not a container');
+        }
+        $this->locationService->swapLocation($currentLocation, $newLocation);
     }
 
     private function buildUiLocations(array $locations, ContentInfo $contentInfo)
