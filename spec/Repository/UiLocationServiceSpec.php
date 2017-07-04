@@ -7,6 +7,7 @@
 namespace spec\EzSystems\HybridPlatformUi\Repository;
 
 use eZ\Publish\API\Repository\LocationService;
+use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Base\Exceptions\ForbiddenException;
 use eZ\Publish\Core\Repository\Values\Content\Location;
@@ -17,9 +18,9 @@ use Prophecy\Argument;
 
 class UiLocationServiceSpec extends ObjectBehavior
 {
-    function let(LocationService $locationService, PathService $pathService)
+    function let(LocationService $locationService, PathService $pathService, Repository $repository)
     {
-        $this->beConstructedWith($locationService, $pathService);
+        $this->beConstructedWith($locationService, $pathService, $repository);
     }
 
     function it_loads_ui_locations_with_a_child_count(LocationService $locationService)
@@ -115,5 +116,32 @@ class UiLocationServiceSpec extends ObjectBehavior
         $locationService->deleteLocation($location)->shouldNotBeCalled();
 
         $this->shouldThrow(ForbiddenException::class)->duringDeleteSecondaryLocations([$mainLocationId]);
+    }
+
+    function it_loads_ui_locations_with_user_access_flags(LocationService $locationService, Repository $repository)
+    {
+        $contentInfo = new ContentInfo(['mainLocationId' => 1]);
+
+        $location = new Location([
+            'id' => 2,
+            'contentInfo' => $contentInfo,
+        ]);
+
+        $locationService->loadLocations($contentInfo)->willReturn([$location]);
+        $locationService->getLocationChildCount($location)->willReturn(1);
+
+        $repository->canUser('content', 'manage_locations', $location->getContentInfo())->willReturn(true);
+        $repository->canUser('content', 'remove', $location->getContentInfo(), $location)->willReturn(true);
+
+        $uiLocation = new UiLocation(
+            $location,
+            [
+                'childCount' => 1,
+                'userCanManage' => true,
+                'userCanRemove' => true,
+            ]
+        );
+
+        $this->loadLocations($contentInfo)->shouldBeLike([$uiLocation]);
     }
 }

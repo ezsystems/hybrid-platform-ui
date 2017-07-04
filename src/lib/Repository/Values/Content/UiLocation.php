@@ -29,6 +29,20 @@ class UiLocation extends Location
      */
     protected $pathLocations;
 
+    /**
+     * User can manage.
+     *
+     * @var bool
+     */
+    protected $userCanManage;
+
+    /**
+     * User can remove.
+     *
+     * @var bool
+     */
+    protected $userCanRemove;
+
     public function __construct(APILocation $location, array $properties = [])
     {
         parent::__construct(get_object_vars($location) + $properties);
@@ -42,5 +56,15 @@ class UiLocation extends Location
     public function isMain()
     {
         return $this->id === $this->getContentInfo()->mainLocationId;
+    }
+
+    /**
+     * Can delete location.
+     *
+     * @return bool
+     */
+    public function canDelete()
+    {
+        return !$this->isMain() && $this->userCanManage && $this->userCanRemove;
     }
 }

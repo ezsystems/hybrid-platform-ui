@@ -7,6 +7,7 @@
 namespace EzSystems\HybridPlatformUi\Repository;
 
 use eZ\Publish\API\Repository\LocationService;
+use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\Core\Base\Exceptions\ForbiddenException;
@@ -28,12 +29,19 @@ class UiLocationService
      */
     private $pathService;
 
+    /**
+     * @var Repository
+     */
+    private $repository;
+
     public function __construct(
         LocationService $locationService,
-        PathService $pathService
+        PathService $pathService,
+        Repository $repository
     ) {
         $this->locationService = $locationService;
         $this->pathService = $pathService;
+        $this->repository = $repository;
     }
 
     /**
@@ -84,6 +92,8 @@ class UiLocationService
                 $properties = [
                     'childCount' => $this->locationService->getLocationChildCount($location),
                     'pathLocations' => $this->pathService->loadPathLocations($location),
+                    'userCanManage' => $this->repository->canUser('content', 'manage_locations', $location->getContentInfo()),
+                    'userCanRemove' => $this->repository->canUser('content', 'remove', $location->getContentInfo(), $location),
                 ];
 
                 $uiLocation = new UiLocation($location, $properties);

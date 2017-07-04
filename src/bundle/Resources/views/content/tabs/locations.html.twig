@@ -22,7 +22,7 @@
     {% if locations is defined %}
         {% for location in locations %}
         <tr>
-            <td>{{ form_widget(actionsForm.removeLocations[location.id], {'attr': {'disabled': location.isMain}}) }}</td>
+            <td>{{ form_widget(actionsForm.removeLocations[location.id], {'attr': {'disabled': not location.canDelete}}) }}</td>
             <td>{{ include('@EzSystemsHybridPlatformUi/fields/location/path.html.twig', {'locations': location.pathLocations}) }}</td>
             <td>{{ location.childCount }}</td>
             <td>
