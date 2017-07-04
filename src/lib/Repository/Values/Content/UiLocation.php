@@ -29,15 +29,18 @@ class UiLocation extends Location
      */
     protected $pathLocations;
 
-    /**
-     * Main flag.
-     *
-     * @var bool
-     */
-    protected $main;
-
     public function __construct(APILocation $location, array $properties = [])
     {
         parent::__construct(get_object_vars($location) + $properties);
+    }
+
+    /**
+     * Is main location.
+     *
+     * @return bool
+     */
+    public function isMain()
+    {
+        return $this->id === $this->getContentInfo()->mainLocationId;
     }
 }

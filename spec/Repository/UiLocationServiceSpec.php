@@ -6,7 +6,6 @@
  */
 namespace spec\EzSystems\HybridPlatformUi\Repository;
 
-use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Base\Exceptions\ForbiddenException;
@@ -18,16 +17,20 @@ use Prophecy\Argument;
 
 class UiLocationServiceSpec extends ObjectBehavior
 {
-    function let(LocationService $locationService, ContentService $contentService, PathService $pathService)
+    function let(LocationService $locationService, PathService $pathService)
     {
-        $this->beConstructedWith($locationService, $contentService, $pathService);
+        $this->beConstructedWith($locationService, $pathService);
     }
 
     function it_loads_ui_locations_with_a_child_count(LocationService $locationService)
     {
         $contentInfo = new ContentInfo(['mainLocationId' => 1]);
 
-        $location = new Location(['id' => 2]);
+        $location = new Location([
+            'id' => 2,
+            'contentInfo' => $contentInfo,
+        ]);
+
         $locationService->loadLocations($contentInfo)->willReturn([$location]);
         $locationService->getLocationChildCount($location)->willReturn(1);
 
@@ -40,7 +43,11 @@ class UiLocationServiceSpec extends ObjectBehavior
     {
         $contentInfo = new ContentInfo(['mainLocationId' => 1]);
 
-        $location = new Location(['id' => 2]);
+        $location = new Location([
+            'id' => 2,
+            'contentInfo' => $contentInfo,
+        ]);
+
         $locationService->loadLocations($contentInfo)->willReturn([$location]);
         $locationService->getLocationChildCount($location)->willReturn(1);
         $pathService->loadPathLocations(Argument::type(Location::class))->willReturn([$location]);
@@ -50,65 +57,63 @@ class UiLocationServiceSpec extends ObjectBehavior
         $this->loadLocations($contentInfo)->shouldBeLike([$uiLocation]);
     }
 
-    function it_loads_ui_locations_with_a_main_flag(LocationService $locationService)
-    {
-        $contentInfo = new ContentInfo(['mainLocationId' => 1]);
-
-        $location = new Location(['id' => 1]);
-        $locationService->loadLocations($contentInfo)->willReturn([$location]);
-        $locationService->getLocationChildCount($location)->willReturn(1);
-
-        $uiLocation = new UiLocation($location, ['childCount' => 1, 'main' => true]);
-
-        $this->loadLocations($contentInfo)->shouldBeLike([$uiLocation]);
-    }
-
     function it_puts_the_main_location_first(LocationService $locationService)
     {
         $contentInfo = new ContentInfo(['mainLocationId' => 1]);
 
-        $location = new Location(['id' => 2]);
-        $mainLocation = new Location(['id' => 1]);
+        $location = new Location([
+            'id' => 2,
+            'contentInfo' => $contentInfo,
+        ]);
+
+        $mainLocation = new Location([
+            'id' => 1,
+            'contentInfo' => $contentInfo,
+        ]);
 
         $locationService->loadLocations($contentInfo)->willReturn([$location, $mainLocation, $location]);
         $locationService->getLocationChildCount($location)->willReturn(1);
         $locationService->getLocationChildCount($mainLocation)->willReturn(1);
 
-        $uiLocation = new UiLocation($location, ['childCount' => 1, 'main' => false]);
+        $uiLocation = new UiLocation($location, ['childCount' => 1]);
 
-        $mainLocationDecorator = new UiLocation($mainLocation, ['childCount' => 1, 'main' => true]);
+        $uiMainLocation = new UiLocation($mainLocation, ['childCount' => 1]);
 
-        $this->loadLocations($contentInfo)->shouldBeLike([$mainLocationDecorator, $uiLocation, $uiLocation]);
+        $this->loadLocations($contentInfo)->shouldBeLike([$uiMainLocation, $uiLocation, $uiLocation]);
     }
 
-    function it_deletes_locations(LocationService $locationService, ContentService $contentService)
+    function it_deletes_secondary_locations(LocationService $locationService)
     {
         $mainLocationId = 1;
-        $contentId = 1;
         $deleteLocationId = 2;
 
         $contentInfo = new ContentInfo(['mainLocationId' => $mainLocationId]);
-        $contentService->loadContentInfo($contentId)->willReturn($contentInfo);
 
-        $location = new Location(['id' => $deleteLocationId]);
+        $location = new Location([
+            'id' => $deleteLocationId,
+            'contentInfo' => $contentInfo,
+        ]);
+
         $locationService->loadLocation($deleteLocationId)->willReturn($location);
         $locationService->deleteLocation($location)->shouldBeCalled();
 
-        $this->deleteLocations([$deleteLocationId], $contentId);
+        $this->deleteSecondaryLocations([$deleteLocationId]);
     }
 
-    function it_does_not_delete_the_main_location(LocationService $locationService, ContentService $contentService)
+    function it_refuses_to_delete_the_main_location(LocationService $locationService)
     {
         $mainLocationId = 1;
-        $contentId = 1;
 
         $contentInfo = new ContentInfo(['mainLocationId' => $mainLocationId]);
-        $contentService->loadContentInfo($contentId)->willReturn($contentInfo);
 
-        $location = new Location(['id' => $mainLocationId]);
+        $location = new Location([
+            'id' => $mainLocationId,
+            'contentInfo' => $contentInfo,
+        ]);
+
         $locationService->loadLocation($mainLocationId)->willReturn($location);
         $locationService->deleteLocation($location)->shouldNotBeCalled();
 
-        $this->shouldThrow(ForbiddenException::class)->duringDeleteLocations([$mainLocationId], $contentId);
+        $this->shouldThrow(ForbiddenException::class)->duringDeleteSecondaryLocations([$mainLocationId]);
     }
 }

@@ -1,5 +1,5 @@
 {% trans_default_domain "locationview" %}
-{{ form_start(actionsForm, {'action': path('ez_hybrid_platform_ui_location_actions', {'contentId': content.id})}) }}
+{{ form_start(actionsForm, {'action': path('ez_hybrid_platform_ui_location_actions', {'contentId': content.id, 'locationId': location.id})}) }}
 
 <div class="ez-list-toolbar">
     <h2 class="ez-list-toolbar-label">{{ 'locationview.locations.content.locations'|trans()|desc('Content locations') }}</h2>
@@ -22,7 +22,7 @@
     {% if locations is defined %}
         {% for location in locations %}
         <tr>
-            <td>{{ form_widget(actionsForm.removeLocations[location.id], {'attr': {'disabled': location.main}}) }}</td>
+            <td>{{ form_widget(actionsForm.removeLocations[location.id], {'attr': {'disabled': location.isMain}}) }}</td>
             <td>{{ include('@EzSystemsHybridPlatformUi/fields/location/path.html.twig', {'locations': location.pathLocations}) }}</td>
             <td>{{ location.childCount }}</td>
             <td>

@@ -6,7 +6,6 @@
  */
 namespace EzSystems\HybridPlatformUi\Repository;
 
-use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Location;
@@ -25,23 +24,16 @@ class UiLocationService
     private $locationService;
 
     /**
-     * @var ContentService
-     */
-    private $contentService;
-
-    /**
      * @var PathService
      */
     private $pathService;
 
     public function __construct(
         LocationService $locationService,
-        ContentService $contentService,
         PathService $pathService
     ) {
         $this->locationService = $locationService;
         $this->pathService = $pathService;
-        $this->contentService = $contentService;
     }
 
     /**
@@ -57,29 +49,27 @@ class UiLocationService
     {
         $locations = $this->locationService->loadLocations($contentInfo);
 
-        $uiLocations = $this->buildUiLocations($locations, $contentInfo);
+        $uiLocations = $this->buildUiLocations($locations);
         $uiLocations = $this->prioritizeMainLocation($uiLocations);
 
         return $uiLocations;
     }
 
     /**
-     * Deletes locations.
+     * Deletes secondary locations.
      * Throws exception if there is an attempt to delete the main location.
      *
      * @param array $locationIds
-     * @param int $contentId
      *
      * @throws ForbiddenException
      */
-    public function deleteLocations(array $locationIds, int $contentId)
+    public function deleteSecondaryLocations(array $locationIds)
     {
-        $contentInfo = $this->contentService->loadContentInfo($contentId);
-
         foreach ($locationIds as $locationId) {
             $location = $this->locationService->loadLocation($locationId);
+            $uiLocation = new UiLocation($location);
 
-            if ($this->isMainLocation($location, $contentInfo)) {
+            if ($uiLocation->isMain()) {
                 throw new ForbiddenException('Main location cannot be deleted.');
             }
 
@@ -87,14 +77,13 @@ class UiLocationService
         }
     }
 
-    private function buildUiLocations(array $locations, ContentInfo $contentInfo)
+    private function buildUiLocations(array $locations)
     {
         return array_map(
-            function (Location $location) use ($contentInfo) {
+            function (Location $location) {
                 $properties = [
                     'childCount' => $this->locationService->getLocationChildCount($location),
                     'pathLocations' => $this->pathService->loadPathLocations($location),
-                    'main' => $this->isMainLocation($location, $contentInfo),
                 ];
 
                 $uiLocation = new UiLocation($location, $properties);
@@ -105,15 +94,10 @@ class UiLocationService
         );
     }
 
-    private function isMainLocation(Location $location, ContentInfo $contentInfo)
-    {
-        return $location->id === $contentInfo->mainLocationId;
-    }
-
     private function prioritizeMainLocation(array $locations)
     {
         foreach ($locations as $key => $location) {
-            if ($location->main) {
+            if ($location->isMain()) {
                 unset($locations[$key]);
                 array_unshift($locations, $location);
             }
