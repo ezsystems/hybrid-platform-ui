@@ -61,7 +61,7 @@ class App implements Component
         }
     }
 
-    public function __toString()
+    public function renderToString()
     {
         return $this->templating->render(
             'EzSystemsHybridPlatformUiBundle:components:app.html.twig',
@@ -73,6 +73,11 @@ class App implements Component
                 'appTagName' => self::TAG_NAME,
             ]
         );
+    }
+
+    function __toString()
+    {
+        return $this->renderToString();
     }
 
     public function jsonSerialize()

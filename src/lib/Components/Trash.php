@@ -4,7 +4,12 @@ namespace EzSystems\HybridPlatformUi\Components;
 
 class Trash implements Component
 {
-    public function __toString()
+    function __toString()
+    {
+        return $this->renderToString();
+    }
+
+    public function renderToString()
     {
         return '<button class="ez-button" disabled>
             Trash
