@@ -23,6 +23,13 @@ class UiLocation extends Location
     protected $childCount;
 
     /**
+     * Is main location.
+     *
+     * @var bool
+     */
+    protected $main;
+
+    /**
      * Path locations.
      *
      * @var \eZ\Publish\API\Repository\Values\Content\Location[]
@@ -49,22 +56,12 @@ class UiLocation extends Location
     }
 
     /**
-     * Is main location.
-     *
-     * @return bool
-     */
-    public function isMain()
-    {
-        return $this->id === $this->getContentInfo()->mainLocationId;
-    }
-
-    /**
      * Can delete location.
      *
      * @return bool
      */
     public function canDelete()
     {
-        return !$this->isMain() && $this->userCanManage && $this->userCanRemove;
+        return $this->userCanManage && $this->userCanRemove;
     }
 }

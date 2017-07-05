@@ -8,7 +8,6 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
-use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
@@ -43,7 +42,6 @@ class LocationController extends Controller
 
     public function actionsAction(
         Content $content,
-        Location $location,
         Request $request,
         UiLocationService $uiLocationService,
         RouterInterface $router,
@@ -52,17 +50,11 @@ class LocationController extends Controller
         $actionsForm = $formFactory->createLocationsActionForm();
         $actionsForm->handleRequest($request);
 
-        $redirectLocationId = $location->id;
-
         if ($actionsForm->isValid()) {
             $locationIds = array_keys($actionsForm->get('removeLocations')->getData());
 
             if ($actionsForm->get('delete')->isClicked()) {
-                $uiLocationService->deleteSecondaryLocations($locationIds);
-
-                if (in_array($location->id, $locationIds)) {
-                    $redirectLocationId = $location->getContentInfo()->mainLocationId;
-                }
+                $uiLocationService->deleteLocations($locationIds);
             }
         }
 
@@ -71,7 +63,7 @@ class LocationController extends Controller
                 '_ez_content_view',
                 [
                     'contentId' => $content->id,
-                    'locationId' => $redirectLocationId,
+                    'locationId' => $request->query->get('redirectLocationId', null),
                 ]
             )
         );

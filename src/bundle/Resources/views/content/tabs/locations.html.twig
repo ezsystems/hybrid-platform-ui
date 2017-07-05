@@ -1,5 +1,5 @@
 {% trans_default_domain "locationview" %}
-{{ form_start(actionsForm, {'action': path('ez_hybrid_platform_ui_location_actions', {'contentId': content.id, 'locationId': location.id})}) }}
+{{ form_start(actionsForm, {'action': path('ez_hybrid_platform_ui_location_actions', {'contentId': content.id, 'redirectLocationId': location.id})}) }}
 
 <div class="ez-list-toolbar">
     <h2 class="ez-list-toolbar-label">{{ 'locationview.locations.content.locations'|trans()|desc('Content locations') }}</h2>

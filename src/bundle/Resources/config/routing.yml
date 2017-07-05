@@ -9,7 +9,7 @@ ez_hybrid_platform_ui_version_draft_actions:
         _controller: EzSystemsHybridPlatformUiBundle:Version:draftActions
     methods: [POST]
 ez_hybrid_platform_ui_location_actions:
-    path: /location/actions/{contentId}/{locationId}
+    path: /location/actions/{contentId}
     defaults:
         _controller: EzSystemsHybridPlatformUiBundle:Location:actions
     methods: [POST]
