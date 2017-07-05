@@ -45,9 +45,7 @@ services:
     EzSystems\HybridPlatformUi\App\AppResponseRenderer:
         alias: EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer
 
-    EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer:
-        arguments:
-            - '@=service("request_stack").getMasterRequest()'
+    EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer: ~
 
     EzSystems\HybridPlatformUi\Http\HtmlFormatRequestMatcher:
         alias: EzSystems\HybridPlatformUi\Http\FormatAttributeHtmlFormatRequestMatcher

@@ -33,7 +33,7 @@ class NavigationHub implements Component
      */
     protected $request;
 
-    public function __construct(EngineInterface $templating, Request $request, array $zones = [], array $links = [])
+    public function __construct(EngineInterface $templating, Request $request = null, array $zones = [], array $links = [])
     {
         $this->request = $request;
         $this->templating = $templating;

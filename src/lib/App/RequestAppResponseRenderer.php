@@ -8,15 +8,15 @@ namespace EzSystems\HybridPlatformUi\App;
 use EzSystems\HybridPlatformUi\Components\App;
 use EzSystems\HybridPlatformUi\Http\AjaxUpdateRequestMatcher;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
 class RequestAppResponseRenderer implements AppResponseRenderer
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\Request
+     * @var \Symfony\Component\HttpFoundation\RequestStack
      */
-    private $request;
+    private $requestStack;
 
     /**
      * @var \Symfony\Component\HttpFoundation\RequestMatcherInterface
@@ -24,10 +24,10 @@ class RequestAppResponseRenderer implements AppResponseRenderer
     private $ajaxUpdateRequestMatcher;
 
     public function __construct(
-        Request $request,
+        RequestStack $requestStack,
         AjaxUpdateRequestMatcher $ajaxUpdateRequestMatcher
     ) {
-        $this->request = $request;
+        $this->requestStack = $requestStack;
         $this->ajaxUpdateRequestMatcher = $ajaxUpdateRequestMatcher;
     }
 
@@ -35,7 +35,7 @@ class RequestAppResponseRenderer implements AppResponseRenderer
     {
         $this->configureToolbars($app);
 
-        $appResponse = $this->ajaxUpdateRequestMatcher->matches($this->request)
+        $appResponse = $this->ajaxUpdateRequestMatcher->matches($this->requestStack->getCurrentRequest())
             ? new JsonResponse($app)
             : new Response($app->renderToString());
 

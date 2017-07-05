@@ -11,7 +11,7 @@ class Browse implements Component
      */
     protected $request;
 
-    public function __construct(Request $request)
+    public function __construct(Request $request = null)
     {
         $this->request = $request;
     }
