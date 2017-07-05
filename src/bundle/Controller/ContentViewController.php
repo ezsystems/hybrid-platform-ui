@@ -17,6 +17,7 @@ use EzSystems\HybridPlatformUi\Filter\VersionFilter;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiFieldGroupService;
 use EzSystems\HybridPlatformUi\Repository\UiLocationService;
+use EzSystems\HybridPlatformUi\Repository\UiRelationService;
 
 class ContentViewController extends Controller
 {
@@ -123,6 +124,19 @@ class ContentViewController extends Controller
                 'locations' => $locations,
             ]);
         }
+
+        return $view;
+    }
+
+    public function relationsTabAction(ContentView $view, UiRelationService $relationService)
+    {
+        $versionInfo = $view->getContent()->getVersionInfo();
+        $contentInfo = $versionInfo->getContentInfo();
+
+        $view->addParameters([
+            'relations' => $relationService->loadRelations($versionInfo),
+            'reverseRelations' => $relationService->loadReverseRelations($contentInfo),
+        ]);
 
         return $view;
     }
