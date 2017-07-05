@@ -33,8 +33,6 @@ class RequestAppResponseRenderer implements AppResponseRenderer
 
     public function render(Response $response, App $app)
     {
-        $this->configureToolbars($app);
-
         $appResponse = $this->ajaxUpdateRequestMatcher->matches($this->request)
             ? new JsonResponse($app)
             : new Response($app);
@@ -42,15 +40,5 @@ class RequestAppResponseRenderer implements AppResponseRenderer
         $response
             ->setContent($appResponse->getContent())
             ->headers->replace($appResponse->headers->all());
-    }
-
-    /**
-     * Configures the toolbars.
-     *
-     * @todo Depends on the Request. See http://github.com/ezsystems/hybrid-platform-ui/pull/4
-     */
-    private function configureToolbars(App $app)
-    {
-        $app->setConfig(['toolbars' => ['discovery' => 1]]);
     }
 }
