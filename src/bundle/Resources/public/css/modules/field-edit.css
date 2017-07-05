@@ -1,0 +1,19 @@
+ez-field-edit input:invalid {
+    border: 1px solid #d92d42;
+    background-color: #fceaec;
+    box-shadow: inset 0 0 8px rgba(217, 45, 66, .25);
+    outline-color: #d92d42;
+}
+
+ez-field-edit label {
+    font-size: 1.1em;
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.ez-invalid label {
+    color: #d92d42;
+}
