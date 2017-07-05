@@ -61,7 +61,7 @@ class App implements Component
         }
     }
 
-    public function __toString()
+    public function renderToString()
     {
         return $this->templating->render(
             'EzSystemsHybridPlatformUiBundle:components:app.html.twig',

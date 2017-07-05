@@ -37,7 +37,7 @@ class RequestAppResponseRenderer implements AppResponseRenderer
 
         $appResponse = $this->ajaxUpdateRequestMatcher->matches($this->request)
             ? new JsonResponse($app)
-            : new Response($app);
+            : new Response($app->renderToString());
 
         $response
             ->setContent($appResponse->getContent())

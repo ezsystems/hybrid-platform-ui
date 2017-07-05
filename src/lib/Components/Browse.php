@@ -25,7 +25,7 @@ class Browse implements Component
         return null;
     }
 
-    public function __toString()
+    public function renderToString()
     {
         $selected = $this->getLocationId();
         // should be rendered with a twig template

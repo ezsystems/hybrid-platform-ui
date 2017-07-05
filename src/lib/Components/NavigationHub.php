@@ -41,7 +41,7 @@ class NavigationHub implements Component
         $this->links = $links;
     }
 
-    public function __toString()
+    public function renderToString()
     {
         return $this->templating->render(
             'EzSystemsHybridPlatformUiBundle:components:navigationhub.html.twig',
