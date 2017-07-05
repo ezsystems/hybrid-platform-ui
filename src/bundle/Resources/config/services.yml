@@ -49,3 +49,5 @@ services:
 
     EzSystems\HybridPlatformUi\View\CoreViewMainContentMapper:
         alias: 'EzSystems\HybridPlatformUi\View\AppConfigCoreViewMainContentMapper'
+
+    Symfony\Component\Routing\RouterInterface: '@router'

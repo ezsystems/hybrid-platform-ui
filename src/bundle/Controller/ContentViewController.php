@@ -16,7 +16,6 @@ use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Filter\VersionFilter;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiFieldGroupService;
-use EzSystems\HybridPlatformUi\Repository\UiLocationService;
 use EzSystems\HybridPlatformUi\Repository\UiRelationService;
 
 class ContentViewController extends Controller
@@ -108,22 +107,6 @@ class ContentViewController extends Controller
             'draftActionsForm' => $draftActionsForm->createView(),
             'archivedActionsForm' => $archivedActionsForm->createView(),
         ]);
-
-        return $view;
-    }
-
-    public function locationsTabAction(ContentView $view, UiLocationService $uiLocationService)
-    {
-        $versionInfo = $view->getContent()->getVersionInfo();
-        $contentInfo = $versionInfo->getContentInfo();
-
-        if ($contentInfo->published) {
-            $locations = $uiLocationService->loadLocations($contentInfo);
-
-            $view->addParameters([
-                'locations' => $locations,
-            ]);
-        }
 
         return $view;
     }
