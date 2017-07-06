@@ -8,18 +8,18 @@
     {{ include('@EzSystemsHybridPlatformUi/content/tabs/relations/table.html.twig', {'relationList': relations}) }}
 {% else %}
     <p class="ez-relations-box-list-no-content">
-        {{ 'locationview.relations.no.related.content'|trans()|desc('This content has no related content.') }}
+        {{ 'locationview.relations.no.related.content.item'|trans()|desc('This content item has no related content.') }}
     </p>
 {% endif %}
 
 <div class="ez-list-toolbar">
-    <h2 class="ez-list-toolbar-label">{{ 'locationview.relations.reverse.relations'|trans()|desc('Reverse relations - content items using this content.') }}</h2>
+    <h2 class="ez-list-toolbar-label">{{ 'locationview.relations.reverse.relations'|trans({'%contentName%' : ez_content_name(content)})|desc('Reverse relations - content items using %contentName%.') }}</h2>
 </div>
 
 {% if reverseRelations %}
     {{ include('@EzSystemsHybridPlatformUi/content/tabs/relations/table.html.twig', {'relationList': reverseRelations}) }}
 {% else %}
     <p class="ez-relations-box-list-no-content">
-        {{ 'locationview.relations.no.reverse.related.content'|trans()|desc('This content is not used by any other content.') }}
+        {{ 'locationview.relations.no.reverse.relations'|trans()|desc('This content item has no reverse relations.') }}
     </p>
 {% endif %}
