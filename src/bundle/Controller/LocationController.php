@@ -60,6 +60,6 @@ class LocationController extends TabController
             }
         }
 
-        return $this->redirectToLocationsTab($content->id, $redirectLocationId);
+        return $this->reloadTab('locations', $content->id, $redirectLocationId);
     }
 }

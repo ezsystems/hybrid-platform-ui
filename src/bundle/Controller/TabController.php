@@ -40,14 +40,9 @@ abstract class TabController extends Controller
         return new ResetResponse($this->generateTabUrl($contentId, $mainLocationId));
     }
 
-    protected function redirectToLocationsTab($contentId, $locationId)
+    protected function reloadTab($tab, $contentId, $locationId)
     {
-        return $this->redirectToTab($contentId, $locationId, 'locations_tab');
-    }
-
-    protected function redirectToVersionsTab($contentId, $locationId)
-    {
-        return $this->redirectToTab($contentId, $locationId, 'versions_tab');
+        return $this->redirectToTab($contentId, $locationId, $tab . '_tab');
     }
 
     private function redirectToTab($contentId, $locationId, $viewType)

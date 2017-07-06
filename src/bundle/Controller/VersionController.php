@@ -35,6 +35,6 @@ class VersionController extends TabController
             }
         }
         //@TODO Show success/fail message to user
-        return $this->redirectToVersionsTab($content->id, $redirectLocationId);
+        return $this->reloadTab('versions', $content->id, $redirectLocationId);
     }
 }
