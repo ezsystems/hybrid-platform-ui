@@ -51,3 +51,7 @@ services:
         alias: 'EzSystems\HybridPlatformUi\View\AppConfigCoreViewMainContentMapper'
 
     Symfony\Component\Routing\RouterInterface: '@router'
+
+    Twig\Environment: '@twig'
+
+    Symfony\Component\Translation\TranslatorInterface: '@translator'
