@@ -80,7 +80,7 @@ class VersionController extends Controller
         return new RedirectResponse(
             $this->router->generate(
                 '_ez_content_view',
-                ['contentId' => $contentId]
+                ['contentId' => $contentId, 'viewType' => 'versions_tab']
             )
         );
     }
