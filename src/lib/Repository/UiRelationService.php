@@ -62,17 +62,18 @@ class UiRelationService
     /**
      * Loads reverse relations for a piece of content.
      * Retrieves reverse relations and then sets the field definition and the content type name.
+     * Returns false if the user doesn't have permission to load reverse relations.
      *
      * @param ContentInfo $contentInfo
      *
-     * @return UiRelation[]
+     * @return UiRelation[]|bool
      */
     public function loadReverseRelations(ContentInfo $contentInfo)
     {
         try {
             $reverseRelations = $this->contentService->loadReverseRelations($contentInfo);
         } catch (UnauthorizedException $e) {
-            return [];
+            return false;
         }
 
         return $this->buildSourceUiRelations($reverseRelations);

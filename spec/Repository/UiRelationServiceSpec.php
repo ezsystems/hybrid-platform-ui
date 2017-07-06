@@ -136,6 +136,6 @@ class UiRelationServiceSpec extends ObjectBehavior
     function it_handles_user_not_having_correct_permissions(ContentService $contentService, ContentInfo $contentInfo)
     {
         $contentService->loadReverseRelations($contentInfo)->willThrow(UnauthorizedException::class);
-        $this->loadReverseRelations($contentInfo)->shouldBe([]);
+        $this->loadReverseRelations($contentInfo)->shouldBe(false);
     }
 }

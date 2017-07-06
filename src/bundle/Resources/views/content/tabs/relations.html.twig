@@ -12,14 +12,16 @@
     </p>
 {% endif %}
 
-<div class="ez-list-toolbar">
-    <h2 class="ez-list-toolbar-label">{{ 'locationview.relations.reverse.relations'|trans({'%contentName%' : ez_content_name(content)})|desc('Reverse relations - content items using %contentName%.') }}</h2>
-</div>
+{% if reverseRelations is not same as(false) %}
+    <div class="ez-list-toolbar">
+        <h2 class="ez-list-toolbar-label">{{ 'locationview.relations.reverse.relations'|trans({'%contentName%' : ez_content_name(content)})|desc('Reverse relations - content items using %contentName%.') }}</h2>
+    </div>
 
-{% if reverseRelations %}
-    {{ include('@EzSystemsHybridPlatformUi/content/tabs/relations/table.html.twig', {'relationList': reverseRelations}) }}
-{% else %}
-    <p class="ez-relations-box-list-no-content">
-        {{ 'locationview.relations.no.reverse.relations'|trans()|desc('This content item has no reverse relations.') }}
-    </p>
+    {% if reverseRelations %}
+        {{ include('@EzSystemsHybridPlatformUi/content/tabs/relations/table.html.twig', {'relationList': reverseRelations}) }}
+    {% else %}
+        <p class="ez-relations-box-list-no-content">
+            {{ 'locationview.relations.no.reverse.relations'|trans()|desc('This content item has no reverse relations.') }}
+        </p>
+    {% endif %}
 {% endif %}
