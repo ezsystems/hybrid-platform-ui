@@ -35,13 +35,20 @@ class RequestAppResponseRenderer implements AppResponseRenderer
     {
         $this->configureToolbars($app);
 
-        $appResponse = $this->ajaxUpdateRequestMatcher->matches($this->requestStack->getCurrentRequest())
+        $appResponse = $this->isUpdateRequest()
             ? new JsonResponse($app)
             : new Response($app->renderToString());
 
         $response
             ->setContent($appResponse->getContent())
             ->headers->replace($appResponse->headers->all());
+    }
+
+    private function isUpdateRequest()
+    {
+        return $this->ajaxUpdateRequestMatcher->matches(
+            $this->requestStack->getMasterRequest()
+        );
     }
 
     /**
@@ -51,6 +58,11 @@ class RequestAppResponseRenderer implements AppResponseRenderer
      */
     private function configureToolbars(App $app)
     {
-        $app->setConfig(['toolbars' => ['discovery' => 1]]);
+        $config = ['discovery' => 0];
+        if ($this->requestStack->getMasterRequest()->attributes->get('_route') === 'ez_urlalias') {
+            $config = ['discovery' => 1];
+        }
+
+        $app->setConfig(['toolbars' => $config]);
     }
 }

@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -39,8 +38,8 @@ class AppRendererSubscriberSpec extends ObjectBehavior
         $request->duplicate(Argument::cetera())->willReturn(new Request());
 
         $event->getRequest()->willReturn($request);
-        $event->getRequestType()->willReturn(HttpKernelInterface::MASTER_REQUEST);
         $event->getResponse()->willReturn($response);
+        $event->isMasterRequest()->willReturn(true);
         $response->isRedirect()->willReturn(false);
 
         $this->beConstructedWith($app, $renderer, $hybridRequestMatcher);
@@ -73,7 +72,7 @@ class AppRendererSubscriberSpec extends ObjectBehavior
 
     function it_ignores_sub_requests(FilterResponseEvent $event)
     {
-        $event->getRequestType()->willReturn(HttpKernelInterface::SUB_REQUEST);
+        $event->isMasterRequest()->willReturn(false);
         $event->getRequest()->shouldNotBeCalled();
         $this->renderApp($event);
     }

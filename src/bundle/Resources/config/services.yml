@@ -28,8 +28,14 @@ services:
 
     EzSystems\HybridPlatformUi\EventSubscriber\:
         resource: '../../../lib/EventSubscriber'
+        exclude: '../../../lib/EventSubscriber/AppExceptionSubscriber.php'
         public: true
         tags: ['kernel.event_subscriber']
+
+    EzSystems\HybridPlatformUi\EventSubscriber\AppExceptionSubscriber:
+        decorates: 'twig.exception_listener'
+        arguments:
+            $innerListener: '@EzSystems\HybridPlatformUi\EventSubscriber\AppExceptionSubscriber.inner'
 
     EzSystems\HybridPlatformUi\EventSubscriber\PjaxSubscriber:
         arguments:

@@ -8,7 +8,6 @@ use EzSystems\HybridPlatformUi\Http\HybridRequestMatcher;
 use EzSystems\HybridPlatformUi\Http\Response\NoRenderResponse;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class AppRendererSubscriber implements EventSubscriberInterface
@@ -40,12 +39,14 @@ class AppRendererSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return [KernelEvents::RESPONSE => ['renderApp', 5]];
+        return [
+            KernelEvents::RESPONSE => ['renderApp', 5],
+        ];
     }
 
     public function renderApp(FilterResponseEvent $event)
     {
-        if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
+        if (!$event->isMasterRequest()) {
             return;
         }
 
