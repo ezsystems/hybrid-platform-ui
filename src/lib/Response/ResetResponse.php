@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ResetResponse extends Response implements NoRenderResponse
 {
-    public function __construct(string $url = '')
+    public function __construct(string $url)
     {
         parent::__construct(
             '',
