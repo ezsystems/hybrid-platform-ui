@@ -7,7 +7,6 @@ namespace EzSystems\HybridPlatformUi\Repository;
 
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
-use eZ\Publish\API\Repository\Exceptions\UnauthorizedException;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Relation;
@@ -62,19 +61,16 @@ class UiRelationService
     /**
      * Loads reverse relations for a piece of content.
      * Retrieves reverse relations and then sets the field definition and the content type name.
-     * Returns false if the user doesn't have permission to load reverse relations.
+     *
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException if the user is not allowed to read reverse relations.
      *
      * @param ContentInfo $contentInfo
      *
-     * @return UiRelation[]|bool
+     * @return UiRelation[]
      */
     public function loadReverseRelations(ContentInfo $contentInfo)
     {
-        try {
-            $reverseRelations = $this->contentService->loadReverseRelations($contentInfo);
-        } catch (UnauthorizedException $e) {
-            return false;
-        }
+        $reverseRelations = $this->contentService->loadReverseRelations($contentInfo);
 
         return $this->buildSourceUiRelations($reverseRelations);
     }

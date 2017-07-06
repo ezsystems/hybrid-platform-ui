@@ -15,6 +15,7 @@ use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Filter\VersionFilter;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
+use EzSystems\HybridPlatformUi\Repository\Permission\UiPermissionResolver;
 use EzSystems\HybridPlatformUi\Repository\UiFieldGroupService;
 use EzSystems\HybridPlatformUi\Repository\UiRelationService;
 
@@ -111,15 +112,22 @@ class ContentViewController extends Controller
         return $view;
     }
 
-    public function relationsTabAction(ContentView $view, UiRelationService $relationService)
-    {
+    public function relationsTabAction(
+        ContentView $view,
+        UiRelationService $relationService,
+        UiPermissionResolver $permissionResolver
+    ) {
         $versionInfo = $view->getContent()->getVersionInfo();
         $contentInfo = $versionInfo->getContentInfo();
 
-        $view->addParameters([
+        $viewParameters = [
             'relations' => $relationService->loadRelations($versionInfo),
-            'reverseRelations' => $relationService->loadReverseRelations($contentInfo),
-        ]);
+        ];
+
+        if ($permissionResolver->canAccessReverseRelated()) {
+            $viewParameters['reverseRelations'] = $relationService->loadReverseRelations($contentInfo);
+        }
+        $view->addParameters($viewParameters);
 
         return $view;
     }

@@ -12,7 +12,7 @@
     </p>
 {% endif %}
 
-{% if reverseRelations is not same as(false) %}
+{% if reverseRelations is defined %}
     <div class="ez-list-toolbar">
         <h2 class="ez-list-toolbar-label">{{ 'locationview.relations.reverse.relations'|trans({'%contentName%' : ez_content_name(content)})|desc('Reverse relations - content items using %contentName%.') }}</h2>
     </div>
