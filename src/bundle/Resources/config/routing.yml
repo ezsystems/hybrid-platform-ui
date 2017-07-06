@@ -4,9 +4,14 @@ ez_hybrid_platform_ui_dashboard:
         _controller: EzSystemsHybridPlatformUiBundle:Dashboard:viewDashboard
     methods: [GET]
 ez_hybrid_platform_ui_version_draft_actions:
-    path: /version/draft-actions/{contentId}
+    path: /content/{contentId}/versions/drafts
     defaults:
         _controller: EzSystemsHybridPlatformUiBundle:Version:draftActions
+    methods: [POST]
+ez_hybrid_platform_ui_version_archive_actions:
+    path: /content/{contentId}/versions/archives
+    defaults:
+        _controller: EzSystemsHybridPlatformUiBundle:Version:archiveActions
     methods: [POST]
 ez_hybrid_platform_ui_location_actions:
     path: /location/actions/{contentId}
