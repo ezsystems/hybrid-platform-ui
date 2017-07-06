@@ -7,40 +7,34 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
-use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
+use eZ\Publish\API\Repository\Values\Content\Content;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiVersionService;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouterInterface;
 
-class VersionController extends Controller
+class VersionController extends TabController
 {
     public function draftActionsAction(
-        $contentId,
+        Content $content,
         Request $request,
         UiVersionService $versionService,
-        UiFormFactory $formFactory,
-        RouterInterface $router
+        UiFormFactory $formFactory
     ) {
         $draftActionsForm = $formFactory->createVersionsDraftActionForm();
         $draftActionsForm->handleRequest($request);
+
+        $redirectLocationId = $request->query->get('redirectLocationId', $content->contentInfo->mainLocationId);
 
         if ($draftActionsForm->isValid()) {
             $selectedIds = $draftActionsForm->get('versionIds')->getData();
 
             if ($draftActionsForm->get('delete')->isClicked()) {
                 foreach (array_keys($selectedIds) as $versionId) {
-                    $versionService->deleteVersion((int) $contentId, $versionId);
+                    $versionService->deleteVersion((int) $content->id, $versionId);
                 }
             }
         }
         //@TODO Show success/fail message to user
-        return new RedirectResponse(
-            $router->generate(
-                '_ez_content_view',
-                ['contentId' => $contentId, 'viewType' => 'versions_tab']
-            )
-        );
+        return $this->redirectToVersionsTab($content->id, $redirectLocationId);
     }
 }

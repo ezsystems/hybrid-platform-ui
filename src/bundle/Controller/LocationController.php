@@ -8,16 +8,13 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
-use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiLocationService;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouterInterface;
 
-class LocationController extends Controller
+class LocationController extends TabController
 {
     public function contentViewTabAction(
         ContentView $view,
@@ -44,28 +41,25 @@ class LocationController extends Controller
         Content $content,
         Request $request,
         UiLocationService $uiLocationService,
-        RouterInterface $router,
         UiFormFactory $formFactory
     ) {
         $actionsForm = $formFactory->createLocationsActionForm();
         $actionsForm->handleRequest($request);
+
+        $redirectLocationId = $request->query->get('redirectLocationId', $content->contentInfo->mainLocationId);
 
         if ($actionsForm->isValid()) {
             $locationIds = array_keys($actionsForm->get('removeLocations')->getData());
 
             if ($actionsForm->get('delete')->isClicked()) {
                 $uiLocationService->deleteLocations($locationIds);
+
+                if (in_array($redirectLocationId, $locationIds)) {
+                    return $this->resetLocation($content->id);
+                }
             }
         }
 
-        return new RedirectResponse(
-            $router->generate(
-                '_ez_content_view',
-                [
-                    'contentId' => $content->id,
-                    'locationId' => $request->query->get('redirectLocationId', null),
-                ]
-            )
-        );
+        return $this->redirectToLocationsTab($content->id, $redirectLocationId);
     }
 }
