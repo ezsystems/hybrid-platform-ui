@@ -10,13 +10,13 @@
 <div id="app-content">
     {% block toolbars %}
         {% for toolbar in toolbars %}
-            {{ toolbar|raw }}
+            {{ toolbar.renderToString|raw }}
         {% endfor %}
     {% endblock %}
 
     <main>
         {% block mainContent %}
-            {{ mainContent|raw }}
+            {{ mainContent.renderToString|raw }}
         {% endblock %}
     </main>
 </div>

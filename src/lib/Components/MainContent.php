@@ -34,7 +34,7 @@ class MainContent implements Component
         $this->result = $result;
     }
 
-    public function __toString()
+    public function renderToString()
     {
         $string = '';
         if ($this->result) {
@@ -49,11 +49,16 @@ class MainContent implements Component
         return $string;
     }
 
+    public function __toString()
+    {
+        return $this->renderToString();
+    }
+
     public function jsonSerialize()
     {
         return [
             'selector' => 'main',
-            'update' => (string)$this,
+            'update' => $this->renderToString(),
         ];
     }
 }
