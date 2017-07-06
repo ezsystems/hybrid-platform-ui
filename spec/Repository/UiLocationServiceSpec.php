@@ -10,6 +10,7 @@ use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\PermissionResolver;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
+use eZ\Publish\API\Repository\Values\Content\LocationCreateStruct;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use EzSystems\HybridPlatformUi\Repository\PathService;
 use EzSystems\HybridPlatformUi\Repository\Values\Content\UiLocation;
@@ -127,5 +128,14 @@ class UiLocationServiceSpec extends ObjectBehavior
         );
 
         $this->loadLocations($contentInfo)->shouldBeLike([$uiLocation]);
+    }
+
+    function it_adds_a_location(LocationService $locationService, ContentInfo $contentInfo, LocationCreateStruct $locationCreateStruct)
+    {
+        $parentLocationId = 2;
+        $locationService->newLocationCreateStruct($parentLocationId)->willReturn($locationCreateStruct);
+        $locationService->createLocation($contentInfo, $locationCreateStruct)->shouldBeCalled();
+
+        $this->addLocation($contentInfo, $parentLocationId);
     }
 }

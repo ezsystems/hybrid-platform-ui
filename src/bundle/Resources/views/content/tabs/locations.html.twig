@@ -4,6 +4,7 @@
 <div class="ez-list-toolbar">
     <h2 class="ez-list-toolbar-label">{{ 'locationview.locations.content.locations'|trans()|desc('Content locations') }}</h2>
     <div class="container-buttons">
+        {{ form_widget(actionsForm.add, {'label': 'locationview.locations.add.location'|trans()|desc('Add Location'), 'attr': {'class': 'ez-button ez-button-secondary'}}) }}
         {{ form_widget(actionsForm.delete, {'label': 'locationview.locations.delete.locations'|trans()|desc('Delete selected locations'), 'attr': {'class': 'ez-button ez-button-negative'}}) }}
     </div>
 </div>

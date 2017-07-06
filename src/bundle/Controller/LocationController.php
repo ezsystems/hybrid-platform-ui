@@ -58,6 +58,13 @@ class LocationController extends TabController
                     return $this->resetLocation($content->id);
                 }
             }
+
+            if ($actionsForm->get('add')->isClicked()) {
+                $uiLocationService->addLocation(
+                    $content->contentInfo,
+                    $actionsForm->get('parentLocationId')->getData()
+                );
+            }
         }
 
         return $this->reloadTab('locations', $content->id, $redirectLocationId);

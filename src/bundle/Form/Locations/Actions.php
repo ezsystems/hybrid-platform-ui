@@ -8,6 +8,7 @@ namespace EzSystems\HybridPlatformUiBundle\Form\Locations;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -17,6 +18,8 @@ class Actions extends AbstractType
     {
         $builder
             ->add('delete', SubmitType::class)
+            ->add('add', SubmitType::class)
+            ->add('parentLocationId', HiddenType::class)
             ->add(
                 'removeLocations',
                 CollectionType::class,
