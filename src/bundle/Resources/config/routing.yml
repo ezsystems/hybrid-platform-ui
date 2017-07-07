@@ -14,7 +14,7 @@ ez_hybrid_platform_ui_version_archive_actions:
         _controller: EzSystemsHybridPlatformUiBundle:Version:archiveActions
     methods: [POST]
 ez_hybrid_platform_ui_location_actions:
-    path: /location/actions/{contentId}
+    path: /content/{contentId}/locations
     defaults:
         _controller: EzSystemsHybridPlatformUiBundle:Location:actions
     methods: [POST]
