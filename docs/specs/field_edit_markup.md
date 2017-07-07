@@ -1,5 +1,37 @@
 # Field edit markup
 
+## Common aspects
+
+### Wrapped by a custom element
+
+As described in [EZP-27576](https://jira.ez.no/browse/EZP-27576), when used
+inside Hybrid Platform UI, the edit markup for a given field should be wrapped
+by a custom element. By default, this custom element is `ez-field-edit` and it
+expects `fieldtype` attribute to be filled with the Field Type identifier.
+
+For a Content Type with a Text Line, a Map Location and a Text Block fields, the
+Content edit form would look like:
+
+```html
+<form>
+  <ez-field-edit fieldtype="ezstring">
+     <!-- markup for Text Line -->
+  </ez-field-edit>
+  <ez-field-edit-maplocation fieldtype="ezgmaplocation">
+     <!-- markup for Map Location -->
+  </ez-field-edit>
+  <ez-field-edit fieldtype="eztext">
+     <!-- markup for Text Block -->
+  </ez-field-edit>
+</form>
+```
+
+### HTML5 validation
+
+Most of our Field Type can be edited and validated with pure HTML5 inputs or
+with a composition of several HTML5 inputs. So when it comes to frontend
+validation, HTML5 validation is the based on which `ez-field-edit` and
+`ez-field-edit-*` custom element will rely on.
 
 ## Authors `ezauthor`
 
