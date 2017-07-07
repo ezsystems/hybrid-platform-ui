@@ -11,14 +11,13 @@ namespace EzSystems\HybridPlatformUiBundle\Controller;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
-use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Filter\VersionFilter;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiFieldGroupService;
 use EzSystems\HybridPlatformUi\Repository\UiRelationService;
 
-class ContentViewController extends Controller
+class ContentViewController extends TabController
 {
     protected $defaultSortFields = [
         Location::SORT_FIELD_NAME => ['key' => 'sort.name', 'default' => 'Content name'],
