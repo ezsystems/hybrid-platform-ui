@@ -23,6 +23,13 @@ class UiLocation extends Location
     protected $childCount;
 
     /**
+     * Is main location.
+     *
+     * @var bool
+     */
+    protected $main;
+
+    /**
      * Path locations.
      *
      * @var \eZ\Publish\API\Repository\Values\Content\Location[]
@@ -30,14 +37,31 @@ class UiLocation extends Location
     protected $pathLocations;
 
     /**
-     * Main flag.
+     * User can manage.
      *
      * @var bool
      */
-    protected $main;
+    protected $userCanManage;
+
+    /**
+     * User can remove.
+     *
+     * @var bool
+     */
+    protected $userCanRemove;
 
     public function __construct(APILocation $location, array $properties = [])
     {
         parent::__construct(get_object_vars($location) + $properties);
+    }
+
+    /**
+     * Can delete location.
+     *
+     * @return bool
+     */
+    public function canDelete()
+    {
+        return $this->userCanManage && $this->userCanRemove;
     }
 }

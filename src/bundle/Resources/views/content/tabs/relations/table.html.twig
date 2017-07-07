@@ -1,0 +1,25 @@
+{% trans_default_domain "locationview" %}
+
+<table class="ez-table-data">
+    <thead>
+        <tr>
+            <th>{{ 'locationview.relations.name'|trans()|desc('Name') }}</th>
+            <th>{{ 'locationview.relations.content.type'|trans()|desc('Content type') }}</th>
+            <th>{{ 'locationview.relations.relation.type'|trans()|desc('Relation type') }}</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for relation in relationList %}
+        <tr>
+            <td><a href="{{ path(relation.relationLocation) }}">{{ relation.relationName }}</a></td>
+            <td>{{ relation.relationContentTypeName }}</td>
+            <td>
+                {{ ez_ui_relation_type(relation) }}
+                {% if (relation.relationFieldDefinitionName) %}
+                    ({{ relation.relationFieldDefinitionName }})
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

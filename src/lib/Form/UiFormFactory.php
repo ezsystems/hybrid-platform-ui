@@ -5,10 +5,13 @@
  */
 namespace EzSystems\HybridPlatformUi\Form;
 
+use eZ\Publish\API\Repository\Values\Content\Location;
+use EzSystems\HybridPlatformUi\Mapper\Form\LocationMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\VersionMapper;
+use EzSystems\HybridPlatformUiBundle\Form\Locations\LocationSwap;
+use EzSystems\HybridPlatformUiBundle\Form\Locations\Actions as LocationActions;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\ArchivedActions;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\DraftActions;
-use EzSystems\HybridPlatformUiBundle\Form\Versions\LocationSwap;
 use Symfony\Component\Form\FormFactoryInterface;
 
 /**
@@ -26,10 +29,19 @@ class UiFormFactory
      */
     private $versionMapper;
 
-    public function __construct(FormFactoryInterface $formFactory, VersionMapper $versionMapper)
-    {
+    /**
+     * @var LocationMapper
+     */
+    private $locationMapper;
+
+    public function __construct(
+        FormFactoryInterface $formFactory,
+        VersionMapper $versionMapper,
+        LocationMapper $locationMapper
+    ) {
         $this->formFactory = $formFactory;
         $this->versionMapper = $versionMapper;
+        $this->locationMapper = $locationMapper;
     }
 
     /**
@@ -58,6 +70,18 @@ class UiFormFactory
         $data = $this->versionMapper->mapToForm($versions);
 
         return $this->formFactory->create(ArchivedActions::class, $data);
+    }
+
+    /**
+     * Create form to be used for actions on locations tab.
+     *
+     * @param Location[] $locations
+     */
+    public function createLocationsActionForm(array $locations = [])
+    {
+        $data = $this->locationMapper->mapToForm($locations);
+
+        return $this->formFactory->create(LocationActions::class, $data);
     }
 
     /**

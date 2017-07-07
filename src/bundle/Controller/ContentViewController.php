@@ -16,7 +16,7 @@ use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Filter\VersionFilter;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiFieldGroupService;
-use EzSystems\HybridPlatformUi\Repository\UiLocationService;
+use EzSystems\HybridPlatformUi\Repository\UiRelationService;
 
 class ContentViewController extends Controller
 {
@@ -111,23 +111,15 @@ class ContentViewController extends Controller
         return $view;
     }
 
-    public function locationsTabAction(
-        ContentView $view,
-        UiLocationService $uiLocationService,
-        UiFormFactory $formFactory
-    ) {
+    public function relationsTabAction(ContentView $view, UiRelationService $relationService)
+    {
         $versionInfo = $view->getContent()->getVersionInfo();
         $contentInfo = $versionInfo->getContentInfo();
 
-        if ($contentInfo->published) {
-            $locations = $uiLocationService->loadLocations($contentInfo);
-            $swapLocationsForm = $formFactory->createLocationsContentSwapForm();
-
-            $view->addParameters([
-                'locations' => $locations,
-                'swapLocationsForm' => $swapLocationsForm->createView(),
-            ]);
-        }
+        $view->addParameters([
+            'relations' => $relationService->loadRelations($versionInfo),
+            'reverseRelations' => $relationService->loadReverseRelations($contentInfo),
+        ]);
 
         return $view;
     }
