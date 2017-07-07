@@ -12,6 +12,12 @@ use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 /**
  * Extends original value object in order to provide additional fields.
  * Takes a standard location instance and retrieves properties from it in addition to the provided properties.
+ *
+ * @property-read int $childCount
+ * @property-read bool $main
+ * @property-read \eZ\Publish\API\Repository\Values\Content\Location[] $pathLocations
+ * @property-read bool $userCanManage
+ * @property-read bool $userCanRemove
  */
 class UiLocation extends Location
 {
