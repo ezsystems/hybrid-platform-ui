@@ -6,8 +6,8 @@
 namespace EzSystems\HybridPlatformUiBundle\Form\Locations;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class LocationSwap extends AbstractType
@@ -17,7 +17,7 @@ class LocationSwap extends AbstractType
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('new_location_id', TextType::class)
+            ->add('new_location_id', NumberType::class)
             ->add('swap', SubmitType::class);
     }
 }
