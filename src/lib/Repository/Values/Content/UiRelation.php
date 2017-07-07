@@ -11,6 +11,11 @@ use eZ\Publish\API\Repository\Values\Content\Relation as APIRelation;
 
 /**
  * Extends original value object in order to provide additional fields.
+ *
+ * @property-read string $relationFieldDefinitionName
+ * @property-read string $relationContentTypeName
+ * @property-read \eZ\Publish\API\Repository\Values\Content\Location $relationLocation
+ * @property-read string $relationName
  */
 class UiRelation extends Relation
 {
@@ -42,7 +47,7 @@ class UiRelation extends Relation
      * The name for the relation.
      * This will either come from destinationContentInfo OR sourceContentInfo depending upon if reverse relation or normal relation.
      *
-     * @var Location
+     * @var string
      */
     protected $relationName;
 
