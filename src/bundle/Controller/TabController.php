@@ -18,12 +18,12 @@ abstract class TabController extends Controller
     /**
      * @var RouterInterface
      */
-    private $router;
+    protected $router;
 
     /**
      * @var ContentService
      */
-    private $contentService;
+    protected $contentService;
 
     public function __construct(
         RouterInterface $router,
