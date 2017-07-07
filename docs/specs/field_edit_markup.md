@@ -26,6 +26,57 @@ Content edit form would look like:
 </form>
 ```
 
+### Base structure
+
+The markup for a given field is always wrapped in a `div` with at least 2
+classes:
+
+* `ez-field-edit`
+* `ez-field-edit-<fieldtypeidentifier>`
+
+If the Field is marked as required, the class `ez-field-edit-required` is added
+as well.
+
+If the Field is not translatable and the user is translating the Content item
+the class `ez-field-edit-disabled` is added.
+
+The `div` starts with a paragraph containing the Field Definition name wrapped
+in a label. The `for` attribute value of this label is filled with the `id` of
+an input generated for the Field Type, usually the first one with some
+exceptions.
+
+Then the specific to the Field Type part is wrapped in a `div` with the class
+`ez-field-edit-ui`.
+
+If the Field has a description, this description is added in a paragraph as the
+last element of the `div.ez-field-edit`. If the Field is not translatable and
+the user is translating a Content, the description is replaced with the non
+translatable notice.
+
+So for a required Field with a description, the base structure is:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezstring ez-field-edit-required">
+    <p class="ez-field-definition-name"><label for="autogenerateid">Field Defintion Name</label></p>
+    <div class="ez-field-edit-ui">
+        <!-- specific to Field Type part -->
+    </div>
+    <p class="ez-field-definition-description">Description of the field type</p>
+</div>
+```
+
+When the same Field is edited but can not be translated, the markup becomes:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezstring ez-field-edit-required ez-field-edit-disabled">
+    <p class="ez-field-definition-name"><label for="autogenerateid">Field Defintion Name</label></p>
+    <div class="ez-field-edit-ui">
+        <!-- specific to Field Type part -->
+    </div>
+    <p class="ez-field-not-translatable">This is not a translatable field and cannot be modified</p>
+</div>
+```
+
 ### HTML5 validation
 
 Most of our Field Type can be edited and validated with pure HTML5 inputs or
