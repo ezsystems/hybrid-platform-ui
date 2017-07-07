@@ -90,6 +90,10 @@ validation, HTML5 validation is the based on which `ez-field-edit` and
 
 ## Checkbox `ezboolean`
 
+### Options:
+
+* can be required
+
 ### Current markup
 
 ```html
@@ -98,6 +102,34 @@ validation, HTML5 validation is the based on which `ez-field-edit` and
         <legend><label class="required">New ezboolean 3</label></legend>
         <input type="checkbox" id="ezrepoforms_content_edit_fieldsData_new_ezboolean_3_value" name="ezrepoforms_content_edit[fieldsData][new_ezboolean_3][value]" value="1">
     </fieldset>
+</div>
+```
+
+### New markup
+
+When not required:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezboolean">
+    <p class="ez-field-definition-name">
+        <label for="checkbox-auto-generated-id">New ezboolean 3</label>
+    </p>
+    <div class="ez-field-edit-ui">
+        <input type="checkbox" id="checkbox-auto-generated-id" name="auto-generated-name" value="1">
+    </div>
+</div>
+```
+
+When Field Definition is marked as required
+
+```html
+<div class="ez-field-edit ez-field-edit-ezboolean ez-field-edit-required">
+    <p class="ez-field-definition-name">
+        <label for="checkbox-auto-generated-id">New ezboolean 3</label>
+    </p>
+    <div class="ez-field-edit-input">
+        <input type="checkbox" id="checkbox-auto-generated-id" name="auto-generated-name" value="1" required>
+    </div>
 </div>
 ```
 
