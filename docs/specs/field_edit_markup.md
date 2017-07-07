@@ -92,7 +92,7 @@ validation, HTML5 validation is the based on which `ez-field-edit` and
 
 ### Options:
 
-* can be required
+* Required
 
 ### Current markup
 
@@ -193,6 +193,12 @@ When Field Definition is marked as required
 
 ## Text Line `ezstring`
 
+### Options
+
+* Minimum length
+* Maximum length
+* Required
+
 ### Current markup
 
 ```html
@@ -203,6 +209,38 @@ When Field Definition is marked as required
     </fieldset>
 </div>
 ```
+
+### New markup
+
+Without any length constraints:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezstring">
+    <p class="ez-field-definition-name">
+        <label for="auto-generated-id">New ezstring 21</label>
+    </p>
+    <div class="ez-field-edit-ui">
+        <input type="text" id="auto-generated-id" name="auto-generated-name" value="">
+    </div>
+</div>
+```
+
+With length constraints:
+
+To have a validation consistency between *Mininum length* and *Maximum length*
+constraint, both are expressed with the `pattern` input attribute (no
+`maxlength` attribute). So depending on the length constraints, the `input`
+element will have the following `pattern` attribute:
+
+* Only *Minimum length* constraint (10 characters for example): `pattern=".{10,}"`
+* Only *Maximum length* constraint (10 characters for example): `pattern=".{,10}"`
+* Both *Minimum length* and *Maximum length* constraints (5 and 10 characters
+  for example): `pattern=".{5,10}"`
+
+When set as required:
+
+As for others Field Type, the outermost `div` gets the `ez-field-edit-required`
+class and the `input` gets the `required` attribute.
 
 ## Text Block `eztextblock`
 
