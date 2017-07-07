@@ -6,7 +6,7 @@ use EzSystems\HybridPlatformUi\App\AppResponseRenderer;
 use EzSystems\HybridPlatformUi\Components\App;
 use EzSystems\HybridPlatformUi\EventSubscriber\AppRendererSubscriber;
 use EzSystems\HybridPlatformUi\Http\HybridRequestMatcher;
-use EzSystems\HybridPlatformUi\Response\ResetResponse;
+use EzSystems\HybridPlatformUi\Http\Response\ResetResponse;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

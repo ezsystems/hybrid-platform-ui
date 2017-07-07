@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\EzSystems\HybridPlatformUi\Response;
+namespace spec\EzSystems\HybridPlatformUi\Http\Response;
 
-use EzSystems\HybridPlatformUi\Response\NoRenderResponse;
+use EzSystems\HybridPlatformUi\Http\Response\NoRenderResponse;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\HttpFoundation\Response;
 

@@ -5,7 +5,7 @@ namespace EzSystems\HybridPlatformUi\EventSubscriber;
 use EzSystems\HybridPlatformUi\App\AppResponseRenderer;
 use EzSystems\HybridPlatformUi\Components\App;
 use EzSystems\HybridPlatformUi\Http\HybridRequestMatcher;
-use EzSystems\HybridPlatformUi\Response\NoRenderResponse;
+use EzSystems\HybridPlatformUi\Http\Response\NoRenderResponse;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;

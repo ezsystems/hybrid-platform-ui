@@ -9,7 +9,7 @@ namespace EzSystems\HybridPlatformUiBundle\Controller;
 
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
-use EzSystems\HybridPlatformUi\Response\ResetResponse;
+use EzSystems\HybridPlatformUi\Http\Response\ResetResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -37,7 +37,7 @@ abstract class TabController extends Controller
     {
         $mainLocationId = $this->contentService->loadContentInfo($contentId)->mainLocationId;
 
-        return new ResetResponse($this->generateTabUrl($contentId, $mainLocationId));
+        return new ResetResponse($this->generateContentViewUrl($contentId, $mainLocationId));
     }
 
     protected function reloadTab($tab, $contentId, $locationId)
@@ -48,11 +48,11 @@ abstract class TabController extends Controller
     private function redirectToTab($contentId, $locationId, $viewType)
     {
         return new RedirectResponse(
-            $this->generateTabUrl($contentId, $locationId, $viewType)
+            $this->generateContentViewUrl($contentId, $locationId, $viewType)
         );
     }
 
-    private function generateTabUrl($contentId, $locationId, $viewType = 'full')
+    private function generateContentViewUrl($contentId, $locationId, $viewType = 'full')
     {
         return $this->router->generate(
             '_ez_content_view',
