@@ -6,6 +6,7 @@ use EzSystems\HybridPlatformUi\App\AppResponseRenderer;
 use EzSystems\HybridPlatformUi\Components\App;
 use EzSystems\HybridPlatformUi\EventSubscriber\AppRendererSubscriber;
 use EzSystems\HybridPlatformUi\Http\HybridRequestMatcher;
+use EzSystems\HybridPlatformUi\Response\NotificationResponse;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -82,6 +83,17 @@ class AppRendererSubscriberSpec extends ObjectBehavior
         Response $response
     ) {
         $response->isRedirect()->willReturn(true);
+        $renderer->render(Argument::any())->shouldNotBeCalled();
+
+        $this->renderApp($event);
+    }
+
+    function it_ignores_notification_responses(
+        FilterResponseEvent $event,
+        AppResponseRenderer $renderer,
+        NotificationResponse $notificationResponse
+    ) {
+        $event->getResponse()->willReturn($notificationResponse);
         $renderer->render(Argument::any())->shouldNotBeCalled();
 
         $this->renderApp($event);

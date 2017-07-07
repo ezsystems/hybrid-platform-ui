@@ -18,6 +18,15 @@ class Actions extends AbstractType
         $builder
             ->add('delete', SubmitType::class)
             ->add(
+                'locationVisibility',
+                CollectionType::class,
+                [
+                    'entry_type' => CheckboxType::class,
+                    'required' => false,
+                    'allow_add' => true,
+                ]
+            )
+            ->add(
                 'removeLocations',
                 CollectionType::class,
                 [

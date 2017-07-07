@@ -5,6 +5,7 @@ namespace EzSystems\HybridPlatformUi\EventSubscriber;
 use EzSystems\HybridPlatformUi\App\AppResponseRenderer;
 use EzSystems\HybridPlatformUi\Components\App;
 use EzSystems\HybridPlatformUi\Http\HybridRequestMatcher;
+use EzSystems\HybridPlatformUi\Response\NotificationResponse;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -51,7 +52,7 @@ class AppRendererSubscriber implements EventSubscriberInterface
 
         $response = $event->getResponse();
 
-        if ($response->isRedirect()) {
+        if ($response->isRedirect() || $response instanceof NotificationResponse) {
             return;
         }
 

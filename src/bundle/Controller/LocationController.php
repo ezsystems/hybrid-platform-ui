@@ -8,14 +8,18 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
+use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
+use EzSystems\HybridPlatformUi\Builder\NotificationBuilderFactory;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiLocationService;
+use EzSystems\HybridPlatformUi\Response\NotificationResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class LocationController extends Controller
 {
@@ -30,10 +34,12 @@ class LocationController extends Controller
         if ($contentInfo->published) {
             $locations = $uiLocationService->loadLocations($contentInfo);
             $actionsForm = $formFactory->createLocationsActionForm($locations);
+            $visibilityForm = $formFactory->createLocationVisibilityForm();
 
             $view->addParameters([
                 'locations' => $locations,
                 'actionsForm' => $actionsForm->createView(),
+                'visibilityForm' => $visibilityForm->createView(),
             ]);
         }
 
@@ -67,5 +73,73 @@ class LocationController extends Controller
                 ]
             )
         );
+    }
+
+    public function visibilityAction(
+        Request $request,
+        LocationService $locationService,
+        UiFormFactory $formFactory,
+        TranslatorInterface $translator,
+        NotificationBuilderFactory $notificationBuilderFactory
+    ) {
+        try {
+            $visibilityForm = $formFactory->createLocationVisibilityForm();
+            $visibilityForm->handleRequest($request);
+
+            if (!$visibilityForm->isValid()) {
+                throw new \Exception('Invalid form submission.');
+            }
+
+            $visibility = $visibilityForm->get('visibility')->getData();
+            $locationId = $visibilityForm->get('locationId')->getData();
+
+            $location = $locationService->loadLocation($locationId);
+
+            if ($visibility) {
+                $locationService->unhideLocation($location);
+                /** @Desc("The Location #%id% is now visible") */
+                $message = $translator->trans(
+                    'locationview.locations.notification.visible', ['%id%' => $location->id], 'locationview'
+                );
+
+                return $this->success($message, $notificationBuilderFactory);
+            }
+
+            $locationService->hideLocation($location);
+            /** @Desc("The Location #%id% is now hidden") */
+            $message = $translator->trans(
+                'locationview.locations.notification.hidden', ['%id%' => $location->id], 'locationview'
+            );
+
+            return $this->success($message, $notificationBuilderFactory);
+        } catch (\Exception $e) {
+            /** @Desc("Error updating location visibility") */
+            $message = $translator->trans('locationview.locations.visibility.error', [], 'locationview');
+
+            return $this->error($message, $e->getMessage(), $notificationBuilderFactory);
+        }
+    }
+
+    private function success(string $message, NotificationBuilderFactory $notificationBuilderFactory)
+    {
+        $notification = $notificationBuilderFactory
+            ->create()
+            ->setMessage($message)
+            ->setSuccess()
+            ->getResult();
+
+        return NotificationResponse::success($notification);
+    }
+
+    private function error(string $message, string $errorDetails, NotificationBuilderFactory $notificationBuilderFactory)
+    {
+        $notification = $notificationBuilderFactory
+            ->create()
+            ->setMessage($message)
+            ->setError()
+            ->setErrorDetails($errorDetails)
+            ->getResult();
+
+        return NotificationResponse::error($notification);
     }
 }

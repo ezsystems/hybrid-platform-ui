@@ -21,10 +21,12 @@ class LocationMapper
     {
         $data = [
             'removeLocations' => [],
+            'locationVisibility' => [],
         ];
 
         foreach ($locations as $location) {
             $data['removeLocations'][$location->id] = false;
+            $data['locationVisibility'][$location->id] = !$location->hidden;
         }
 
         return $data;
