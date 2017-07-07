@@ -141,6 +141,29 @@ When Field Definition is marked as required
 
 ## Email Address `ezemail`
 
+### Options
+
+* Required
+
+### Markup
+
+```html
+<div class="ez-field-edit ez-field-edit-ezemail">
+    <p class="ez-field-definition-name">
+        <label for="auto-generated-id">New ezemail 21</label>
+    </p>
+    <div class="ez-field-edit-ui">
+        <input type="email" id="auto-generated-id" name="auto-generated-name" value="">
+    </div>
+</div>
+```
+
+When set as required:
+
+As for others Field Type, the outermost `div` gets the `ez-field-edit-required`
+class and the `input` gets the `required` attribute.
+
+
 ## Float `ezfloat`
 
 ## Map Location `ezgmaplocation`
