@@ -51,7 +51,8 @@ services:
     EzSystems\HybridPlatformUi\App\AppResponseRenderer:
         alias: EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer
 
-    EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer: ~
+    EzSystems\HybridPlatformUi\App\ToolbarsConfigurator:
+        alias: 'EzSystems\HybridPlatformUi\App\ToolbarsConfigurator\RouteToolbarsConfigurator'
 
     EzSystems\HybridPlatformUi\Http\HtmlFormatRequestMatcher:
         alias: EzSystems\HybridPlatformUi\Http\FormatAttributeHtmlFormatRequestMatcher

@@ -3,6 +3,7 @@
 namespace EzSystems\HybridPlatformUi\EventSubscriber;
 
 use EzSystems\HybridPlatformUi\App\AppResponseRenderer;
+use EzSystems\HybridPlatformUi\App\ToolbarsConfigurator;
 use EzSystems\HybridPlatformUi\Components\App;
 use EzSystems\HybridPlatformUi\Http\HybridRequestMatcher;
 use EzSystems\HybridPlatformUi\Http\Response\NoRenderResponse;
@@ -27,14 +28,21 @@ class AppRendererSubscriber implements EventSubscriberInterface
      */
     private $appRenderer;
 
+    /**
+     * @var \EzSystems\HybridPlatformUi\App\ToolbarsConfigurator
+     */
+    private $toolbarsConfigurator;
+
     public function __construct(
         App $app,
         AppResponseRenderer $appRenderer,
-        HybridRequestMatcher $hybridRequestMatcher
+        HybridRequestMatcher $hybridRequestMatcher,
+        ToolbarsConfigurator $toolbarsConfigurator
     ) {
         $this->hybridRequestMatcher = $hybridRequestMatcher;
         $this->app = $app;
         $this->appRenderer = $appRenderer;
+        $this->toolbarsConfigurator = $toolbarsConfigurator;
     }
 
     public static function getSubscribedEvents()
@@ -62,6 +70,7 @@ class AppRendererSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $this->toolbarsConfigurator->configureToolbars($this->app);
         $this->appRenderer->render($response, $this->app);
     }
 }
