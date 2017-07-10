@@ -359,6 +359,11 @@ class and the `input` gets the `required` attribute.
 
 ## Text Block `eztextblock`
 
+### Options
+
+* Required
+* Number of rows
+
 ### Current markup
 
 ```html
@@ -369,6 +374,23 @@ class and the `input` gets the `required` attribute.
     </fieldset>
 </div>
 ```
+
+### Markup
+
+```html
+<div class="ez-field-edit ez-field-edit-eztext">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <textarea rows="10" name="auto-generated-name" id="auto-generated-id"></textarea>
+    </div>
+</div>
+```
+
+Notes: the `rows` attribute value comes from the field definition settings.
 
 ## Time `eztime`
 
