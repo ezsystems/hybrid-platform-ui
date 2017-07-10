@@ -18,7 +18,7 @@ system:
             versions_tab:
                 default:
                     template: "EzSystemsHybridPlatformUiBundle:content/tabs:versions.html.twig"
-                    controller: 'EzSystems\HybridPlatformUiBundle\Controller\ContentViewController:versionsTabAction'
+                    controller: 'EzSystems\HybridPlatformUiBundle\Controller\VersionController:contentViewTabAction'
                     match: true
             locations_tab:
                 default:
