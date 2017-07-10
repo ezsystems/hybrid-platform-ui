@@ -79,7 +79,7 @@ class UiLocationService
      * Creates location.
      *
      * @param ContentInfo $contentInfo
-     * @param $parentLocationId
+     * @param mixed $parentLocationId
      */
     public function addLocation(ContentInfo $contentInfo, $parentLocationId)
     {
