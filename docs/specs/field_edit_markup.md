@@ -172,6 +172,40 @@ class and the `input` gets the `required` attribute.
 
 ## Integer `ezinteger`
 
+### Options
+
+* Minimum value
+* Maximum value
+* Required
+
+### Markup
+
+Without any constraints:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezinteger">
+    <p class="ez-field-definition-name">
+        <label for="auto-generated-id">Integer</label>
+    </p>
+    <div class="ez-field-edit-ui">
+        <input type="number" step="1" id="auto-generated-id" name="auto-generated-name" value="">
+    </div>
+</div>
+```
+
+When set required and with a min and max value:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezinteger ez-field-edit-required">
+    <p class="ez-field-definition-name">
+        <label for="auto-generated-id">Integer</label>
+    </p>
+    <div class="ez-field-edit-ui">
+        <input type="number" step="1" min="5" max="10" required id="auto-generated-id" name="auto-generated-name" value="">
+    </div>
+</div>
+```
+
 ## ISBN `ezisbn`
 
 ## Keywords `ezkeyword`
