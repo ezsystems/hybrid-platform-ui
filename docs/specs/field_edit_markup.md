@@ -618,6 +618,10 @@ class but only the URL `input` gets the `required` attribute.
 
 ## User Accout `ezuser`
 
+### Options
+
+* Required
+
 ### Current markup
 
 ```html
@@ -645,3 +649,67 @@ class but only the URL `input` gets the `required` attribute.
     </fieldset>
 </div>
 ```
+
+### New markup
+
+```html
+<div class="ez-field-edit ez-field-edit-ezuser">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name"><!-- no for attribute! -->
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <fieldset>
+            <div class="ez-sub-field">
+                <div class="ez-sub-field-text-zone">
+                    <label class="ez-sub-field-name" for="auto-generated-id-login">
+                        Login
+                    </label>
+                </div>
+                <div class="ez-sub-field-ui">
+                    <input type="text" id="auto-generated-id-login" name="auto-generated-name-login">
+                </div>
+            </div>
+            <div class="ez-sub-field">
+                <div class="ez-sub-field-text-zone">
+                    <label class="ez-sub-field-name" for="auto-generated-id-email">
+                        Email
+                    </label>
+                </div>
+                <div class="ez-sub-field-ui">
+                    <input type="email" id="auto-generated-id-email" name="auto-generated-name-email">
+                </div>
+            </div>
+            <div class="ez-sub-field">
+                <div class="ez-sub-field-text-zone">
+                    <label class="ez-sub-field-name" for="auto-generated-id-password1">
+                        Password
+                    </label>
+                </div>
+                <div class="ez-sub-field-ui">
+                    <input type="password" id="auto-generated-id-password1" name="auto-generated-name-password1">
+                </div>
+            </div>
+            <div class="ez-sub-field">
+                <div class="ez-sub-field-text-zone">
+                    <label class="ez-sub-field-name" for="auto-generated-id-password2">
+                        Confirm password
+                    </label>
+                </div>
+                <div class="ez-sub-field-ui">
+                    <input type="password" id="auto-generated-id-password2" name="auto-generated-name-password2">
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+```
+
+When set as required:
+
+As for others Field Type, the outermost `div` gets the `ez-field-edit-required`
+class. In addition, all `input` receives the `required` attribute.
+
+Note: the login can not change, so the login `input` is set as read only (with
+the `readonly` HTML5 attribute) when editing a Content item with a User field.
