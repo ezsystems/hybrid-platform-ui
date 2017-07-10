@@ -419,6 +419,48 @@ Notes: the `rows` attribute value comes from the field definition settings.
 
 ## Time `eztime`
 
+### Options
+
+* Required
+* Use seconds
+
+### Markup
+
+```html
+<div class="ez-field-edit ez-field-edit-eztime">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <input type="time" id="auto-generated-id" name="auto-generated-name" value="">
+    </div>
+</div>
+```
+
+When configured to store/show seconds, the time input gets the `step` attribute
+with the value `1`:
+
+```html
+<div class="ez-field-edit ez-field-edit-eztime">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <input type="time" step="1" id="auto-generated-id" name="auto-generated-name" value="">
+    </div>
+</div>
+```
+
+When set as required:
+
+As for others Field Type, the outermost `div` gets the `ez-field-edit-required`
+class and the `input` gets the `required` attribute.
+
+
 ## URL `ezurl`
 
 ## User Accout `ezuser`
