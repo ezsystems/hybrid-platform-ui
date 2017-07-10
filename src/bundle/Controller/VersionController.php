@@ -85,6 +85,7 @@ class VersionController extends TabController
 
         if ($archiveActionsForm->isValid()) {
             $this->deleteVersionsBasedOnFormSubmit($archiveActionsForm, $content->id);
+            $this->createDraftVersionBasedOnFormSubmit($archiveActionsForm, $content->id);
         }
 
         $redirectLocationId = $request->query->get('redirectLocationId', $content->contentInfo->mainLocationId);
@@ -100,6 +101,14 @@ class VersionController extends TabController
             foreach ($selectedIds as $versionId) {
                 $this->uiVersionService->deleteVersion((int) $contentId, $versionId);
             }
+        }
+    }
+
+    private function createDraftVersionBasedOnFormSubmit(FormInterface $form, $contentId)
+    {
+        if ($form->get('new_draft')->isClicked()) {
+            $versionId = key($form->get('versionIds')->getData());
+            $this->uiVersionService->createDraft($contentId, $versionId);
         }
     }
 }
