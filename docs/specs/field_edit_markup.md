@@ -40,10 +40,10 @@ as well.
 If the Field is not translatable and the user is translating the Content item
 the class `ez-field-edit-disabled` is added.
 
-The `div` starts with a paragraph containing the Field Definition name wrapped
-in a label. The `for` attribute value of this label is filled with the `id` of
-an input generated for the Field Type, usually the first one with some
-exceptions.
+The `div` starts with a `div` with the class `ez-field-edit-text-zone`. This
+`div` contains the Field Definition name wrapped in a `label` element. The
+`for` attribute value of this label is filled with the `id` of an input
+generated for the Field Type, usually the first one with some exceptions.
 
 Then the specific to the Field Type part is wrapped in a `div` with the class
 `ez-field-edit-ui`.
@@ -57,7 +57,11 @@ So for a required Field with a description, the base structure is:
 
 ```html
 <div class="ez-field-edit ez-field-edit-ezstring ez-field-edit-required">
-    <p class="ez-field-definition-name"><label for="autogenerateid">Field Defintion Name</label></p>
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
     <div class="ez-field-edit-ui">
         <!-- specific to Field Type part -->
     </div>
@@ -69,7 +73,11 @@ When the same Field is edited but can not be translated, the markup becomes:
 
 ```html
 <div class="ez-field-edit ez-field-edit-ezstring ez-field-edit-required ez-field-edit-disabled">
-    <p class="ez-field-definition-name"><label for="autogenerateid">Field Defintion Name</label></p>
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
     <div class="ez-field-edit-ui">
         <!-- specific to Field Type part -->
     </div>
@@ -111,9 +119,11 @@ When not required:
 
 ```html
 <div class="ez-field-edit ez-field-edit-ezboolean">
-    <p class="ez-field-definition-name">
-        <label for="checkbox-auto-generated-id">New ezboolean 3</label>
-    </p>
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="checkbox-auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
     <div class="ez-field-edit-ui">
         <input type="checkbox" id="checkbox-auto-generated-id" name="auto-generated-name" value="1">
     </div>
@@ -124,9 +134,11 @@ When Field Definition is marked as required
 
 ```html
 <div class="ez-field-edit ez-field-edit-ezboolean ez-field-edit-required">
-    <p class="ez-field-definition-name">
-        <label for="checkbox-auto-generated-id">New ezboolean 3</label>
-    </p>
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="checkbox-auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
     <div class="ez-field-edit-input">
         <input type="checkbox" id="checkbox-auto-generated-id" name="auto-generated-name" value="1" required>
     </div>
@@ -149,9 +161,11 @@ When Field Definition is marked as required
 
 ```html
 <div class="ez-field-edit ez-field-edit-ezemail">
-    <p class="ez-field-definition-name">
-        <label for="auto-generated-id">New ezemail 21</label>
-    </p>
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
     <div class="ez-field-edit-ui">
         <input type="email" id="auto-generated-id" name="auto-generated-name" value="">
     </div>
@@ -178,9 +192,11 @@ Without any constraints:
 
 ```html
 <div class="ez-field-edit ez-field-edit-ezfloat">
-    <p class="ez-field-definition-name">
-        <label for="auto-generated-id">Float</label>
-    </p>
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
     <div class="ez-field-edit-ui">
         <input type="number" step="any" id="auto-generated-id" name="auto-generated-name" value="">
     </div>
@@ -191,9 +207,11 @@ When set required and with a min and max value:
 
 ```html
 <div class="ez-field-edit ez-field-edit-ezfloat ez-field-edit-required">
-    <p class="ez-field-definition-name">
-        <label for="auto-generated-id">Float</label>
-    </p>
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
     <div class="ez-field-edit-ui">
         <input type="number" step="any" min="5.2" max="10.6" required id="auto-generated-id" name="auto-generated-name" value="">
     </div>
@@ -218,9 +236,11 @@ Without any constraints:
 
 ```html
 <div class="ez-field-edit ez-field-edit-ezinteger">
-    <p class="ez-field-definition-name">
-        <label for="auto-generated-id">Integer</label>
-    </p>
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
     <div class="ez-field-edit-ui">
         <input type="number" step="1" id="auto-generated-id" name="auto-generated-name" value="">
     </div>
@@ -231,9 +251,11 @@ When set required and with a min and max value:
 
 ```html
 <div class="ez-field-edit ez-field-edit-ezinteger ez-field-edit-required">
-    <p class="ez-field-definition-name">
-        <label for="auto-generated-id">Integer</label>
-    </p>
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
     <div class="ez-field-edit-ui">
         <input type="number" step="1" min="5" max="10" required id="auto-generated-id" name="auto-generated-name" value="">
     </div>
@@ -307,9 +329,11 @@ Without any length constraints:
 
 ```html
 <div class="ez-field-edit ez-field-edit-ezstring">
-    <p class="ez-field-definition-name">
-        <label for="auto-generated-id">New ezstring 21</label>
-    </p>
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
     <div class="ez-field-edit-ui">
         <input type="text" id="auto-generated-id" name="auto-generated-name" value="">
     </div>
