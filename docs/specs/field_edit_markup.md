@@ -149,6 +149,31 @@ When Field Definition is marked as required
 
 ## Date `ezdate`
 
+### Options
+
+* Required
+
+### Markup
+
+```html
+<div class="ez-field-edit ez-field-edit-ezdate">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <input type="date" id="auto-generated-id" name="auto-generated-name" value="">
+    </div>
+</div>
+```
+
+When set as required:
+
+As for others Field Type, the outermost `div` gets the `ez-field-edit-required`
+class and the `input` gets the `required` attribute.
+
+
 ## Date and Time `ezdatetime`
 
 ## Email Address `ezemail`
