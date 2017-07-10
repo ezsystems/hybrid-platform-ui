@@ -571,6 +571,51 @@ class and the `input` gets the `required` attribute.
 
 ## URL `ezurl`
 
+### Options
+
+* Required
+
+### Markup
+
+```html
+<div class="ez-field-edit ez-field-edit-ezurl">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name"><!-- no for attribute! -->
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <fieldset>
+            <div class="ez-sub-field">
+                <div class="ez-sub-field-text-zone">
+                    <label class="ez-sub-field-name" for="auto-generated-id-url">
+                        URL
+                    </label>
+                </div>
+                <div class="ez-sub-field-ui">
+                    <input type="text" id="auto-generated-id-url" name="auto-generated-name-url">
+                </div>
+            </div>
+            <div class="ez-sub-field">
+                <div class="ez-sub-field-text-zone">
+                    <label class="ez-sub-field-name" for="auto-generated-id-text">
+                        Text
+                    </label>
+                </div>
+                <div class="ez-sub-field-ui">
+                    <input type="text" id="auto-generated-id-text" name="auto-generated-name-text">
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+```
+
+When set as required:
+
+As for others Field Type, the outermost `div` gets the `ez-field-edit-required`
+class but only the URL `input` gets the `required` attribute.
+
 ## User Accout `ezuser`
 
 ### Current markup
