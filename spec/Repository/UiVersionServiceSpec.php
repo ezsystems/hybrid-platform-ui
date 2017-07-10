@@ -53,4 +53,19 @@ class UiVersionServiceSpec extends ObjectBehavior
 
         $this->loadVersions($contentInfo)->shouldBeLike([$uiVersion]);
     }
+
+    function it_should_create_a_draft(
+        ContentService $contentService,
+        ContentInfo $contentInfo,
+        VersionInfo $versionInfo
+    ) {
+        $contentId = 1;
+        $versionNumber = 10;
+
+        $contentService->loadContentInfo($contentId)->willReturn($contentInfo)->shouldBeCalled();
+        $contentService->loadVersionInfo($contentInfo, $versionNumber)->willReturn($versionInfo)->shouldBeCalled();
+        $contentService->createContentDraft($contentInfo, $versionInfo)->shouldBeCalled();
+
+        $this->createDraft($contentId, $versionNumber);
+    }
 }
