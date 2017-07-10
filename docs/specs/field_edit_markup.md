@@ -411,6 +411,25 @@ class and the `input` gets the `required` attribute.
 
 ## Rich Text `ezrichtext`
 
+### Options
+
+* Required
+
+### Markup
+
+```html
+<div class="ez-field-edit ez-field-edit-ezrichtext">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <textarea id="auto-generated-id" name="auto-generated-name"></textarea>
+    </div>
+</div>
+```
+
 ## Selection `ezselection`
 
 ### Options
