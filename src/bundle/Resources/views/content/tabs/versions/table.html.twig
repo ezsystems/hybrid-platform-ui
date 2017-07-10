@@ -26,14 +26,14 @@
                 {{ version.versionNo }}
             </td>
             <td>
-                {% if translations[version.id] is defined %}
-                    {% for translation in translations[version.id] %}
-                        {{ translation.name }}<br>
-                    {% endfor %}
-                {% endif %}
+                {% for translation in version.translations %}
+                    {{ translation.name }}<br>
+                {% endfor %}
             </td>
             <td>
-                {% if authors[version.id] is defined and authors[version.id] is not empty %} {{ ez_content_name(authors[version.id]) }} {% endif %}
+                {% if version.author is not empty %}
+                    {{ ez_content_name(version.author) }}
+                {% endif %}
             </td>
             <td>
                 {{ version.creationDate|localizeddate('medium', 'short', app.request.locale) }}

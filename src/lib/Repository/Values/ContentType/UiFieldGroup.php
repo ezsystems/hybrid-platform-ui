@@ -10,6 +10,10 @@ use eZ\Publish\API\Repository\Values\ValueObject;
 
 /**
  * This class represents a field group object.
+ *
+ * @property-read string $id
+ * @property-read string $name
+ * @property-read \eZ\Publish\API\Repository\Values\ContentType\FieldDefinition $fieldDefinitions
  */
 class UiFieldGroup extends ValueObject
 {

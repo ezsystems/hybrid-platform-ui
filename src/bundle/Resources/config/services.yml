@@ -11,7 +11,7 @@ services:
 
     EzSystems\HybridPlatformUi\:
         resource: '../../../lib/*'
-        exclude: '../../../lib/{Components,NavigationHub,Repository/Values}'
+        exclude: '../../../lib/{Components,NavigationHub,Repository/Values,Http/Response}'
 
     EzSystems\HybridPlatformUiBundle\Controller\:
         resource: '../../Controller'

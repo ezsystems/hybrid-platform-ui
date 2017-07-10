@@ -7,34 +7,59 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
-use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
+use eZ\Publish\Core\MVC\Symfony\View\ContentView;
+use EzSystems\HybridPlatformUi\Filter\VersionFilter;
+use eZ\Publish\API\Repository\ContentService;
+use eZ\Publish\API\Repository\Values\Content\Content;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiVersionService;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 
-class VersionController extends Controller
+class VersionController extends TabController
 {
     /**
      * @var UiVersionService
      */
     private $uiVersionService;
 
-    /**
-     * @var RouterInterface
-     */
-    private $router;
-
-    public function __construct(UiVersionService $uiVersionService, RouterInterface $router)
-    {
+    public function __construct(
+        UiVersionService $uiVersionService,
+        ContentService $contentService,
+        RouterInterface $router
+    ) {
         $this->uiVersionService = $uiVersionService;
-        $this->router = $router;
+        parent::__construct($router, $contentService);
+    }
+
+    public function contentViewTabAction(
+        ContentView $view,
+        VersionFilter $versionFilter,
+        UiFormFactory $formFactory
+    ) {
+        $contentInfo = $view->getContent()->getVersionInfo()->getContentInfo();
+        $versions = $this->uiVersionService->loadVersions($contentInfo);
+
+        $draftVersions = $versionFilter->filterDrafts($versions);
+        $draftActionsForm = $formFactory->createVersionsDraftActionForm($draftVersions);
+
+        $archivedVersions = $versionFilter->filterArchived($versions);
+        $archivedActionsForm = $formFactory->createVersionsArchivedActionForm($archivedVersions);
+
+        $view->addParameters([
+            'draftVersions' => $draftVersions,
+            'publishedVersions' => $versionFilter->filterPublished($versions),
+            'archivedVersions' => $archivedVersions,
+            'draftActionsForm' => $draftActionsForm->createView(),
+            'archivedActionsForm' => $archivedActionsForm->createView(),
+        ]);
+
+        return $view;
     }
 
     public function draftActionsAction(
-        $contentId,
+        Content $content,
         Request $request,
         UiFormFactory $formFactory
     ) {
@@ -42,14 +67,16 @@ class VersionController extends Controller
         $draftActionsForm->handleRequest($request);
 
         if ($draftActionsForm->isValid()) {
-            $this->deleteVersionsBasedOnFormSubmit($draftActionsForm, $contentId);
+            $this->deleteVersionsBasedOnFormSubmit($draftActionsForm, $content->id);
         }
 
-        return $this->redirectToContentView($contentId);
+        $redirectLocationId = $request->query->get('redirectLocationId', $content->contentInfo->mainLocationId);
+
+        return $this->reloadTab('versions', $content->id, $redirectLocationId);
     }
 
     public function archiveActionsAction(
-        $contentId,
+        Content $content,
         Request $request,
         UiFormFactory $formFactory
     ) {
@@ -57,10 +84,12 @@ class VersionController extends Controller
         $archiveActionsForm->handleRequest($request);
 
         if ($archiveActionsForm->isValid()) {
-            $this->deleteVersionsBasedOnFormSubmit($archiveActionsForm, $contentId);
+            $this->deleteVersionsBasedOnFormSubmit($archiveActionsForm, $content->id);
         }
 
-        return $this->redirectToContentView($contentId);
+        $redirectLocationId = $request->query->get('redirectLocationId', $content->contentInfo->mainLocationId);
+
+        return $this->reloadTab('versions', $content->id, $redirectLocationId);
     }
 
     private function deleteVersionsBasedOnFormSubmit(FormInterface $form, $contentId)
@@ -72,16 +101,5 @@ class VersionController extends Controller
                 $this->uiVersionService->deleteVersion((int) $contentId, $versionId);
             }
         }
-    }
-
-    protected function redirectToContentView($contentId)
-    {
-        //@TODO Show success/fail message to user
-        return new RedirectResponse(
-            $this->router->generate(
-                '_ez_content_view',
-                ['contentId' => $contentId, 'viewType' => 'versions_tab']
-            )
-        );
     }
 }
