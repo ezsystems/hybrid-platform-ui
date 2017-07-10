@@ -147,6 +147,8 @@ When Field Definition is marked as required
 
 ## Country `ezcountry`
 
+Same as for Selection.
+
 ## Date `ezdate`
 
 ### Options
