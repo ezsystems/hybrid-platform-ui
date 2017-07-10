@@ -332,6 +332,30 @@ When set required and with a min and max value:
 
 ## Keywords `ezkeyword`
 
+### Options
+
+* Required
+
+### Markup
+
+```html
+<div class="ez-field-edit ez-field-edit-ezkeyword">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <input type="text" id="auto-generated-id" name="auto-generated-name" value="">
+    </div>
+</div>
+```
+When set as required:
+
+As for others Field Type, the outermost `div` gets the `ez-field-edit-required`
+class and the `input` gets the `required` attribute.
+
+
 ## Media `ezmedia`
 
 ## Content Relation `ezobjectrelation`
