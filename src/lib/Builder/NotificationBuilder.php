@@ -5,26 +5,13 @@
  */
 namespace EzSystems\HybridPlatformUi\Builder;
 
-use Twig\Environment;
+use EzSystems\HybridPlatformUi\Notification\NotificationMessage;
 
 /**
  * Builder for notification messages, returns output from twig.
  */
 class NotificationBuilder
 {
-    const TEMPLATE = 'EzSystemsHybridPlatformUiBundle::notification.html.twig';
-
-    const DEFAULT_TIMEOUT = 10;
-
-    const TYPE_SUCCESS = 'positive';
-
-    const TYPE_ERROR = 'error';
-
-    /**
-     * @var Environment
-     */
-    private $environment;
-
     /**
      * @var string
      */
@@ -38,7 +25,7 @@ class NotificationBuilder
     /**
      * @var int
      */
-    private $timeout = self::DEFAULT_TIMEOUT;
+    private $timeout = NotificationMessage::DEFAULT_TIMEOUT;
 
     /**
      * @var bool
@@ -50,11 +37,6 @@ class NotificationBuilder
      */
     private $details;
 
-    public function __construct(Environment $environment)
-    {
-        $this->environment = $environment;
-    }
-
     /**
      * Sets notification type as success.
      *
@@ -62,7 +44,7 @@ class NotificationBuilder
      */
     public function setSuccess()
     {
-        $this->type = self::TYPE_SUCCESS;
+        $this->type = NotificationMessage::TYPE_SUCCESS;
 
         return $this;
     }
@@ -74,7 +56,7 @@ class NotificationBuilder
      */
     public function setError()
     {
-        $this->type = self::TYPE_ERROR;
+        $this->type = NotificationMessage::TYPE_ERROR;
 
         return $this;
     }
@@ -129,15 +111,12 @@ class NotificationBuilder
      */
     public function getResult()
     {
-        return $this->environment->render(
-            self::TEMPLATE,
-            [
-                'type' => $this->type,
-                'message' => $this->message,
-                'timeout' => $this->timeout,
-                'copyable' => $this->copyable,
-                'details' => $this->details,
-            ]
-        );
+        return new NotificationMessage([
+            'type' => $this->type,
+            'message' => $this->message,
+            'timeout' => $this->timeout,
+            'copyable' => $this->copyable,
+            'details' => $this->details,
+        ]);
     }
 }

@@ -2,58 +2,52 @@
 
 namespace spec\EzSystems\HybridPlatformUi\Builder;
 
-use EzSystems\HybridPlatformUi\Builder\NotificationBuilder;
+use EzSystems\HybridPlatformUi\Notification\NotificationMessage;
 use PhpSpec\ObjectBehavior;
-use Twig\Environment;
 
 class NotificationBuilderSpec extends ObjectBehavior
 {
-    function let(Environment $environment)
-    {
-        $this->beConstructedWith($environment);
-    }
-
-    function it_build_success_notification(Environment $environment)
+    function it_build_success_notification()
     {
         $message = 'test';
 
-        $environment->render(
-            NotificationBuilder::TEMPLATE,
+        $expectedNotification = new NotificationMessage(
             [
-                'type' => NotificationBuilder::TYPE_SUCCESS,
+                'type' => NotificationMessage::TYPE_SUCCESS,
                 'message' => $message,
-                'timeout' => NotificationBuilder::DEFAULT_TIMEOUT,
+                'timeout' => NotificationMessage::DEFAULT_TIMEOUT,
                 'copyable' => null,
                 'details' => null,
             ]
-        )->shouldBeCalled();
+        );
 
         $this
             ->setSuccess()
             ->setMessage($message)
-            ->getResult();
+            ->getResult()
+            ->shouldBeLike($expectedNotification);
     }
 
-    function it_build_error_notification(Environment $environment)
+    function it_build_error_notification()
     {
         $message = 'test';
         $details = 'test details';
 
-        $environment->render(
-            NotificationBuilder::TEMPLATE,
+        $expectedNotification = new NotificationMessage(
             [
-                'type' => NotificationBuilder::TYPE_ERROR,
+                'type' => NotificationMessage::TYPE_ERROR,
                 'message' => $message,
-                'timeout' => NotificationBuilder::DEFAULT_TIMEOUT,
+                'timeout' => NotificationMessage::DEFAULT_TIMEOUT,
                 'copyable' => true,
                 'details' => $details,
             ]
-        )->shouldBeCalled();
+        );
 
         $this
             ->setError()
             ->setErrorDetails($details)
             ->setMessage($message)
-            ->getResult();
+            ->getResult()
+            ->shouldBeLike($expectedNotification);
     }
 }

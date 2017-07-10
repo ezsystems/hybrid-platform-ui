@@ -5,6 +5,7 @@
  */
 namespace EzSystems\HybridPlatformUi\Http\Response;
 
+use EzSystems\HybridPlatformUi\Notification\NotificationMessage;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -12,28 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class NotificationResponse extends Response implements NoRenderResponse
 {
-    /**
-     * Successful response.
-     *
-     * @param string $content
-     *
-     * @return static
-     */
-    public static function success(string $content)
+    public function __construct(NotificationMessage $message, $status = Response::HTTP_OK)
     {
-        return new static($content);
-    }
-
-    /**
-     * Error response.
-     *
-     * @param string $content
-     * @param int $status
-     *
-     * @return static
-     */
-    public static function error(string $content, int $status)
-    {
-        return new static($content, $status);
+        parent::__construct($message, $status);
     }
 }

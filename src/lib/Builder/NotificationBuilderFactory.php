@@ -5,23 +5,11 @@
  */
 namespace EzSystems\HybridPlatformUi\Builder;
 
-use Twig\Environment;
-
 /**
  * Factory for new notification builder instances.
  */
 class NotificationBuilderFactory
 {
-    /**
-     * @var Environment
-     */
-    private $environment;
-
-    public function __construct(Environment $environment)
-    {
-        $this->environment = $environment;
-    }
-
     /**
      * Create new builder instance.
      *
@@ -29,6 +17,6 @@ class NotificationBuilderFactory
      */
     public function create()
     {
-        return new NotificationBuilder($this->environment);
+        return new NotificationBuilder();
     }
 }
