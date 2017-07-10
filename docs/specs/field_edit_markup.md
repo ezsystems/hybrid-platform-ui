@@ -411,9 +411,12 @@ class and the `input` gets the `required` attribute.
 
 ## Selection `ezselection`
 
-### Single
+### Options
 
-#### Current markup
+* Multiple
+* Required
+
+### Current markup
 
 ```html
 <div class="ezfield-type-ezselection ezfield-identifier-new_ezselection_19">
@@ -424,18 +427,33 @@ class and the `input` gets the `required` attribute.
 </div>
 ```
 
-### Multiple
+When configured as multiple, the `select` element receives the `multiple`
+attribute.
 
-#### Current markup
+### New markup
 
-```
-<div class="ezfield-type-ezselection ezfield-identifier-new_ezselection_19">
-    <fieldset>
-        <legend>New ezselection 19</label></legend>
-        <select id="ezrepoforms_content_edit_fieldsData_new_ezselection_19_value" name="ezrepoforms_content_edit[fieldsData][new_ezselection_19][value][]" multiple=""></select>
-    </fieldset>
+```html
+<div class="ez-field-edit ez-field-edit-ezselect">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <select id="auto-generated-id" name="auto-generated-name">
+            <!-- list of option -->
+        </select>
+    </div>
 </div>
 ```
+
+When set as multiple selection, the `select` element receives the `multiple`
+attribute.
+
+When set as required:
+
+As for others Field Type, the outermost `div` gets the `ez-field-edit-required`
+class and the `select` gets the `required` attribute.
 
 ## Text Line `ezstring`
 
