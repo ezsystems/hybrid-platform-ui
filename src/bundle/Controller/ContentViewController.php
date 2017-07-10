@@ -8,14 +8,12 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
-use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Values\Content\Location;
-use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
-use EzSystems\HybridPlatformUi\Filter\VersionFilter;
-use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiFieldGroupService;
 use EzSystems\HybridPlatformUi\Repository\UiRelationService;
+use EzSystems\HybridPlatformUi\Repository\UiTranslationService;
+use EzSystems\HybridPlatformUi\Repository\UiUserService;
 
 class ContentViewController extends TabController
 {
@@ -48,8 +46,11 @@ class ContentViewController extends TabController
         return $view;
     }
 
-    public function detailsTabAction(ContentView $view)
-    {
+    public function detailsTabAction(
+        ContentView $view,
+        UiUserService $userService,
+        UiTranslationService $translationService
+    ) {
         $versionInfo = $view->getContent()->getVersionInfo();
         $contentInfo = $versionInfo->getContentInfo();
 
@@ -60,51 +61,13 @@ class ContentViewController extends TabController
             'section' => $section,
             'contentInfo' => $contentInfo,
             'versionInfo' => $versionInfo,
-            'creator' => $this->loadUser($contentInfo->ownerId),
-            'lastContributor' => $this->loadUser($versionInfo->creatorId),
-            'translations' => $this->getTranslations($versionInfo),
+            'creator' => $userService->findUserById($contentInfo->ownerId),
+            'lastContributor' => $userService->findUserById($versionInfo->creatorId),
+            'translations' => $translationService->loadTranslations($versionInfo),
             'ordering' => [
                 'sortFields' => $this->getSortFields($view->getLocation()->sortField),
                 'sortOrders' => $this->getSortOrders(),
             ],
-        ]);
-
-        return $view;
-    }
-
-    public function versionsTabAction(
-        ContentView $view,
-        VersionFilter $versionFilter,
-        UiFormFactory $formFactory
-    ) {
-        $contentInfo = $view->getContent()->getVersionInfo()->getContentInfo();
-        $contentService = $this->getRepository()->getContentService();
-        $versions = $contentService->loadVersions($contentInfo);
-
-        $authors = [];
-        foreach ($versions as $version) {
-            $authors[$version->id] = $this->loadUser($version->creatorId);
-        }
-
-        $translations = [];
-        foreach ($versions as $version) {
-            $translations[$version->id] = $this->getTranslations($version);
-        }
-
-        $draftVersions = $versionFilter->filterDrafts($versions);
-        $draftActionsForm = $formFactory->createVersionsDraftActionForm($draftVersions);
-
-        $archivedVersions = $versionFilter->filterArchived($versions);
-        $archivedActionsForm = $formFactory->createVersionsArchivedActionForm($archivedVersions);
-
-        $view->addParameters([
-            'draftVersions' => $draftVersions,
-            'publishedVersions' => $versionFilter->filterPublished($versions),
-            'archivedVersions' => $archivedVersions,
-            'authors' => $authors,
-            'translations' => $translations,
-            'draftActionsForm' => $draftActionsForm->createView(),
-            'archivedActionsForm' => $archivedActionsForm->createView(),
         ]);
 
         return $view;
@@ -123,38 +86,13 @@ class ContentViewController extends TabController
         return $view;
     }
 
-    public function translationsTabAction(ContentView $view)
+    public function translationsTabAction(ContentView $view, UiTranslationService $translationService)
     {
         $view->addParameters([
-            'translations' => $this->getTranslations($view->getContent()->getVersionInfo()),
+            'translations' => $translationService->loadTranslations($view->getContent()->getVersionInfo()),
         ]);
 
         return $view;
-    }
-
-    protected function loadUser($userId)
-    {
-        $userService = $this->getRepository()->getUserService();
-
-        return $this->getRepository()->sudo(function () use ($userId, $userService) {
-            try {
-                return $userService->loadUser($userId);
-            } catch (NotFoundException $e) {
-                return null;
-            }
-        });
-    }
-
-    protected function getTranslations(VersionInfo $versionInfo)
-    {
-        $languageRepository = $this->getRepository()->getContentLanguageService();
-
-        $translations = [];
-        foreach ($versionInfo->languageCodes as $languageCode) {
-            $translations[] = $languageRepository->loadLanguage($languageCode);
-        }
-
-        return $translations;
     }
 
     protected function getSortFields($currentSortField)
