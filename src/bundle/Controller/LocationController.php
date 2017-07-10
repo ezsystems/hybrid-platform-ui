@@ -65,7 +65,7 @@ class LocationController extends TabController
         return $this->reloadTab('locations', $content->id, $redirectLocationId);
     }
 
-    public function updateLocationDefaultSortOrderAction(
+    public function updateDefaultSortOrderAction(
         Location $location,
         Content $content,
         Request $request,
@@ -76,12 +76,7 @@ class LocationController extends TabController
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $updateStruct = $locationService->newLocationUpdateStruct();
-
-            $updateStruct->sortField = $form->get('sortField')->getData();
-            $updateStruct->sortOrder = $form->get('sortOrder')->getData();
-
-            $locationService->updateLocation($location, $updateStruct);
+            $locationService->updateLocation($location, $form->getData());
         }
 
         return $this->reloadTab('details', $content->id, $location->id);

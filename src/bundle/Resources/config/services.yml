@@ -52,6 +52,7 @@ services:
 
     Symfony\Component\Routing\RouterInterface: '@router'
 
-    EzSystems\HybridPlatformUiBundle\Form\Location\Ordering:
-        arguments: ['@translator']
+    Symfony\Component\Translation\TranslatorInterface: '@translator'
+
+    EzSystems\HybridPlatformUiBundle\Form\Locations\Ordering:
         tags: [form.type]

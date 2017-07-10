@@ -6,6 +6,7 @@
  */
 namespace EzSystems\HybridPlatformUi\Mapper\Form\Location;
 
+use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\Location;
 
 /**
@@ -13,11 +14,23 @@ use eZ\Publish\API\Repository\Values\Content\Location;
  */
 class OrderingMapper
 {
+    /**
+     * @var LocationService
+     */
+    private $locationService;
+
+    public function __construct(LocationService $locationService)
+    {
+        $this->locationService = $locationService;
+    }
+
     public function mapToForm(Location $location)
     {
-        return [
-            'sortField' => $location->sortField,
-            'sortOrder' => $location->sortOrder,
-        ];
+        $updateStruct = $this->locationService->newLocationUpdateStruct();
+
+        $updateStruct->sortField = $location->sortField;
+        $updateStruct->sortOrder = $location->sortOrder;
+
+        return $updateStruct;
     }
 }

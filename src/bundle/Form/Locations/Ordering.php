@@ -4,9 +4,10 @@
  * @copyright Copyright (C) eZ Systems AS. All rights reserved.
  * @license For full copyright and license information view LICENSE file distributed with this source code.
  */
-namespace EzSystems\HybridPlatformUiBundle\Form\Location;
+namespace EzSystems\HybridPlatformUiBundle\Form\Locations;
 
 use eZ\Publish\API\Repository\Values\Content\Location;
+use eZ\Publish\API\Repository\Values\Content\LocationUpdateStruct;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -107,6 +108,10 @@ class Ordering extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefault('current_sort_field', null);
+        $resolver
+            ->setDefaults([
+                'current_sort_field' => null,
+                'data_class' => LocationUpdateStruct::class,
+            ]);
     }
 }

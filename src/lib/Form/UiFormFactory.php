@@ -9,7 +9,7 @@ use eZ\Publish\API\Repository\Values\Content\Location;
 use EzSystems\HybridPlatformUi\Mapper\Form\Location\OrderingMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\LocationMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\VersionMapper;
-use EzSystems\HybridPlatformUiBundle\Form\Location\Ordering;
+use EzSystems\HybridPlatformUiBundle\Form\Locations\Ordering;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\Actions as LocationActions;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\ArchivedActions;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\DraftActions;
