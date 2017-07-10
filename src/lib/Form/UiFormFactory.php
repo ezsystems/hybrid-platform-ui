@@ -94,11 +94,9 @@ class UiFormFactory
 
     public function createLocationOrderingForm(Location $location)
     {
-        $data = $this->orderingMapper->mapToForm($location);
-
         return $this->formFactory->create(
             Ordering::class,
-            $data,
+            $this->orderingMapper->mapToForm($location),
             ['current_sort_field' => $location->sortField]
         );
     }
