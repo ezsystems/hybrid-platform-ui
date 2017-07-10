@@ -166,6 +166,40 @@ class and the `input` gets the `required` attribute.
 
 ## Float `ezfloat`
 
+### Options
+
+* Minimum value
+* Maximum value
+* Required
+
+### Markup
+
+Without any constraints:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezfloat">
+    <p class="ez-field-definition-name">
+        <label for="auto-generated-id">Float</label>
+    </p>
+    <div class="ez-field-edit-ui">
+        <input type="number" step="any" id="auto-generated-id" name="auto-generated-name" value="">
+    </div>
+</div>
+```
+
+When set required and with a min and max value:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezfloat ez-field-edit-required">
+    <p class="ez-field-definition-name">
+        <label for="auto-generated-id">Float</label>
+    </p>
+    <div class="ez-field-edit-ui">
+        <input type="number" step="any" min="5.2" max="10.6" required id="auto-generated-id" name="auto-generated-name" value="">
+    </div>
+</div>
+```
+
 ## Map Location `ezgmaplocation`
 
 ## Image `ezimage`
