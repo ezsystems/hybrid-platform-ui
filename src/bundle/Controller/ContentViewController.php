@@ -8,7 +8,6 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
-use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiFieldGroupService;
