@@ -330,6 +330,49 @@ When set required and with a min and max value:
 
 ## ISBN `ezisbn`
 
+### Options
+
+* Required
+* ISBN13 (ISBN10 by default)
+
+### Markup
+
+For ISBN10:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezisbn">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <input type="text" pattern="^([0-9]{9}[0-9X])$" id="auto-generated-id" name="auto-generated-name" value="">
+    </div>
+</div>
+```
+
+For ISBN13:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezisbn">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <input type="text" pattern="^(97[89][0-9]{10})$" id="auto-generated-id" name="auto-generated-name" value="">
+    </div>
+</div>
+```
+
+When set as required:
+
+As for others Field Type, the outermost `div` gets the `ez-field-edit-required`
+class and the `input` gets the `required` attribute.
+
+
 ## Keywords `ezkeyword`
 
 ### Options
