@@ -176,6 +176,47 @@ class and the `input` gets the `required` attribute.
 
 ## Date and Time `ezdatetime`
 
+### Options
+
+* Required
+* Use seconds
+
+### Markup
+
+```html
+<div class="ez-field-edit ez-field-edit-ezdatetime">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <input type="datetime-local" id="auto-generated-id" name="auto-generated-name" value="">
+    </div>
+</div>
+```
+
+When configured to store/show seconds, the time input gets the `step` attribute
+with the value `1`:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezdatetime">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <input type="datetime-local" step="1" id="auto-generated-id" name="auto-generated-name" value="">
+    </div>
+</div>
+```
+
+When set as required:
+
+As for others Field Type, the outermost `div` gets the `ez-field-edit-required`
+class and the `input` gets the `required` attribute.
+
 ## Email Address `ezemail`
 
 ### Options
