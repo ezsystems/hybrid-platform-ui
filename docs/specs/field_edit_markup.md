@@ -678,7 +678,7 @@ class and the `input` gets the `required` attribute.
     </div>
     <div class="ez-field-edit-ui">
         <fieldset>
-            <div class="ez-sub-field">
+            <div class="ez-sub-field ez-sub-field-url">
                 <div class="ez-sub-field-text-zone">
                     <label class="ez-sub-field-name" for="auto-generated-id-url">
                         URL
@@ -688,7 +688,7 @@ class and the `input` gets the `required` attribute.
                     <input type="text" id="auto-generated-id-url" name="auto-generated-name-url">
                 </div>
             </div>
-            <div class="ez-sub-field">
+            <div class="ez-sub-field ez-sub-field-text">
                 <div class="ez-sub-field-text-zone">
                     <label class="ez-sub-field-name" for="auto-generated-id-text">
                         Text
@@ -753,7 +753,7 @@ class but only the URL `input` gets the `required` attribute.
     </div>
     <div class="ez-field-edit-ui">
         <fieldset>
-            <div class="ez-sub-field">
+            <div class="ez-sub-field ez-sub-field-login">
                 <div class="ez-sub-field-text-zone">
                     <label class="ez-sub-field-name" for="auto-generated-id-login">
                         Login
@@ -763,7 +763,7 @@ class but only the URL `input` gets the `required` attribute.
                     <input type="text" id="auto-generated-id-login" name="auto-generated-name-login">
                 </div>
             </div>
-            <div class="ez-sub-field">
+            <div class="ez-sub-field ez-sub-field-email">
                 <div class="ez-sub-field-text-zone">
                     <label class="ez-sub-field-name" for="auto-generated-id-email">
                         Email
@@ -773,7 +773,7 @@ class but only the URL `input` gets the `required` attribute.
                     <input type="email" id="auto-generated-id-email" name="auto-generated-name-email">
                 </div>
             </div>
-            <div class="ez-sub-field">
+            <div class="ez-sub-field ez-sub-field-password">
                 <div class="ez-sub-field-text-zone">
                     <label class="ez-sub-field-name" for="auto-generated-id-password1">
                         Password
@@ -783,7 +783,7 @@ class but only the URL `input` gets the `required` attribute.
                     <input type="password" id="auto-generated-id-password1" name="auto-generated-name-password1">
                 </div>
             </div>
-            <div class="ez-sub-field">
+            <div class="ez-sub-field ez-sub-field-confirm-password">
                 <div class="ez-sub-field-text-zone">
                     <label class="ez-sub-field-name" for="auto-generated-id-password2">
                         Confirm password
