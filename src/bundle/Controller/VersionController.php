@@ -67,7 +67,7 @@ class VersionController extends TabController
         $draftActionsForm->handleRequest($request);
 
         if ($draftActionsForm->isValid()) {
-            $this->deleteVersionsBasedOnFormSubmit($draftActionsForm, $content->id);
+            $this->deleteVersionsBasedOnFormSubmit($draftActionsForm, $content);
         }
 
         $redirectLocationId = $request->query->get('redirectLocationId', $content->contentInfo->mainLocationId);
@@ -84,8 +84,8 @@ class VersionController extends TabController
         $archiveActionsForm->handleRequest($request);
 
         if ($archiveActionsForm->isValid()) {
-            $this->deleteVersionsBasedOnFormSubmit($archiveActionsForm, $content->id);
-            $this->createDraftVersionBasedOnFormSubmit($archiveActionsForm, $content->id);
+            $this->deleteVersionsBasedOnFormSubmit($archiveActionsForm, $content);
+            $this->createDraftVersionBasedOnFormSubmit($archiveActionsForm, $content);
         }
 
         $redirectLocationId = $request->query->get('redirectLocationId', $content->contentInfo->mainLocationId);
@@ -93,22 +93,22 @@ class VersionController extends TabController
         return $this->reloadTab('versions', $content->id, $redirectLocationId);
     }
 
-    private function deleteVersionsBasedOnFormSubmit(FormInterface $form, $contentId)
+    private function deleteVersionsBasedOnFormSubmit(FormInterface $form, Content $content)
     {
         $selectedIds = array_keys($form->get('versionIds')->getData());
 
         if ($form->get('delete')->isClicked()) {
             foreach ($selectedIds as $versionId) {
-                $this->uiVersionService->deleteVersion((int) $contentId, $versionId);
+                $this->uiVersionService->deleteVersion($content->contentInfo, $versionId);
             }
         }
     }
 
-    private function createDraftVersionBasedOnFormSubmit(FormInterface $form, $contentId)
+    private function createDraftVersionBasedOnFormSubmit(FormInterface $form, Content $content)
     {
         if ($form->get('new_draft')->isClicked()) {
             $versionId = key($form->get('versionIds')->getData());
-            $this->uiVersionService->createDraft($contentId, $versionId);
+            $this->uiVersionService->createDraft($content->contentInfo, $versionId);
         }
     }
 }
