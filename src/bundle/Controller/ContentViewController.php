@@ -9,15 +9,11 @@
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
 use eZ\Publish\API\Repository\Values\Content\Location;
-use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
-use EzSystems\HybridPlatformUi\Filter\VersionFilter;
-use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiFieldGroupService;
 use EzSystems\HybridPlatformUi\Repository\UiRelationService;
 use EzSystems\HybridPlatformUi\Repository\UiTranslationService;
 use EzSystems\HybridPlatformUi\Repository\UiUserService;
-use EzSystems\HybridPlatformUi\Repository\UiVersionService;
 
 class ContentViewController extends TabController
 {
@@ -72,32 +68,6 @@ class ContentViewController extends TabController
                 'sortFields' => $this->getSortFields($view->getLocation()->sortField),
                 'sortOrders' => $this->getSortOrders(),
             ],
-        ]);
-
-        return $view;
-    }
-
-    public function versionsTabAction(
-        ContentView $view,
-        VersionFilter $versionFilter,
-        UiFormFactory $formFactory,
-        UiVersionService $versionService
-    ) {
-        $contentInfo = $view->getContent()->getVersionInfo()->getContentInfo();
-        $versions = $versionService->loadVersions($contentInfo);
-
-        $draftVersions = $versionFilter->filterDrafts($versions);
-        $draftActionsForm = $formFactory->createVersionsDraftActionForm($draftVersions);
-
-        $archivedVersions = $versionFilter->filterArchived($versions);
-        $archivedActionsForm = $formFactory->createVersionsArchivedActionForm($archivedVersions);
-
-        $view->addParameters([
-            'draftVersions' => $draftVersions,
-            'publishedVersions' => $versionFilter->filterPublished($versions),
-            'archivedVersions' => $archivedVersions,
-            'draftActionsForm' => $draftActionsForm->createView(),
-            'archivedActionsForm' => $archivedActionsForm->createView(),
         ]);
 
         return $view;

@@ -7,6 +7,8 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
+use eZ\Publish\Core\MVC\Symfony\View\ContentView;
+use EzSystems\HybridPlatformUi\Filter\VersionFilter;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
@@ -29,6 +31,31 @@ class VersionController extends TabController
     ) {
         $this->uiVersionService = $uiVersionService;
         parent::__construct($router, $contentService);
+    }
+
+    public function contentViewTabAction(
+        ContentView $view,
+        VersionFilter $versionFilter,
+        UiFormFactory $formFactory
+    ) {
+        $contentInfo = $view->getContent()->getVersionInfo()->getContentInfo();
+        $versions = $this->uiVersionService->loadVersions($contentInfo);
+
+        $draftVersions = $versionFilter->filterDrafts($versions);
+        $draftActionsForm = $formFactory->createVersionsDraftActionForm($draftVersions);
+
+        $archivedVersions = $versionFilter->filterArchived($versions);
+        $archivedActionsForm = $formFactory->createVersionsArchivedActionForm($archivedVersions);
+
+        $view->addParameters([
+            'draftVersions' => $draftVersions,
+            'publishedVersions' => $versionFilter->filterPublished($versions),
+            'archivedVersions' => $archivedVersions,
+            'draftActionsForm' => $draftActionsForm->createView(),
+            'archivedActionsForm' => $archivedActionsForm->createView(),
+        ]);
+
+        return $view;
     }
 
     public function draftActionsAction(
