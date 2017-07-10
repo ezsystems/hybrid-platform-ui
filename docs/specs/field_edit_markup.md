@@ -288,6 +288,59 @@ When set required and with a min and max value:
 
 ## Map Location `ezgmaplocation`
 
+### Options
+
+* Required
+
+### Markup
+
+```html
+<div class="ez-field-edit ez-field-edit-ezgmaplocation">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name"><!-- no for attribute -->
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <fieldset>
+            <div class="ez-sub-field ez-sub-field-latitude">
+                <div class="ez-sub-field-text-zone">
+                    <label class="ez-sub-field-name" for="auto-generated-id-lat">
+                        Latitude
+                    </label>
+                </div>
+                <div class="ez-sub-field-ui">
+                    <input type="number" step="any" id="auto-generated-id-lat" name="auto-generated-name-lat">
+                </div>
+            </div>
+            <div class="ez-sub-field ez-sub-field-longitude">
+                <div class="ez-sub-field-text-zone">
+                    <label class="ez-sub-field-name" for="auto-generated-id-lon">
+                        Longitude
+                    </label>
+                </div>
+                <div class="ez-sub-field-ui">
+                    <input type="number" step="any" id="auto-generated-id-lon" name="auto-generated-name-lon">
+                </div>
+            </div>
+            <div class="ez-sub-field ez-sub-field-address">
+                <div class="ez-sub-field-text-zone">
+                    <label class="ez-sub-field-name" for="auto-generated-id-address">
+                        Address
+                    </label>
+                </div>
+                <div class="ez-sub-field-ui">
+                    <input type="text" id="auto-generated-id-address" name="auto-generated-name-address">
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+```
+
+When set required, the latitude and longitude inputs receives the `required`
+attribute.
+
 ## Image `ezimage`
 
 ## Integer `ezinteger`
