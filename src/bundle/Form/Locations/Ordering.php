@@ -69,7 +69,7 @@ class Ordering extends AbstractType
      */
     protected function getSortFields($currentSortField)
     {
-        $defaultSortFields = [
+        $sortFields = [
             /** @Desc("Content name") */
             $this->translator->trans('sort.name', [], 'locationview') => Location::SORT_FIELD_NAME,
             /** @Desc("Priority") */
@@ -80,7 +80,7 @@ class Ordering extends AbstractType
             $this->translator->trans('sort.published', [], 'locationview') => Location::SORT_FIELD_PUBLISHED,
         ];
 
-        $otherSortFields = [
+        $unsupportedFields = [
             /** @Desc("Location path") */
             $this->translator->trans('sort.path', [], 'locationview') => Location::SORT_FIELD_PATH,
             /** @Desc("Content type identifier") */
@@ -94,13 +94,13 @@ class Ordering extends AbstractType
         ];
 
         if ($currentSortField) {
-            $otherKey = array_search($currentSortField, $otherSortFields);
-            if ($otherKey) {
-                $defaultSortFields[$otherKey] = $otherSortFields[$otherKey];
+            $unsupportedKey = array_search($currentSortField, $unsupportedFields);
+            if ($unsupportedKey) {
+                $sortFields[$unsupportedKey] = $unsupportedFields[$unsupportedKey];
             }
         }
 
-        return $defaultSortFields;
+        return $sortFields;
     }
 
     /**
