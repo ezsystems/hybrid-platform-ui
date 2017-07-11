@@ -94,6 +94,160 @@ validation, HTML5 validation is the based on which `ez-field-edit` and
 
 ## Authors `ezauthor`
 
+### Options
+
+* Required
+
+### Markup
+
+When the Field is empty:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezauthor">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="checkbox-auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <fieldset>
+            <div class="ez-sub-field ez-sub-field-name">
+                <div class="ez-sub-field-text-zone">
+                    <label class="ez-sub-field-name" for="name-auto-generated-id">
+                        Full name
+                    </label>
+                </div>
+                <div class="ez-sub-field-ui">
+                    <input type="text" id="name-auto-generated-id" name="name-auto-generated-name">
+                </div>
+            </div>
+            <div class="ez-sub-field ez-sub-field-email">
+                <div class="ez-sub-field-text-zone">
+                    <label class="ez-sub-field-name" for="email-auto-generated-id">
+                        Email
+                    </label>
+                </div>
+                <div class="ez-sub-field-ui">
+                    <input type="email" id="email-auto-generated-id" name="email-auto-generated-name">
+                </div>
+            </div>
+            <div class="ez-author-tools">
+                <button type="button" class="ez-button ez-button-secondary ez-js-remove-author" disabled>Remove</button>
+                <button type="button" class="ez-button ez-button-secondary ez-js-add-author" disabled>Add</button>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<template class="author-template">
+    <!--
+        here, the *auto-generated* id and name should have a placeholder
+        that will be replaced by the JS code to make them unique
+        *Prototype* options of SF CollectionType can be used for that
+        http://symfony.com/doc/current/reference/forms/types/collection.html#adding-and-removing-items
+    -->
+    <fieldset>
+        <div class="ez-sub-field ez-sub-field-name">
+            <div class="ez-sub-field-text-zone">
+                <label class="ez-sub-field-name" for="name-auto-generated-id">
+                    Full name
+                </label>
+            </div>
+            <div class="ez-sub-field-ui">
+                <input type="text" id="name-auto-generated-id" name="name-auto-generated-name">
+            </div>
+        </div>
+        <div class="ez-sub-field ez-sub-field-email">
+            <div class="ez-sub-field-text-zone">
+                <label class="ez-sub-field-name" for="email-auto-generated-id">
+                    Email
+                </label>
+            </div>
+            <div class="ez-sub-field-ui">
+                <input type="email" id="email-auto-generated-id" name="email-auto-generated-name">
+            </div>
+        </div>
+        <div class="ez-author-tools">
+            <button type="button" class="ez-button ez-button-secondary ez-js-remove-author" disabled>Remove</button>
+            <button type="button" class="ez-button ez-button-secondary ez-js-add-author" disabled>Add</button>
+        </div>
+    </fieldset>
+</template>
+```
+
+When the Field is filled:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezauthor">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="checkbox-auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <fieldset>
+            <div class="ez-sub-field ez-sub-field-name">
+                <div class="ez-sub-field-text-zone">
+                    <label class="ez-sub-field-name" for="name-auto-generated-id">
+                        Full name
+                    </label>
+                </div>
+                <div class="ez-sub-field-ui">
+                    <input type="text" id="name-auto-generated-id" name="name-auto-generated-name" value="Damien Pobel">
+                </div>
+            </div>
+            <div class="ez-sub-field ez-sub-field-email">
+                <div class="ez-sub-field-text-zone">
+                    <label class="ez-sub-field-name" for="email-auto-generated-id">
+                        Email
+                    </label>
+                </div>
+                <div class="ez-sub-field-ui">
+                    <input type="email" id="email-auto-generated-id" name="email-auto-generated-name" value="dp@ez.no">
+                </div>
+            </div>
+            <div class="ez-author-tools">
+                <button type="button" class="ez-button ez-button-secondary ez-js-remove-author">Remove</button>
+                <button type="button" class="ez-button ez-button-secondary ez-js-add-author" disabled>Add</button>
+            </div>
+        </fieldset>
+        <fieldset>
+            <div class="ez-sub-field ez-sub-field-name">
+                <div class="ez-sub-field-text-zone">
+                    <label class="ez-sub-field-name" for="name-auto-generated-id">
+                        Full name
+                    </label>
+                </div>
+                <div class="ez-sub-field-ui">
+                    <input type="text" id="name-auto-generated-id" name="name-auto-generated-name" value="Someone">
+                </div>
+            </div>
+            <div class="ez-sub-field ez-sub-field-email">
+                <div class="ez-sub-field-text-zone">
+                    <label class="ez-sub-field-name" for="email-auto-generated-id">
+                        Email
+                    </label>
+                </div>
+                <div class="ez-sub-field-ui">
+                    <input type="email" id="email-auto-generated-id" name="email-auto-generated-name" value="someone@ez.no">
+                </div>
+            </div>
+            <div class="ez-author-tools">
+                <button type="button" class="ez-button ez-button-secondary ez-js-remove-author">Remove</button>
+                <button type="button" class="ez-button ez-button-secondary ez-js-add-author">Add</button>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<template class="author-template">
+    <!-- same template as above -->
+</template>
+```
+
+When set as required:
+
+* the outermost `div` gets the `ez-field-edit-required` class
+* if the Field is empty, the name and email `input` gets the `required` attribute
+
 ## Checkbox `ezboolean`
 
 ### Options:
