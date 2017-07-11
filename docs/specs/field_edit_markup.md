@@ -458,6 +458,33 @@ class and the `input` gets the `required` attribute.
 
 ## Content Relation `ezobjectrelation`
 
+### Options
+
+* Default Location
+* Required
+
+### Markup
+
+```html
+<div class="ez-field-edit ez-field-edit-ezobjectrelation">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <input type="number" step="1" min="1"  id="auto-generated-id" name="auto-generated-name" value="">
+    </div>
+</div>
+```
+
+The `input` field expects a Content id.
+
+When set as required:
+
+As for others Field Type, the outermost `div` gets the `ez-field-edit-required`
+class and the `input` gets the `required` attribute.
+
 ## Content Relations `ezobjectrelationlist`
 
 ## Page `ezpage`
