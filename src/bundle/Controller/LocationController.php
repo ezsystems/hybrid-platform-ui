@@ -8,7 +8,9 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
+use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\Content;
+use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiLocationService;
@@ -61,5 +63,22 @@ class LocationController extends TabController
         }
 
         return $this->reloadTab('locations', $content->id, $redirectLocationId);
+    }
+
+    public function updateDefaultSortOrderAction(
+        Location $location,
+        Content $content,
+        Request $request,
+        LocationService $locationService,
+        UiFormFactory $formFactory
+    ) {
+        $form = $formFactory->createLocationOrderingForm($location);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $locationService->updateLocation($location, $form->getData());
+        }
+
+        return $this->reloadTab('details', $content->id, $location->id);
     }
 }

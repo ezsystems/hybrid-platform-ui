@@ -78,20 +78,16 @@
     </tbody>
 </table>
 
+{{ form_start(orderingForm, {'action': path('ez_hybrid_platform_ui_location_sort_order', {'locationId': location.id, 'contentId': contentInfo.id})}) }}
+
 <div class="ez-list-toolbar">
-    <h2 class="ez-list-toolbar-label">{{ 'locationview.details.subitems.default.ordering'|trans()|desc('Sub-items default ordering') }}</h2>
+    <h2 class="ez-list-toolbar-label">{{ 'locationview.details.sub.items.sorting.order'|trans()|desc('Sub-items sorting order') }}</h2>
 </div>
 
-<p class="ez-subitem-ordering-details">{{ 'locationview.details.default.listing.of.subitems.by'|trans()|desc('Default listing of sub-items by') }}
-    <select class="ez-subitems-ordering-sort-type" disabled>
-        {% for fieldId, fieldLabel in ordering.sortFields %}
-        <option {% if location.sortField == fieldId %}selected{% endif %} value="{{ fieldId }}">{{ fieldLabel.key|trans()|desc(fieldLabel.default) }}</option>
-        {% endfor %}
-    </select>
-    in
-    <select class="ez-subitems-sorting-order" disabled>
-        {% for orderId, orderLabel in ordering.sortOrders %}
-        <option {% if location.sortOrder == orderId %}selected{% endif %} value="{{ orderId }}">{{ orderLabel.key|trans()|desc(orderLabel.default) }}</option>
-        {% endfor %}
-    </select>
+<p class="ez-subitem-ordering-details">{{ 'locationview.details.sort_order.by'|trans()|desc('Order by') }}
+    {{ form_widget(orderingForm.sortField) }}
+    {{ 'locationview.details.sort_order.direction'|trans()|desc('in') }}
+    {{ form_widget(orderingForm.sortOrder) }}
 </p>
+
+{{ form_end(orderingForm) }}
