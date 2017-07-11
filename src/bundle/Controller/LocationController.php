@@ -69,14 +69,28 @@ class LocationController extends TabController
         $redirectLocationId = $request->query->get('redirectLocationId', $content->contentInfo->mainLocationId);
 
         if ($actionsForm->isValid()) {
-            $this->deleteLocationsBasedOnFormSubmit($actionsForm, $content, $redirectLocationId);
+            $resetLocation = $this->deleteLocationsBasedOnFormSubmit($actionsForm, $redirectLocationId);
+
+            if ($resetLocation) {
+                return $this->resetLocation($content->id);
+            }
+
             $this->addLocationBasedOnFormSubmit($actionsForm, $content);
         }
 
         return $this->reloadTab('locations', $content->id, $redirectLocationId);
     }
 
-    private function deleteLocationsBasedOnFormSubmit(FormInterface $form, Content $content, $redirectLocationId)
+    /**
+     * Delete locations based on form submit.
+     *
+     * @param FormInterface $form
+     * @param mixed $redirectLocationId
+     *
+     * @return bool
+     *  Whether to reset location or not.
+     */
+    private function deleteLocationsBasedOnFormSubmit(FormInterface $form, $redirectLocationId)
     {
         $locationIds = array_keys($form->get('removeLocations')->getData());
 
@@ -84,9 +98,11 @@ class LocationController extends TabController
             $this->uiLocationService->deleteLocations($locationIds);
 
             if (in_array($redirectLocationId, $locationIds)) {
-                return $this->resetLocation($content->id);
+                return true;
             }
         }
+
+        return false;
     }
 
     private function addLocationBasedOnFormSubmit(FormInterface $form, Content $content)
