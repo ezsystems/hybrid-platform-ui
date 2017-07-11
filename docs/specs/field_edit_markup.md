@@ -94,8 +94,6 @@ validation, HTML5 validation is the based on which `ez-field-edit` and
 
 ## Authors `ezauthor`
 
-## File `ezbinaryfile`
-
 ## Checkbox `ezboolean`
 
 ### Options:
@@ -245,6 +243,73 @@ When set as required:
 As for others Field Type, the outermost `div` gets the `ez-field-edit-required`
 class and the `input` gets the `required` attribute.
 
+## File `ezbinaryfile`
+
+### Options
+
+* Required
+* Maximum file size
+
+### Markup
+
+Unlike most Field Types, the fact that the Field is empty or not has a major
+impact on the server side generated markup. This is because the file input is
+only a mean to pick a file, it does not allow to represent a file that is stored
+in the Field.
+
+In addition, the File Field edit UI should allow 3 operations:
+
+1. keep the Field empty (if not required)
+1. fill or replace the file stored in the Field
+1. remove a previously stored file
+
+That's why, the default server side UI is composed of a file input to fill or
+replace the file in the Field and a checkbox to remove a previously stored file.
+
+When the Field is empty, the markup should be:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezbinaryfile">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <input type="file" id="auto-generated-id" name="auto-generated-name">
+    </div>
+</div>
+```
+
+When the Field is filled:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezbinaryfile">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-preview">
+        presentation.pdf
+        <strong>12.2MB</strong>
+        <div class="ez-field-preview-tools">
+            <a href="/path/to/file">Download</a>
+            <label>
+                Remove <input type="checkbox" name="checkbox-auto-generated-name" value="1">
+            </label>
+        </div>
+    </div>
+    <div class="ez-field-edit-ui">
+        <input type="file" id="auto-generated-id" name="auto-generated-name">
+    </div>
+</div>
+```
+
+When set as required:
+
+As for others Field Type, the outermost `div` gets the `ez-field-edit-required`
+class and the file `input` gets the `required` attribute.
 
 ## Float `ezfloat`
 
