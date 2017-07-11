@@ -485,6 +485,11 @@ When set as required:
 As for others Field Type, the outermost `div` gets the `ez-field-edit-required`
 class and the `input` gets the `required` attribute.
 
+Note: This markup is far from the expected UI to render and fill a Relation
+field (Select content button, usage of the UDW, Render the selected Content
+item, ...). The UI is a kind of a mini application in the application that
+requires deeper thinkings which are postponed to a later stage.
+
 ## Content Relations `ezobjectrelationlist`
 
 ### Options
@@ -515,6 +520,10 @@ When set as required:
 As for others Field Type, the outermost `div` gets the `ez-field-edit-required`
 class and the `input` gets the `required` attribute.
 
+Note: This markup is far from the expected UI to render and fill a Relation list
+field (Select content button, usage of the UDW, Render the selected Content
+items, ...). The UI is a kind of a mini application in the application that
+requires deeper thinkings which are postponed to a later stage.
 
 ## Page `ezpage`
 
