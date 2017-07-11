@@ -51,3 +51,8 @@ services:
         alias: 'EzSystems\HybridPlatformUi\View\AppConfigCoreViewMainContentMapper'
 
     Symfony\Component\Routing\RouterInterface: '@router'
+
+    Symfony\Component\Translation\TranslatorInterface: '@translator'
+
+    EzSystems\HybridPlatformUiBundle\Form\Locations\Ordering:
+        tags: [form.type]
