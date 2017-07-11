@@ -593,6 +593,108 @@ class and the `input` gets the `required` attribute.
 
 ## Media `ezmedia`
 
+### Options
+
+* Required
+* Maximum file size
+* Media type (HTML5 video or audio, others are irrelevant)
+
+### Markup
+
+Media Field edit markup is very similar to File Field edit markup, the main
+difference is the *edit preview* to properly render the stored video or audio
+file and let the user tweak player settings.
+
+When the Field is empty, the markup should be:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezbinaryfile">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <input type="file" id="auto-generated-id" name="auto-generated-name">
+    </div>
+</div>
+```
+
+When the Field is filled and is configured to store an HTML5 video:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezbinaryfile">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-preview">
+        <div class="ez-field-preview-visual">
+            <video src="/path/to/stored/video" preload="auto" controls></video>
+            <p>whatever.mp4 <strong>12.2MB</strong></p>
+        </div>
+        <div class="ez-field-preview-tools">
+            <label>
+                Remove <input type="checkbox" name="checkbox-auto-generated-name" value="1">
+            </label>
+            <a href="/path/to/stored/video" target="_blank">View full screen</a>
+        </div>
+        <div class="ez-player-settings">
+            Player settings
+            <ul>
+                <li>
+                    <label>
+                        <input type="checkbox" name="control-auto-generated-name" value="1">
+                        Display controls
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" name="autoplay-auto-generated-name" value="1">
+                        Auto play
+                    </label>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox" name="loop-auto-generated-name" value="1">
+                        Loop
+                    </label>
+                </li>
+                <li class="ez-sub-field ez-sub-field-width">
+                    <div class="ez-sub-field-text-zone">
+                        <label class="ez-sub-field-name" for="width-auto-generated-id">
+                            Width
+                        </label>
+                    </div>
+                    <div class="ez-sub-field-ui">
+                        <input type="number" step="1" min="1" id="width-auto-generated-id" name="width-auto-generated-name">
+                    </div>
+                </li>
+                <li class="ez-sub-field ez-sub-field-height">
+                    <div class="ez-sub-field-text-zone">
+                        <label class="ez-sub-field-name" for="height-auto-generated-id">
+                            Height
+                        </label>
+                    </div>
+                    <div class="ez-sub-field-ui">
+                        <input type="number" step="1" min="1" id="height-auto-generated-id" name="height-auto-generated-name">
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="ez-field-edit-ui">
+        <input type="file" id="auto-generated-id" name="auto-generated-name">
+    </div>
+</div>
+```
+
+When set as required:
+
+As for others Field Type, the outermost `div` gets the `ez-field-edit-required`
+class and the file `input` gets the `required` attribute.
+
 ## Content Relation `ezobjectrelation`
 
 ### Options
