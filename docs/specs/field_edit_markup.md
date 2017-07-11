@@ -79,7 +79,11 @@ When the same Field is edited but can not be translated, the markup becomes:
         </label>
     </div>
     <div class="ez-field-edit-ui">
-        <!-- specific to Field Type part -->
+        <!--
+            specific to Field Type part where input, select, textarea are marked
+            as read only with `readonly` attribute and buttons are disabled with
+            the `disabled` attribute.
+        -->
     </div>
     <p class="ez-field-not-translatable">This is not a translatable field and cannot be modified</p>
 </div>
