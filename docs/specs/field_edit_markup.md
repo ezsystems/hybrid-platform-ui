@@ -38,11 +38,11 @@ If the Field is marked as required, the class `ez-field-edit-required` is added
 as well.
 
 If the Field is not translatable and the user is translating the Content item
-the class `ez-field-edit-disabled` is added.
+the class `ez-field-edit-disabled` is added.
 
 The `div` starts with a `div` with the class `ez-field-edit-text-zone`. This
 `div` contains the Field Definition name wrapped in a `label` element. The
-`for` attribute value of this label is filled with the `id` of an input
+`for` attribute value of this label is filled with the `id` of an input
 generated for the Field Type, usually the first one with some exceptions.
 
 Then the specific to the Field Type part is wrapped in a `div` with the class
@@ -98,7 +98,7 @@ validation, HTML5 validation is the based on which `ez-field-edit` and
 
 * Required
 
-### Markup
+### Markup
 
 When the Field is empty:
 
@@ -507,7 +507,7 @@ When set required and with a min and max value:
 
 ## Map Location `ezgmaplocation`
 
-### Options
+### Options
 
 * Required
 
@@ -567,7 +567,7 @@ attribute.
 * Required
 * Maximum file size
 
-### Markup
+### Markup
 
 Image Field edit markup is very similar to File Field edit markup, the main
 differences are:
@@ -753,7 +753,7 @@ class and the `input` gets the `required` attribute.
 * Maximum file size
 * Media type (HTML5 video or audio, others are irrelevant)
 
-### Markup
+### Markup
 
 Media Field edit markup is very similar to File Field edit markup, the main
 difference is the *edit preview* to properly render the stored video or audio
