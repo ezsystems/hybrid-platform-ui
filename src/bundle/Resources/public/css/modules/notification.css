@@ -10,6 +10,10 @@ ez-notification {
     color: var(--ez-color-text-base-inverted);
 }
 
+ez-notification a {
+    color: var(--ez-color-text-base-inverted);
+}
+
 ez-notification[type="error"] {
     background: var(--ez-color-negative-feedback);
 }
@@ -23,3 +27,6 @@ ez-notification[type="processing"] {
     color: var(--ez-color-text-base);
 }
 
+ez-notification[type="processing"] a {
+    color: var(--ez-color-hyperlink);
+}
