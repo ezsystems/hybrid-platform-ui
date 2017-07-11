@@ -10,11 +10,11 @@ namespace EzSystems\HybridPlatformUiBundle\Controller;
 
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
-use EzSystems\HybridPlatformUi\Repository\Permission\UiPermissionResolver;
 use EzSystems\HybridPlatformUi\Repository\UiFieldGroupService;
-use EzSystems\HybridPlatformUi\Repository\UiRelationService;
 use EzSystems\HybridPlatformUi\Repository\UiTranslationService;
 use EzSystems\HybridPlatformUi\Repository\UiUserService;
+use EzSystems\HybridPlatformUi\View\Content\Relations\RelationParameterSupplier;
+use EzSystems\HybridPlatformUi\View\Content\Relations\ReverseRelationParameterSupplier;
 
 class ContentViewController extends TabController
 {
@@ -76,20 +76,11 @@ class ContentViewController extends TabController
 
     public function relationsTabAction(
         ContentView $view,
-        UiRelationService $relationService,
-        UiPermissionResolver $permissionResolver
+        RelationParameterSupplier $relationParameterSupplier,
+        ReverseRelationParameterSupplier $reverseRelationParameterSupplier
     ) {
-        $versionInfo = $view->getContent()->getVersionInfo();
-        $contentInfo = $versionInfo->getContentInfo();
-
-        $viewParameters = [
-            'relations' => $relationService->loadRelations($versionInfo),
-        ];
-
-        if ($permissionResolver->canAccessReverseRelations()) {
-            $viewParameters['reverseRelations'] = $relationService->loadReverseRelations($contentInfo);
-        }
-        $view->addParameters($viewParameters);
+        $relationParameterSupplier->supply($view);
+        $reverseRelationParameterSupplier->supply($view);
 
         return $view;
     }
