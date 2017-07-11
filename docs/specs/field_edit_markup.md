@@ -85,12 +85,38 @@ When the same Field is edited but can not be translated, the markup becomes:
 </div>
 ```
 
-### HTML5 validation
+### Frontend side validation
 
 Most of our Field Type can be edited and validated with pure HTML5 inputs or
 with a composition of several HTML5 inputs. So when it comes to frontend
-validation, HTML5 validation is the based on which `ez-field-edit` and
-`ez-field-edit-*` custom element will rely on.
+validation, HTML5 validation is the base mechanism on which `ez-field-edit` and
+`ez-field-edit-*` custom elements will rely on.
+
+### Server side validation
+
+When the form is submitted, for each Field, the server should validate the input
+and report validation errors in the following way:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezstring ez-field-edit-required ez-field-edit-disabled">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+        <em class="ez-field-edit-error">Field Definition name has an error</em>
+    </div>
+    <div class="ez-field-edit-ui">
+        <!-- specific to Field Type part -->
+    </div>
+    <p class="ez-field-not-translatable">This is not a translatable field and cannot be modified</p>
+</div>
+```
+
+Of course, the error message depends on the Field Type and the actual error.
+
+Note: a shared message mechanism between frontend and server will have to be
+setup so that validation messages between the server and the frontend are the
+same.
 
 ## Authors `ezauthor`
 
