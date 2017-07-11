@@ -7,6 +7,8 @@ namespace EzSystems\HybridPlatformUi\Repository\Permission;
 
 use eZ\Publish\API\Repository\PermissionResolver;
 use eZ\Publish\API\Repository\Repository;
+use eZ\Publish\API\Repository\Values\Content\ContentInfo;
+use eZ\Publish\API\Repository\Values\Content\Location;
 
 /**
  * This class is a proxy to allow handling of permissions needed for the HybridPlatformUiBundle in one place.
@@ -15,6 +17,8 @@ class UiPermissionResolver
 {
     const CONTENT_MODULE = 'content';
     const REVERSE_RELATION = 'reverserelatedlist';
+    const MANAGE_LOCATIONS = 'manage_locations';
+    const REMOVE = 'remove';
 
     /**
      * @var PermissionResolver
@@ -32,8 +36,37 @@ class UiPermissionResolver
      *
      * @return bool
      */
-    public function canAccessReverseRelated()
+    public function canAccessReverseRelations()
     {
         return $this->permissionResolver->hasAccess(self::CONTENT_MODULE, self::REVERSE_RELATION) === true;
+    }
+
+    /**
+     * Checks if the current user can manage locations.
+     *
+     * @param ContentInfo $contentInfo
+     *
+     * @return bool
+     */
+    public function canManageLocations(ContentInfo $contentInfo)
+    {
+        return $this->permissionResolver->canUser(
+            self::CONTENT_MODULE, self::MANAGE_LOCATIONS, $contentInfo
+        );
+    }
+
+    /**
+     * Checks if the current user is allowed to remove content.
+     *
+     * @param ContentInfo $contentInfo
+     * @param Location $targetLocation
+     *
+     * @return bool
+     */
+    public function canRemoveContent(ContentInfo $contentInfo, Location $targetLocation)
+    {
+        return $this->permissionResolver->canUser(
+            self::CONTENT_MODULE, self::REMOVE, $contentInfo, [$targetLocation]
+        );
     }
 }

@@ -7,9 +7,9 @@
 namespace EzSystems\HybridPlatformUi\Repository;
 
 use eZ\Publish\API\Repository\LocationService;
-use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Location;
+use EzSystems\HybridPlatformUi\Repository\Permission\UiPermissionResolver;
 use EzSystems\HybridPlatformUi\Repository\Values\Content\UiLocation;
 
 /**
@@ -29,18 +29,18 @@ class UiLocationService
     private $pathService;
 
     /**
-     * @var Repository
+     * @var UiPermissionResolver
      */
-    private $repository;
+    private $permissionResolver;
 
     public function __construct(
         LocationService $locationService,
         PathService $pathService,
-        Repository $repository
+        UiPermissionResolver $permissionResolver
     ) {
         $this->locationService = $locationService;
         $this->pathService = $pathService;
-        $this->repository = $repository;
+        $this->permissionResolver = $permissionResolver;
     }
 
     /**
@@ -82,11 +82,9 @@ class UiLocationService
                 $properties = [
                     'childCount' => $this->locationService->getLocationChildCount($location),
                     'pathLocations' => $this->pathService->loadPathLocations($location),
-                    'userCanManage' => $this->repository->getPermissionResolver()->canUser(
-                        'content', 'manage_locations', $location->getContentInfo()
-                    ),
-                    'userCanRemove' => $this->repository->getPermissionResolver()->canUser(
-                        'content', 'remove', $location->getContentInfo(), [$location]
+                    'userCanManage' => $this->permissionResolver->canManageLocations($location->getContentInfo()),
+                    'userCanRemove' => $this->permissionResolver->canRemoveContent(
+                        $location->getContentInfo(), $location
                     ),
                     'main' => $this->isMainLocation($location),
                 ];

@@ -86,7 +86,7 @@ class ContentViewController extends TabController
             'relations' => $relationService->loadRelations($versionInfo),
         ];
 
-        if ($permissionResolver->canAccessReverseRelated()) {
+        if ($permissionResolver->canAccessReverseRelations()) {
             $viewParameters['reverseRelations'] = $relationService->loadReverseRelations($contentInfo);
         }
         $view->addParameters($viewParameters);
