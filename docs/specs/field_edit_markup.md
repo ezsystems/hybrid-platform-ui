@@ -408,6 +408,78 @@ attribute.
 
 ## Image `ezimage`
 
+### Options
+
+* Required
+* Maximum file size
+
+### Markup
+
+Image Field edit markup is very similar to File Field edit markup, the main
+differences are:
+
+* the file input receives an `accept` attribute with the accepted mimetypes
+* the *edit preview* is different to render the store image when there's one and
+  to allow filling an alternative text.
+
+When the Field is empty, the markup should be:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezbinaryfile">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-edit-ui">
+        <input type="file" accept="image/jpg, image/gif, image/png" id="auto-generated-id" name="auto-generated-name">
+    </div>
+</div>
+```
+
+When the Field is filled:
+
+```html
+<div class="ez-field-edit ez-field-edit-ezbinaryfile">
+    <div class="ez-field-edit-text-zone">
+        <label class="ez-field-definition-name" for="auto-generated-id">
+            Field Definition Name
+        </label>
+    </div>
+    <div class="ez-field-preview">
+        <div class="ez-field-preview-visual">
+            <img src="/path/to/stored/image" alt="Image stored in field 'Field Definition Name'">
+            <p>image.jpg <strong>1.3MB</strong></p>
+        </div>
+        <div class="ez-field-preview-tools">
+            <label>
+                Remove <input type="checkbox" name="checkbox-auto-generated-name" value="1">
+            </label>
+            <a href="/path/stored/image/original" target="_blank">View full screen</a>
+        </div>
+        <div class="ez-sub-field ez-sub-field-alt">
+            <div class="ez-sub-field-text-zone">
+                <label class="ez-sub-field-name" for="auto-generated-id-alt">
+                    Alternative text
+                </label>
+            </div>
+            <div class="ez-sub-field-ui">
+                <input type="text" id="auto-generated-id-alt" name="auto-generated-name-alt">
+            </div>
+        </div>
+    </div>
+    <div class="ez-field-edit-ui">
+        <input type="file" accept="image/jpg, image/gif, image/png" id="auto-generated-id" name="auto-generated-name">
+    </div>
+</div>
+```
+
+When set as required:
+
+As for others Field Type, the outermost `div` gets the `ez-field-edit-required`
+class and the file `input` gets the `required` attribute.
+
+
 ## Integer `ezinteger`
 
 ### Options
