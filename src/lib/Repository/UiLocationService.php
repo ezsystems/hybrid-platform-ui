@@ -11,7 +11,7 @@ use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Location;
-use eZ\Publish\Core\Base\Exceptions\ForbiddenException;
+use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use EzSystems\HybridPlatformUi\Repository\Values\Content\UiLocation;
 
 /**
@@ -99,7 +99,10 @@ class UiLocationService
         $contentType = $this->contentTypeService->loadContentType($newLocation->getContentInfo()->contentTypeId);
 
         if (!$contentType->isContainer && $childCount) {
-            throw new ForbiddenException('Cannot swap location that has sub items with a location that is not a container');
+            throw new InvalidArgumentException(
+                '$newLocation',
+                'Cannot swap location that has sub items with a location that is not a container'
+            );
         }
         $this->locationService->swapLocation($currentLocation, $newLocation);
     }

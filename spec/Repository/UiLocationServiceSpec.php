@@ -11,7 +11,7 @@ use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\PermissionResolver;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
-use eZ\Publish\Core\Base\Exceptions\ForbiddenException;
+use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use EzSystems\HybridPlatformUi\Repository\PathService;
@@ -158,7 +158,7 @@ class UiLocationServiceSpec extends ObjectBehavior
 
         $locationService->swapLocation($location, $newLocation)->shouldNotBeCalled();
 
-        $this->shouldThrow(ForbiddenException::class)->duringSwapLocations($currentLocationId, $newLocationId);
+        $this->shouldThrow(InvalidArgumentException::class)->duringSwapLocations($currentLocationId, $newLocationId);
     }
 
     function it_can_swap_a_location(
