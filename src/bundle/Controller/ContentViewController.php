@@ -11,9 +11,10 @@ namespace EzSystems\HybridPlatformUiBundle\Controller;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiFieldGroupService;
-use EzSystems\HybridPlatformUi\Repository\UiRelationService;
 use EzSystems\HybridPlatformUi\Repository\UiTranslationService;
 use EzSystems\HybridPlatformUi\Repository\UiUserService;
+use EzSystems\HybridPlatformUi\View\Content\Relations\RelationParameterSupplier;
+use EzSystems\HybridPlatformUi\View\Content\Relations\ReverseRelationParameterSupplier;
 
 class ContentViewController extends TabController
 {
@@ -55,15 +56,13 @@ class ContentViewController extends TabController
         return $view;
     }
 
-    public function relationsTabAction(ContentView $view, UiRelationService $relationService)
-    {
-        $versionInfo = $view->getContent()->getVersionInfo();
-        $contentInfo = $versionInfo->getContentInfo();
-
-        $view->addParameters([
-            'relations' => $relationService->loadRelations($versionInfo),
-            'reverseRelations' => $relationService->loadReverseRelations($contentInfo),
-        ]);
+    public function relationsTabAction(
+        ContentView $view,
+        RelationParameterSupplier $relationParameterSupplier,
+        ReverseRelationParameterSupplier $reverseRelationParameterSupplier
+    ) {
+        $relationParameterSupplier->supply($view);
+        $reverseRelationParameterSupplier->supply($view);
 
         return $view;
     }
