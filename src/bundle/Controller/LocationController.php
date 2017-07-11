@@ -106,8 +106,7 @@ class LocationController extends TabController
      * @param FormInterface $form
      * @param mixed $redirectLocationId
      *
-     * @return bool
-     *  Whether to reset location or not.
+     * @return bool Whether to reset location or not.
      */
     private function deleteLocationsBasedOnFormSubmit(FormInterface $form, $redirectLocationId)
     {
