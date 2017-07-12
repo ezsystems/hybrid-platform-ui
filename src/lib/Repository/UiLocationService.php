@@ -99,12 +99,11 @@ class UiLocationService
     /**
      * Swaps locations.
      *
-     * @param int $locationId
-     * @param int $newLocationId
+     * @param Location $currentLocation
+     * @param mixed $newLocationId
      */
-    public function swapLocations(int $locationId, int $newLocationId)
+    public function swapLocations(Location $currentLocation, $newLocationId)
     {
-        $currentLocation = $this->locationService->loadLocation($locationId);
         $newLocation = $this->locationService->loadLocation($newLocationId);
 
         $childCount = $this->locationService->getLocationChildCount($currentLocation);

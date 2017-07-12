@@ -159,7 +159,6 @@ class UiLocationServiceSpec extends ObjectBehavior
         $newLocation = new Location(['id' => $newLocationId, 'contentInfo' => $contentInfo]);
         $contentType = new ContentType(['isContainer' => false]);
 
-        $locationService->loadLocation($currentLocationId)->willReturn($location);
         $locationService->loadLocation($newLocationId)->willReturn($newLocation);
         $locationService->getLocationChildCount($location)->willReturn(1);
 
@@ -167,7 +166,7 @@ class UiLocationServiceSpec extends ObjectBehavior
 
         $locationService->swapLocation($location, $newLocation)->shouldNotBeCalled();
 
-        $this->shouldThrow(InvalidArgumentException::class)->duringSwapLocations($currentLocationId, $newLocationId);
+        $this->shouldThrow(InvalidArgumentException::class)->duringSwapLocations($location, $newLocationId);
     }
 
     function it_can_swap_a_location(
@@ -183,7 +182,6 @@ class UiLocationServiceSpec extends ObjectBehavior
         $newLocation = new Location(['id' => $newLocationId, 'contentInfo' => $contentInfo]);
         $contentType = new ContentType(['isContainer' => true]);
 
-        $locationService->loadLocation($currentLocationId)->willReturn($location);
         $locationService->loadLocation($newLocationId)->willReturn($newLocation);
         $locationService->getLocationChildCount($location)->willReturn(1);
 
@@ -191,6 +189,6 @@ class UiLocationServiceSpec extends ObjectBehavior
 
         $locationService->swapLocation($location, $newLocation)->shouldBeCalled();
 
-        $this->swapLocations($currentLocationId, $newLocationId);
+        $this->swapLocations($location, $newLocationId);
     }
 }
