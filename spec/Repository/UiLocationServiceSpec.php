@@ -8,13 +8,13 @@ namespace spec\EzSystems\HybridPlatformUi\Repository;
 
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\LocationService;
-use eZ\Publish\API\Repository\PermissionResolver;
-use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
+use eZ\Publish\API\Repository\Values\Content\LocationCreateStruct;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use EzSystems\HybridPlatformUi\Repository\PathService;
+use EzSystems\HybridPlatformUi\Repository\Permission\UiPermissionResolver;
 use EzSystems\HybridPlatformUi\Repository\Values\Content\UiLocation;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -24,12 +24,10 @@ class UiLocationServiceSpec extends ObjectBehavior
     function let(
         LocationService $locationService,
         PathService $pathService,
-        Repository $repository,
-        PermissionResolver $permissionResolver,
+        UiPermissionResolver $permissionResolver,
         ContentTypeService $contentTypeService
     ) {
-        $repository->getPermissionResolver()->willReturn($permissionResolver);
-        $this->beConstructedWith($locationService, $pathService, $repository, $contentTypeService);
+        $this->beConstructedWith($locationService, $pathService, $permissionResolver, $contentTypeService);
     }
 
     function it_loads_ui_locations_with_a_child_count(LocationService $locationService)
@@ -110,8 +108,10 @@ class UiLocationServiceSpec extends ObjectBehavior
         $this->deleteLocations([$deleteLocationId]);
     }
 
-    function it_loads_ui_locations_with_user_access_flags(LocationService $locationService, PermissionResolver $permissionResolver)
-    {
+    function it_loads_ui_locations_with_user_access_flags(
+        LocationService $locationService,
+        UiPermissionResolver $permissionResolver
+    ) {
         $contentInfo = new ContentInfo(['mainLocationId' => 1]);
 
         $location = new Location([
@@ -122,8 +122,8 @@ class UiLocationServiceSpec extends ObjectBehavior
         $locationService->loadLocations($contentInfo)->willReturn([$location]);
         $locationService->getLocationChildCount($location)->willReturn(1);
 
-        $permissionResolver->canUser('content', 'manage_locations', $location->getContentInfo())->willReturn(true);
-        $permissionResolver->canUser('content', 'remove', $location->getContentInfo(), [$location])->willReturn(true);
+        $permissionResolver->canManageLocations($location->getContentInfo())->willReturn(true);
+        $permissionResolver->canRemoveContent($location->getContentInfo(), $location)->willReturn(true);
 
         $uiLocation = new UiLocation(
             $location,
@@ -135,6 +135,15 @@ class UiLocationServiceSpec extends ObjectBehavior
         );
 
         $this->loadLocations($contentInfo)->shouldBeLike([$uiLocation]);
+    }
+
+    function it_adds_a_location(LocationService $locationService, ContentInfo $contentInfo, LocationCreateStruct $locationCreateStruct)
+    {
+        $parentLocationId = 2;
+        $locationService->newLocationCreateStruct($parentLocationId)->willReturn($locationCreateStruct);
+        $locationService->createLocation($contentInfo, $locationCreateStruct)->shouldBeCalled();
+
+        $this->addLocation($contentInfo, $parentLocationId);
     }
 
     function it_cannot_swap_a_non_container_with_a_container(

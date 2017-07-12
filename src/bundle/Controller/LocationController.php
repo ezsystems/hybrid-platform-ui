@@ -9,11 +9,13 @@
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
 use eZ\Publish\API\Repository\ContentService;
+use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use eZ\Publish\API\Repository\Values\Content\Location;
+use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiLocationService;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -31,9 +33,9 @@ class LocationController extends TabController
 
     public function __construct(
         UiLocationService $uiLocationService,
-        UiFormFactory $formFactory,
+        RouterInterface $router,
         ContentService $contentService,
-        RouterInterface $router
+        UiFormFactory $formFactory
     ) {
         $this->uiLocationService = $uiLocationService;
         $this->formFactory = $formFactory;
@@ -71,15 +73,13 @@ class LocationController extends TabController
         $redirectLocationId = $request->query->get('redirectLocationId', $content->contentInfo->mainLocationId);
 
         if ($actionsForm->isValid()) {
-            $locationIds = array_keys($actionsForm->get('removeLocations')->getData());
+            $resetLocation = $this->deleteLocationsBasedOnFormSubmit($actionsForm, $redirectLocationId);
 
-            if ($actionsForm->get('delete')->isClicked()) {
-                $this->uiLocationService->deleteLocations($locationIds);
-
-                if (in_array($redirectLocationId, $locationIds)) {
-                    return $this->resetLocation($content->id);
-                }
+            if ($resetLocation) {
+                return $this->resetLocation($content->id);
             }
+
+            $this->addLocationBasedOnFormSubmit($actionsForm, $content);
         }
 
         return $this->reloadTab('locations', $content->id, $redirectLocationId);
@@ -101,5 +101,55 @@ class LocationController extends TabController
         $redirectLocationId = $request->query->get('redirectLocationId', $content->contentInfo->mainLocationId);
 
         return $this->reloadTab('locations', $content->id, $redirectLocationId);
+    }
+
+    public function updateDefaultSortOrderAction(
+        Location $location,
+        Content $content,
+        Request $request,
+        LocationService $locationService,
+        UiFormFactory $formFactory
+    ) {
+        $form = $formFactory->createLocationOrderingForm($location);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $locationService->updateLocation($location, $form->getData());
+        }
+
+        return $this->reloadTab('details', $content->id, $location->id);
+    }
+
+    /**
+     * Delete locations based on form submit.
+     *
+     * @param FormInterface $form
+     * @param mixed $redirectLocationId
+     *
+     * @return bool Whether to reset location or not.
+     */
+    private function deleteLocationsBasedOnFormSubmit(FormInterface $form, $redirectLocationId)
+    {
+        $locationIds = array_keys($form->get('removeLocations')->getData());
+
+        if ($form->get('delete')->isClicked()) {
+            $this->uiLocationService->deleteLocations($locationIds);
+
+            if (in_array($redirectLocationId, $locationIds)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function addLocationBasedOnFormSubmit(FormInterface $form, Content $content)
+    {
+        if ($form->get('add')->isClicked()) {
+            $this->uiLocationService->addLocation(
+                $content->contentInfo,
+                $form->get('parentLocationId')->getData()
+            );
+        }
     }
 }

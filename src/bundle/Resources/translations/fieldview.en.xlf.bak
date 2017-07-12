@@ -10,7 +10,7 @@
         <source>This field is empty</source>
         <target>fieldview.field.empty</target>
         <note>key: fieldview.field.empty</note>
-        <jms:reference-file line="10">src/bundle/Resources/views/content/tabs/content.html.twig</jms:reference-file>
+        <jms:reference-file line="10">/../../../../.././vendor/ezsystems/hybrid-platform-ui/src/bundle/Resources/views/content/tabs/content.html.twig</jms:reference-file>
       </trans-unit>
     </body>
   </file>
