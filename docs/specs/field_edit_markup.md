@@ -85,7 +85,7 @@ When the same Field is edited but can not be translated, the markup becomes:
             the `disabled` attribute.
         -->
     </div>
-    <p class="ez-field-not-translatable">This is not a translatable field and cannot be modified</p>
+    <p class="ez-field-not-translatable">Translation for Field Definition Name is disabled</p>
 </div>
 ```
 
