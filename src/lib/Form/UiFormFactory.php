@@ -5,12 +5,15 @@
  */
 namespace EzSystems\HybridPlatformUi\Form;
 
+use eZ\Publish\API\Repository\Values\Content\Language;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use EzSystems\HybridPlatformUi\Mapper\Form\Location\OrderingMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\LocationMapper;
+use EzSystems\HybridPlatformUi\Mapper\Form\TranslationMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\VersionMapper;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\Ordering;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\Actions as LocationActions;
+use EzSystems\HybridPlatformUiBundle\Form\Translations\Actions as TranslationActions;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\ArchivedActions;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\DraftActions;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -40,16 +43,23 @@ class UiFormFactory
      */
     private $orderingMapper;
 
+    /**
+     * @var TranslationMapper
+     */
+    private $translationMapper;
+
     public function __construct(
         FormFactoryInterface $formFactory,
         VersionMapper $versionMapper,
         LocationMapper $locationMapper,
-        OrderingMapper $orderingMapper
+        OrderingMapper $orderingMapper,
+        TranslationMapper $translationMapper
     ) {
         $this->formFactory = $formFactory;
         $this->versionMapper = $versionMapper;
         $this->locationMapper = $locationMapper;
         $this->orderingMapper = $orderingMapper;
+        $this->translationMapper = $translationMapper;
     }
 
     /**
@@ -99,5 +109,17 @@ class UiFormFactory
             $this->orderingMapper->mapToForm($location),
             ['current_sort_field' => $location->sortField]
         );
+    }
+
+    /**
+     * Create form to be used for actions on translations tab.
+     *
+     * @param Language[] $translations
+     */
+    public function createTranslationsActionForm(array $translations = [])
+    {
+        $data = $this->translationMapper->mapToForm($translations);
+
+        return $this->formFactory->create(TranslationActions::class, $data);
     }
 }

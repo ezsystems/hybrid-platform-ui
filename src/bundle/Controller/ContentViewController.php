@@ -66,13 +66,4 @@ class ContentViewController extends TabController
 
         return $view;
     }
-
-    public function translationsTabAction(ContentView $view, UiTranslationService $translationService)
-    {
-        $view->addParameters([
-            'translations' => $translationService->loadTranslations($view->getContent()->getVersionInfo()),
-        ]);
-
-        return $view;
-    }
 }

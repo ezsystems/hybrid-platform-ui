@@ -9,6 +9,7 @@ use eZ\Publish\API\Repository\PermissionResolver;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Location;
+use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 
 /**
  * This class is a proxy to allow handling of permissions needed for the HybridPlatformUiBundle in one place.
@@ -19,6 +20,7 @@ class UiPermissionResolver
     const REVERSE_RELATION = 'reverserelatedlist';
     const MANAGE_LOCATIONS = 'manage_locations';
     const REMOVE = 'remove';
+    const DELETE = 'delete';
 
     /**
      * @var PermissionResolver
@@ -67,6 +69,20 @@ class UiPermissionResolver
     {
         return $this->permissionResolver->canUser(
             self::CONTENT_MODULE, self::REMOVE, $contentInfo, [$targetLocation]
+        );
+    }
+
+    /**
+     * Checks if the current user is allowed to remove translation.
+     *
+     * @param VersionInfo $versionInfo
+     *
+     * @return bool
+     */
+    public function canRemoveTranslation(VersionInfo $versionInfo)
+    {
+        return $this->permissionResolver->canUser(
+            self::CONTENT_MODULE, self::DELETE, $versionInfo
         );
     }
 }
