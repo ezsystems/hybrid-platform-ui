@@ -19,7 +19,7 @@ ez_hybrid_platform_ui_location_actions:
         _controller: EzSystemsHybridPlatformUiBundle:Location:actions
     methods: [POST]
 ez_hybrid_platform_ui_location_swap_location:
-    path: /content/{contentId}/location/swap-location/{locationId}
+    path: /content/{contentId}/location/{locationId}/swap
     defaults:
         _controller: EzSystemsHybridPlatformUiBundle:Location:swapLocation
     methods: [POST]
