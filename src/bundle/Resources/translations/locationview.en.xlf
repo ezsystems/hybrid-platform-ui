@@ -232,6 +232,30 @@
         <note>key: locationview.relations.reverse.relations</note>
         <jms:reference-file line="17">src/bundle/Resources/views/content/tabs/relations.html.twig</jms:reference-file>
       </trans-unit>
+      <trans-unit id="b04c0424d48b6bb2dbe096848d3a2a7150b07fad" resname="locationview.relations.type.content_level_relation">
+        <source>Content level relation</source>
+        <target state="new">Content level relation</target>
+        <note>key: locationview.relations.type.content_level_relation</note>
+        <jms:reference-file line="56">src/lib/Templating/Twig/RelationTypeExtension.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="b351b635b58b3d7ffb52715621cbe9385f52ab20" resname="locationview.relations.type.embed">
+        <source>Embed</source>
+        <target state="new">Embed</target>
+        <note>key: locationview.relations.type.embed</note>
+        <jms:reference-file line="59">src/lib/Templating/Twig/RelationTypeExtension.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="d750345cd57711887efbf4aa3b3ad0fcbf4e5f32" resname="locationview.relations.type.field">
+        <source>Field</source>
+        <target state="new">Field</target>
+        <note>key: locationview.relations.type.field</note>
+        <jms:reference-file line="65">src/lib/Templating/Twig/RelationTypeExtension.php</jms:reference-file>
+      </trans-unit>
+        <trans-unit id="da5ad9f0b2f8de694379f7d3980fc83734e1f48e" resname="locationview.relations.type.link">
+        <source>Link</source>
+        <target state="new">Link</target>
+        <note>key: locationview.relations.type.link</note>
+        <jms:reference-file line="62">src/lib/Templating/Twig/RelationTypeExtension.php</jms:reference-file>
+      </trans-unit>
       <trans-unit id="97d47470f71983df3a61744fb5c0b2c5d51774d5" resname="locationview.translations.languagecode">
         <source>Language code</source>
         <target state="new">Language code</target>
