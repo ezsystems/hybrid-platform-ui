@@ -8,10 +8,10 @@
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
-use EzSystems\HybridPlatformUi\Filter\VersionFilter;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiVersionService;
+use EzSystems\HybridPlatformUi\View\Content\Versions\VersionParameterSupplier;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -30,22 +30,19 @@ class VersionController extends TabController
 
     public function contentViewTabAction(
         ContentView $view,
-        VersionFilter $versionFilter,
+        VersionParameterSupplier $versionParameterSupplier,
         UiFormFactory $formFactory
     ) {
-        $contentInfo = $view->getContent()->getVersionInfo()->getContentInfo();
-        $versions = $this->uiVersionService->loadVersions($contentInfo);
+        $versionParameterSupplier->supply($view);
 
-        $draftVersions = $versionFilter->filterDrafts($versions);
-        $draftActionsForm = $formFactory->createVersionsDraftActionForm($draftVersions);
-
-        $archivedVersions = $versionFilter->filterArchived($versions);
-        $archivedActionsForm = $formFactory->createVersionsArchivedActionForm($archivedVersions);
+        $draftActionsForm = $formFactory->createVersionsDraftActionForm(
+            $view->hasParameter('draftVersions') ? $view->getParameter('draftVersions') : []
+        );
+        $archivedActionsForm = $formFactory->createVersionsArchivedActionForm(
+            $view->hasParameter('archivedVersions') ? $view->getParameter('archivedVersions') : []
+        );
 
         $view->addParameters([
-            'draftVersions' => $draftVersions,
-            'publishedVersions' => $versionFilter->filterPublished($versions),
-            'archivedVersions' => $archivedVersions,
             'draftActionsForm' => $draftActionsForm->createView(),
             'archivedActionsForm' => $archivedActionsForm->createView(),
         ]);

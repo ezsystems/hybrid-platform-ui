@@ -43,6 +43,8 @@ class UiVersionService
     /**
      * Load versions and adds the author and translations.
      *
+     * @throws \eZ\Publish\API\Repository\Exceptions\UnauthorizedException
+     *
      * @param ContentInfo $contentInfo
      *
      * @return UiVersionInfo[]
