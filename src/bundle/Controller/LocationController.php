@@ -96,6 +96,8 @@ class LocationController extends TabController
         if ($swapLocationsForm->isValid()) {
             $newLocationId = $swapLocationsForm->get('new_location_id')->getData();
             $this->uiLocationService->swapLocations($location, $newLocationId);
+
+            return $this->resetLocation($content->id);
         }
 
         $redirectLocationId = $request->query->get('redirectLocationId', $content->contentInfo->mainLocationId);
