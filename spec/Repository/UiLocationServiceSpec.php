@@ -169,7 +169,7 @@ class UiLocationServiceSpec extends ObjectBehavior
         $this->shouldThrow(InvalidArgumentException::class)->duringSwapLocations($location, $newLocationId);
     }
 
-    function it_can_swap_a_location(
+    function it_swaps_a_location_and_then_reloads(
         LocationService $locationService,
         ContentTypeService $contentTypeService
     ) {
@@ -189,6 +189,8 @@ class UiLocationServiceSpec extends ObjectBehavior
 
         $locationService->swapLocation($location, $newLocation)->shouldBeCalled();
 
-        $this->swapLocations($location, $newLocationId);
+        $locationService->loadLocation($currentLocationId)->willReturn($location);
+
+        $this->swapLocations($location, $newLocationId)->shouldBe($location);
     }
 }

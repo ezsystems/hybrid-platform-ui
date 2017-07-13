@@ -76,7 +76,7 @@ class LocationController extends TabController
             $resetLocation = $this->deleteLocationsBasedOnFormSubmit($actionsForm, $redirectLocationId);
 
             if ($resetLocation) {
-                return $this->resetLocation($content->id);
+                return $this->resetToMainLocation($content->id);
             }
 
             $this->addLocationBasedOnFormSubmit($actionsForm, $content);
@@ -95,9 +95,9 @@ class LocationController extends TabController
 
         if ($swapLocationsForm->isValid()) {
             $newLocationId = $swapLocationsForm->get('new_location_id')->getData();
-            $this->uiLocationService->swapLocations($location, $newLocationId);
+            $location = $this->uiLocationService->swapLocations($location, $newLocationId);
 
-            return $this->resetLocation($content->id);
+            return $this->resetLocation($location);
         }
 
         $redirectLocationId = $request->query->get('redirectLocationId', $content->contentInfo->mainLocationId);

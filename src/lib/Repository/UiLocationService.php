@@ -98,9 +98,14 @@ class UiLocationService
 
     /**
      * Swaps locations.
+     * Returns the current location reloaded with the correct content.
      *
      * @param Location $currentLocation
      * @param mixed $newLocationId
+     *
+     * @return Location
+     *
+     * @throws InvalidArgumentException
      */
     public function swapLocations(Location $currentLocation, $newLocationId)
     {
@@ -116,6 +121,8 @@ class UiLocationService
             );
         }
         $this->locationService->swapLocation($currentLocation, $newLocation);
+
+        return $this->locationService->loadLocation($currentLocation->id);
     }
 
     private function buildUiLocations(array $locations)
