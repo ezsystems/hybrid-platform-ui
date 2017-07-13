@@ -4,6 +4,12 @@
     <section class="ez-content-view-column ez-tabs">
     {% block contentview %}
         {% block contentview_details %}
+        {% for location in locations %}
+            {% if location.id == locationId %}
+                {{ include('@EzSystemsHybridPlatformUi/fields/location/path.html.twig', {'locations': location.pathLocations}) }}
+            {% endif %}
+        {% endfor %}
+
         <header class="ez-page-header">
             <h1>{{ ez_content_name(content) }}</h1>
         </header>

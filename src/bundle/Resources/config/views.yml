@@ -4,6 +4,7 @@ system:
             full:
                 default:
                     template: "EzSystemsHybridPlatformUiBundle::locationview.html.twig"
+                    controller: 'EzSystems\HybridPlatformUiBundle\Controller\ContentViewController:locationViewAction'
                     match: true
             content_tab:
                 default:

@@ -14,11 +14,19 @@ use EzSystems\HybridPlatformUi\Repository\UiFieldGroupService;
 use EzSystems\HybridPlatformUi\Repository\UiSectionService;
 use EzSystems\HybridPlatformUi\Repository\UiTranslationService;
 use EzSystems\HybridPlatformUi\Repository\UiUserService;
+use EzSystems\HybridPlatformUi\View\Content\Locations\LocationParameterSupplier;
 use EzSystems\HybridPlatformUi\View\Content\Relations\RelationParameterSupplier;
 use EzSystems\HybridPlatformUi\View\Content\Relations\ReverseRelationParameterSupplier;
 
 class ContentViewController extends TabController
 {
+    public function locationViewAction(ContentView $view, LocationParameterSupplier $locationParameterSupplier)
+    {
+        $locationParameterSupplier->supply($view);
+
+        return $view;
+    }
+
     public function contentTabAction(ContentView $view, UiFieldGroupService $fieldGroupService)
     {
         $versionInfo = $view->getContent()->getVersionInfo();
