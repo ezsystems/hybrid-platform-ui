@@ -7,6 +7,16 @@ namespace EzSystems\HybridPlatformUi\Notification;
 
 use eZ\Publish\API\Repository\Values\ValueObject;
 
+/**
+ * Notification object for messages to users, to be stored in a FlashBag.
+ * Can be cast to a string for sending as a Response but most use cases will just access properties of it.
+ *
+ * @property-read string $type
+ * @property-read string $message
+ * @property-read int $timeout
+ * @property-read bool $copyable
+ * @property-read string $details
+ */
 class Notification extends ValueObject
 {
     const DEFAULT_TIMEOUT = 10;
