@@ -15,6 +15,7 @@ use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiLocationService;
+use EzSystems\HybridPlatformUi\View\Content\Locations\LocationParameterSupplier;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
@@ -43,17 +44,20 @@ class LocationController extends TabController
     }
 
     public function contentViewTabAction(
-        ContentView $view
+        ContentView $view,
+        LocationParameterSupplier $locationParameterSupplier
     ) {
         $versionInfo = $view->getContent()->getVersionInfo();
         $contentInfo = $versionInfo->getContentInfo();
 
         if ($contentInfo->published) {
-            $locations = $this->uiLocationService->loadLocations($contentInfo);
-            $actionsForm = $this->formFactory->createLocationsActionForm($locations);
+            $locationParameterSupplier->supply($view);
+
+            $actionsForm = $this->formFactory->createLocationsActionForm(
+                $view->hasParameter('locations') ? $view->getParameter('locations') : []
+            );
 
             $view->addParameters([
-                'locations' => $locations,
                 'actionsForm' => $actionsForm->createView(),
             ]);
         }
