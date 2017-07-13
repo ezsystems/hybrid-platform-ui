@@ -35,6 +35,7 @@ class NotificationBagSpec extends ObjectBehavior
         $parameters = ['%id%' => '1'];
 
         $flashBag->add(NotificationBag::FLASH_MESSAGE_TYPE, Argument::type(Notification::class))->shouldBeCalled();
+        $translator->trans('test', $parameters, $domain)->shouldBeCalled()->willReturn('translated test');
 
         $this->addError('test', $parameters, $domain, 'details');
     }

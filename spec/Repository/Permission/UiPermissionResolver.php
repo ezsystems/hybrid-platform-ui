@@ -9,7 +9,7 @@ use eZ\Publish\API\Repository\Values\Content\Location;
 use EzSystems\HybridPlatformUi\Repository\Permission\UiPermissionResolver;
 use PhpSpec\ObjectBehavior;
 
-class UiPermissionResolver extends ObjectBehavior
+class UiPermissionResolverSpec extends ObjectBehavior
 {
     function let(
         Repository $repository,
