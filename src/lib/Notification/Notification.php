@@ -1,12 +1,17 @@
 <?php
-
+/**
+ * @copyright Copyright (C) eZ Systems AS. All rights reserved.
+ * @license For full copyright and license information view LICENSE file distributed with this source code.
+ */
 namespace EzSystems\HybridPlatformUi\Notification;
 
 use eZ\Publish\API\Repository\Values\ValueObject;
 
-class NotificationMessage extends ValueObject
+class Notification extends ValueObject
 {
     const DEFAULT_TIMEOUT = 10;
+
+    const ERROR_TIMEOUT = 0;
 
     const TYPE_SUCCESS = 'positive';
 

@@ -2,14 +2,14 @@
 
 namespace spec\EzSystems\HybridPlatformUi\Notification;
 
-use EzSystems\HybridPlatformUi\Notification\NotificationMessage;
+use EzSystems\HybridPlatformUi\Notification\Notification;
 use PhpSpec\ObjectBehavior;
 
-class NotificationMessageSpec extends ObjectBehavior
+class NotificationSpec extends ObjectBehavior
 {
-    private $type = NotificationMessage::TYPE_SUCCESS;
+    private $type = Notification::TYPE_SUCCESS;
 
-    private $timeout = NotificationMessage::DEFAULT_TIMEOUT;
+    private $timeout = Notification::DEFAULT_TIMEOUT;
 
     private $message = 'test message';
 

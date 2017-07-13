@@ -5,7 +5,7 @@
  */
 namespace EzSystems\HybridPlatformUi\Http\Response;
 
-use EzSystems\HybridPlatformUi\Notification\NotificationMessage;
+use EzSystems\HybridPlatformUi\Notification\Notification;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -13,8 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class NotificationResponse extends Response implements NoRenderResponse
 {
-    public function __construct(NotificationMessage $message, $status = Response::HTTP_OK)
+    public function __construct(Notification $notification, $status = Response::HTTP_OK)
     {
-        parent::__construct($message, $status);
+        parent::__construct($notification, $status);
     }
 }

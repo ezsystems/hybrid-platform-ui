@@ -56,3 +56,5 @@ services:
 
     EzSystems\HybridPlatformUiBundle\Form\Locations\Ordering:
         tags: [form.type]
+
+    Symfony\Component\HttpFoundation\Session\Session: '@session'
