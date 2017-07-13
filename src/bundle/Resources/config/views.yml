@@ -3,6 +3,7 @@ system:
         content_view:
             full:
                 default:
+                    controller: 'EzSystems\HybridPlatformUiBundle\Controller\ContentViewController:locationViewAction'
                     template: "EzSystemsHybridPlatformUiBundle::locationview.html.twig"
                     match: true
             content_tab:
