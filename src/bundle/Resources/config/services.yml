@@ -58,3 +58,7 @@ services:
         tags: [form.type]
 
     Symfony\Component\HttpFoundation\Session\Session: '@session'
+
+    EzSystems\HybridPlatformUi\Translation\PhpNotificationBagFileVisitor:
+        tags:
+            - { name: jms_translation.file_visitor, alias: ez_hybrid_php_notification }

@@ -44,6 +44,7 @@ class NotificationBag
     {
         $notification = new Notification([
             'type' => Notification::TYPE_SUCCESS,
+            /** @Ignore */
             'message' => $this->translator->trans($message, $params, $domain),
             'timeout' => Notification::DEFAULT_TIMEOUT,
         ]);
@@ -63,6 +64,7 @@ class NotificationBag
     {
         $notification = new Notification([
             'type' => Notification::TYPE_ERROR,
+            /** @Ignore */
             'message' => $this->translator->trans($message, $params, $domain),
             'timeout' => Notification::ERROR_TIMEOUT,
             'copyable' => true,
