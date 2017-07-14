@@ -15,6 +15,7 @@
             <li class="ez-tabs-label"><a href="#ez-tab-locations">{{ 'tab.locations'|trans|desc('Locations') }}</a></li>
             <li class="ez-tabs-label"><a href="#ez-tab-relations">{{ 'tab.related.content'|trans|desc('Related content') }}</a></li>
             <li class="ez-tabs-label"><a href="#ez-tab-translations">{{ 'tab.translations'|trans|desc('Translations') }}</a></li>
+            <li class="ez-tabs-label"><a href="#ez-tab-urls">{{ 'tab.urls'|trans|desc('URL') }}</a></li>
         </ul>
 
         <div class="ez-tabs-panels">
@@ -40,6 +41,10 @@
             <ez-asynchronous-block
                 class="ez-tabs-panel" id="ez-tab-translations"
                 url="{{ path('_ez_content_view', {'contentId': contentId, 'locationId': locationId, 'viewType': 'translations_tab'}) }}"
+            ></ez-asynchronous-block>
+            <ez-asynchronous-block
+                    class="ez-tabs-panel" id="ez-tab-urls"
+                    url="{{ path('_ez_content_view', {'contentId': contentId, 'locationId': locationId, 'viewType': 'urls_tab'}) }}"
             ></ez-asynchronous-block>
         </div>
         {% endblock contentview_details %}

@@ -35,3 +35,8 @@ system:
                     template: "EzSystemsHybridPlatformUiBundle:content/tabs:translations.html.twig"
                     controller: 'EzSystems\HybridPlatformUiBundle\Controller\ContentViewController:translationsTabAction'
                     match: true
+            urls_tab:
+                default:
+                    template: "EzSystemsHybridPlatformUiBundle:content/tabs:urls.html.twig"
+                    controller: 'EzSystems\HybridPlatformUiBundle\Controller\UrlController:contentViewTabAction'
+                    match: true
