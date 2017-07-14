@@ -214,10 +214,10 @@
         <note>key: locationview.relations.no.reverse.relations</note>
         <jms:reference-file line="24">src/bundle/Resources/views/content/tabs/relations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="0b409a5f5675b6ee03cfaea432d179c2648a36a3" resname="locationview.relations.related.content">
-        <source>Related content - other content items used by this content.</source>
-        <target state="new">Related content - other content items used by this content.</target>
-        <note>key: locationview.relations.related.content</note>
+      <trans-unit id="0b409a5f5675b6ee03cfaea432d179c2648a36a3" resname="locationview.relations.related">
+        <source>Related content (content items used by %contentName%)</source>
+        <target state="new">Related content (content items used by %contentName%)</target>
+        <note>key: locationview.relations.related</note>
         <jms:reference-file line="4">src/bundle/Resources/views/content/tabs/relations.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8aea3326a700a081784bc0e51f0c91a3583eedc2" resname="locationview.relations.relation.type">
@@ -227,8 +227,8 @@
         <jms:reference-file line="8">src/bundle/Resources/views/content/tabs/relations/table.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="9b9945f37ee3ca4f14d28264800169879c298ac6" resname="locationview.relations.reverse.relations">
-        <source>Reverse relations - content items using %contentName%.</source>
-        <target state="new">Reverse relations - content items using %contentName%.</target>
+        <source>Reverse relations (content items using %contentName%)</source>
+        <target state="new">Reverse relations (content items using %contentName%)</target>
         <note>key: locationview.relations.reverse.relations</note>
         <jms:reference-file line="17">src/bundle/Resources/views/content/tabs/relations.html.twig</jms:reference-file>
       </trans-unit>
