@@ -9,6 +9,7 @@ use eZ\Publish\API\Repository\Values\Content\Location;
 use EzSystems\HybridPlatformUi\Mapper\Form\Location\OrderingMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\LocationMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\VersionMapper;
+use EzSystems\HybridPlatformUiBundle\Form\Locations\LocationSwap;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\Ordering;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\Actions as LocationActions;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\ArchivedActions;
@@ -90,6 +91,16 @@ class UiFormFactory
         $data = $this->locationMapper->mapToForm($locations);
 
         return $this->formFactory->create(LocationActions::class, $data);
+    }
+
+    /**
+     * Create a form to be used for swapping contents location.
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createLocationsContentSwapForm()
+    {
+        return $this->formFactory->create(LocationSwap::class);
     }
 
     public function createLocationOrderingForm(Location $location)

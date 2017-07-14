@@ -6,10 +6,13 @@
  */
 namespace spec\EzSystems\HybridPlatformUi\Repository;
 
+use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
+use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use eZ\Publish\API\Repository\Values\Content\LocationCreateStruct;
 use eZ\Publish\Core\Repository\Values\Content\Location;
+use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use EzSystems\HybridPlatformUi\Repository\PathService;
 use EzSystems\HybridPlatformUi\Repository\Permission\UiPermissionResolver;
 use EzSystems\HybridPlatformUi\Repository\Values\Content\UiLocation;
@@ -18,9 +21,13 @@ use Prophecy\Argument;
 
 class UiLocationServiceSpec extends ObjectBehavior
 {
-    function let(LocationService $locationService, PathService $pathService, UiPermissionResolver $permissionResolver)
-    {
-        $this->beConstructedWith($locationService, $pathService, $permissionResolver);
+    function let(
+        LocationService $locationService,
+        PathService $pathService,
+        UiPermissionResolver $permissionResolver,
+        ContentTypeService $contentTypeService
+    ) {
+        $this->beConstructedWith($locationService, $pathService, $permissionResolver, $contentTypeService);
     }
 
     function it_loads_ui_locations_with_a_child_count(LocationService $locationService)
@@ -137,5 +144,53 @@ class UiLocationServiceSpec extends ObjectBehavior
         $locationService->createLocation($contentInfo, $locationCreateStruct)->shouldBeCalled();
 
         $this->addLocation($contentInfo, $parentLocationId);
+    }
+
+    function it_cannot_swap_a_non_container_with_a_container(
+        LocationService $locationService,
+        ContentTypeService $contentTypeService
+    ) {
+        $currentLocationId = 1;
+        $newLocationId = 5;
+        $contentTypeId = 2;
+
+        $location = new Location(['id' => $currentLocationId]);
+        $contentInfo = new ContentInfo(['contentTypeId' => $contentTypeId]);
+        $newLocation = new Location(['id' => $newLocationId, 'contentInfo' => $contentInfo]);
+        $contentType = new ContentType(['isContainer' => false]);
+
+        $locationService->loadLocation($newLocationId)->willReturn($newLocation);
+        $locationService->getLocationChildCount($location)->willReturn(1);
+
+        $contentTypeService->loadContentType($contentTypeId)->willReturn($contentType);
+
+        $locationService->swapLocation($location, $newLocation)->shouldNotBeCalled();
+
+        $this->shouldThrow(InvalidArgumentException::class)->duringSwapLocations($location, $newLocationId);
+    }
+
+    function it_swaps_a_location_and_then_reloads(
+        LocationService $locationService,
+        ContentTypeService $contentTypeService
+    ) {
+        $currentLocationId = 1;
+        $newLocationId = 5;
+        $contentTypeId = 2;
+
+        $location = new Location(['id' => $currentLocationId]);
+        $contentInfo = new ContentInfo(['contentTypeId' => $contentTypeId]);
+        $newLocation = new Location(['id' => $newLocationId, 'contentInfo' => $contentInfo]);
+        $contentType = new ContentType(['isContainer' => true]);
+
+        $locationService->loadLocation($newLocationId)->willReturn($newLocation);
+        $locationService->getLocationChildCount($location)->willReturn(1);
+
+        $contentTypeService->loadContentType($contentTypeId)->willReturn($contentType);
+
+        $locationService->swapLocation($location, $newLocation)->shouldBeCalled();
+
+        $locationService->loadLocation($currentLocationId)->willReturn($location);
+
+        $this->swapLocations($location, $newLocationId)->shouldBe($location);
     }
 }
