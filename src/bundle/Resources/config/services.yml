@@ -8,6 +8,10 @@ services:
         Symfony\Component\DependencyInjection\ContainerAwareInterface:
             calls:
                 - [setContainer, ['@service_container']]
+        EzSystems\HybridPlatformUi\Notification\NotificationPoolAware:
+            calls:
+                - [setNotificationPool]
+                - [setTranslator]
 
     EzSystems\HybridPlatformUi\:
         resource: '../../../lib/*'
@@ -59,6 +63,6 @@ services:
 
     Symfony\Component\HttpFoundation\Session\Session: '@session'
 
-    EzSystems\HybridPlatformUi\Translation\PhpNotificationBagFileVisitor:
+    EzSystems\HybridPlatformUi\Translation\PhpNotificationPoolFileVisitor:
         tags:
             - { name: jms_translation.file_visitor, alias: ez_hybrid_php_notification }

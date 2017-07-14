@@ -8,12 +8,12 @@ namespace EzSystems\HybridPlatformUi\Translation;
 
 use JMS\TranslationBundle\Translation\Extractor\File\DefaultPhpFileExtractor;
 
-class PhpNotificationBagFileVisitor extends DefaultPhpFileExtractor
+class PhpNotificationPoolFileVisitor extends DefaultPhpFileExtractor
 {
     /**
      * Methods and "domain" parameter offset to extract from PHP code.
      *
      * @var array method => position of the "domain" parameter
      */
-    protected $methodsToExtractFrom = ['addsuccess' => 2, 'adderror' => 2];
+    protected $methodsToExtractFrom = ['addsuccessnotification' => 2, 'adderrornotification' => 2];
 }

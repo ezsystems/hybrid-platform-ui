@@ -10,11 +10,15 @@ namespace EzSystems\HybridPlatformUiBundle\Controller;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use EzSystems\HybridPlatformUi\Http\Response\ResetResponse;
+use EzSystems\HybridPlatformUi\Notification\NotificationPoolAware;
+use EzSystems\HybridPlatformUi\Notification\NotificationPoolAwareTrait;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
 
-abstract class TabController extends Controller
+abstract class TabController extends Controller implements NotificationPoolAware
 {
+    use NotificationPoolAwareTrait;
+
     /**
      * @var RouterInterface
      */

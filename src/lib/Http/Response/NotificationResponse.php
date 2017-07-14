@@ -15,6 +15,18 @@ class NotificationResponse extends Response implements NoRenderResponse
 {
     public function __construct(Notification $notification, $status = Response::HTTP_OK)
     {
-        parent::__construct($notification, $status);
+        parent::__construct($this->convertNotificationToString($notification), $status);
+    }
+
+    private function convertNotificationToString(Notification $notification)
+    {
+        return sprintf(
+            '<ez-notification type="%s" timeout="%s"%s%s><p>%s</p></ez-notification>',
+            $notification->type,
+            $notification->timeout,
+            ($notification->copyable) ? ' copyable' : '',
+            (trim($notification->details)) ? ' details="' . $notification->details . '"' : '',
+            $notification->message
+        );
     }
 }

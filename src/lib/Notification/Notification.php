@@ -8,7 +8,7 @@ namespace EzSystems\HybridPlatformUi\Notification;
 use eZ\Publish\API\Repository\Values\ValueObject;
 
 /**
- * Notification object for messages to users, to be stored in a FlashBag.
+ * Notification object for messages to users, to be stored in a Notification Pool.
  * Can be cast to a string for sending as a Response but most use cases will just access properties of it.
  *
  * @property-read string $type
@@ -61,16 +61,4 @@ class Notification extends ValueObject
      * @var string
      */
     protected $details;
-
-    public function __toString()
-    {
-        return sprintf(
-            '<ez-notification type="%s" timeout="%s"%s%s><p>%s</p></ez-notification>',
-            $this->type,
-            $this->timeout,
-            ($this->copyable) ? ' copyable' : '',
-            (trim($this->details)) ? ' details="' . $this->details . '"' : '',
-            $this->message
-        );
-    }
 }
