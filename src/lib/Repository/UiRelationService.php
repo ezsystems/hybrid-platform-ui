@@ -11,7 +11,9 @@ use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Relation;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
+use EzSystems\HybridPlatformUi\Paginator\Pager;
 use EzSystems\HybridPlatformUi\Repository\Values\Content\UiRelation;
+use Pagerfanta\Adapter\ArrayAdapter;
 
 /**
  * Service for loading relations with additional data not provided by the original API.
@@ -53,9 +55,11 @@ class UiRelationService
      */
     public function loadRelations(VersionInfo $versionInfo)
     {
-        $relations = $this->contentService->loadRelations($versionInfo);
+        $relations = $this->buildDestinationUiRelations(
+            $this->contentService->loadRelations($versionInfo)
+        );
 
-        return $this->buildDestinationUiRelations($relations);
+        return $this->convertToPaginator($relations);
     }
 
     /**
@@ -70,9 +74,25 @@ class UiRelationService
      */
     public function loadReverseRelations(ContentInfo $contentInfo)
     {
-        $reverseRelations = $this->contentService->loadReverseRelations($contentInfo);
+        $reverseRelations = $this->buildSourceUiRelations(
+            $this->contentService->loadReverseRelations($contentInfo)
+        );
 
-        return $this->buildSourceUiRelations($reverseRelations);
+        return $this->convertToPaginator($reverseRelations);
+    }
+
+    /**
+     * This would be handled by the API.
+     *
+     * @param array $relations
+     *
+     * @return Pager
+     */
+    private function convertToPaginator(array $relations)
+    {
+        $adapter = new ArrayAdapter($relations);
+
+        return new Pager($adapter);
     }
 
     private function buildDestinationUiRelations(array $relations)

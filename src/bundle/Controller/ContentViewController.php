@@ -16,6 +16,7 @@ use EzSystems\HybridPlatformUi\Repository\UiTranslationService;
 use EzSystems\HybridPlatformUi\Repository\UiUserService;
 use EzSystems\HybridPlatformUi\View\Content\Relations\RelationParameterSupplier;
 use EzSystems\HybridPlatformUi\View\Content\Relations\ReverseRelationParameterSupplier;
+use Symfony\Component\HttpFoundation\Request;
 
 class ContentViewController extends TabController
 {
@@ -58,10 +59,15 @@ class ContentViewController extends TabController
     public function relationsTabAction(
         ContentView $view,
         RelationParameterSupplier $relationParameterSupplier,
-        ReverseRelationParameterSupplier $reverseRelationParameterSupplier
+        ReverseRelationParameterSupplier $reverseRelationParameterSupplier,
+        Request $request
     ) {
         $relationParameterSupplier->supply($view);
         $reverseRelationParameterSupplier->supply($view);
+
+        //@TODO improve how the supplies work with setting the current page
+        $view->getParameter('relations')->setCurrentPage($request->query->getInt('relationPage', 1));
+        $view->getParameter('reverseRelations')->setCurrentPage($request->query->getInt('reverseRelationPage', 1));
 
         return $view;
     }

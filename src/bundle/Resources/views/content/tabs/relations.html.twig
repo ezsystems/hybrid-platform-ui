@@ -6,6 +6,10 @@
 
 {% if relations %}
     {{ include('@EzSystemsHybridPlatformUi/content/tabs/relations/table.html.twig', {'relationList': relations}) }}
+    <div class="pager">
+        {{ pagerfanta(relations, 'default', { 'pageParameter': '[relationPage]' }) }}
+    </div>
+
 {% else %}
     <p class="ez-relations-box-list-no-content">
         {{ 'locationview.relations.no.related.content.item'|trans()|desc('This content item has no related content.') }}
@@ -19,6 +23,9 @@
 
     {% if reverseRelations %}
         {{ include('@EzSystemsHybridPlatformUi/content/tabs/relations/table.html.twig', {'relationList': reverseRelations}) }}
+        <div class="pager">
+            {{ pagerfanta(reverseRelations, 'default', { 'pageParameter': '[reverseRelationPage]' }) }}
+        </div>
     {% else %}
         <p class="ez-relations-box-list-no-content">
             {{ 'locationview.relations.no.reverse.relations'|trans()|desc('This content item has no reverse relations.') }}

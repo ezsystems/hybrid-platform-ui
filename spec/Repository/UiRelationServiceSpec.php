@@ -12,6 +12,9 @@ use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\Core\Repository\Values\Content\Relation;
 use EzSystems\HybridPlatformUi\Repository\Values\Content\UiRelation;
+use PhpSpec\Matcher\Iterate\SubjectElementDoesNotMatchException;
+use PhpSpec\Matcher\Iterate\SubjectHasFewerElementsException;
+use PhpSpec\Matcher\Iterate\SubjectHasMoreElementsException;
 use PhpSpec\ObjectBehavior;
 
 class UiRelationServiceSpec extends ObjectBehavior
@@ -75,7 +78,7 @@ class UiRelationServiceSpec extends ObjectBehavior
             ]
         );
 
-        $this->loadRelations($versionInfo)->shouldBeLike([$uiRelation]);
+        $this->loadRelations($versionInfo)->shouldIterateLike(new \ArrayIterator([$uiRelation]));
     }
 
     function it_loads_reverse_relations_with_location_field_definition_and_content_type(
@@ -129,6 +132,45 @@ class UiRelationServiceSpec extends ObjectBehavior
             ]
         );
 
-        $this->loadReverseRelations($contentInfo)->shouldBeLike([$uiRelation]);
+        $this->loadReverseRelations($contentInfo)->shouldIterateLike(new \ArrayIterator([$uiRelation]));
+    }
+
+    /**
+     * Taken from \PhpSpec\Matcher\Iterate\IterablesMatcher::match and changed so it checks if equal rather than identical.
+     * @see https://github.com/phpspec/phpspec/issues/1032
+     *
+     * @return array
+     */
+    public function getMatchers()
+    {
+        return [
+            'iterateLike' => function ($subject, $expected) {
+                $expectedIterator = new \ArrayIterator($expected);
+                $count = 0;
+                foreach ($subject as $subjectKey => $subjectValue) {
+                    if (!$expectedIterator->valid()) {
+                        throw new SubjectHasMoreElementsException();
+                    }
+
+                    if ($subjectKey !== $expectedIterator->key() || $subjectValue != $expectedIterator->current()) {
+                        throw new SubjectElementDoesNotMatchException(
+                            $count,
+                            $subjectKey,
+                            $subjectValue,
+                            $expectedIterator->key(),
+                            $expectedIterator->current()
+                        );
+                    }
+                    $expectedIterator->next();
+                    ++$count;
+                }
+
+                if ($expectedIterator->valid()) {
+                    throw new SubjectHasFewerElementsException();
+                }
+
+                return true;
+            },
+        ];
     }
 }
