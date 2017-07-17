@@ -129,16 +129,6 @@ class AppRendererSubscriberSpec extends ObjectBehavior
                     && is_array($subscribedEvents[$event])
                     && count($subscribedEvents[$event]) === 2;
             },
-            'havePriorityHigherThan' => function (array $subscribedEvents, $priority) {
-                $event = $subscribedEvents[KernelEvents::VIEW];
-
-                return isset($event[1]) && $event[1] > $priority;
-            },
-            'havePriorityLowerThan' => function (array $subscribedEvents, $priority) {
-                $event = $subscribedEvents[KernelEvents::VIEW];
-
-                return isset($event[1]) && $event[1] < $priority;
-            },
         ];
     }
 }
