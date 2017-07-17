@@ -15,6 +15,7 @@ use EzSystems\HybridPlatformUiBundle\Form\Locations\LocationSwap;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\Ordering;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\Actions as LocationActions;
 use EzSystems\HybridPlatformUiBundle\Form\Translations\Actions as TranslationActions;
+use EzSystems\HybridPlatformUiBundle\Form\Locations\Visibility;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\ArchivedActions;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\DraftActions;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -139,5 +140,10 @@ class UiFormFactory
         $data = $this->translationMapper->mapToForm($translations);
 
         return $this->formFactory->create(TranslationActions::class, $data);
+    }
+
+    public function createLocationVisibilityForm()
+    {
+        return $this->formFactory->create(Visibility::class);
     }
 }
