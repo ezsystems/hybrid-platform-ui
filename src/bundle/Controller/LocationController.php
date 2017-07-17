@@ -8,7 +8,6 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
-use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\Location;
@@ -18,7 +17,6 @@ use EzSystems\HybridPlatformUi\Repository\UiLocationService;
 use EzSystems\HybridPlatformUi\View\Content\Locations\LocationParameterSupplier;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouterInterface;
 
 class LocationController extends TabController
 {
@@ -34,13 +32,10 @@ class LocationController extends TabController
 
     public function __construct(
         UiLocationService $uiLocationService,
-        RouterInterface $router,
-        ContentService $contentService,
         UiFormFactory $formFactory
     ) {
         $this->uiLocationService = $uiLocationService;
         $this->formFactory = $formFactory;
-        parent::__construct($router, $contentService);
     }
 
     public function contentViewTabAction(
