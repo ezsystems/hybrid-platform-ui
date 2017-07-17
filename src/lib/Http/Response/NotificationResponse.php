@@ -21,7 +21,7 @@ class NotificationResponse extends Response implements NoRenderResponse
     private function convertNotificationToString(Notification $notification)
     {
         return sprintf(
-            '<ez-notification type="%s" timeout="%s"%s%s><p>%s</p></ez-notification>',
+            '<ez-notification type="%s" timeout="%s"%s%s>%s</ez-notification>',
             $notification->type,
             $notification->timeout,
             ($notification->copyable) ? ' copyable' : '',

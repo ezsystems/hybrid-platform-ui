@@ -46,7 +46,7 @@ class Notification extends ValueObject
      *
      * @var int
      */
-    protected $timeout;
+    protected $timeout = self::DEFAULT_TIMEOUT;
 
     /**
      * Are details Copyable.

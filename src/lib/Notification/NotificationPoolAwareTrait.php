@@ -56,7 +56,6 @@ trait NotificationPoolAwareTrait
             'type' => Notification::TYPE_SUCCESS,
             /** @Ignore */
             'message' => $this->translator->trans($message, $params, $domain),
-            'timeout' => Notification::DEFAULT_TIMEOUT,
         ]);
 
         $this->notificationPool->add($notification);

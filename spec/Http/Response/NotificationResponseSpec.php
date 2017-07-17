@@ -43,7 +43,7 @@ class NotificationResponseSpec extends ObjectBehavior
     function it_converts_notification_to_string()
     {
         $this->getContent()->shouldBe(
-            '<ez-notification type="' . $this->type . '" timeout="' . $this->timeout . '"><p>' . $this->message . '</p></ez-notification>'
+            '<ez-notification type="' . $this->type . '" timeout="' . $this->timeout . '">' . $this->message . '</ez-notification>'
         );
     }
 }
