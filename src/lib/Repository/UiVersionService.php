@@ -55,19 +55,30 @@ class UiVersionService
     }
 
     /**
-     * Deletes a version based on the contentId and versionNo.
+     * Deletes a version based on the contentInfo and versionNo.
      *
-     * @param int $contentId
+     * @param ContentInfo $contentInfo
      * @param int $versionNo
      */
-    public function deleteVersion(int $contentId, int $versionNo)
+    public function deleteVersion(ContentInfo $contentInfo, int $versionNo)
     {
-        $versionInfo = $this->contentService->loadVersionInfo(
-            $this->contentService->loadContentInfo($contentId),
-            $versionNo
+        $this->contentService->deleteVersion(
+            $this->loadVersionInfo($contentInfo, $versionNo)
         );
+    }
 
-        $this->contentService->deleteVersion($versionInfo);
+    /**
+     * Creates a new draft based on the contentInfo and versionNo.
+     *
+     * @param ContentInfo $contentInfo
+     * @param mixed $versionNo
+     */
+    public function createDraft(ContentInfo $contentInfo, $versionNo)
+    {
+        return $this->contentService->createContentDraft(
+            $contentInfo,
+            $this->loadVersionInfo($contentInfo, $versionNo)
+        );
     }
 
     private function buildUiVersions(array $versions)
@@ -83,5 +94,10 @@ class UiVersionService
             },
             $versions
         );
+    }
+
+    private function loadVersionInfo(ContentInfo $contentInfo, $versionNo)
+    {
+        return $this->contentService->loadVersionInfo($contentInfo, $versionNo);
     }
 }

@@ -24,14 +24,12 @@ class UiVersionServiceSpec extends ObjectBehavior
         ContentInfo $contentInfo,
         VersionInfo $versionInfo
     ) {
-        $contentId = '1';
         $versionNumber = 10;
 
-        $contentService->loadContentInfo($contentId)->willReturn($contentInfo)->shouldBeCalled();
         $contentService->loadVersionInfo($contentInfo, $versionNumber)->willReturn($versionInfo)->shouldBeCalled();
         $contentService->deleteVersion($versionInfo)->shouldBeCalled();
 
-        $this->deleteVersion($contentId, $versionNumber);
+        $this->deleteVersion($contentInfo, $versionNumber);
     }
 
     function it_loads_ui_versions_with_translation_and_author(
@@ -52,5 +50,18 @@ class UiVersionServiceSpec extends ObjectBehavior
         $uiVersion = new UiVersionInfo($versionInfo, ['author' => $user, 'translations' => [$language]]);
 
         $this->loadVersions($contentInfo)->shouldBeLike([$uiVersion]);
+    }
+
+    function it_should_create_a_draft(
+        ContentService $contentService,
+        ContentInfo $contentInfo,
+        VersionInfo $versionInfo
+    ) {
+        $versionNumber = 10;
+
+        $contentService->loadVersionInfo($contentInfo, $versionNumber)->willReturn($versionInfo)->shouldBeCalled();
+        $contentService->createContentDraft($contentInfo, $versionInfo)->shouldBeCalled();
+
+        $this->createDraft($contentInfo, $versionNumber);
     }
 }

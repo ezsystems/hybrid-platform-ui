@@ -50,21 +50,19 @@ class RelationTypeExtension extends Twig_Extension
      */
     public function renderRelationType(Relation $relation)
     {
-        $domain = 'locationview';
-
         switch ($relation->type) {
             case Relation::COMMON:
                 return /** @Desc("Content level relation") */
-                    $this->translator->trans('locationview.relations.type.content_level_relation', [], $domain);
+                    $this->translator->trans('locationview.relations.type.content_level_relation', [], 'locationview');
             case Relation::EMBED:
                 return /** @Desc("Embed") */
-                    $this->translator->trans('locationview.relations.type.embed', [], $domain);
+                    $this->translator->trans('locationview.relations.type.embed', [], 'locationview');
             case Relation::LINK:
                 return /** @Desc("Link") */
-                    $this->translator->trans('locationview.relations.type.link', [], $domain);
+                    $this->translator->trans('locationview.relations.type.link', [], 'locationview');
             case Relation::FIELD:
                 return /** @Desc("Field") */
-                    $this->translator->trans('locationview.relations.type.field', [], $domain);
+                    $this->translator->trans('locationview.relations.type.field', [], 'locationview');
             default:
                 return '';
         }

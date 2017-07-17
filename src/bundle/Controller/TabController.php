@@ -8,13 +8,18 @@
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
 use eZ\Publish\API\Repository\ContentService;
+use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\Core\MVC\Symfony\Controller\Controller;
 use EzSystems\HybridPlatformUi\Http\Response\ResetResponse;
+use EzSystems\HybridPlatformUi\Notification\NotificationPoolAware;
+use EzSystems\HybridPlatformUi\Notification\NotificationPoolAwareTrait;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
 
-abstract class TabController extends Controller
+abstract class TabController extends Controller implements NotificationPoolAware
 {
+    use NotificationPoolAwareTrait;
+
     /**
      * @var RouterInterface
      */
@@ -25,19 +30,26 @@ abstract class TabController extends Controller
      */
     protected $contentService;
 
-    public function __construct(
-        RouterInterface $router,
-        ContentService $contentService
-    ) {
+    public function setRouter(RouterInterface $router)
+    {
         $this->router = $router;
+    }
+
+    public function setContentService(ContentService $contentService)
+    {
         $this->contentService = $contentService;
     }
 
-    protected function resetLocation($contentId)
+    protected function resetToMainLocation($contentId)
     {
         $mainLocationId = $this->contentService->loadContentInfo($contentId)->mainLocationId;
 
         return new ResetResponse($this->generateContentViewUrl($contentId, $mainLocationId));
+    }
+
+    protected function resetLocation(Location $location)
+    {
+        return new ResetResponse($this->generateContentViewUrl($location->contentId, $location->id));
     }
 
     protected function reloadTab($tab, $contentId, $locationId)

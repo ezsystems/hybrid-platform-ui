@@ -1,7 +1,7 @@
 {% trans_default_domain "locationview" %}
 
 <div class="ez-list-toolbar">
-    <h2 class="ez-list-toolbar-label">{{ 'locationview.relations.related.content'|trans()|desc('Related content - other content items used by this content.') }}</h2>
+    <h2 class="ez-list-toolbar-label">{{ 'locationview.relations.related'|trans({'%contentName%' : ez_content_name(content)})|desc('Related content (content items used by %contentName%)') }}</h2>
 </div>
 
 {% if relations %}
@@ -14,7 +14,7 @@
 
 {% if reverseRelations is defined %}
     <div class="ez-list-toolbar">
-        <h2 class="ez-list-toolbar-label">{{ 'locationview.relations.reverse.relations'|trans({'%contentName%' : ez_content_name(content)})|desc('Reverse relations - content items using %contentName%.') }}</h2>
+        <h2 class="ez-list-toolbar-label">{{ 'locationview.relations.reverse.relations'|trans({'%contentName%' : ez_content_name(content)})|desc('Reverse relations (content items using %contentName%)') }}</h2>
     </div>
 
     {% if reverseRelations %}

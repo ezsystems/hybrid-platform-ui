@@ -8,7 +8,6 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
-use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\Location;
@@ -17,7 +16,6 @@ use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiLocationService;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouterInterface;
 
 class LocationController extends TabController
 {
@@ -33,13 +31,10 @@ class LocationController extends TabController
 
     public function __construct(
         UiLocationService $uiLocationService,
-        RouterInterface $router,
-        ContentService $contentService,
         UiFormFactory $formFactory
     ) {
         $this->uiLocationService = $uiLocationService;
         $this->formFactory = $formFactory;
-        parent::__construct($router, $contentService);
     }
 
     public function contentViewTabAction(
@@ -51,10 +46,12 @@ class LocationController extends TabController
         if ($contentInfo->published) {
             $locations = $this->uiLocationService->loadLocations($contentInfo);
             $actionsForm = $this->formFactory->createLocationsActionForm($locations);
+            $swapLocationsForm = $this->formFactory->createLocationsContentSwapForm();
 
             $view->addParameters([
                 'locations' => $locations,
                 'actionsForm' => $actionsForm->createView(),
+                'swapLocationsForm' => $swapLocationsForm->createView(),
             ]);
         }
 
@@ -74,11 +71,31 @@ class LocationController extends TabController
             $resetLocation = $this->deleteLocationsBasedOnFormSubmit($actionsForm, $redirectLocationId);
 
             if ($resetLocation) {
-                return $this->resetLocation($content->id);
+                return $this->resetToMainLocation($content->id);
             }
 
             $this->addLocationBasedOnFormSubmit($actionsForm, $content);
         }
+
+        return $this->reloadTab('locations', $content->id, $redirectLocationId);
+    }
+
+    public function swapLocationAction(
+        Content $content,
+        Location $location,
+        Request $request
+    ) {
+        $swapLocationsForm = $this->formFactory->createLocationsContentSwapForm();
+        $swapLocationsForm->handleRequest($request);
+
+        if ($swapLocationsForm->isValid()) {
+            $newLocationId = $swapLocationsForm->get('new_location_id')->getData();
+            $location = $this->uiLocationService->swapLocations($location, $newLocationId);
+
+            return $this->resetLocation($location);
+        }
+
+        $redirectLocationId = $request->query->get('redirectLocationId', $content->contentInfo->mainLocationId);
 
         return $this->reloadTab('locations', $content->id, $redirectLocationId);
     }

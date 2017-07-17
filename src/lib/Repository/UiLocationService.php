@@ -6,9 +6,11 @@
  */
 namespace EzSystems\HybridPlatformUi\Repository;
 
+use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Location;
+use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use EzSystems\HybridPlatformUi\Repository\Permission\UiPermissionResolver;
 use EzSystems\HybridPlatformUi\Repository\Values\Content\UiLocation;
 
@@ -33,14 +35,21 @@ class UiLocationService
      */
     private $permissionResolver;
 
+    /**
+     * @var ContentTypeService
+     */
+    private $contentTypeService;
+
     public function __construct(
         LocationService $locationService,
         PathService $pathService,
-        UiPermissionResolver $permissionResolver
+        UiPermissionResolver $permissionResolver,
+        ContentTypeService $contentTypeService
     ) {
         $this->locationService = $locationService;
         $this->pathService = $pathService;
         $this->permissionResolver = $permissionResolver;
+        $this->contentTypeService = $contentTypeService;
     }
 
     /**
@@ -85,6 +94,35 @@ class UiLocationService
     {
         $locationCreateStruct = $this->locationService->newLocationCreateStruct($parentLocationId);
         $this->locationService->createLocation($contentInfo, $locationCreateStruct);
+    }
+
+    /**
+     * Swaps locations.
+     * Returns the current location reloaded with the correct content.
+     *
+     * @param Location $currentLocation
+     * @param mixed $newLocationId
+     *
+     * @return Location
+     *
+     * @throws InvalidArgumentException
+     */
+    public function swapLocations(Location $currentLocation, $newLocationId)
+    {
+        $newLocation = $this->locationService->loadLocation($newLocationId);
+
+        $childCount = $this->locationService->getLocationChildCount($currentLocation);
+        $contentType = $this->contentTypeService->loadContentType($newLocation->getContentInfo()->contentTypeId);
+
+        if (!$contentType->isContainer && $childCount) {
+            throw new InvalidArgumentException(
+                '$newLocation',
+                'Cannot swap location that has sub items with a location that is not a container'
+            );
+        }
+        $this->locationService->swapLocation($currentLocation, $newLocation);
+
+        return $this->locationService->loadLocation($currentLocation->id);
     }
 
     private function buildUiLocations(array $locations)
