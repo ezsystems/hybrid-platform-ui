@@ -126,16 +126,4 @@ class DomXpathPjaxResponseMainContentMapperSpec extends ObjectBehavior
 
         $this->map($response);
     }
-
-    function getMatchers()
-    {
-        return [
-            'haveTitle' => function (App $app, $expectedTitle) {
-                return $mainContent->getTitle() == $expectedTitle;
-            },
-            'haveResult' => function (App $app, $expectedContent) {
-                return strstr((string)$mainContent, $expectedContent) !== null;
-            },
-        ];
-    }
 }
