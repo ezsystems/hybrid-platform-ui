@@ -103,6 +103,13 @@ class UiFormFactory
         return $this->formFactory->create(LocationSwap::class);
     }
 
+    /**
+     * Create form to be used for ordering of locations.
+     *
+     * @param Location $location
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
     public function createLocationOrderingForm(Location $location)
     {
         return $this->formFactory->create(
