@@ -18,9 +18,7 @@
         {% for customUrl in customUrls %}
             <tr>
                 <td></td>
-                <td>
-                    <a href="{{ customUrl.path }}">{{ customUrl.path }}</a>
-                </td>
+                <td>{{ customUrl.path }}</td>
                 <td>
                     {% for languageCode in customUrl.languageCodes %}{{ languageCode }}<br>{% endfor %}
                 </td>
@@ -56,9 +54,7 @@
         <tbody>
         {% for systemUrl in systemUrls %}
             <tr>
-                <td>
-                    <a href="{{ systemUrl.path }}">{{ systemUrl.path }}</a>
-                </td>
+                <td>{{ systemUrl.path }}</td>
                 <td>
                     {% for languageCode in systemUrl.languageCodes %}{{ languageCode }}<br>{% endfor %}
                 </td>
