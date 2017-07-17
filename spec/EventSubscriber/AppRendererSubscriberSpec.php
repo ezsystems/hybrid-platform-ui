@@ -6,6 +6,7 @@ use EzSystems\HybridPlatformUi\App\AppResponseRenderer;
 use EzSystems\HybridPlatformUi\Components\App;
 use EzSystems\HybridPlatformUi\EventSubscriber\AppRendererSubscriber;
 use EzSystems\HybridPlatformUi\Http\HybridRequestMatcher;
+use EzSystems\HybridPlatformUi\Http\Response\NotificationResponse;
 use EzSystems\HybridPlatformUi\Http\Response\ResetResponse;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -94,6 +95,17 @@ class AppRendererSubscriberSpec extends ObjectBehavior
         ResetResponse $resetResponse
     ) {
         $event->getResponse()->willReturn($resetResponse);
+        $renderer->render(Argument::any())->shouldNotBeCalled();
+
+        $this->renderApp($event);
+    }
+
+    function it_ignores_notification_responses(
+        FilterResponseEvent $event,
+        AppResponseRenderer $renderer,
+        NotificationResponse $notificationResponse
+    ) {
+        $event->getResponse()->willReturn($notificationResponse);
         $renderer->render(Argument::any())->shouldNotBeCalled();
 
         $this->renderApp($event);
