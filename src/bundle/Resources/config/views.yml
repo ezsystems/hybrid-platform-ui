@@ -5,6 +5,7 @@ system:
                 default:
                     controller: 'EzSystems\HybridPlatformUiBundle\Controller\ContentViewController:locationViewAction'
                     template: "EzSystemsHybridPlatformUiBundle::locationview.html.twig"
+                    controller: 'EzSystems\HybridPlatformUiBundle\Controller\ContentViewController:locationViewAction'
                     match: true
             content_tab:
                 default:
