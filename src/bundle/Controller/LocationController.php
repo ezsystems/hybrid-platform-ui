@@ -52,10 +52,12 @@ class LocationController extends TabController
                 $view->hasParameter('locations') ? $view->getParameter('locations') : []
             );
             $swapLocationsForm = $this->formFactory->createLocationsContentSwapForm();
+            $visibilityForm = $this->formFactory->createLocationVisibilityForm();
 
             $view->addParameters([
                 'actionsForm' => $actionsForm->createView(),
                 'swapLocationsForm' => $swapLocationsForm->createView(),
+                'visibilityForm' => $visibilityForm->createView(),
             ]);
         }
 
@@ -119,6 +121,41 @@ class LocationController extends TabController
         }
 
         return $this->reloadTab('details', $content->id, $location->id);
+    }
+
+    public function visibilityAction(
+        Request $request,
+        LocationService $locationService,
+        UiFormFactory $formFactory
+    ) {
+        try {
+            $visibilityForm = $formFactory->createLocationVisibilityForm();
+            $visibilityForm->handleRequest($request);
+
+            if (!$visibilityForm->isValid()) {
+                throw new \Exception(var_export($visibilityForm->getErrors(), true));
+            }
+
+            $visibility = $visibilityForm->get('visibility')->getData();
+            $locationId = $visibilityForm->get('locationId')->getData();
+
+            $location = $locationService->loadLocation($locationId);
+
+            if ($visibility) {
+                $locationService->unhideLocation($location);
+                /** @Desc("The Location #%id% is now visible") */
+                $this->addSuccessNotification('locationview.locations.notification.visible', ['%id%' => $location->id], 'locationview');
+            } else {
+                $locationService->hideLocation($location);
+                /** @Desc("The Location #%id% is now hidden") */
+                $this->addSuccessNotification('locationview.locations.notification.hidden', ['%id%' => $location->id], 'locationview');
+            }
+        } catch (\Exception $e) {
+            /** @Desc("Error updating location visibility") */
+            $this->addErrorNotification('locationview.locations.visibility.error', [], 'locationview', $e->getMessage());
+        }
+
+        return $this->notificationResponse();
     }
 
     /**

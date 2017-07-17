@@ -32,4 +32,8 @@ ez_hybrid_platform_ui_translation_actions:
     path: /content/{contentId}/translations
     defaults:
         _controller: EzSystemsHybridPlatformUiBundle:Translation:actions
+ez_hybrid_platform_ui_location_visibility:
+    path: /location/visibility
+    defaults:
+        _controller: EzSystemsHybridPlatformUiBundle:Location:visibility
     methods: [POST]

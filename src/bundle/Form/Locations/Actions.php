@@ -21,6 +21,15 @@ class Actions extends AbstractType
             ->add('add', SubmitType::class)
             ->add('parentLocationId', TextType::class, ['required' => false])
             ->add(
+                'locationVisibility',
+                CollectionType::class,
+                [
+                    'entry_type' => CheckboxType::class,
+                    'required' => false,
+                    'allow_add' => true,
+                ]
+            )
+            ->add(
                 'removeLocations',
                 CollectionType::class,
                 [
