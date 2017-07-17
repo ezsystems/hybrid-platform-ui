@@ -8,7 +8,6 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
-use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
@@ -16,7 +15,6 @@ use EzSystems\HybridPlatformUi\Repository\UiTranslationService;
 use EzSystems\HybridPlatformUi\View\Content\Translations\TranslationParameterSupplier;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouterInterface;
 
 class TranslationController extends TabController
 {
@@ -32,13 +30,10 @@ class TranslationController extends TabController
 
     public function __construct(
         UiTranslationService $uiTranslationService,
-        UiFormFactory $formFactory,
-        RouterInterface $router,
-        ContentService $contentService
+        UiFormFactory $formFactory
     ) {
         $this->uiTranslationService = $uiTranslationService;
         $this->formFactory = $formFactory;
-        parent::__construct($router, $contentService);
     }
 
     public function contentViewTabAction(ContentView $view, TranslationParameterSupplier $translationParameterSupplier)
