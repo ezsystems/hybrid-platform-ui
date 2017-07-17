@@ -18,7 +18,7 @@ class ContentTypeParameterSupplierSpec extends ObjectBehavior
         $this->beConstructedWith($contentTypeService);
     }
 
-    function it_is_initializable()
+    function it_is_a_supplier()
     {
         $this->shouldHaveType(ParameterSupplier::class);
     }
