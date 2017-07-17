@@ -12,6 +12,10 @@ services:
             calls:
                 - [setNotificationPool]
                 - [setTranslator]
+        EzSystems\HybridPlatformUiBundle\Controller\TabController:
+            calls:
+                - [setRouter]
+                - [setContentService]
 
     EzSystems\HybridPlatformUi\:
         resource: '../../../lib/*'

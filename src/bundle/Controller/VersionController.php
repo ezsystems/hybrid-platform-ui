@@ -9,13 +9,11 @@ namespace EzSystems\HybridPlatformUiBundle\Controller;
 
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Filter\VersionFilter;
-use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiVersionService;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouterInterface;
 
 class VersionController extends TabController
 {
@@ -25,12 +23,9 @@ class VersionController extends TabController
     private $uiVersionService;
 
     public function __construct(
-        UiVersionService $uiVersionService,
-        ContentService $contentService,
-        RouterInterface $router
+        UiVersionService $uiVersionService
     ) {
         $this->uiVersionService = $uiVersionService;
-        parent::__construct($router, $contentService);
     }
 
     public function contentViewTabAction(

@@ -30,11 +30,13 @@ abstract class TabController extends Controller implements NotificationPoolAware
      */
     protected $contentService;
 
-    public function __construct(
-        RouterInterface $router,
-        ContentService $contentService
-    ) {
+    public function setRouter(RouterInterface $router)
+    {
         $this->router = $router;
+    }
+
+    public function setContentService(ContentService $contentService)
+    {
         $this->contentService = $contentService;
     }
 
