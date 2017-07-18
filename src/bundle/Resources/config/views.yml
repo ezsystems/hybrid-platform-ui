@@ -35,5 +35,5 @@ system:
             translations_tab:
                 default:
                     template: "EzSystemsHybridPlatformUiBundle:content/tabs:translations.html.twig"
-                    controller: 'EzSystems\HybridPlatformUiBundle\Controller\ContentViewController:translationsTabAction'
+                    controller: 'EzSystems\HybridPlatformUiBundle\Controller\TranslationController:contentViewTabAction'
                     match: true

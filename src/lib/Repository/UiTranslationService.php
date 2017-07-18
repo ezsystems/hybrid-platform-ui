@@ -6,8 +6,12 @@
  */
 namespace EzSystems\HybridPlatformUi\Repository;
 
+use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\LanguageService;
+use eZ\Publish\API\Repository\Values\Content\Language;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
+use EzSystems\HybridPlatformUi\Repository\Permission\UiPermissionResolver;
+use EzSystems\HybridPlatformUi\Repository\Values\Content\UiLanguage;
 
 /**
  * Service for loading translations.
@@ -19,9 +23,24 @@ class UiTranslationService
      */
     private $languageService;
 
-    public function __construct(LanguageService $languageService)
-    {
+    /**
+     * @var ContentService
+     */
+    private $contentService;
+
+    /**
+     * @var UiPermissionResolver
+     */
+    private $permissionResolver;
+
+    public function __construct(
+        LanguageService $languageService,
+        ContentService $contentService,
+        UiPermissionResolver $permissionResolver
+    ) {
         $this->languageService = $languageService;
+        $this->contentService = $contentService;
+        $this->permissionResolver = $permissionResolver;
     }
 
     /**
@@ -33,8 +52,39 @@ class UiTranslationService
      */
     public function loadTranslations(VersionInfo $versionInfo)
     {
-        return array_map(function ($languageCode) {
-            return $this->languageService->loadLanguage($languageCode);
+        return array_map(function ($languageCode) use ($versionInfo) {
+            return $this->buildUiLanguage(
+                $this->languageService->loadLanguage($languageCode),
+                $versionInfo
+            );
         }, $versionInfo->languageCodes);
+    }
+
+    /**
+     * Deletes translations.
+     *
+     * @param array $languageCodes
+     */
+    public function deleteTranslations(array $languageCodes, VersionInfo $versionInfo)
+    {
+        foreach ($languageCodes as $languageCode) {
+            $this->contentService->removeTranslation($versionInfo->getContentInfo(), $languageCode);
+        }
+    }
+
+    private function isMainLanguage($languageCode, VersionInfo $versionInfo)
+    {
+        return $languageCode === $versionInfo->getContentInfo()->mainLanguageCode;
+    }
+
+    private function buildUiLanguage(Language $language, VersionInfo $versionInfo)
+    {
+        return new UiLanguage(
+            $language,
+            [
+                'userCanRemove' => $this->permissionResolver->canRemoveTranslation($versionInfo),
+                'main' => $this->isMainLanguage($language->languageCode, $versionInfo),
+            ]
+        );
     }
 }
