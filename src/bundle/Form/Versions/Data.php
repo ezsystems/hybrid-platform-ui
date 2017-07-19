@@ -19,6 +19,7 @@ abstract class Data extends AbstractType
                 'entry_type' => CheckboxType::class,
                 'allow_add' => true,
                 'required' => false,
+                'label' => false,
             ]);
     }
 }

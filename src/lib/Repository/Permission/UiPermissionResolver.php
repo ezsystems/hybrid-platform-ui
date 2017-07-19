@@ -21,6 +21,7 @@ class UiPermissionResolver
     const MANAGE_LOCATIONS = 'manage_locations';
     const REMOVE = 'remove';
     const DELETE = 'delete';
+    const READ_VERSION = 'versionread';
 
     /**
      * @var PermissionResolver
@@ -84,5 +85,17 @@ class UiPermissionResolver
         return $this->permissionResolver->canUser(
             self::CONTENT_MODULE, self::DELETE, $versionInfo
         );
+    }
+
+    /**
+     * Checks if the current user can read the version.
+     *
+     * @param ContentInfo $contentInfo
+     *
+     * @return bool
+     */
+    public function canReadVersion(ContentInfo $contentInfo)
+    {
+        return $this->permissionResolver->canUser(self::CONTENT_MODULE, self::READ_VERSION, $contentInfo);
     }
 }

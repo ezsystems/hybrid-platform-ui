@@ -81,8 +81,25 @@ class UiPermissionResolverSpec extends ObjectBehavior
         PermissionResolver $permissionResolver,
         VersionInfo $versionInfo
     ) {
-        $permissionResolver->canUser(UiPermissionResolver::CONTENT_MODULE, UiPermissionResolver::DELETE, $versionInfo)->willReturn(false);
+        $permissionResolver->canUser(UiPermissionResolver::CONTENT_MODULE, UiPermissionResolver::DELETE,
+            $versionInfo)->willReturn(false);
 
         $this->canRemoveTranslation($versionInfo)->shouldBe(false);
+    }
+
+    function it_checks_user_can_read_version(PermissionResolver $permissionResolver, ContentInfo $contentInfo)
+    {
+        $permissionResolver->canUser(UiPermissionResolver::CONTENT_MODULE, UiPermissionResolver::READ_VERSION,
+            $contentInfo)->willReturn(true);
+
+        $this->canReadVersion($contentInfo)->shouldBe(true);
+    }
+
+    function it_checks_user_cannot_read_version(PermissionResolver $permissionResolver, ContentInfo $contentInfo)
+    {
+        $permissionResolver->canUser(UiPermissionResolver::CONTENT_MODULE, UiPermissionResolver::READ_VERSION,
+            $contentInfo)->willReturn(false);
+
+        $this->canReadVersion($contentInfo)->shouldBe(false);
     }
 }

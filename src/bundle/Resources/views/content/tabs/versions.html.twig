@@ -1,40 +1,63 @@
 {% trans_default_domain "locationview" %}
 
-{% if draftVersions %}
+
+{% if draftVersions is not defined or draftVersions %}
     {{ form_start(draftActionsForm, {"action": path("ez_hybrid_platform_ui_version_draft_actions", {'contentId': content.id, 'redirectLocationId': location.id})}) }}
 
     <div class="ez-list-toolbar">
         <h2 class="ez-list-toolbar-label">{{ 'locationview.versions.draft.under.edit'|trans()|desc('Draft under edit') }}</h2>
         <div class="ez-list-toolbar-tools">
-            {{ form_widget(draftActionsForm.delete, {'label': 'locationview.versions.delete'|trans()|desc('Delete'), 'attr': {'class': 'ez-button ez-button-negative'}}) }}
+            {{ form_widget(draftActionsForm.delete, {'label': 'locationview.versions.delete'|trans()|desc('Delete'), 'attr': {'class': 'ez-button ez-button-negative', 'disabled': draftVersions is not defined}}) }}
         </div>
     </div>
 
-    {{ include('@EzSystemsHybridPlatformUi/content/tabs/versions/table.html.twig', {'versions': draftVersions, 'form': draftActionsForm, 'isDraft': true}) }}
+    {% if draftVersions is defined %}
+        {{ include('@EzSystemsHybridPlatformUi/content/tabs/versions/table.html.twig', {'versions': draftVersions, 'form': draftActionsForm, 'isDraft': true}) }}
+    {% else %}
+        <p class="ez-relations-box-list-no-content">
+            {{ 'locationview.versions.no.permission'|trans()|desc("You don't have access to view the content item's versions") }}
+        </p>
+    {% endif %}
 
     {{ form_end(draftActionsForm) }}
 
 {% endif %}
 
-{% if publishedVersions %}
+{% if publishedVersions is not defined or publishedVersions %}
     <div class="ez-list-toolbar">
         <h2 class="ez-list-toolbar-label">{{ 'locationview.versions.published.version'|trans()|desc('Published version') }}</h2>
     </div>
-    {{ include('@EzSystemsHybridPlatformUi/content/tabs/versions/table.html.twig', {'versions': publishedVersions}) }}
+
+    {% if publishedVersions is defined %}
+        {{ include('@EzSystemsHybridPlatformUi/content/tabs/versions/table.html.twig', {'versions': publishedVersions}) }}
+    {% else %}
+        <p class="ez-relations-box-list-no-content">
+            {{ 'locationview.versions.no.permission'|trans()|desc("You don't have access to view the content item's versions") }}
+        </p>
+    {% endif %}
+
 {% endif %}
 
-{% if archivedVersions %}
+
+
+{% if archivedVersions is not defined or archivedVersions %}
     {{ form_start(archivedActionsForm, {"action": path("ez_hybrid_platform_ui_version_archive_actions", {'contentId': content.id, 'redirectLocationId': location.id})}) }}
 
     <div class="ez-list-toolbar">
         <h2 class="ez-list-toolbar-label">{{ 'locationview.versions.archived.versions'|trans()|desc('Archived versions') }}</h2>
         <div class="ez-list-toolbar-tools">
-            {{ form_widget(archivedActionsForm.new_draft, {'label': 'locationview.versions.new.draft.selected.version'|trans()|desc('New draft based on selected version'), 'attr': {'class': 'ez-button ez-button-secondary'}}) }}
-            {{ form_widget(archivedActionsForm.delete, {'label': 'locationview.versions.delete'|trans()|desc('Delete'), 'attr': {'class': 'ez-button ez-button-negative'}}) }}
+            {{ form_widget(archivedActionsForm.new_draft, {'label': 'locationview.versions.new.draft.selected.version'|trans()|desc('New draft based on selected version'), 'attr': {'class': 'ez-button ez-button-secondary', 'disabled': archivedVersions is not defined}}) }}
+            {{ form_widget(archivedActionsForm.delete, {'label': 'locationview.versions.delete'|trans()|desc('Delete'), 'attr': {'class': 'ez-button ez-button-negative', 'disabled': archivedVersions is not defined}}) }}
         </div>
     </div>
 
-    {{ include('@EzSystemsHybridPlatformUi/content/tabs/versions/table.html.twig', {'versions': archivedVersions, 'form': archivedActionsForm}) }}
+    {% if archivedVersions is defined %}
+        {{ include('@EzSystemsHybridPlatformUi/content/tabs/versions/table.html.twig', {'versions': archivedVersions, 'form': archivedActionsForm}) }}
+    {% else %}
+        <p class="ez-relations-box-list-no-content">
+            {{ 'locationview.versions.no.permission'|trans()|desc("You don't have access to view the content item's versions") }}
+        </p>
+    {% endif %}
 
     {{ form_end(archivedActionsForm) }}
 
