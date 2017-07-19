@@ -77,10 +77,18 @@ class App implements Component
         }
     }
 
-    public function renderToString()
+    public function renderToString($partial = false)
     {
         if ($this->isException()) {
             return (string)$this->mainContent;
+        } elseif ($partial) {
+            return $this->templating->render(
+                'EzSystemsHybridPlatformUiBundle:components:app_partial.html.twig',
+                [
+                    'mainContent' => $this->mainContent->renderToString(),
+                    'notifications' => $this->notifications->renderToString(),
+                ]
+            );
         } else {
             return $this->templating->render(
                 'EzSystemsHybridPlatformUiBundle:components:app.html.twig',

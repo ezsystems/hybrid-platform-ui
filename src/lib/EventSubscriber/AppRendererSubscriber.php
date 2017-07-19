@@ -6,6 +6,7 @@ use EzSystems\HybridPlatformUi\App\ToolbarsConfigurator;
 use EzSystems\HybridPlatformUi\Components\App;
 use EzSystems\HybridPlatformUi\Http\AjaxUpdateRequestMatcher;
 use EzSystems\HybridPlatformUi\Http\HybridRequestMatcher;
+use EzSystems\HybridPlatformUi\Http\PartialHtmlRequestMatcher;
 use EzSystems\HybridPlatformUi\Http\Response\NoRenderResponse;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -37,7 +38,7 @@ class AppRendererSubscriber implements EventSubscriberInterface
     private $ajaxUpdateRequestMatcher;
 
     /**
-     * @var \EzSystems\HybridPlatformUi\EventSubscriber\PartialHtmlRequestMatcher
+     * @var \EzSystems\HybridPlatformUi\Http\PartialHtmlRequestMatcher
      */
     private $partialHtmlRequestMatcher;
 
@@ -45,12 +46,14 @@ class AppRendererSubscriber implements EventSubscriberInterface
         App $app,
         HybridRequestMatcher $hybridRequestMatcher,
         AjaxUpdateRequestMatcher $ajaxUpdateRequestMatcher,
+        PartialHtmlRequestMatcher $partialHtmlRequestMatcher,
         ToolbarsConfigurator $toolbarsConfigurator
     ) {
         $this->app = $app;
         $this->hybridRequestMatcher = $hybridRequestMatcher;
         $this->ajaxUpdateRequestMatcher = $ajaxUpdateRequestMatcher;
         $this->toolbarsConfigurator = $toolbarsConfigurator;
+        $this->partialHtmlRequestMatcher = $partialHtmlRequestMatcher;
     }
 
     public static function getSubscribedEvents()
@@ -94,7 +97,9 @@ class AppRendererSubscriber implements EventSubscriberInterface
             $response = new JsonResponse($this->app);
         } else {
             $response = new Response(
-                $this->app->renderToString()
+                $this->app->renderToString(
+                    $this->partialHtmlRequestMatcher->matches($request)
+                )
             );
         }
 

@@ -7,9 +7,9 @@ use EzSystems\HybridPlatformUi\Components\App;
 use EzSystems\HybridPlatformUi\EventSubscriber\AppRendererSubscriber;
 use EzSystems\HybridPlatformUi\Http\AjaxUpdateRequestMatcher;
 use EzSystems\HybridPlatformUi\Http\HybridRequestMatcher;
+use EzSystems\HybridPlatformUi\Http\PartialHtmlRequestMatcher;
 use EzSystems\HybridPlatformUi\Http\Response\NotificationResponse;
 use EzSystems\HybridPlatformUi\Http\Response\ResetResponse;
-use PhpParser\Node\Arg;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -35,6 +35,7 @@ class AppRendererSubscriberSpec extends ObjectBehavior
         ParameterBag $requestAttributes,
         HybridRequestMatcher $hybridRequestMatcher,
         AjaxUpdateRequestMatcher $ajaxUpdateRequestMatcher,
+        PartialHtmlRequestMatcher $partialHtmlRequestMatcher,
         ToolbarsConfigurator $toolbarsConfigurator
     ) {
         $hybridRequestMatcher->matches(Argument::type(Request::class))->willReturn(true);
@@ -50,6 +51,7 @@ class AppRendererSubscriberSpec extends ObjectBehavior
             $app,
             $hybridRequestMatcher,
             $ajaxUpdateRequestMatcher,
+            $partialHtmlRequestMatcher,
             $toolbarsConfigurator
         );
     }
@@ -133,8 +135,23 @@ class AppRendererSubscriberSpec extends ObjectBehavior
         Request $request
     ) {
         $ajaxUpdateRequestMatcher->matches($request)->shouldBeCalled()->willReturn(true);
-        $app->jsonSerialize()->shouldBeCalled()->willReturn("update json");
+        $app->jsonSerialize()->shouldBeCalled()->willReturn('update json');
         $event->setResponse(Argument::type(JsonResponse::class))->shouldBeCalled();
+
+        $this->renderApp($event);
+    }
+
+    function it_renders_partial_html_requests_to_html(
+        AjaxUpdateRequestMatcher $ajaxUpdateRequestMatcher,
+        App $app,
+        FilterResponseEvent $event,
+        PartialHtmlRequestMatcher $partialHtmlRequestMatcher,
+        Request $request
+    ) {
+        $partialHtmlRequestMatcher->matches($request)->shouldBeCalled()->willReturn(true);
+        $ajaxUpdateRequestMatcher->matches($request)->shouldBeCalled()->willReturn(false);
+        $app->renderToString(true)->shouldBeCalled()->willReturn('<partial-html />');
+        $event->setResponse(Argument::type(Response::class))->shouldBeCalled();
 
         $this->renderApp($event);
     }
@@ -143,10 +160,12 @@ class AppRendererSubscriberSpec extends ObjectBehavior
         AjaxUpdateRequestMatcher $ajaxUpdateRequestMatcher,
         App $app,
         FilterResponseEvent $event,
+        PartialHtmlRequestMatcher $partialHtmlRequestMatcher,
         Request $request
     ) {
+        $partialHtmlRequestMatcher->matches($request)->shouldBeCalled()->willReturn(false);
         $ajaxUpdateRequestMatcher->matches($request)->shouldBeCalled()->willReturn(false);
-        $app->renderToString()->shouldBeCalled()->willReturn("<html />");
+        $app->renderToString(false)->shouldBeCalled()->willReturn('<html />');
         $event->setResponse(Argument::type(Response::class))->shouldBeCalled();
 
         $this->renderApp($event);
