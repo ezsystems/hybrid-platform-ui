@@ -95,6 +95,8 @@ class UiFormFactory
      * Create form to be used for actions on locations tab.
      *
      * @param Location[] $locations
+     *
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createLocationsActionForm(array $locations = [])
     {
@@ -133,6 +135,8 @@ class UiFormFactory
      * Create form to be used for actions on translations tab.
      *
      * @param Language[] $translations
+     *
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createTranslationsActionForm(array $translations = [])
     {
