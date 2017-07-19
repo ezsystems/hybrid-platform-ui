@@ -1,29 +1,22 @@
 {% trans_default_domain "locationview" %}
 {{ form_start(actionsForm, {'action': path('ez_hybrid_platform_ui_location_actions', {'contentId': content.id, 'redirectLocationId': location.id})}) }}
 
-<dialog id="confirm-location-removal-{{ location.id }}" class="ez-modal">
-    <section>
-        <p>{{ 'confirm.remove.location'|trans()|desc('Are you sure you want to remove selected locations?') }}</p>
-    </section>
-    <footer>
-        <button type="button" class="ez-button ez-button-secondary ez-js-close-modal">
-            {{ 'confirmbox.cancel'|trans({}, 'confirmbox')|desc('Cancel') }}
-        </button>
-        {{
-            form_widget(actionsForm.delete, {
-                'label': 'confirmbox.confirm'|trans({}, 'confirmbox')|desc('Confirm'),
-                'attr': {'class': 'ez-button ez-button-primary ez-js-close-modal'}
-            })
-        }}
-    </footer>
-</dialog>
+{% set dialogId = 'confirm-location-removal-' ~ location.id %}
+
+{{
+    include('@EzSystemsHybridPlatformUi/components/confirm_dialog.html.twig', {
+        'dialogId': dialogId,
+        'message': 'confirm.remove.location'|trans()|desc('Are you sure you want to remove selected locations?'),
+        'confirmButton': actionsForm.delete,
+    })
+}}
 
 <div class="ez-list-toolbar">
     <h2 class="ez-list-toolbar-label">{{ 'locationview.locations.content.locations'|trans()|desc('Content locations') }}</h2>
     <div class="ez-list-toolbar-tools">
         {{ form_widget(actionsForm.parentLocationId, {'attr': {'placeholder': 'Location ID'}}) }}
         {{ form_widget(actionsForm.add, {'label': 'locationview.locations.add.location'|trans()|desc('Add Location'), 'attr': {'class': 'ez-button ez-button-secondary'}}) }}
-        <button type="button" value="#confirm-location-removal-{{ location.id }}" class="ez-button ez-button-negative ez-js-open-modal">
+        <button type="button" value="#{{ dialogId }}" class="ez-button ez-button-negative ez-js-open-modal">
             {{ 'locationview.locations.delete.locations'|trans()|desc('Delete selected locations') }}
         </button>
     </div>
