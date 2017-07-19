@@ -1,0 +1,71 @@
+{% trans_default_domain "locationview" %}
+
+<div class="ez-list-toolbar">
+    <h2 class="ez-list-toolbar-label">{{ 'locationview.urls.custom.title'|trans({'%contentName%' : ez_content_name(content)})|desc('Custom URL aliases for %contentName%') }}</h2>
+</div>
+
+{% if customUrls %}
+    <table class="ez-table-data">
+        <thead>
+        <tr>
+            <th></th>
+            <th>{{ 'locationview.urls.url'|trans|desc('URL') }}</th>
+            <th>{{ 'locationview.urls.language'|trans|desc('Language') }}</th>
+            <th>{{ 'locationview.urls.type'|trans|desc('Type') }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for customUrl in customUrls %}
+            <tr>
+                <td></td>
+                <td>{{ customUrl.path }}</td>
+                <td>
+                    {% for languageCode in customUrl.languageCodes %}{{ languageCode }}<br>{% endfor %}
+                </td>
+                <td>
+                    {% if customUrl.forward %}
+                        {{ 'locationview.urls.type.redirect'|trans|desc('Redirect') }}
+                    {% else %}
+                        {{ 'locationview.urls.type.direct'|trans|desc('Direct') }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p class="ez-relations-box-list-no-content">
+        {{ 'locationview.urls.no.custom.urls'|trans|desc('This content item has no custom url aliases.') }}
+    </p>
+{% endif %}
+
+<div class="ez-list-toolbar">
+    <h2 class="ez-list-toolbar-label">{{ 'locationview.urls.system.title'|trans|desc('System URL') }}</h2>
+</div>
+
+{% if systemUrls %}
+    <table class="ez-table-data">
+        <thead>
+        <tr>
+            <th>{{ 'locationview.urls.url'|trans|desc('URL') }}</th>
+            <th>{{ 'locationview.urls.language'|trans|desc('Language') }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for systemUrl in systemUrls %}
+            <tr>
+                <td>{{ systemUrl.path }}</td>
+                <td>
+                    {% for languageCode in systemUrl.languageCodes %}{{ languageCode }}<br>{% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p class="ez-relations-box-list-no-content">
+        {{ 'locationview.urls.no.system.urls'|trans|desc('This content item has no system urls.') }}
+    </p>
+{% endif %}
+
+
