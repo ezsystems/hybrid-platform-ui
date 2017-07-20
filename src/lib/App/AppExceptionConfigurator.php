@@ -36,7 +36,7 @@ class AppExceptionConfigurator implements ExceptionConfigurator
         return new Notification([
             'type' => 'error',
             'timeout' => 0,
-            'message' => $exception->getMessage(),
+            'content' => $exception->getMessage(),
             'details' => (string)$exception,
             'copyable' => true,
         ]);

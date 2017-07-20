@@ -26,7 +26,7 @@ class NotificationResponse extends Response implements NoRenderResponse
             $notification->timeout,
             ($notification->copyable) ? ' copyable' : '',
             (trim($notification->details)) ? ' details="' . $notification->details . '"' : '',
-            $notification->message
+            $notification->content
         );
     }
 }

@@ -36,7 +36,7 @@ class NotificationsSpec extends ObjectBehavior
         NotificationPool $notificationPool
     ) {
         $notification = new Notification([
-            'message' => 'the message',
+            'content' => 'the message',
             'timeout' => 0,
             'copyable' => true,
             'details' => 'details',
@@ -53,7 +53,7 @@ class NotificationsSpec extends ObjectBehavior
     function it_renders_notifications_from_the_pool_to_json(
         NotificationPool $notificationPool
     ) {
-        $notification = new Notification(['message' => 'the message']);
+        $notification = new Notification(['content' => 'the message']);
 
         $notificationPool->get()
             ->shouldBeCalled()
@@ -87,20 +87,13 @@ class NotificationsSpec extends ObjectBehavior
                     }
 
                     $testedNotification = $array[$index];
-                    if (!array_key_exists('type', $testedNotification) || $testedNotification['type'] != $notification->type) {
-                        return false;
-                    }
-                    if (!array_key_exists('copyable', $testedNotification) || $testedNotification['copyable'] != $notification->copyable) {
-                        return false;
-                    }
-                    if (!array_key_exists('content', $testedNotification) || $testedNotification['content'] != $notification->message) {
-                        return false;
-                    }
-                    if (!array_key_exists('details', $testedNotification) || $testedNotification['details'] != $notification->details) {
-                        return false;
-                    }
-                    if (!array_key_exists('timeout', $testedNotification) || $testedNotification['timeout'] != $notification->timeout) {
-                        return false;
+                    foreach (['type', 'content', 'details', 'timeout', 'copyable'] as $property) {
+                        if (!array_key_exists($property, $testedNotification)) {
+                            return false;
+                        }
+                        if ($testedNotification[$property] != $notification->$property) {
+                            return false;
+                        }
                     }
 
                     return true;

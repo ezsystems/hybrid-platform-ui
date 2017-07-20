@@ -17,14 +17,14 @@ class NotificationResponseSpec extends ObjectBehavior
 
     private $timeout = Notification::DEFAULT_TIMEOUT;
 
-    private $message = 'test message';
+    private $content = 'test message';
 
     function let()
     {
         $notification = new Notification([
             'type' => $this->type,
             'timeout' => $this->timeout,
-            'message' => $this->message,
+            'content' => $this->content,
         ]);
 
         $this->beConstructedWith($notification);
@@ -43,7 +43,7 @@ class NotificationResponseSpec extends ObjectBehavior
     function it_converts_notification_to_string()
     {
         $this->getContent()->shouldBe(
-            '<ez-notification type="' . $this->type . '" timeout="' . $this->timeout . '">' . $this->message . '</ez-notification>'
+            '<ez-notification type="' . $this->type . '" timeout="' . $this->timeout . '">' . $this->content . '</ez-notification>'
         );
     }
 }

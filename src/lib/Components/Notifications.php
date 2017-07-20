@@ -51,7 +51,7 @@ class Notifications implements Component
             function (Notification $notification) {
                 return [
                     'type' => $notification->type,
-                    'content' => $notification->message,
+                    'content' => $notification->content,
                     'timeout' => $notification->timeout,
                     'details' => $notification->details,
                     'copyable' => $notification->copyable,
