@@ -8,6 +8,7 @@ namespace EzSystems\HybridPlatformUi\App;
 
 use Exception;
 use EzSystems\HybridPlatformUi\Components\App;
+use EzSystems\HybridPlatformUi\Notification\Notification;
 use Symfony\Component\HttpFoundation\Response;
 
 class AppExceptionConfigurator implements ExceptionConfigurator
@@ -26,19 +27,18 @@ class AppExceptionConfigurator implements ExceptionConfigurator
     {
         $this->app->setConfig([
             'title' => $exception->getMessage(),
-            'exception' => [$this->buildNotification($exception)],
-            'mainContent' => ['result' => $exceptionResponse->getContent()],
+            'exception' => $this->buildNotification($exception),
         ]);
     }
 
     private function buildNotification(Exception $exception)
     {
-        return [
+        return new Notification([
             'type' => 'error',
             'timeout' => 0,
-            'content' => $exception->getMessage(),
+            'message' => $exception->getMessage(),
             'details' => (string)$exception,
             'copyable' => true,
-        ];
+        ]);
     }
 }

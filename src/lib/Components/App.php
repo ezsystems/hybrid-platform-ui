@@ -2,6 +2,7 @@
 
 namespace EzSystems\HybridPlatformUi\Components;
 
+use EzSystems\HybridPlatformUi\Notification\Notification;
 use Symfony\Component\Templating\EngineInterface;
 
 class App implements Component
@@ -18,7 +19,10 @@ class App implements Component
 
     protected $title;
 
-    protected $notifications = [];
+    /**
+     * @var \EzSystems\HybridPlatformUi\Components\Notifications
+     */
+    protected $notifications;
 
     /**
      * General app exception. If set, the exception alone is rendered, without any
@@ -32,12 +36,14 @@ class App implements Component
         EngineInterface $templating,
         MainContent $content,
         NavigationHub $navigationHub,
-        array $toolbars
+        array $toolbars,
+        Notifications $notifications
     ) {
         $this->templating = $templating;
         $this->mainContent = $content;
         $this->navigationHub = $navigationHub;
         $this->toolbars = $toolbars;
+        $this->notifications = $notifications;
     }
 
     public function setConfig(array $config)
@@ -45,14 +51,13 @@ class App implements Component
         if (isset($config['title'])) {
             $this->title = $config['title'];
         }
+
         if (isset($config['toolbars'])) {
             $this->setToolbarsVisibility($config['toolbars']);
         }
-        if (isset($config['notifications'])) {
-            $this->notifications = $config['notifications'];
-        }
+
         if (isset($config['exception'])) {
-            $this->exception = $config['exception'];
+            $this->notifications->exception = $config['exception'];
         }
 
         if (isset($config['mainContent']) && $config['mainContent'] instanceof Component) {
@@ -93,7 +98,7 @@ class App implements Component
     public function jsonSerialize()
     {
         if ($this->isException()) {
-            $update = ['properties' => ['notifications' => $this->exception]];
+            $update = ['properties' => ['notifications' => $this->notifications]];
         } else {
             $update = [
                 'properties' => [
@@ -115,6 +120,6 @@ class App implements Component
 
     private function isException()
     {
-        return $this->exception !== null;
+        return $this->notifications->exception instanceof Notification;
     }
 }
