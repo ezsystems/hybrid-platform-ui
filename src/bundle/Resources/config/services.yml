@@ -48,9 +48,6 @@ services:
         calls:
             - [setExcludedRoutesPrefixes, ['%ezpublish.default_router.non_siteaccess_aware_routes%']]
 
-    EzSystems\HybridPlatformUi\App\AppResponseRenderer:
-        alias: EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer
-
     EzSystems\HybridPlatformUi\App\ToolbarsConfigurator:
         alias: 'EzSystems\HybridPlatformUi\App\ToolbarsConfigurator\RouteToolbarsConfigurator'
 

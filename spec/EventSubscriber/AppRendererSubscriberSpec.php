@@ -2,16 +2,18 @@
 
 namespace spec\EzSystems\HybridPlatformUi\EventSubscriber;
 
-use EzSystems\HybridPlatformUi\App\AppResponseRenderer;
 use EzSystems\HybridPlatformUi\App\ToolbarsConfigurator;
 use EzSystems\HybridPlatformUi\Components\App;
 use EzSystems\HybridPlatformUi\EventSubscriber\AppRendererSubscriber;
+use EzSystems\HybridPlatformUi\Http\AjaxUpdateRequestMatcher;
 use EzSystems\HybridPlatformUi\Http\HybridRequestMatcher;
+use EzSystems\HybridPlatformUi\Http\PartialHtmlRequestMatcher;
 use EzSystems\HybridPlatformUi\Http\Response\NotificationResponse;
 use EzSystems\HybridPlatformUi\Http\Response\ResetResponse;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,12 +29,13 @@ class AppRendererSubscriberSpec extends ObjectBehavior
 {
     function let(
         App $app,
-        AppResponseRenderer $renderer,
         GetResponseForControllerResultEvent $event,
         Request $request,
         Response $response,
         ParameterBag $requestAttributes,
         HybridRequestMatcher $hybridRequestMatcher,
+        AjaxUpdateRequestMatcher $ajaxUpdateRequestMatcher,
+        PartialHtmlRequestMatcher $partialHtmlRequestMatcher,
         ToolbarsConfigurator $toolbarsConfigurator
     ) {
         $hybridRequestMatcher->matches(Argument::type(Request::class))->willReturn(true);
@@ -44,7 +47,13 @@ class AppRendererSubscriberSpec extends ObjectBehavior
         $event->isMasterRequest()->willReturn(true);
         $response->isRedirect()->willReturn(false);
 
-        $this->beConstructedWith($app, $renderer, $hybridRequestMatcher, $toolbarsConfigurator);
+        $this->beConstructedWith(
+            $app,
+            $hybridRequestMatcher,
+            $ajaxUpdateRequestMatcher,
+            $partialHtmlRequestMatcher,
+            $toolbarsConfigurator
+        );
     }
 
     function it_is_initializable()
@@ -60,14 +69,12 @@ class AppRendererSubscriberSpec extends ObjectBehavior
     }
 
     function it_ignores_non_admin_requests(
-        AppResponseRenderer $renderer,
         FilterResponseEvent $event,
         Request $request,
-        HybridRequestMatcher $hybridRequestMatcher,
-        Response $response
+        HybridRequestMatcher $hybridRequestMatcher
     ) {
         $hybridRequestMatcher->matches($request)->willReturn(false);
-        $renderer->render($response)->shouldNotBeCalled();
+        $event->setResponse(Argument::type(Response::class))->shouldNotBeCalled();
 
         $this->renderApp($event);
     }
@@ -76,50 +83,90 @@ class AppRendererSubscriberSpec extends ObjectBehavior
     {
         $event->isMasterRequest()->willReturn(false);
         $event->getRequest()->shouldNotBeCalled();
+
         $this->renderApp($event);
     }
 
     function it_ignores_redirect_responses(
         FilterResponseEvent $event,
-        AppResponseRenderer $renderer,
         Response $response
     ) {
         $response->isRedirect()->willReturn(true);
-        $renderer->render(Argument::any())->shouldNotBeCalled();
+        $event->setResponse(Argument::type(Response::class))->shouldNotBeCalled();
 
         $this->renderApp($event);
     }
 
     function it_ignores_reset_responses(
         FilterResponseEvent $event,
-        AppResponseRenderer $renderer,
         ResetResponse $resetResponse
     ) {
         $event->getResponse()->willReturn($resetResponse);
-        $renderer->render(Argument::any())->shouldNotBeCalled();
+        $event->setResponse(Argument::type(Response::class))->shouldNotBeCalled();
 
         $this->renderApp($event);
     }
 
     function it_ignores_notification_responses(
         FilterResponseEvent $event,
-        AppResponseRenderer $renderer,
         NotificationResponse $notificationResponse
     ) {
         $event->getResponse()->willReturn($notificationResponse);
-        $renderer->render(Argument::any())->shouldNotBeCalled();
+        $event->setResponse(Argument::type(Response::class))->shouldNotBeCalled();
 
         $this->renderApp($event);
     }
 
     function it_configures_the_toolbars_and_renders_the_app(
         App $app,
-        AppResponseRenderer $renderer,
         FilterResponseEvent $event,
         ToolbarsConfigurator $toolbarsConfigurator
     ) {
-        $renderer->render(Argument::type(Response::class), $app)->shouldBeCalled();
         $toolbarsConfigurator->configureToolbars($app)->shouldBeCalled();
+        $event->setResponse(Argument::type(Response::class))->shouldBeCalled();
+
+        $this->renderApp($event);
+    }
+
+    function it_renders_ajax_update_requests_to_json(
+        AjaxUpdateRequestMatcher $ajaxUpdateRequestMatcher,
+        App $app,
+        FilterResponseEvent $event,
+        Request $request
+    ) {
+        $ajaxUpdateRequestMatcher->matches($request)->shouldBeCalled()->willReturn(true);
+        $app->jsonSerialize()->shouldBeCalled()->willReturn('update json');
+        $event->setResponse(Argument::type(JsonResponse::class))->shouldBeCalled();
+
+        $this->renderApp($event);
+    }
+
+    function it_renders_partial_html_requests_to_html(
+        AjaxUpdateRequestMatcher $ajaxUpdateRequestMatcher,
+        App $app,
+        FilterResponseEvent $event,
+        PartialHtmlRequestMatcher $partialHtmlRequestMatcher,
+        Request $request
+    ) {
+        $partialHtmlRequestMatcher->matches($request)->shouldBeCalled()->willReturn(true);
+        $ajaxUpdateRequestMatcher->matches($request)->shouldBeCalled()->willReturn(false);
+        $app->renderToString(true)->shouldBeCalled()->willReturn('<partial-html />');
+        $event->setResponse(Argument::type(Response::class))->shouldBeCalled();
+
+        $this->renderApp($event);
+    }
+
+    function it_renders_hybrid_requests_to_html(
+        AjaxUpdateRequestMatcher $ajaxUpdateRequestMatcher,
+        App $app,
+        FilterResponseEvent $event,
+        PartialHtmlRequestMatcher $partialHtmlRequestMatcher,
+        Request $request
+    ) {
+        $partialHtmlRequestMatcher->matches($request)->shouldBeCalled()->willReturn(false);
+        $ajaxUpdateRequestMatcher->matches($request)->shouldBeCalled()->willReturn(false);
+        $app->renderToString(false)->shouldBeCalled()->willReturn('<html />');
+        $event->setResponse(Argument::type(Response::class))->shouldBeCalled();
 
         $this->renderApp($event);
     }

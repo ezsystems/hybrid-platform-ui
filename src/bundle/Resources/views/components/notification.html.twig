@@ -4,5 +4,5 @@
                  {% if notification.copyable %}copyable{% endif %}
                  details="{{ notification.details }}">
 {% endspaceless %}
-    {{ notification.message }}
+    {{ notification.content|raw }}
 </ez-notification>
