@@ -31,6 +31,9 @@ class PjaxSubscriberSpec extends ObjectBehavior
         $event->getResponse()->willReturn($response);
         $event->getRequestType()->willReturn(HttpKernelInterface::MASTER_REQUEST);
 
+        $response->isClientError()->willReturn(false);
+        $response->isServerError()->willReturn(false);
+
         $adminRequestMatcher->matches($request)->willReturn(true);
         $pjaxRequestMatcher->matches($request)->willReturn(true);
 
@@ -41,6 +44,27 @@ class PjaxSubscriberSpec extends ObjectBehavior
     {
         $this->shouldHaveType(PjaxSubscriber::class);
         $this->shouldHaveType(EventSubscriberInterface::class);
+    }
+
+    function it_ignores_responses_that_are_client_errors(
+        FilterResponseEvent $event,
+        PjaxResponseMainContentMapper $mapper,
+        Response $response
+    ) {
+        $response->isClientError()->shouldBeCalled()->willReturn(true);
+        $mapper->map($response)->shouldNotBeCalled();
+
+        $this->mapPjaxResponseToMainContent($event);
+    }
+
+    function it_ignores_responses_that_are_server_errors(
+        FilterResponseEvent $event,
+        PjaxResponseMainContentMapper $mapper,
+        Response $response
+    ) {
+        $response->isServerError()->shouldBeCalled()->willReturn(true);
+        $mapper->map($response)->shouldNotBeCalled();
+        $this->mapPjaxResponseToMainContent($event);
     }
 
     function it_ignores_sub_requests(FilterResponseEvent $event)

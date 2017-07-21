@@ -2,6 +2,7 @@
 
 namespace EzSystems\HybridPlatformUi\Components;
 
+use EzSystems\HybridPlatformUi\Notification\Notification;
 use Symfony\Component\Templating\EngineInterface;
 
 class App implements Component
@@ -18,18 +19,31 @@ class App implements Component
 
     protected $title;
 
-    protected $notifications = [];
+    /**
+     * @var \EzSystems\HybridPlatformUi\Components\Notifications
+     */
+    protected $notifications;
+
+    /**
+     * General app exception. If set, the exception alone is rendered, without any
+     * other part.
+     *
+     * @var array
+     */
+    protected $exception;
 
     public function __construct(
         EngineInterface $templating,
         MainContent $content,
         NavigationHub $navigationHub,
-        array $toolbars
+        array $toolbars,
+        Notifications $notifications
     ) {
         $this->templating = $templating;
         $this->mainContent = $content;
         $this->navigationHub = $navigationHub;
         $this->toolbars = $toolbars;
+        $this->notifications = $notifications;
     }
 
     public function setConfig(array $config)
@@ -37,11 +51,13 @@ class App implements Component
         if (isset($config['title'])) {
             $this->title = $config['title'];
         }
+
         if (isset($config['toolbars'])) {
             $this->setToolbarsVisibility($config['toolbars']);
         }
-        if (isset($config['notifications'])) {
-            $this->notifications = $config['notifications'];
+
+        if (isset($config['exception'])) {
+            $this->notifications->exception = $config['exception'];
         }
 
         if (isset($config['mainContent']) && $config['mainContent'] instanceof Component) {
@@ -61,25 +77,30 @@ class App implements Component
         }
     }
 
-    public function __toString()
+    public function renderToString()
     {
-        return $this->templating->render(
-            'EzSystemsHybridPlatformUiBundle:components:app.html.twig',
-            [
-                'tagName' => self::TAG_NAME,
-                'navigationHub' => $this->navigationHub,
-                'toolbars' => $this->toolbars,
-                'mainContent' => $this->mainContent,
-                'appTagName' => self::TAG_NAME,
-            ]
-        );
+        if ($this->isException()) {
+            return (string)$this->mainContent;
+        } else {
+            return $this->templating->render(
+                'EzSystemsHybridPlatformUiBundle:components:app.html.twig',
+                [
+                    'tagName' => self::TAG_NAME,
+                    'navigationHub' => $this->navigationHub,
+                    'toolbars' => $this->toolbars,
+                    'mainContent' => $this->mainContent,
+                    'appTagName' => self::TAG_NAME,
+                ]
+            );
+        }
     }
 
     public function jsonSerialize()
     {
-        return [
-            'selector' => self::TAG_NAME,
-            'update' => [
+        if ($this->isException()) {
+            $update = ['properties' => ['notifications' => $this->notifications]];
+        } else {
+            $update = [
                 'properties' => [
                     'pageTitle' => $this->title,
                     'notifications' => $this->notifications,
@@ -88,7 +109,17 @@ class App implements Component
                     $this->toolbars,
                     [$this->navigationHub, $this->mainContent]
                 ),
-            ],
+            ];
+        }
+
+        return [
+            'selector' => self::TAG_NAME,
+            'update' => $update,
         ];
+    }
+
+    private function isException()
+    {
+        return $this->notifications->exception instanceof Notification;
     }
 }

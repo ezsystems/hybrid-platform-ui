@@ -3,12 +3,12 @@
 namespace EzSystems\HybridPlatformUi\EventSubscriber;
 
 use EzSystems\HybridPlatformUi\App\AppResponseRenderer;
+use EzSystems\HybridPlatformUi\App\ToolbarsConfigurator;
 use EzSystems\HybridPlatformUi\Components\App;
 use EzSystems\HybridPlatformUi\Http\HybridRequestMatcher;
 use EzSystems\HybridPlatformUi\Http\Response\NoRenderResponse;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class AppRendererSubscriber implements EventSubscriberInterface
@@ -28,24 +28,33 @@ class AppRendererSubscriber implements EventSubscriberInterface
      */
     private $appRenderer;
 
+    /**
+     * @var \EzSystems\HybridPlatformUi\App\ToolbarsConfigurator
+     */
+    private $toolbarsConfigurator;
+
     public function __construct(
         App $app,
         AppResponseRenderer $appRenderer,
-        HybridRequestMatcher $hybridRequestMatcher
+        HybridRequestMatcher $hybridRequestMatcher,
+        ToolbarsConfigurator $toolbarsConfigurator
     ) {
         $this->hybridRequestMatcher = $hybridRequestMatcher;
         $this->app = $app;
         $this->appRenderer = $appRenderer;
+        $this->toolbarsConfigurator = $toolbarsConfigurator;
     }
 
     public static function getSubscribedEvents()
     {
-        return [KernelEvents::RESPONSE => ['renderApp', 5]];
+        return [
+            KernelEvents::RESPONSE => ['renderApp', 5],
+        ];
     }
 
     public function renderApp(FilterResponseEvent $event)
     {
-        if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
+        if (!$event->isMasterRequest()) {
             return;
         }
 
@@ -61,6 +70,7 @@ class AppRendererSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $this->toolbarsConfigurator->configureToolbars($this->app);
         $this->appRenderer->render($response, $this->app);
     }
 }

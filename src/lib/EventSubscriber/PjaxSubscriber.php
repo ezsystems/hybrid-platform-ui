@@ -67,7 +67,8 @@ class PjaxSubscriber implements EventSubscriberInterface
         if (
             $event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST ||
             !$this->adminRequestMatcher->matches($request) ||
-            !$this->isPjax($request, $response)
+            !$this->isPjax($request, $response) ||
+            $this->isError($response)
         ) {
             return;
         }
@@ -87,5 +88,10 @@ class PjaxSubscriber implements EventSubscriberInterface
     {
         return $this->pjaxRequestMatcher->matches($request)
             || $this->pjaxResponseMatcher->matches($response);
+    }
+
+    private function isError($response)
+    {
+        return $response->isClientError() || $response->isServerError();
     }
 }

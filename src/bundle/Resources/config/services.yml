@@ -28,8 +28,14 @@ services:
 
     EzSystems\HybridPlatformUi\EventSubscriber\:
         resource: '../../../lib/EventSubscriber'
+        exclude: '../../../lib/EventSubscriber/AppExceptionSubscriber.php'
         public: true
         tags: ['kernel.event_subscriber']
+
+    EzSystems\HybridPlatformUi\EventSubscriber\AppExceptionSubscriber:
+        decorates: 'twig.exception_listener'
+        arguments:
+            $innerListener: '@EzSystems\HybridPlatformUi\EventSubscriber\AppExceptionSubscriber.inner'
 
     EzSystems\HybridPlatformUi\EventSubscriber\PjaxSubscriber:
         arguments:
@@ -45,9 +51,8 @@ services:
     EzSystems\HybridPlatformUi\App\AppResponseRenderer:
         alias: EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer
 
-    EzSystems\HybridPlatformUi\App\RequestAppResponseRenderer:
-        arguments:
-            - '@=service("request_stack").getMasterRequest()'
+    EzSystems\HybridPlatformUi\App\ToolbarsConfigurator:
+        alias: 'EzSystems\HybridPlatformUi\App\ToolbarsConfigurator\RouteToolbarsConfigurator'
 
     EzSystems\HybridPlatformUi\Http\HtmlFormatRequestMatcher:
         alias: EzSystems\HybridPlatformUi\Http\FormatAttributeHtmlFormatRequestMatcher

@@ -3,6 +3,7 @@
 namespace spec\EzSystems\HybridPlatformUi\EventSubscriber;
 
 use EzSystems\HybridPlatformUi\App\AppResponseRenderer;
+use EzSystems\HybridPlatformUi\App\ToolbarsConfigurator;
 use EzSystems\HybridPlatformUi\Components\App;
 use EzSystems\HybridPlatformUi\EventSubscriber\AppRendererSubscriber;
 use EzSystems\HybridPlatformUi\Http\HybridRequestMatcher;
@@ -16,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -32,18 +32,19 @@ class AppRendererSubscriberSpec extends ObjectBehavior
         Request $request,
         Response $response,
         ParameterBag $requestAttributes,
-        HybridRequestMatcher $hybridRequestMatcher
+        HybridRequestMatcher $hybridRequestMatcher,
+        ToolbarsConfigurator $toolbarsConfigurator
     ) {
         $hybridRequestMatcher->matches(Argument::type(Request::class))->willReturn(true);
         $request->attributes = $requestAttributes;
         $request->duplicate(Argument::cetera())->willReturn(new Request());
 
         $event->getRequest()->willReturn($request);
-        $event->getRequestType()->willReturn(HttpKernelInterface::MASTER_REQUEST);
         $event->getResponse()->willReturn($response);
+        $event->isMasterRequest()->willReturn(true);
         $response->isRedirect()->willReturn(false);
 
-        $this->beConstructedWith($app, $renderer, $hybridRequestMatcher);
+        $this->beConstructedWith($app, $renderer, $hybridRequestMatcher, $toolbarsConfigurator);
     }
 
     function it_is_initializable()
@@ -73,7 +74,7 @@ class AppRendererSubscriberSpec extends ObjectBehavior
 
     function it_ignores_sub_requests(FilterResponseEvent $event)
     {
-        $event->getRequestType()->willReturn(HttpKernelInterface::SUB_REQUEST);
+        $event->isMasterRequest()->willReturn(false);
         $event->getRequest()->shouldNotBeCalled();
         $this->renderApp($event);
     }
@@ -111,12 +112,14 @@ class AppRendererSubscriberSpec extends ObjectBehavior
         $this->renderApp($event);
     }
 
-    function it_renders_the_app(
+    function it_configures_the_toolbars_and_renders_the_app(
         App $app,
         AppResponseRenderer $renderer,
-        FilterResponseEvent $event
+        FilterResponseEvent $event,
+        ToolbarsConfigurator $toolbarsConfigurator
     ) {
         $renderer->render(Argument::type(Response::class), $app)->shouldBeCalled();
+        $toolbarsConfigurator->configureToolbars($app)->shouldBeCalled();
 
         $this->renderApp($event);
     }

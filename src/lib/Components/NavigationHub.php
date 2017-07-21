@@ -33,7 +33,7 @@ class NavigationHub implements Component
      */
     protected $request;
 
-    public function __construct(EngineInterface $templating, Request $request, array $zones = [], array $links = [])
+    public function __construct(EngineInterface $templating, Request $request = null, array $zones = [], array $links = [])
     {
         $this->request = $request;
         $this->templating = $templating;
@@ -41,7 +41,7 @@ class NavigationHub implements Component
         $this->links = $links;
     }
 
-    public function __toString()
+    public function renderToString()
     {
         return $this->templating->render(
             'EzSystemsHybridPlatformUiBundle:components:navigationhub.html.twig',

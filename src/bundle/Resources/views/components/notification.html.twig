@@ -1,0 +1,8 @@
+{% spaceless %}
+<ez-notification type="{{ notification.type }}"
+                 timeout="{{ notification.timeout }}"
+                 {% if notification.copyable %}copyable{% endif %}
+                 details="{{ notification.details }}">
+{% endspaceless %}
+    {{ notification.message }}
+</ez-notification>

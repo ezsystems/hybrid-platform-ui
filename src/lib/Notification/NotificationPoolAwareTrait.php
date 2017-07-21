@@ -55,7 +55,7 @@ trait NotificationPoolAwareTrait
         $notification = new Notification([
             'type' => Notification::TYPE_SUCCESS,
             /** @Ignore */
-            'message' => $this->translator->trans($message, $params, $domain),
+            'content' => $this->translator->trans($message, $params, $domain),
         ]);
 
         $this->notificationPool->add($notification);

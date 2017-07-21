@@ -12,7 +12,7 @@ use eZ\Publish\API\Repository\Values\ValueObject;
  * Can be cast to a string for sending as a Response but most use cases will just access properties of it.
  *
  * @property-read string $type
- * @property-read string $message
+ * @property-read string $content
  * @property-read int $timeout
  * @property-read bool $copyable
  * @property-read string $details
@@ -39,7 +39,7 @@ class Notification extends ValueObject
      *
      * @var string
      */
-    protected $message;
+    protected $content;
 
     /**
      * Message timeout.

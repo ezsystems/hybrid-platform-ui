@@ -19,7 +19,7 @@ abstract class Link
      */
     abstract public function getUrl();
 
-    public function __toString()
+    public function renderToString()
     {
         $disabled = '';
         $url = $this->getUrl();

@@ -8,15 +8,15 @@ namespace EzSystems\HybridPlatformUi\App;
 use EzSystems\HybridPlatformUi\Components\App;
 use EzSystems\HybridPlatformUi\Http\AjaxUpdateRequestMatcher;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
 class RequestAppResponseRenderer implements AppResponseRenderer
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\Request
+     * @var \Symfony\Component\HttpFoundation\RequestStack
      */
-    private $request;
+    private $requestStack;
 
     /**
      * @var \Symfony\Component\HttpFoundation\RequestMatcherInterface
@@ -24,33 +24,28 @@ class RequestAppResponseRenderer implements AppResponseRenderer
     private $ajaxUpdateRequestMatcher;
 
     public function __construct(
-        Request $request,
+        RequestStack $requestStack,
         AjaxUpdateRequestMatcher $ajaxUpdateRequestMatcher
     ) {
-        $this->request = $request;
+        $this->requestStack = $requestStack;
         $this->ajaxUpdateRequestMatcher = $ajaxUpdateRequestMatcher;
     }
 
     public function render(Response $response, App $app)
     {
-        $this->configureToolbars($app);
-
-        $appResponse = $this->ajaxUpdateRequestMatcher->matches($this->request)
+        $appResponse = $this->isUpdateRequest()
             ? new JsonResponse($app)
-            : new Response($app);
+            : new Response($app->renderToString());
 
         $response
             ->setContent($appResponse->getContent())
             ->headers->replace($appResponse->headers->all());
     }
 
-    /**
-     * Configures the toolbars.
-     *
-     * @todo Depends on the Request. See http://github.com/ezsystems/hybrid-platform-ui/pull/4
-     */
-    private function configureToolbars(App $app)
+    private function isUpdateRequest()
     {
-        $app->setConfig(['toolbars' => ['discovery' => 1]]);
+        return $this->ajaxUpdateRequestMatcher->matches(
+            $this->requestStack->getMasterRequest()
+        );
     }
 }

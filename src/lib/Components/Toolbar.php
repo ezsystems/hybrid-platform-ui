@@ -16,11 +16,11 @@ class Toolbar implements Component
         $this->children = $children;
     }
 
-    public function __toString()
+    public function renderToString()
     {
         $html = '<ez-toolbar id="' . $this->id . '"' . ($this->visible ? ' visible' : '') . '>';
         foreach ($this->children as $component) {
-            $html .= (string)$component;
+            $html .= $component->renderToString();
         }
         $html .= '</ez-toolbar>';
 
