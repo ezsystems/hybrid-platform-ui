@@ -1,4 +1,4 @@
-html {
+html, button, input {
     font-family: var(--ez-base-font-family); 
 }
 

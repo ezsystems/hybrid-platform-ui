@@ -30,7 +30,7 @@ class Browse implements Component
         $selected = $this->getLocationId();
         // should be rendered with a twig template
         return '<ez-browse
-            class="ez-button"
+            class="ez-button  ez-button-action"
             ' . ($selected ? 'selected-location-id="' . $selected . '"' : '') . '>
                 Browse
             </ez-browse>';

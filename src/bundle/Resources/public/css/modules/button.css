@@ -81,3 +81,15 @@
     background: var(--ez-color-secondary);
     color: var(--ez-color-text-base-inverted);
 }
+
+.ez-button-action {
+    white-space: normal;
+    width: 100%;
+    text-align: center;
+    background: transparent;
+    border-color: transparent;
+}
+
+.ez-button-action:hover:not([disabled]) {
+    background: rgba(0, 0, 0, 0.2);
+}

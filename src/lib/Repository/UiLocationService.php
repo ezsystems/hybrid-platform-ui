@@ -8,9 +8,11 @@ namespace EzSystems\HybridPlatformUi\Repository;
 
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\LocationService;
+use eZ\Publish\API\Repository\TrashService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
+use eZ\Publish\Core\Base\Exceptions\UnauthorizedException;
 use EzSystems\HybridPlatformUi\Repository\Permission\UiPermissionResolver;
 use EzSystems\HybridPlatformUi\Repository\Values\Content\UiLocation;
 
@@ -24,6 +26,11 @@ class UiLocationService
      * @var LocationService
      */
     private $locationService;
+
+    /**
+     * @var TrashService
+     */
+    private $trashService;
 
     /**
      * @var PathService
@@ -42,11 +49,13 @@ class UiLocationService
 
     public function __construct(
         LocationService $locationService,
+        TrashService $trashService,
         PathService $pathService,
         UiPermissionResolver $permissionResolver,
         ContentTypeService $contentTypeService
     ) {
         $this->locationService = $locationService;
+        $this->trashService = $trashService;
         $this->pathService = $pathService;
         $this->permissionResolver = $permissionResolver;
         $this->contentTypeService = $contentTypeService;
@@ -75,6 +84,8 @@ class UiLocationService
      * Deletes locations.
      *
      * @param array $locationIds
+     *
+     * @throws UnauthorizedException if the user is not allowed to trash a location
      */
     public function deleteLocations(array $locationIds)
     {
@@ -82,6 +93,43 @@ class UiLocationService
             $location = $this->locationService->loadLocation($locationId);
             $this->locationService->deleteLocation($location);
         }
+    }
+
+    /**
+     * Trashes locations.
+     * Returns the parent location.
+     *
+     * @param Location $location
+     *
+     * @return Location Parent location of the trashed location
+     *
+     * @throws UnauthorizedException if the user is not allowed to trash a location
+     */
+    public function trashLocationAndReturnParent(Location $location)
+    {
+        $parentLocationId = $location->parentLocationId;
+
+        $this->trashService->trash($location);
+
+        return $this->locationService->loadLocation($parentLocationId);
+    }
+
+    /**
+     * Checks if a given location can be removed.
+     *
+     * @param Location $location
+     *
+     * @return bool true if the location can be removed
+     */
+    public function canRemoveLocation(Location $location)
+    {
+        if ($location->contentId == 1) {
+            return false;
+        }
+
+        return $allowedToRemove = $this->permissionResolver->canRemoveContent(
+            $location->getContentInfo(), $location
+        );
     }
 
     /**

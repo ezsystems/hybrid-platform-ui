@@ -29,15 +29,6 @@ div#app-content {
     color: var(--ez-color-text-base-inverted);
 }
 
-ez-toolbar .ez-button {
-    white-space: normal;
-    width: 100%;
-    text-align: center;
-
-    background: transparent;
-    border-color: transparent;
-}
-
 main {
     flex: 1 1;
     display: flex;

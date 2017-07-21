@@ -6,7 +6,7 @@ class Trash implements Component
 {
     public function renderToString()
     {
-        return '<button class="ez-button" disabled>
+        return '<button class="ez-button  ez-button-action" disabled>
             Trash
         </button>';
     }
