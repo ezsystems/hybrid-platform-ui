@@ -41,6 +41,7 @@ class TranslationController extends TabController
         $translationParameterSupplier->supply($view);
 
         $actionsForm = $this->formFactory->createTranslationsActionForm(
+            $view->getContent()->getVersionInfo(),
             $view->hasParameter('translations') ? $view->getParameter('translations') : []
         );
 

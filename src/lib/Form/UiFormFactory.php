@@ -5,8 +5,11 @@
  */
 namespace EzSystems\HybridPlatformUi\Form;
 
+use eZ\Publish\API\Repository\PermissionResolver;
+use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\Language;
 use eZ\Publish\API\Repository\Values\Content\Location;
+use eZ\Publish\API\Repository\Values\Content\VersionInfo;
 use EzSystems\HybridPlatformUi\Mapper\Form\Location\OrderingMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\LocationMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\TranslationMapper;
@@ -50,18 +53,25 @@ class UiFormFactory
      */
     private $translationMapper;
 
+    /**
+     * @var \eZ\Publish\API\Repository\PermissionResolver
+     */
+    private $permissionResolver;
+
     public function __construct(
         FormFactoryInterface $formFactory,
         VersionMapper $versionMapper,
         LocationMapper $locationMapper,
         OrderingMapper $orderingMapper,
-        TranslationMapper $translationMapper
+        TranslationMapper $translationMapper,
+        Repository $repository
     ) {
         $this->formFactory = $formFactory;
         $this->versionMapper = $versionMapper;
         $this->locationMapper = $locationMapper;
         $this->orderingMapper = $orderingMapper;
         $this->translationMapper = $translationMapper;
+        $this->permissionResolver = $repository->getPermissionResolver();
     }
 
     /**
@@ -95,7 +105,9 @@ class UiFormFactory
     /**
      * Create form to be used for actions on locations tab.
      *
-     * @param Location[] $locations
+     * @param \eZ\Publish\API\Repository\Values\Content\Location[] $locations
+     *
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createLocationsActionForm(array $locations = [])
     {
@@ -107,11 +119,16 @@ class UiFormFactory
     /**
      * Create a form to be used for swapping contents location.
      *
+     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createLocationsContentSwapForm()
+    public function createLocationsContentSwapForm(Location $location)
     {
-        return $this->formFactory->create(LocationSwap::class);
+        return $this->formFactory->create(
+            LocationSwap::class,
+            ['canSwap' => $this->canSwap($location)]
+        );
     }
 
     /**
@@ -133,11 +150,14 @@ class UiFormFactory
     /**
      * Create form to be used for actions on translations tab.
      *
+     * @param \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
      * @param Language[] $translations
+     *
+     * @return \Symfony\Component\Form\FormInterface
      */
-    public function createTranslationsActionForm(array $translations = [])
+    public function createTranslationsActionForm(VersionInfo $versionInfo, array $translations = [])
     {
-        $data = $this->translationMapper->mapToForm($translations);
+        $data = $this->translationMapper->mapToForm($versionInfo, $translations);
 
         return $this->formFactory->create(TranslationActions::class, $data);
     }
@@ -145,5 +165,15 @@ class UiFormFactory
     public function createLocationVisibilityForm()
     {
         return $this->formFactory->create(Visibility::class);
+    }
+
+    /**
+     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     *
+     * @return bool
+     */
+    private function canSwap(Location $location)
+    {
+        $this->permissionResolver->canUser('content', 'delete', $location->getContentInfo(), [$location]);
     }
 }
