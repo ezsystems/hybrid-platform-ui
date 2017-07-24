@@ -4,7 +4,7 @@
 {% set dialogId = 'confirm-location-removal-' ~ location.id %}
 
 {{
-    include('@EzSystemsHybridPlatformUi/components/confirm_dialog.html.twig', {
+    include('@EzSystemsHybridPlatformUi/components/confirm_delete_dialog.html.twig', {
         'dialogId': dialogId,
         'message': 'confirm.remove.location'|trans()|desc('Are you sure you want to remove selected locations?'),
         'confirmButton': actionsForm.delete,

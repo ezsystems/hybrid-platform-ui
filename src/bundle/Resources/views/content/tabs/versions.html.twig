@@ -6,7 +6,7 @@
 
     {% set draftDialogId = 'confirm-draft-removal' %}
     {{
-        include('@EzSystemsHybridPlatformUi/components/confirm_dialog.html.twig', {
+        include('@EzSystemsHybridPlatformUi/components/confirm_delete_dialog.html.twig', {
             'dialogId': draftDialogId,
             'message': 'confirmed.remove.versions'|trans()|desc('Are you sure you want to remove selected versions?'),
             'confirmButton': draftActionsForm.delete,
@@ -57,7 +57,7 @@
 
     {% set archivedDialogId = 'confirm-archive-removal' %}
     {{
-        include('@EzSystemsHybridPlatformUi/components/confirm_dialog.html.twig', {
+        include('@EzSystemsHybridPlatformUi/components/confirm_delete_dialog.html.twig', {
             'dialogId': archivedDialogId,
             'message': 'confirmed.remove.versions'|trans()|desc('Are you sure you want to remove selected versions?'),
             'confirmButton': archivedActionsForm.delete,

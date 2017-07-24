@@ -1,0 +1,20 @@
+{% set confirmLabel = 'confirmbox.delete'|trans({}, 'confirmbox')|desc('Delete') %}
+{% if confirmButton.vars.label %}
+    {% set confirmLabel = confirmButton.vars.label|trans({}, confirmButton.vars.translation_domain) %}
+{% endif %}
+<dialog id="{{ dialogId }}" class="ez-modal">
+    <section>
+        <p>{{ message }}</p>
+    </section>
+    <footer>
+        <button type="button" class="ez-button ez-js-close-modal">
+            {{ 'confirmbox.cancel'|trans({}, 'confirmbox')|desc('Cancel') }}
+        </button>
+        {{
+            form_widget(confirmButton, {
+                'label': confirmLabel,
+                'attr': {'class': 'ez-button ez-button-negative ez-js-close-modal'}
+            })
+        }}
+    </footer>
+</dialog>
