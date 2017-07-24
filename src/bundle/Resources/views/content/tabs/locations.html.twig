@@ -14,7 +14,7 @@
 <div class="ez-list-toolbar">
     <h2 class="ez-list-toolbar-label">{{ 'locationview.locations.content.locations'|trans()|desc('Content locations') }}</h2>
     <div class="ez-list-toolbar-tools">
-        {{ form_widget(actionsForm.parentLocationId, {'attr': {'placeholder': 'Location ID'}}) }}
+        {{ form_widget(actionsForm.parentLocationIds, {'attr': {'placeholder': 'Location ID'}}) }}
         {{ form_widget(actionsForm.add, {'label': 'locationview.locations.add.location'|trans()|desc('Add Location'), 'attr': {'class': 'ez-button ez-button-secondary'}}) }}
         <button type="button" value="#{{ dialogId }}" class="ez-button ez-button-negative ez-js-open-modal">
             {{ 'locationview.locations.delete.locations'|trans()|desc('Delete selected locations') }}

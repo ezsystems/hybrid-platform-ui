@@ -19,7 +19,7 @@ class Actions extends AbstractType
         $builder
             ->add('delete', SubmitType::class)
             ->add('add', SubmitType::class)
-            ->add('parentLocationId', TextType::class, ['required' => false])
+            ->add('parentLocationIds', TextType::class, ['required' => false])
             ->add(
                 'removeLocations',
                 CollectionType::class,
