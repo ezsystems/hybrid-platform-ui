@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
-  <file date="2017-07-11T16:39:33Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
+  <file date="2017-07-24T15:35:28Z" source-language="en" target-language="en" datatype="plaintext" original="not.available">
     <header>
       <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
       <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
@@ -8,7 +8,7 @@
     <body>
       <trans-unit id="e0be1422e1af400879a6716220eabc9ad4fca29e" resname="locationview.details.ascending">
         <source>Ascending</source>
-        <target state="new">Ascending</target>
+        <target>Ascending</target>
         <note>key: locationview.details.ascending</note>
         <jms:reference-file line="60">src/bundle/Form/Locations/Ordering.php</jms:reference-file>
       </trans-unit>
@@ -37,7 +37,7 @@
       </trans-unit>
       <trans-unit id="a8f82a516b76060775a7c40c5163cd4f2af7b8ac" resname="locationview.details.descending">
         <source>Descending</source>
-        <target state="new">Descending</target>
+        <target>Descending</target>
         <note>key: locationview.details.descending</note>
         <jms:reference-file line="62">src/bundle/Form/Locations/Ordering.php</jms:reference-file>
       </trans-unit>
@@ -91,19 +91,19 @@
       </trans-unit>
       <trans-unit id="3ddcb59aacd5f5e2faf9368cfd8294ae400d83be" resname="locationview.details.sort_order.by">
         <source>Order by</source>
-        <target state="new">Order by</target>
+        <target>Order by</target>
         <note>key: locationview.details.sort_order.by</note>
         <jms:reference-file line="87">src/bundle/Resources/views/content/tabs/details.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a2ac933a52b8040b3597aa77d3713b8beefd7f57" resname="locationview.details.sort_order.direction">
         <source>in</source>
-        <target state="new">in</target>
+        <target>in</target>
         <note>key: locationview.details.sort_order.direction</note>
         <jms:reference-file line="89">src/bundle/Resources/views/content/tabs/details.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="404f7ced09ccf9b1373e068d7b07a5e26f8b5fac" resname="locationview.details.sub.items.sorting.order">
         <source>Sub-items sorting order</source>
-        <target state="new">Sub-items sorting order</target>
+        <target>Sub-items sorting order</target>
         <note>key: locationview.details.sub.items.sorting.order</note>
         <jms:reference-file line="84">src/bundle/Resources/views/content/tabs/details.html.twig</jms:reference-file>
       </trans-unit>
@@ -132,7 +132,7 @@
       </trans-unit>
       <trans-unit id="cf775f467a5d5f450635af645a5587ada940d885" resname="locationview.locations.add.location">
         <source>Add Location</source>
-        <target state="new">Add Location</target>
+        <target>Add Location</target>
         <note>key: locationview.locations.add.location</note>
         <jms:reference-file line="8">src/bundle/Resources/views/content/tabs/locations.html.twig</jms:reference-file>
       </trans-unit>
@@ -144,7 +144,7 @@
       </trans-unit>
       <trans-unit id="0f8d8ce57557263694cfcb73284099a4cbd51bb7" resname="locationview.locations.delete.locations">
         <source>Delete selected locations</source>
-        <target state="new">Delete selected locations</target>
+        <target>Delete selected locations</target>
         <note>key: locationview.locations.delete.locations</note>
         <jms:reference-file line="9">src/bundle/Resources/views/content/tabs/locations.html.twig</jms:reference-file>
       </trans-unit>
@@ -172,11 +172,35 @@
         <note>key: locationview.locations.path</note>
         <jms:reference-file line="17">src/bundle/Resources/views/content/tabs/locations.html.twig</jms:reference-file>
       </trans-unit>
+      <trans-unit id="30412ae8741b6ad892f8e7121c1df1c98690fe69" resname="locationview.locations.select.content.item">
+        <source>Select content item</source>
+        <target state="new">Select content item</target>
+        <note>key: locationview.locations.select.content.item</note>
+        <jms:reference-file line="58">src/bundle/Resources/views/content/tabs/locations.html.twig</jms:reference-file>
+      </trans-unit>
       <trans-unit id="b5ab365ec9097447d661364c587dd74a3a2a4da3" resname="locationview.locations.subitems">
         <source>Sub-items</source>
         <target>Sub-items</target>
         <note>key: locationview.locations.subitems</note>
         <jms:reference-file line="18">src/bundle/Resources/views/content/tabs/locations.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="42255a22470e6d8cab2b91cd5dd47b0eca9fed69" resname="locationview.locations.swap.location.id">
+        <source>Location ID</source>
+        <target state="new">Location ID</target>
+        <note>key: locationview.locations.swap.location.id</note>
+        <jms:reference-file line="59">src/bundle/Resources/views/content/tabs/locations.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="fd80e99cfc9616bd856f90bf4087d3ea93cd9cb3" resname="locationview.locations.swap.title">
+        <source>Location Content Swap</source>
+        <target state="new">Location Content Swap</target>
+        <note>key: locationview.locations.swap.title</note>
+        <jms:reference-file line="53">src/bundle/Resources/views/content/tabs/locations.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="78f72ceb515315ffb377e812832368f846c12fec" resname="locationview.locations.swap.with.another">
+        <source>Swap the content item at this location with another</source>
+        <target state="new">Swap the content item at this location with another</target>
+        <note>key: locationview.locations.swap.with.another</note>
+        <jms:reference-file line="56">src/bundle/Resources/views/content/tabs/locations.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8bf047758974255c4a8001ef57927d5b4098e7b1" resname="locationview.locations.visibility">
         <source>Visibility</source>
@@ -192,93 +216,155 @@
       </trans-unit>
       <trans-unit id="3d63b18d8273f5775b525a4888e3bbde27b81c51" resname="locationview.relations.content.type">
         <source>Content type</source>
-        <target state="new">Content type</target>
+        <target>Content type</target>
         <note>key: locationview.relations.content.type</note>
         <jms:reference-file line="7">src/bundle/Resources/views/content/tabs/relations/table.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="99231b4f91bdad921c2db1d9331264c25d34c99a" resname="locationview.relations.name">
         <source>Name</source>
-        <target state="new">Name</target>
+        <target>Name</target>
         <note>key: locationview.relations.name</note>
         <jms:reference-file line="6">src/bundle/Resources/views/content/tabs/relations/table.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="0f438eadf4436df843c76ff6b30ea67b1cf9c5de" resname="locationview.relations.no.related.content.item">
         <source>This content item has no related content.</source>
-        <target state="new">This content item has no related content.</target>
+        <target>This content item has no related content.</target>
         <note>key: locationview.relations.no.related.content.item</note>
         <jms:reference-file line="11">src/bundle/Resources/views/content/tabs/relations.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="66495062cf6c4fc562a8095d2085963b78849f56" resname="locationview.relations.no.reverse.relations">
         <source>This content item has no reverse relations.</source>
-        <target state="new">This content item has no reverse relations.</target>
+        <target>This content item has no reverse relations.</target>
         <note>key: locationview.relations.no.reverse.relations</note>
         <jms:reference-file line="24">src/bundle/Resources/views/content/tabs/relations.html.twig</jms:reference-file>
       </trans-unit>
-      <trans-unit id="0b409a5f5675b6ee03cfaea432d179c2648a36a3" resname="locationview.relations.related">
+      <trans-unit id="4f9b491916cc0c1b5473a8d8960b7e4143f40f50" resname="locationview.relations.related">
         <source>Related content (content items used by %contentName%)</source>
-        <target state="new">Related content (content items used by %contentName%)</target>
+        <target>Related content (content items used by %contentName%)</target>
         <note>key: locationview.relations.related</note>
         <jms:reference-file line="4">src/bundle/Resources/views/content/tabs/relations.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="8aea3326a700a081784bc0e51f0c91a3583eedc2" resname="locationview.relations.relation.type">
         <source>Relation type</source>
-        <target state="new">Relation type</target>
+        <target>Relation type</target>
         <note>key: locationview.relations.relation.type</note>
         <jms:reference-file line="8">src/bundle/Resources/views/content/tabs/relations/table.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="9b9945f37ee3ca4f14d28264800169879c298ac6" resname="locationview.relations.reverse.relations">
         <source>Reverse relations (content items using %contentName%)</source>
-        <target state="new">Reverse relations (content items using %contentName%)</target>
+        <target>Reverse relations (content items using %contentName%)</target>
         <note>key: locationview.relations.reverse.relations</note>
         <jms:reference-file line="17">src/bundle/Resources/views/content/tabs/relations.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="b04c0424d48b6bb2dbe096848d3a2a7150b07fad" resname="locationview.relations.type.content_level_relation">
         <source>Content level relation</source>
-        <target state="new">Content level relation</target>
+        <target>Content level relation</target>
         <note>key: locationview.relations.type.content_level_relation</note>
         <jms:reference-file line="56">src/lib/Templating/Twig/RelationTypeExtension.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="b351b635b58b3d7ffb52715621cbe9385f52ab20" resname="locationview.relations.type.embed">
         <source>Embed</source>
-        <target state="new">Embed</target>
+        <target>Embed</target>
         <note>key: locationview.relations.type.embed</note>
         <jms:reference-file line="59">src/lib/Templating/Twig/RelationTypeExtension.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="d750345cd57711887efbf4aa3b3ad0fcbf4e5f32" resname="locationview.relations.type.field">
         <source>Field</source>
-        <target state="new">Field</target>
+        <target>Field</target>
         <note>key: locationview.relations.type.field</note>
         <jms:reference-file line="65">src/lib/Templating/Twig/RelationTypeExtension.php</jms:reference-file>
       </trans-unit>
-        <trans-unit id="da5ad9f0b2f8de694379f7d3980fc83734e1f48e" resname="locationview.relations.type.link">
+      <trans-unit id="da5ad9f0b2f8de694379f7d3980fc83734e1f48e" resname="locationview.relations.type.link">
         <source>Link</source>
-        <target state="new">Link</target>
+        <target>Link</target>
         <note>key: locationview.relations.type.link</note>
         <jms:reference-file line="62">src/lib/Templating/Twig/RelationTypeExtension.php</jms:reference-file>
       </trans-unit>
+      <trans-unit id="607de7e6481a7af1515bc497992c555d22c246be" resname="locationview.translations.delete.translations">
+        <source>Delete selected translations</source>
+        <target state="new">Delete selected translations</target>
+        <note>key: locationview.translations.delete.translations</note>
+        <jms:reference-file line="7">src/bundle/Resources/views/content/tabs/translations.html.twig</jms:reference-file>
+      </trans-unit>
       <trans-unit id="97d47470f71983df3a61744fb5c0b2c5d51774d5" resname="locationview.translations.languagecode">
         <source>Language code</source>
-        <target state="new">Language code</target>
+        <target>Language code</target>
         <note>key: locationview.translations.languagecode</note>
-        <jms:reference-file line="12">src/bundle/Resources/views/content/tabs/translations.html.twig</jms:reference-file>
+        <jms:reference-file line="16">src/bundle/Resources/views/content/tabs/translations.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="3ff10b4870cf3a8a0b42da203318dc34034f6752" resname="locationview.translations.languagename">
         <source>Language name</source>
-        <target state="new">Language name</target>
+        <target>Language name</target>
         <note>key: locationview.translations.languagename</note>
-        <jms:reference-file line="11">src/bundle/Resources/views/content/tabs/translations.html.twig</jms:reference-file>
+        <jms:reference-file line="15">src/bundle/Resources/views/content/tabs/translations.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="ed4f44e8279389dcad2ac73ec6e8a8bf252e3dc5" resname="locationview.translations.title">
         <source>Translation manager</source>
-        <target state="new">Translation manager</target>
+        <target>Translation manager</target>
         <note>key: locationview.translations.title</note>
-        <jms:reference-file line="4">src/bundle/Resources/views/content/tabs/translations.html.twig</jms:reference-file>
+        <jms:reference-file line="5">src/bundle/Resources/views/content/tabs/translations.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="84fa31b1063ad97b6be1130a214aa2c4b76fbd33" resname="locationview.urls.custom.title">
+        <source>Custom URL aliases for %contentName%</source>
+        <target state="new">Custom URL aliases for %contentName%</target>
+        <note>key: locationview.urls.custom.title</note>
+        <jms:reference-file line="4">src/bundle/Resources/views/content/tabs/urls.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="d9e6449e0126f7106ad8e29d9caeaf7111b2e340" resname="locationview.urls.language">
+        <source>Language</source>
+        <target state="new">Language</target>
+        <note>key: locationview.urls.language</note>
+        <jms:reference-file line="13">src/bundle/Resources/views/content/tabs/urls.html.twig</jms:reference-file>
+        <jms:reference-file line="51">src/bundle/Resources/views/content/tabs/urls.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="ecda0ca815d0af192f7c0d5fd06a9711ac28e30c" resname="locationview.urls.no.custom.urls">
+        <source>This content item has no custom url aliases.</source>
+        <target state="new">This content item has no custom url aliases.</target>
+        <note>key: locationview.urls.no.custom.urls</note>
+        <jms:reference-file line="38">src/bundle/Resources/views/content/tabs/urls.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="33e91326cb12bad27e24379567ef5b0887803ad5" resname="locationview.urls.no.system.urls">
+        <source>This content item has no system urls.</source>
+        <target state="new">This content item has no system urls.</target>
+        <note>key: locationview.urls.no.system.urls</note>
+        <jms:reference-file line="67">src/bundle/Resources/views/content/tabs/urls.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="b9c6b6a4c71d6d8597446d4182b0c810385f3932" resname="locationview.urls.system.title">
+        <source>System URL</source>
+        <target state="new">System URL</target>
+        <note>key: locationview.urls.system.title</note>
+        <jms:reference-file line="43">src/bundle/Resources/views/content/tabs/urls.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="3df907c956ddbb59f9d2cfd000756a32a3807d4c" resname="locationview.urls.type">
+        <source>Type</source>
+        <target state="new">Type</target>
+        <note>key: locationview.urls.type</note>
+        <jms:reference-file line="14">src/bundle/Resources/views/content/tabs/urls.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="cafac693f29bcd62cde2d4afc94235672c5f6ee2" resname="locationview.urls.type.direct">
+        <source>Direct</source>
+        <target state="new">Direct</target>
+        <note>key: locationview.urls.type.direct</note>
+        <jms:reference-file line="29">src/bundle/Resources/views/content/tabs/urls.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="f32781ed4cb5fe12f469ae6be0d9f5a8e7095313" resname="locationview.urls.type.redirect">
+        <source>Redirect</source>
+        <target state="new">Redirect</target>
+        <note>key: locationview.urls.type.redirect</note>
+        <jms:reference-file line="27">src/bundle/Resources/views/content/tabs/urls.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="f0ff3498d61aeff52d194cab9dbf0662ff9f933b" resname="locationview.urls.url">
+        <source>URL</source>
+        <target state="new">URL</target>
+        <note>key: locationview.urls.url</note>
+        <jms:reference-file line="12">src/bundle/Resources/views/content/tabs/urls.html.twig</jms:reference-file>
+        <jms:reference-file line="50">src/bundle/Resources/views/content/tabs/urls.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="19f2181b9bb473b99dc985187f631876cebf3b35" resname="locationview.versions.archived.versions">
         <source>Archived versions</source>
         <target>Archived versions</target>
         <note>key: locationview.versions.archived.versions</note>
-        <jms:reference-file line="30">src/bundle/Resources/views/content/tabs/versions.html.twig</jms:reference-file>
+        <jms:reference-file line="47">src/bundle/Resources/views/content/tabs/versions.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a2b63d00a7b9a132b9803f608b43b6e9d67a59b0" resname="locationview.versions.contributor">
         <source>Contributor</source>
@@ -294,16 +380,16 @@
       </trans-unit>
       <trans-unit id="73437790631936bdb15de26c734995e017ad3c6a" resname="locationview.versions.delete">
         <source>Delete</source>
-        <target state="new">Delete</target>
+        <target>Delete</target>
         <note>key: locationview.versions.delete</note>
-        <jms:reference-file line="33">src/bundle/Resources/views/content/tabs/versions.html.twig</jms:reference-file>
-        <jms:reference-file line="9">src/bundle/Resources/views/content/tabs/versions.html.twig</jms:reference-file>
+        <jms:reference-file line="10">src/bundle/Resources/views/content/tabs/versions.html.twig</jms:reference-file>
+        <jms:reference-file line="50">src/bundle/Resources/views/content/tabs/versions.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="a7bf4de2ddd469229edee5cf992afa5b2099cd92" resname="locationview.versions.draft.under.edit">
         <source>Draft under edit</source>
         <target>Draft under edit</target>
         <note>key: locationview.versions.draft.under.edit</note>
-        <jms:reference-file line="7">src/bundle/Resources/views/content/tabs/versions.html.twig</jms:reference-file>
+        <jms:reference-file line="8">src/bundle/Resources/views/content/tabs/versions.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="5037377a0c7dc615547308d1ed82755e31176c03" resname="locationview.versions.last.saved">
         <source>Last saved</source>
@@ -319,15 +405,23 @@
       </trans-unit>
       <trans-unit id="ab40edd4e3d49edea2de3a5e5339cc9527c9ff03" resname="locationview.versions.new.draft.selected.version">
         <source>New draft based on selected version</source>
-        <target state="new">New draft based on selected version</target>
+        <target>New draft based on selected version</target>
         <note>key: locationview.versions.new.draft.selected.version</note>
-        <jms:reference-file line="32">src/bundle/Resources/views/content/tabs/versions.html.twig</jms:reference-file>
+        <jms:reference-file line="49">src/bundle/Resources/views/content/tabs/versions.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="cca68a30ae45cb418391cafba770aea5ddd80c36" resname="locationview.versions.no.permission">
+        <source>You don't have access to view the content item's versions</source>
+        <target state="new">You don't have access to view the content item's versions</target>
+        <note>key: locationview.versions.no.permission</note>
+        <jms:reference-file line="18">src/bundle/Resources/views/content/tabs/versions.html.twig</jms:reference-file>
+        <jms:reference-file line="35">src/bundle/Resources/views/content/tabs/versions.html.twig</jms:reference-file>
+        <jms:reference-file line="58">src/bundle/Resources/views/content/tabs/versions.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="bd9a1564891fdc81516078f86ecdb11dd212e86d" resname="locationview.versions.published.version">
         <source>Published version</source>
         <target>Published version</target>
         <note>key: locationview.versions.published.version</note>
-        <jms:reference-file line="21">src/bundle/Resources/views/content/tabs/versions.html.twig</jms:reference-file>
+        <jms:reference-file line="28">src/bundle/Resources/views/content/tabs/versions.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="199990450f06a84725d61f91a899166d0d3305c4" resname="locationview.versions.version">
         <source>Version</source>
@@ -337,55 +431,55 @@
       </trans-unit>
       <trans-unit id="5fa3c429a7ffda07ccc05013a851a2beafee966d" resname="sort.content.type.identifier">
         <source>Content type identifier</source>
-        <target state="new">Content type identifier</target>
+        <target>Content type identifier</target>
         <note>key: sort.content.type.identifier</note>
         <jms:reference-file line="87">src/bundle/Form/Locations/Ordering.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="62a66a9c02d5728bbc517a5d7c11889990cbed12" resname="sort.content.type.name">
         <source>Content type name</source>
-        <target state="new">Content type name</target>
+        <target>Content type name</target>
         <note>key: sort.content.type.name</note>
         <jms:reference-file line="93">src/bundle/Form/Locations/Ordering.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="3fc89a073d545b17319f4926105bf536a2481795" resname="sort.depth">
         <source>Location depth</source>
-        <target state="new">Location depth</target>
+        <target>Location depth</target>
         <note>key: sort.depth</note>
         <jms:reference-file line="91">src/bundle/Form/Locations/Ordering.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="8e3b63eca8c0b79018040b44d8ee39701824a187" resname="sort.modified">
         <source>Modification date</source>
-        <target state="new">Modification date</target>
+        <target>Modification date</target>
         <note>key: sort.modified</note>
         <jms:reference-file line="78">src/bundle/Form/Locations/Ordering.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="4f2fcdfe68ca50269b9c334594a8acd1a688809f" resname="sort.name">
         <source>Content name</source>
-        <target state="new">Content name</target>
+        <target>Content name</target>
         <note>key: sort.name</note>
         <jms:reference-file line="74">src/bundle/Form/Locations/Ordering.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="668f8150c4acd0a0c8075de8b794639b8b4a6519" resname="sort.path">
         <source>Location path</source>
-        <target state="new">Location path</target>
+        <target>Location path</target>
         <note>key: sort.path</note>
         <jms:reference-file line="85">src/bundle/Form/Locations/Ordering.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="bcb9183148c577a8a232c08847dff0c1647e62e7" resname="sort.priority">
         <source>Priority</source>
-        <target state="new">Priority</target>
+        <target>Priority</target>
         <note>key: sort.priority</note>
         <jms:reference-file line="76">src/bundle/Form/Locations/Ordering.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="033291f867da64bfb4f9db9ec1b3c947b1e431c5" resname="sort.published">
         <source>Publication date</source>
-        <target state="new">Publication date</target>
+        <target>Publication date</target>
         <note>key: sort.published</note>
         <jms:reference-file line="80">src/bundle/Form/Locations/Ordering.php</jms:reference-file>
       </trans-unit>
       <trans-unit id="f0ec72293071715721e084ed98b6ceb112aae22b" resname="sort.section">
         <source>Section</source>
-        <target state="new">Section</target>
+        <target>Section</target>
         <note>key: sort.section</note>
         <jms:reference-file line="89">src/bundle/Form/Locations/Ordering.php</jms:reference-file>
       </trans-unit>
@@ -393,37 +487,43 @@
         <source>Details</source>
         <target>tab.details</target>
         <note>key: tab.details</note>
-        <jms:reference-file line="13">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
+        <jms:reference-file line="22">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="eb9d8fcea3c517851502006e163eb0725ec183f0" resname="tab.locations">
         <source>Locations</source>
         <target>tab.locations</target>
         <note>key: tab.locations</note>
-        <jms:reference-file line="15">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
+        <jms:reference-file line="24">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="20043ee647633fb1c639869bce609c568c195de1" resname="tab.related.content">
         <source>Related content</source>
         <target>tab.related.content</target>
         <note>key: tab.related.content</note>
-        <jms:reference-file line="16">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
+        <jms:reference-file line="25">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="1f6ee525b06a7c65a59379a1036a9a0d74acb416" resname="tab.translations">
         <source>Translations</source>
-        <target state="new">Translations</target>
+        <target>Translations</target>
         <note>key: tab.translations</note>
-        <jms:reference-file line="17">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
+        <jms:reference-file line="26">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="5c2510a7e4d33b312b43ba9d00a944f632dd3919" resname="tab.urls">
+        <source>URL</source>
+        <target state="new">URL</target>
+        <note>key: tab.urls</note>
+        <jms:reference-file line="27">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="5d768a9bb2d1a42f98c5af3016c1019497d8ac62" resname="tab.versions">
         <source>Versions</source>
         <target>tab.versions</target>
         <note>key: tab.versions</note>
-        <jms:reference-file line="14">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
+        <jms:reference-file line="23">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
       </trans-unit>
       <trans-unit id="946cdac35638dc1a2cda2d50e1e8af3ee27f2545" resname="tab.view">
         <source>View</source>
         <target>tab.view</target>
         <note>key: tab.view</note>
-        <jms:reference-file line="12">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
+        <jms:reference-file line="21">src/bundle/Resources/views/locationview.html.twig</jms:reference-file>
       </trans-unit>
     </body>
   </file>
