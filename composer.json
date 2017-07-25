@@ -18,6 +18,11 @@
         "phpspec/phpspec": "^3.2",
         "memio/spec-gen": "^0.6"
     },
+    "extra": {
+        "branch-alias": {
+            "dev-*": "1.0.x-dev"
+        }
+    },
     "autoload": {
         "psr-4": {
             "EzSystems\\HybridPlatformUiBundle\\": "src/bundle",
