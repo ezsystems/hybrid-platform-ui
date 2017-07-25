@@ -1,0 +1,38 @@
+.ez-modal {
+    position: fixed;
+    top: 75px;
+    max-width: 80vw;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: var(--ez-color-ground-modal);
+
+    box-shadow: 0 3px 20px var(--ez-color-shadow-modal);
+}
+
+.ez-modal header, .ez-modal section, .ez-modal footer {
+    padding: 1em 3.33em;
+}
+
+.ez-modal section {
+    overflow-y: auto;
+    max-height: 70vh;
+}
+
+.ez-modal header {
+    background: var(--ez-color-ground-modal-header);
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+
+.ez-modal footer {
+    text-align: right;
+    background: var(--ez-color-ground-modal-footer);
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.ez-modal::backdrop,
+.ez-modal + .backdrop { /* <dialog> polyfill */
+    background: var(--ez-color-ground-modal-backdrop);
+}

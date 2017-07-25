@@ -40,4 +40,19 @@
     --ez-color-positive-feedback: #00825c;
     --ez-color-processing-feedback: #f7d000;
     --ez-color-negative-feedback: #d6194a;
+
+    /* modal */
+    --ez-color-ground-modal: #e5e5e5;
+    --ez-color-shadow-modal: rgba(0, 0, 0, 0.7);
+    --ez-color-ground-modal-header: #bfbfbf;
+    --ez-color-ground-modal-footer: #dcdcdc;
+    --ez-color-ground-modal-backdrop: rgba(0, 0, 0, 0.6); /* needed browsers where <dialog> is polyfilled */
+}
+
+::backdrop {
+    /*
+     * ::backdrop does not inherit from root so variables needs to be defined here
+     * https://fullscreen.spec.whatwg.org/#::backdrop-pseudo-element
+     */
+    --ez-color-ground-modal-backdrop: rgba(0, 0, 0, 0.6);
 }
