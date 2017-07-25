@@ -1,0 +1,17 @@
+{% block location_selection_widget %}
+    {% if widget == "text" %}
+        {{ block('number_widget') }}
+    {% endif %}
+
+    {% if widget == "udw" %}
+        {{ block('hidden_widget') }}
+        <script>
+            document.addEventListener('ez:locationSelected', (e) => {{ '{' }}
+                document.querySelector('#{{ id }}').value = e.detail.locationId;
+            {{ '}' }});
+        </script>
+        <ez-select-location selected-location-id="{{ starting_location_id }}">
+            Select location
+        </ez-select-location>
+    {% endif %}
+{% endblock %}

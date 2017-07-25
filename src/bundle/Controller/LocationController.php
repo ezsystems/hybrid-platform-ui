@@ -89,7 +89,7 @@ class LocationController extends TabController
         Location $location,
         Request $request
     ) {
-        $swapLocationsForm = $this->formFactory->createLocationsContentSwapForm();
+        $swapLocationsForm = $this->formFactory->createLocationsContentSwapForm($location);
         $swapLocationsForm->handleRequest($request);
 
         if ($swapLocationsForm->isValid()) {
