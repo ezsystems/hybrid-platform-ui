@@ -1,30 +1,36 @@
 {% trans_default_domain "locationview" %}
 {{ form_start(actionsForm, {'action': path('ez_hybrid_platform_ui_translation_actions', {'contentId': content.id, 'redirectLocationId': location.id})}) }}
 
-<div class="ez-list-toolbar">
-    <h2 class="ez-list-toolbar-label">{{ 'locationview.translations.title'|trans|desc('Translation manager') }}</h2>
-    <div class="container-buttons">
-        {{ form_widget(actionsForm.delete, {'label': 'locationview.translations.delete.translations'|trans()|desc('Delete selected translations'), 'attr': {'class': 'ez-button ez-button-negative'}}) }}
+<ez-selection-activate-element>
+    <div class="ez-list-toolbar">
+        <h2 class="ez-list-toolbar-label">{{ 'locationview.translations.title'|trans|desc('Translation manager') }}</h2>
+        <div class="container-buttons">
+            {{
+                form_widget(actionsForm.delete, {
+                    'label': 'locationview.translations.delete.translations'|trans()|desc('Delete selected translations'),
+                    'attr': {'class': 'ez-button ez-button-negative ez-js-activable-element', 'disabled': true}
+                })
+            }}
+        </div>
     </div>
-</div>
 
-<table class="ez-table-data">
-    <thead>
-        <tr>
-            <th></th>
-            <th>{{ 'locationview.translations.languagename'|trans|desc('Language name') }}</th>
-            <th>{{ 'locationview.translations.languagecode'|trans|desc('Language code') }}</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for translation in translations %}
-        <tr>
-            <td>{{ form_widget(actionsForm.removeTranslations[translation.languageCode], {'attr': {'disabled': not translation.canDelete}}) }}</td>
-            <td>{{ translation.name }}</td>
-            <td>{{ translation.languageCode }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
+    <table class="ez-table-data">
+        <thead>
+            <tr>
+                <th></th>
+                <th>{{ 'locationview.translations.languagename'|trans|desc('Language name') }}</th>
+                <th>{{ 'locationview.translations.languagecode'|trans|desc('Language code') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for translation in translations %}
+            <tr>
+                <td>{{ form_widget(actionsForm.removeTranslations[translation.languageCode], {'attr': {'disabled': not translation.canDelete}}) }}</td>
+                <td>{{ translation.name }}</td>
+                <td>{{ translation.languageCode }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</ez-selection-activate-element>
 {{ form_end(actionsForm) }}
