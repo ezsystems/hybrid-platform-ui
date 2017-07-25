@@ -36,7 +36,8 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/dpobel/installers.git"
+            "url": "https://github.com/dpobel/installers.git",
+            "no-api": true
         }
     ]
 }
