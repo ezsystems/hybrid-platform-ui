@@ -1,16 +1,25 @@
 {% trans_default_domain "locationview" %}
 {{ form_start(actionsForm, {'action': path('ez_hybrid_platform_ui_translation_actions', {'contentId': content.id, 'redirectLocationId': location.id})}) }}
 
+{% set dialogId = 'confirm-translations-removal-' ~ location.id %}
+{{
+    include('@EzSystemsHybridPlatformUi/components/confirm_delete_dialog.html.twig', {
+        'dialogId': dialogId,
+        'message': 'confirm.remove.translations'|trans()|desc('Are you sure you want to remove selected translations?'),
+        'confirmButton': actionsForm.delete,
+    })
+}}
+
 <ez-selection-activate-element>
     <div class="ez-list-toolbar">
         <h2 class="ez-list-toolbar-label">{{ 'locationview.translations.title'|trans|desc('Translation manager') }}</h2>
-        <div class="container-buttons">
-            {{
-                form_widget(actionsForm.delete, {
-                    'label': 'locationview.translations.delete.translations'|trans()|desc('Delete selected translations'),
-                    'attr': {'class': 'ez-button ez-button-negative ez-js-activable-element', 'disabled': true}
-                })
-            }}
+        <div class="ez-list-toolbar-tools">
+            <button type="button"
+                value="#{{ dialogId }}"
+                disabled
+                class="ez-button ez-button-negative ez-js-open-modal ez-js-activable-element">
+                {{ 'locationview.translations.delete.translations'|trans()|desc('Delete selected translations') }}
+            </button>
         </div>
     </div>
 
