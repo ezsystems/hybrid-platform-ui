@@ -41,7 +41,7 @@
             <td>
                 {{ version.modificationDate|localizeddate('medium', 'short', app.request.locale) }}
             </td>
-            {% if isDraft is defined %}
+            {% if isDraft is defined and version.canEdit %}
                 <td>
                     <a href="{{ path('ez_content_edit', {
                         'contentId': version.contentInfo.id,

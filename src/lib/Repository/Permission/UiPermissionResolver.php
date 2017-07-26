@@ -22,6 +22,8 @@ class UiPermissionResolver
     const REMOVE = 'remove';
     const DELETE = 'delete';
     const READ_VERSION = 'versionread';
+    const REMOVE_VERSION = 'versionremove';
+    const EDIT_CONTENT = 'edit';
 
     /**
      * @var PermissionResolver
@@ -97,5 +99,15 @@ class UiPermissionResolver
     public function canReadVersion(ContentInfo $contentInfo)
     {
         return $this->permissionResolver->canUser(self::CONTENT_MODULE, self::READ_VERSION, $contentInfo);
+    }
+
+    public function canRemoveVersion(VersionInfo $versionInfo)
+    {
+        return $this->permissionResolver->canUser(self::CONTENT_MODULE, self::REMOVE_VERSION, $versionInfo);
+    }
+
+    public function canEditVersion(VersionInfo $versionInfo)
+    {
+        return $this->permissionResolver->canUser(self::CONTENT_MODULE, self::EDIT_CONTENT, $versionInfo->getContentInfo());
     }
 }
