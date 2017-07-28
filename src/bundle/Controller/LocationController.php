@@ -78,7 +78,7 @@ class LocationController extends TabController
                 return $this->resetToMainLocation($content->id);
             }
 
-            $this->addLocationBasedOnFormSubmit($actionsForm, $content);
+            $this->addLocationsBasedOnFormSubmit($actionsForm, $content);
         }
 
         return $this->reloadTab('locations', $content->id, $redirectLocationId);
@@ -144,12 +144,15 @@ class LocationController extends TabController
         return false;
     }
 
-    private function addLocationBasedOnFormSubmit(FormInterface $form, Content $content)
+    private function addLocationsBasedOnFormSubmit(FormInterface $form, Content $content)
     {
         if ($form->get('add')->isClicked()) {
-            $this->uiLocationService->addLocation(
-                $content->contentInfo,
-                $form->get('parentLocationId')->getData()
+            $contentInfo = $content->contentInfo;
+            array_map(
+                function ($locationId) use ($contentInfo) {
+                    $this->uiLocationService->addLocation($contentInfo, (int) $locationId);
+                },
+                explode(',', $form->get('parentLocationIds')->getData())
             );
         }
     }

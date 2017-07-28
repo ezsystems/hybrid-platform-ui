@@ -1,5 +1,9 @@
 {% trans_default_domain "locationview" %}
-{{ form_start(actionsForm, {'action': path('ez_hybrid_platform_ui_location_actions', {'contentId': content.id, 'redirectLocationId': location.id})}) }}
+{{
+    form_start(actionsForm, {
+        'action': path('ez_hybrid_platform_ui_location_actions', {'contentId': content.id, 'redirectLocationId': location.id}),
+    })
+}}
 
 {% set dialogId = 'confirm-location-removal-' ~ location.id %}
 
@@ -14,8 +18,20 @@
 <div class="ez-list-toolbar">
     <h2 class="ez-list-toolbar-label">{{ 'locationview.locations.content.locations'|trans()|desc('Content locations') }}</h2>
     <div class="ez-list-toolbar-tools">
-        {{ form_widget(actionsForm.parentLocationId, {'attr': {'placeholder': 'Location ID'}}) }}
-        {{ form_widget(actionsForm.add, {'label': 'locationview.locations.add.location'|trans()|desc('Add Location'), 'attr': {'class': 'ez-button ez-button-secondary'}}) }}
+        {{ form_widget(actionsForm.parentLocationIds) }}
+        {{
+            form_widget(actionsForm.add, {
+                'label': 'locationview.locations.add.location'|trans()|desc('Add Location'),
+                'attr': {
+                    'class': 'ez-button ez-button-secondary ez-js-run-universal-discovery',
+                    'data-ud-title': 'select.location.to.create.new.location'|trans()|desc('Select the location where you want to create new location'),
+                    'data-ud-multiple': true,
+                    'data-ud-container': true,
+                    'data-ud-confirm-fill': '#' ~ actionsForm.parentLocationIds.vars.id,
+                    'data-ud-confirm-fill-with': 'location.id',
+                }
+            })
+        }}
         <button type="button" value="#{{ dialogId }}" class="ez-button ez-button-negative ez-js-open-modal">
             {{ 'locationview.locations.delete.locations'|trans()|desc('Delete selected locations') }}
         </button>
