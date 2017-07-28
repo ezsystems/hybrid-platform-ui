@@ -5,6 +5,7 @@
  */
 namespace EzSystems\HybridPlatformUi\Notification;
 
+use EzSystems\HybridPlatformUi\Http\Response\NotificationResponse;
 use Symfony\Component\Translation\Translator;
 
 /**
@@ -81,5 +82,17 @@ trait NotificationPoolAwareTrait
         ]);
 
         $this->notificationPool->add($notification);
+    }
+
+    /**
+     * Send last notification message as a response.
+     */
+    protected function notificationResponse()
+    {
+        $notifications = $this->notificationPool->get();
+
+        return new NotificationResponse(
+            reset($notifications)
+        );
     }
 }

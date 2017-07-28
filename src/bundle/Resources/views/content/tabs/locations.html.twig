@@ -66,7 +66,7 @@
                     {% endif %}
                 {% endif %}
             </td>
-            <td></td>
+            <td>{{ form_widget(actionsForm.locationVisibility[location.id]) }}</td>
             <td></td>
         </tr>
         {% endfor %}
@@ -87,3 +87,5 @@
     {{ form_widget(swapLocationsForm.new_location_id, {'attr': {'placeholder': 'locationview.locations.swap.location.id'|trans()|desc('Location ID')}}) }}
 </p>
 {{ form_end(swapLocationsForm) }}
+
+{{ form(visibilityForm, {'action': path('ez_hybrid_platform_ui_location_visibility')}) }}
