@@ -89,6 +89,29 @@
                     {{ 'actionbar.trash'|trans|desc('Send to Trash')}}
                 </button>
             {{ form_end(trashLocationForm) }}
+
+            {{
+                form_start(moveLocationForm, {
+                    "action": path("ez_hybrid_platform_ui_location_move_location",
+                    {'contentId': content.id, 'locationId': locationId})
+                })
+            }}
+                {{ form_widget(moveLocationForm.newParentLocationId) }}
+                {{
+                    form_widget(moveLocationForm.move, {
+                        'label': 'actionbar.move'|trans()|desc('Move'),
+                        'attr': {
+                            'class': 'ez-button ez-button-action ez-js-run-universal-discovery',
+                            'data-ud-title': 'actionbar.move.selectbox.title'|trans()|desc('Select a new location to move your content item'),
+                            'data-ud-confirm-label': 'actionbar.move.selectbox.confirmlabel'|trans()|desc('Move'),
+                            'data-ud-starting-location-id': location.parentLocationId,
+                            'data-ud-container': true,
+                            'data-ud-confirm-fill': '#' ~ moveLocationForm.newParentLocationId.vars.id,
+                            'data-ud-confirm-fill-with': 'location.id',
+                        }
+                    })
+                }}
+            {{ form_end(moveLocationForm) }}
         {% endblock %}
     </ez-toolbar>
     {% endblock %}
