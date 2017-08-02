@@ -15,64 +15,66 @@
     })
 }}
 
-<div class="ez-list-toolbar">
-    <h2 class="ez-list-toolbar-label">{{ 'locationview.locations.content.locations'|trans()|desc('Content locations') }}</h2>
-    <div class="ez-list-toolbar-tools">
-        {{ form_widget(actionsForm.parentLocationIds) }}
-        {{
-            form_widget(actionsForm.add, {
-                'label': 'locationview.locations.add.location'|trans()|desc('Add Location'),
-                'attr': {
-                    'class': 'ez-button ez-button-secondary ez-js-run-universal-discovery',
-                    'data-ud-title': 'select.location.to.create.new.location'|trans()|desc('Select the location where you want to create new location'),
-                    'data-ud-multiple': true,
-                    'data-ud-container': true,
-                    'data-ud-confirm-fill': '#' ~ actionsForm.parentLocationIds.vars.id,
-                    'data-ud-confirm-fill-with': 'location.id',
-                }
-            })
-        }}
-        <button type="button" value="#{{ dialogId }}" class="ez-button ez-button-negative ez-js-open-modal">
-            {{ 'locationview.locations.delete.locations'|trans()|desc('Delete selected locations') }}
-        </button>
+<ez-selection-activate-element>
+    <div class="ez-list-toolbar">
+        <h2 class="ez-list-toolbar-label">{{ 'locationview.locations.content.locations'|trans()|desc('Content locations') }}</h2>
+        <div class="ez-list-toolbar-tools">
+            {{ form_widget(actionsForm.parentLocationIds) }}
+            {{
+                form_widget(actionsForm.add, {
+                    'label': 'locationview.locations.add.location'|trans()|desc('Add Location'),
+                    'attr': {
+                        'class': 'ez-button ez-button-secondary ez-js-run-universal-discovery',
+                        'data-ud-title': 'select.location.to.create.new.location'|trans()|desc('Select the location where you want to create new location'),
+                        'data-ud-multiple': true,
+                        'data-ud-container': true,
+                        'data-ud-confirm-fill': '#' ~ actionsForm.parentLocationIds.vars.id,
+                        'data-ud-confirm-fill-with': 'location.id',
+                    }
+                })
+            }}
+            <button type="button" value="#{{ dialogId }}" class="ez-button ez-button-negative ez-js-open-modal ez-js-activable-element" disabled>
+                {{ 'locationview.locations.delete.locations'|trans()|desc('Delete selected locations') }}
+            </button>
+        </div>
     </div>
-</div>
 
-<table class="ez-table-data">
-    <thead>
-        <tr>
-            <th></th>
-            <th>{{ 'locationview.locations.path'|trans()|desc('Path') }}</th>
-            <th>{{ 'locationview.locations.subitems'|trans()|desc('Sub-items') }}</th>
-            <th colspan="2">{{ 'locationview.locations.visibility'|trans()|desc('Visibility') }}</th>
-            <th>{{ 'locationview.locations.main'|trans()|desc('Main') }}</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% if locations is defined %}
-        {% for location in locations %}
-        <tr>
-            <td>{{ form_widget(actionsForm.removeLocations[location.id], {'attr': {'disabled': not location.canDelete}}) }}</td>
-            <td>{{ include('@EzSystemsHybridPlatformUi/fields/location/path.html.twig', {'locations': location.pathLocations}) }}</td>
-            <td>{{ location.childCount }}</td>
-            <td>
-                {% if location.hidden %}
-                    {{ 'locationview.locations.hidden'|trans()|desc('Hidden') }}
-                {% else %}
-                    {% if location.invisible %}
-                        {{ 'locationview.locations.hidden.by.superior'|trans()|desc('Hidden by superior') }}
+    <table class="ez-table-data">
+        <thead>
+            <tr>
+                <th></th>
+                <th>{{ 'locationview.locations.path'|trans()|desc('Path') }}</th>
+                <th>{{ 'locationview.locations.subitems'|trans()|desc('Sub-items') }}</th>
+                <th colspan="2">{{ 'locationview.locations.visibility'|trans()|desc('Visibility') }}</th>
+                <th>{{ 'locationview.locations.main'|trans()|desc('Main') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if locations is defined %}
+            {% for location in locations %}
+            <tr>
+                <td>{{ form_widget(actionsForm.removeLocations[location.id], {'attr': {'disabled': not location.canDelete}}) }}</td>
+                <td>{{ include('@EzSystemsHybridPlatformUi/fields/location/path.html.twig', {'locations': location.pathLocations}) }}</td>
+                <td>{{ location.childCount }}</td>
+                <td>
+                    {% if location.hidden %}
+                        {{ 'locationview.locations.hidden'|trans()|desc('Hidden') }}
                     {% else %}
-                        {{ 'locationview.locations.visible'|trans()|desc('Visible') }}
+                        {% if location.invisible %}
+                            {{ 'locationview.locations.hidden.by.superior'|trans()|desc('Hidden by superior') }}
+                        {% else %}
+                            {{ 'locationview.locations.visible'|trans()|desc('Visible') }}
+                        {% endif %}
                     {% endif %}
-                {% endif %}
-            </td>
-            <td></td>
-            <td></td>
-        </tr>
-        {% endfor %}
-    {% endif %}
-    </tbody>
-</table>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+</ez-selection-activate-element>
 
 {{ form_end(actionsForm) }}
 
