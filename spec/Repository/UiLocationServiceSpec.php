@@ -6,13 +6,16 @@
  */
 namespace spec\EzSystems\HybridPlatformUi\Repository;
 
+use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\TrashService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use eZ\Publish\API\Repository\Values\Content\LocationCreateStruct;
+use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
+use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use EzSystems\HybridPlatformUi\Repository\PathService;
 use EzSystems\HybridPlatformUi\Repository\Permission\UiPermissionResolver;
@@ -24,6 +27,7 @@ class UiLocationServiceSpec extends ObjectBehavior
 {
     function let(
         LocationService $locationService,
+        ContentService $contentService,
         TrashService $trashService,
         PathService $pathService,
         UiPermissionResolver $permissionResolver,
@@ -31,6 +35,7 @@ class UiLocationServiceSpec extends ObjectBehavior
     ) {
         $this->beConstructedWith(
             $locationService,
+            $contentService,
             $trashService,
             $pathService,
             $permissionResolver,
@@ -332,5 +337,64 @@ class UiLocationServiceSpec extends ObjectBehavior
         ]);
 
         $this->canMoveLocation($location)->shouldReturn(true);
+    }
+
+    function it_copies_a_location(
+        LocationService $locationService,
+        ContentService $contentService,
+        ContentTypeService $contentTypeService
+    ) {
+        $currentLocationId = 1;
+        $newParentLocationId = 5;
+        $parentContentTypeId = 2;
+
+        $locationContentInfo = new ContentInfo();
+        $location = new Location(['id' => $currentLocationId, 'contentInfo' => $locationContentInfo]);
+
+        $parentContentInfo = new ContentInfo(['contentTypeId' => $parentContentTypeId]);
+        $newParentLocation = new Location(['id' => $newParentLocationId, 'contentInfo' => $parentContentInfo]);
+
+        $locationService->loadLocation($newParentLocationId)->willReturn($newParentLocation);
+
+        $parentContentType = new ContentType(['isContainer' => true]);
+        $contentTypeService->loadContentType($parentContentTypeId)->willReturn($parentContentType);
+
+        $locationCreateStruct = new LocationCreateStruct();
+        $locationService->newLocationCreateStruct($newParentLocationId)->willReturn($locationCreateStruct);
+        $copiedContentLocationId = 4242;
+        $copiedContentContentInfo = new ContentInfo(['mainLocationId' => $copiedContentLocationId]);
+        $copiedContentVersionInfo = new VersionInfo(['contentInfo' => $copiedContentContentInfo]);
+        $copiedContent = new Content(['versionInfo' => $copiedContentVersionInfo]);
+        $contentService->copyContent($locationContentInfo, $locationCreateStruct)->willReturn($copiedContent);
+
+        $copiedLocation = new Location();
+        $locationService->loadLocation($copiedContentLocationId)->willReturn($copiedLocation);
+
+        $this->copyLocation($location, $newParentLocationId)->shouldBe($copiedLocation);
+    }
+
+    function it_cannot_copy_a_location_to_a_parent_that_is_not_a_container(
+        LocationService $locationService,
+        ContentTypeService $contentTypeService
+    ) {
+        $currentLocationId = 1;
+        $newParentLocationId = 5;
+        $contentTypeId = 2;
+
+        $location = new Location(['id' => $currentLocationId]);
+        $contentInfo = new ContentInfo(['contentTypeId' => $contentTypeId]);
+        $newParentLocation = new Location(['id' => $newParentLocationId, 'contentInfo' => $contentInfo]);
+        $contentType = new ContentType(['isContainer' => false]);
+
+        $locationService->loadLocation($newParentLocationId)->willReturn($newParentLocation);
+
+        $contentTypeService->loadContentType($contentTypeId)->willReturn($contentType);
+
+        $locationService->newLocationCreateStruct($newParentLocationId)->shouldNotBeCalled();
+
+        $this->shouldThrow(InvalidArgumentException::class)->duringCopyLocation(
+            $location,
+            $newParentLocationId
+        );
     }
 }

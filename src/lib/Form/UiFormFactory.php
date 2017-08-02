@@ -11,6 +11,7 @@ use EzSystems\HybridPlatformUi\Mapper\Form\Location\OrderingMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\LocationMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\TranslationMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\VersionMapper;
+use EzSystems\HybridPlatformUiBundle\Form\Locations\LocationCopy;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\LocationMove;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\LocationSwap;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\LocationTrash;
@@ -147,6 +148,16 @@ class UiFormFactory
             null,
             ['disabled' => $disabled]
         );
+    }
+
+    /**
+     * Create a form to be used for copying contents location.
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createLocationContentCopyForm()
+    {
+        return $this->formFactory->create(LocationCopy::class);
     }
 
     /**

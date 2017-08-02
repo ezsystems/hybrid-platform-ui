@@ -9,6 +9,7 @@
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
 use eZ\Publish\API\Repository\LocationService;
+use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiFieldGroupService;
@@ -57,6 +58,23 @@ class ContentViewController extends TabController
         $locationParameterSupplier->supply($view);
         $location = $view->getLocation();
 
+        $this->addActionBarFormsToView($view, $location);
+
+        $view->addParameters([
+            'childCount' => $this->locationService->getLocationChildCount($location),
+        ]);
+
+        return $view;
+    }
+
+    /**
+     * Adds the action bar forms to the provided view.
+     *
+     * @param ContentView $view
+     * @param Location $location
+     */
+    private function addActionBarFormsToView(ContentView $view, Location $location)
+    {
         $trashDisabled = !$this->uiLocationService->canRemoveLocation($location);
 
         $trashLocationForm = $this->formFactory->createLocationContentTrashForm(
@@ -66,13 +84,13 @@ class ContentViewController extends TabController
         $moveDisabled = !$this->uiLocationService->canMoveLocation($location);
         $moveLocationForm = $this->formFactory->createLocationContentMoveForm($moveDisabled);
 
+        $copyLocationForm = $this->formFactory->createLocationContentCopyForm();
+
         $view->addParameters([
             'trashLocationForm' => $trashLocationForm->createView(),
             'moveLocationForm' => $moveLocationForm->createView(),
-            'childCount' => $this->locationService->getLocationChildCount($location),
+            'copyLocationForm' => $copyLocationForm->createView(),
         ]);
-
-        return $view;
     }
 
     public function contentTabAction(ContentView $view, UiFieldGroupService $fieldGroupService)
