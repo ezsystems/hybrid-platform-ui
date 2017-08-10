@@ -40,3 +40,8 @@
     /* so that, if there's only one td (Role pages), it's left aligned */
     text-align: left;
 }
+
+.ez-dashboard-tabs .ez-table-data thead tr {
+    background: var(--ez-color-ground-secondary-medium);
+    color: var(--ez-color-text-base-inverted);
+}
