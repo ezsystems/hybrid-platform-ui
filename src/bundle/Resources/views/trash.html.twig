@@ -1,0 +1,106 @@
+{% trans_default_domain 'trash' %}
+
+<ez-server-side-content class="ez-trash-view">
+    {% block trashview %}
+    <div class="ez-trash-view-main">
+        <header>
+            <h1>{{ 'trash.header.name'|trans()|desc('Trash') }}</h1>
+        </header>
+
+        <ez-selection-activate-element>
+        {{ form_start(restoreForm, {"action": path("ez_hybrid_platform_ui_trash_restore")}) }}
+        {{ form_widget(restoreForm.newParentLocationId) }}
+        {{ form_widget(restoreForm._token) }}
+
+        <div class="ez-list-toolbar">
+            <h2 class="ez-list-toolbar-label">{{ 'buttons.title'|trans()|desc('Trash') }}</h2>
+            {% if uiTrashItems %}
+                <div class="ez-list-toolbar-tools">
+                    {{
+                        form_widget(restoreForm.restoreNewParent, {
+                            'label': 'restore.new.button'|trans()|desc('Restore under new parent'),
+                            'attr': {
+                                'class': 'ez-button ez-button-secondary ez-js-run-universal-discovery ez-js-activable-element',
+                                'data-ud-title': 'restore.new.title'|trans()|desc('Select the location where you want to restore the location'),
+                                'data-ud-confirm-label': 'restore.new.confirm'|trans()|desc('Restore'),
+                                'data-ud-container': true,
+                                'data-ud-confirm-fill': '#' ~ restoreForm.newParentLocationId.vars.id,
+                                'data-ud-confirm-fill-with': 'location.id',
+                                'disabled': 'disabled,'
+                            }
+                        })
+                    }}
+
+                    {{
+                        form_widget(restoreForm.restore, {
+                            'label': 'buttons.original'|trans()|desc('Restore'),
+                            'attr': {
+                                'class': 'ez-button ez-button-primary ez-js-activable-element',
+                                'disabled': 'disabled'
+                            }
+                        })
+                    }}
+                </div>
+            {% endif %}
+        </div>
+
+        <table class="ez-table-data">
+            <thead>
+            <tr>
+                <th></th>
+                <th>{{ 'trash.name.label'|trans()|desc('Name') }}</th>
+                <th>{{ 'trash.content.type.label'|trans()|desc('Content type') }}</th>
+                <th>{{ 'trash.original.location.label'|trans()|desc('Original location') }}</th>
+            </tr>
+            </thead>
+            {% if uiTrashItems %}
+                {% for trashItem in uiTrashItems %}
+                    <tr>
+                        <td>{{ form_widget(restoreForm.trashItems[trashItem.id]) }}</td>
+                        <td>{{ trashItem.contentInfo.name }}</td>
+                        <td>{{ trashItem.contentType.name }}</td>
+                        <td>
+                            {% if trashItem.parentDeleted %}
+                                <span class="ez-trash-ancestor-trash">{{ 'trash.ancestors'|trans()|desc('Item’s ancestors are in Trash') }}</span>
+                            {% else %}
+                                {{ include('@EzSystemsHybridPlatformUi/fields/location/path.html.twig', {'locations': trashItem.locationPath}) }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4" class="ez-trash-empty">
+                        <strong>{{ 'list.empty'|trans()|desc('Trash empty.') }}</strong>
+                        {{ 'list.empty.description'|trans()|desc('Any content items you send to trash will end up here.') }}
+                    </td>
+                </tr>
+            {% endif %}
+        </table>
+        {{ form_end(restoreForm, {'render_rest': false}) }}
+        </ez-selection-activate-element>
+    </div>
+
+    <ez-toolbar class="ez-action-bar" visible>
+        {% block trash_action_toolbar %}
+            {{ form_start(emptyTrashForm, {"action": path("ez_hybrid_platform_ui_empty_trash")}) }}
+            {% set emptyTrashDialogId = 'confirm-empty-trash' %}
+            {% set emptyTrashDialogMsg = 'empty.confirm'|trans({'%number of content items in the trash%': nbTrashItems})|desc('Are you sure you want to permanently delete %number of content items in the trash% item(s)?') %}
+
+            {{
+                include('@EzSystemsHybridPlatformUi/components/confirm_delete_dialog.html.twig', {
+                    'dialogId': emptyTrashDialogId,
+                    'message': emptyTrashDialogMsg,
+                    'confirmButton': emptyTrashForm.empty,
+                })
+            }}
+
+            <button type="button" value="#{{ emptyTrashDialogId }}" class="ez-button ez-button-action ez-js-open-modal"
+                    {% if emptyTrashForm.empty.vars.disabled %}disabled{% endif %}>
+                {{ 'actionbar.empty.trash'|trans|desc('Empty trash')}}
+            </button>
+            {{ form_end(emptyTrashForm) }}
+        {% endblock %}
+    </ez-toolbar>
+    {% endblock %}
+</ez-server-side-content>

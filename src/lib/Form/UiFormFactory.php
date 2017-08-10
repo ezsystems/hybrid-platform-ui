@@ -10,14 +10,18 @@ use eZ\Publish\API\Repository\Values\Content\Location;
 use EzSystems\HybridPlatformUi\Mapper\Form\Location\OrderingMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\LocationMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\TranslationMapper;
+use EzSystems\HybridPlatformUi\Mapper\Form\TrashItemMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\VersionMapper;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\LocationCopy;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\LocationMove;
+use EzSystems\HybridPlatformUi\Repository\Values\Content\UiTrashItem;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\LocationSwap;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\LocationTrash;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\Ordering;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\Actions as LocationActions;
 use EzSystems\HybridPlatformUiBundle\Form\Translations\Actions as TranslationActions;
+use EzSystems\HybridPlatformUiBundle\Form\Trash\EmptyTrash;
+use EzSystems\HybridPlatformUiBundle\Form\Trash\RestoreTrashItems;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\ArchivedActions;
 use EzSystems\HybridPlatformUiBundle\Form\Versions\DraftActions;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -52,18 +56,25 @@ class UiFormFactory
      */
     private $translationMapper;
 
+    /**
+     * @var TrashItemMapper
+     */
+    private $trashItemMapper;
+
     public function __construct(
         FormFactoryInterface $formFactory,
         VersionMapper $versionMapper,
         LocationMapper $locationMapper,
         OrderingMapper $orderingMapper,
-        TranslationMapper $translationMapper
+        TranslationMapper $translationMapper,
+        TrashItemMapper $trashItemMapper
     ) {
         $this->formFactory = $formFactory;
         $this->versionMapper = $versionMapper;
         $this->locationMapper = $locationMapper;
         $this->orderingMapper = $orderingMapper;
         $this->translationMapper = $translationMapper;
+        $this->trashItemMapper = $trashItemMapper;
     }
 
     /**
@@ -158,6 +169,38 @@ class UiFormFactory
     public function createLocationContentCopyForm()
     {
         return $this->formFactory->create(LocationCopy::class);
+    }
+
+    /**
+     * Create a form to be used for emptying the trash.
+     *
+     * @param bool $disabled whether or not the form is disabled
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createEmptyTrashForm($disabled = false)
+    {
+        return $this->formFactory->create(
+            EmptyTrash::class,
+            null,
+            ['disabled' => $disabled]
+        );
+    }
+
+    /**
+     * Create a form to be used for restoring trash items.
+     *
+     * @param UiTrashItem[] $uiTrashItems
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createRestoreTrashItemsForm($uiTrashItems = [])
+    {
+        $data = $this->trashItemMapper->mapToForm($uiTrashItems);
+
+        return $this->formFactory->create(
+            RestoreTrashItems::class,
+            $data
+        );
     }
 
     /**
