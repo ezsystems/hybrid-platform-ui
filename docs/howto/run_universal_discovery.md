@@ -1,0 +1,281 @@
+# How-to: Run the Universal Discovery
+
+The Hybrid Platform UI application provides a widget called Universal Discovery
+(often abbreviated <abbr title="Universal Discovery">UD</abbr> or <abbr
+title="Universal Discovery Widget">UDW</a>). It is designed to be a handy way to
+pick one or several Content items/Locations in the repository. The application
+recognizes a markup convention that allows you to run and configure the
+Universal Discovery.
+
+## Markup convention
+
+The *run Universal Discovery* convention relies on the class
+`ez-js-run-universal-discovery`. If the user clicks on an HTML element holding
+that class, the application will run the Universal Discovery.
+
+Example:
+
+```html
+<button type="button" class="ez-js-run-universal-discovery">Run UDW</button>
+```
+
+**Note:** in the following paragraphs, the element holding the
+`ez-js-run-universal-discovery` class is called the *run Universal Discovery
+element*.
+
+### Configuration
+
+The Universal Discovery can be configured so that it can be used in different
+contexts. The application recognizes [some HTML data
+attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes)
+on the *run Universal Discovery element* and transforms them in configuration
+options. All those data attributes start with the `data-ud-` prefix.
+
+### Base configuration
+
+The following data attributes are recognized:
+
+* `data-ud-title`: its value will be used as the title of the Universal
+  Discovery.
+* `data-ud-multiple`: it's a boolean attribute. If it is added, the Universal
+  Discovery will allow several Content items/Locations to be picked, otherwise
+  only one can be selected.
+* `data-ud-starting-location-id`: if set, its value will be used as the starting
+  Location id when browsing the repository
+* `data-ud-confirm-label`: if set, its value can be used to define the Confirm
+  button label. If not specified, the button label is *Confirm*.
+* `data-ud-min-discover-depth`: it can be used to set the min discover depth of
+  the Universal Discovery. If set with a starting Location id, this allows you
+  to restrict browsing to a given subtree.
+* `data-ud-visible-method`: If set, its value can be used to set the default
+  visible method in the Universal Discovery.
+
+
+Examples:
+
+Allow a multiple selection, use a custom confirm button label and search for
+Content items by default
+
+```html
+<button type="button" class="ez-js-run-universal-discovery"
+    data-ud-title="Pick one or several items"
+    data-ud-confirm-label="One or several is OK"
+    data-ud-visible-method="search"
+    data-ud-multiple>Run UDW</button>
+```
+
+Restrict browsing to `/Media/Images`
+
+```html
+<!--
+    51 is the Location id of /Media/Images
+    2 is the depth of /Media/Images,
+    so the user won't be able to pick something in /Media for instance
+-->
+<button type="button" class="ez-js-run-universal-discovery"
+    data-ud-title="Pick something only under /Media/Images"
+    data-ud-starting-location-id="51"
+    data-ud-min-discover-depth="2">Run UDW</button>
+```
+
+### Restrict selection
+
+The *run Universal Discovery* convention allows the UD to be configured to only
+allow *container* Content items and/or Content items beloning to a set of
+Content Types to be selected. In addition, it exposes a JavaScript event to
+implement custom restrictions.
+
+#### Container only
+
+Adding the `data-ud-container` boolean attribute on the *run Universal Discovery
+element* will configure the Universal Discovery to only allow *container*
+Content items to be picked.
+
+Example:
+
+```html
+<button type="button" class="ez-js-run-universal-discovery"
+    data-ud-title="Pick a container"
+    data-ud-container>Run UDW</button>
+```
+
+#### Content items of a Content Types set
+
+The `data-ud-content-type-identifiers` can be used to let the user only pick
+Content items of a Content Types set. This attribute expects a space-separated
+list of Content Type identifiers.
+
+Example:
+
+```html
+<button type="button" class="ez-js-run-universal-discovery"
+    data-ud-title="Pick a Folder or an Article"
+    data-ud-content-type-identifiers="folder article">Run UDW</button>
+```
+
+#### Custom restriction
+
+To implement more advanced restrictions, the *run Universal Discovery* mechanism
+also exposes the `ez:runUniversalDiscovery:select` JavaScript event.  This event
+is dispatched from the *run Universal Discovery element* when the user is about
+to pick a Content item/Location. It is configured [to
+*bubble*](https://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-flow-bubbling)
+and to [be
+*cancelable*](https://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-flow-cancelation).
+Preventing the default behaviour of this event allows you to restrict the user
+from picking the corresponding Content item/Location.
+
+<p id="selection-object">The event detail provides a selection object containing:</p>
+
+* the Content item object under `content` as generated by
+  [`eZ.Content#toObject`](https://github.com/ezsystems/PlatformUIBundle/blob/2.0/Resources/public/js/models/ez-contentmodel.js#L468)
+* the Location object under `location` as generated by
+  [`eZ.Location#toObject`](https://github.com/ezsystems/PlatformUIBundle/blob/2.0/Resources/public/js/models/ez-locationmodel.js#L423)
+* the Content Type object under `contentType` as generated by
+  [`eZ.ContentType#toObject`](https://github.com/ezsystems/PlatformUIBundle/blob/2.0/Resources/public/js/models/ez-contenttypemodel.js#L188)
+
+Example: only allow Content items with a Field whose identifier is `image`.
+
+```js
+function hasAnImageField(selection) {
+    return (
+        typeof selection.contentType.fieldDefinitions['image'] !== 'undefined'
+    );
+}
+
+document.addEventListener('ez:runUniversalDiscovery:select', function (e) {
+    const selection = e.detail.selection; // selection object
+    // const runUDElement = e.target;
+    // runUDElement might be useful to retrieve the context in which the UD is run
+
+    if ( !hasAnImageField(selection) ) {
+        e.preventDefault();
+    }
+});
+```
+
+### Use the Universal Discovery selection
+
+The *run Universal Discovery* convention allows handling the Universal
+Discovery selection validated by the user. As for the selection restriction, a
+built-in behavior can be configured and a JavaScript event allows you to
+implement custom ones.
+
+#### Fill a form input with the selection
+
+The *run Universal Discovery* convention recognizes the `data-ud-confirm-fill`
+and `data-ud-confirm-fill-with` attributes on the *run Universal Discovery
+element*. `data-ud-confirm-fill` expects a selector matching an HTML input in
+the page. `data-ud-confirm-fill-with` expects a *path* in the selection for a
+value. When the user confirms its selection in the Universal Discovery, the
+input selected by `data-ud-confirm-fill` selector will be filled with the value
+found by interpreting the *path* provided in `data-ud-confirm-fill-with`
+attribute.
+
+The *path* is a dot separated string which represents the property to pick in
+the selection. For instance, when selecting `/Media/Images` in the Universal
+Discovery, the selection is an object similar to:
+
+```js
+{
+    "content": {
+        "id": 49,
+        "name": "Images",
+        "fields": {/* fields */}
+    },
+    "location": {
+        "id": 51,
+        "contentInfo": {
+            "id": 49,
+            "name": "Images"
+        },
+        "url": "/admin/view/content/49/full/true/51"
+    },
+    "contentType": {
+        "names": {"eng-GB": "Folder"},
+        "fieldDefinitions": {/* field definitions */}
+    }
+}
+```
+
+To fill the input with the Location id, `data-ud-confirm-fill-with` value should
+be `location.id`. If you are interested in the name of the corresponding Content
+item, you can use `content.name` or even `location.contentInfo.name`.
+
+Example: in the following example, after confirming the selection, `#my-input`
+input will receive the id of the Content item picked by the user.
+
+```html
+<input type="hidden" value="" id="my-input">
+<button type="button" class="ez-js-run-universal-discovery"
+    data-ud-title="Pick a Content item"
+    data-ud-confirm-fill="#my-input"
+    data-ud-confirm-fill-with="content.id">Run UDW</button>
+```
+
+If the Universal Discovery is configured to allow a multiple selection, the
+input will be filled with the values separated by a coma.
+
+Example: in the following example, if the user picks Locations 51 and 52, after
+confirming the selection, `#my-input` input value will be `51,52`.
+
+```html
+<input type="hidden" value="" id="my-input">
+<button type="button" class="ez-js-run-universal-discovery"
+    data-ud-title="Pick some Locations"
+    data-ud-multiple
+    data-ud-confirm-fill="#my-input"
+    data-ud-confirm-fill-with="location.id">Run UDW</button>
+```
+
+#### Submit the form after confirming the selection
+
+If the *run Universal Discovery element* is a submit button (`type="submit"`
+instead of `type="button"` like in previous examples), when confirming the
+selection in the Universal Discovery, the corresponding form will be submitted.
+
+Example: in the following case, when the user clicks on the *Submit* button, the
+form won't be submitted right away. Instead, it will be submitted when the user
+confirms the selection in the Universal Discovery after filling the input
+according to `data-ud-confirm-fill` and to `data-ud-confirm-fill-with`
+attributes.
+
+```html
+<form action="/form/action" method="post">
+    <input type="hidden" value="" id="my-input">
+    <button type="submit" class="ez-js-run-universal-discovery"
+        data-ud-title="Pick a Location"
+        data-ud-confirm-fill="#my-input"
+        data-ud-confirm-fill-with="location.id">Submit</button>
+</form>
+```
+
+#### Custom selection use
+
+The *run Universal Discovery* mechanism also exposes the
+`ez:runUniversalDiscovery:confirm` JavaScript event.  This event is dispatched
+from the *run Universal Discovery element* when the user confirms the selection
+and it is configured [to
+*bubble*](https://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-flow-bubbling).
+
+The event detail provides the user selection. The selection is either [the
+object described in the Custom restriction paragraph](#selection-object) or an
+array of this kind of object when the Universal Discovery is configured to allow
+a multiple selection. `ez:runUniversalDiscovery:confirm` event listeners are run
+after taking into account `data-ud-confirm-fill` and `data-ud-confirm-fill-with`
+attributes.
+
+Example:
+
+```js
+document.addEventListener('ez:runUniversalDiscovery:confirm', function (e) {
+    const selection = e.detail.selection;
+    const runUDElement = e.target;
+    // runUDElement might be useful to retrieve the context in which the UD is run
+
+    console.log('Selection', selection);
+    if ( isConfirmForMyContext(runUDElement) ) {
+        displaySelection(selection);
+    }
+});
+```
