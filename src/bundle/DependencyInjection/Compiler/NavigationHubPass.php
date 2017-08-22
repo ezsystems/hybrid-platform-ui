@@ -34,7 +34,7 @@ class NavigationHubPass implements CompilerPassInterface
         }
 
         $sorted = [];
-        krsort($unsorted);
+        ksort($unsorted);
         foreach ($unsorted as $items) {
             $sorted = array_merge($sorted, $items);
         }
