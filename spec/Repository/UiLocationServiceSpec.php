@@ -8,6 +8,7 @@ namespace spec\EzSystems\HybridPlatformUi\Repository;
 
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\LocationService;
+use eZ\Publish\API\Repository\TrashService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Base\Exceptions\InvalidArgumentException;
 use eZ\Publish\API\Repository\Values\Content\LocationCreateStruct;
@@ -23,11 +24,18 @@ class UiLocationServiceSpec extends ObjectBehavior
 {
     function let(
         LocationService $locationService,
+        TrashService $trashService,
         PathService $pathService,
         UiPermissionResolver $permissionResolver,
         ContentTypeService $contentTypeService
     ) {
-        $this->beConstructedWith($locationService, $pathService, $permissionResolver, $contentTypeService);
+        $this->beConstructedWith(
+            $locationService,
+            $trashService,
+            $pathService,
+            $permissionResolver,
+            $contentTypeService
+        );
     }
 
     function it_loads_ui_locations_with_a_child_count(LocationService $locationService)
@@ -106,6 +114,70 @@ class UiLocationServiceSpec extends ObjectBehavior
         $locationService->deleteLocation($location)->shouldBeCalled();
 
         $this->deleteLocations([$deleteLocationId]);
+    }
+
+    function it_trashes_a_single_location_and_returns_the_parent(
+        LocationService $locationService,
+        TrashService $trashService
+    ) {
+        $locationId = 333;
+        $parentLocationId = 222;
+
+        $location = new Location([
+            'id' => $locationId,
+            'parentLocationId' => $parentLocationId,
+        ]);
+
+        $parentLocation = new Location([
+            'id' => $parentLocationId,
+        ]);
+
+        $trashService->trash($location)->shouldBeCalled();
+        $locationService->loadLocation($parentLocationId)->willReturn($parentLocation);
+
+        $this->trashLocationAndReturnParent($location)->shouldBeLike($parentLocation);
+    }
+
+    function it_tells_if_a_location_can_not_be_removed_because_it_is_the_root()
+    {
+        $contentInfo = new ContentInfo(['id' => 1]);
+
+        $location = new Location([
+            'id' => 111,
+            'contentInfo' => $contentInfo,
+        ]);
+
+        $this->canRemoveLocation($location)->shouldReturn(false);
+    }
+
+    function it_tells_if_a_location_can_not_be_removed_because_user_is_not_allowed(
+        UiPermissionResolver $permissionResolver
+    ) {
+        $contentInfo = new ContentInfo(['id' => 110]);
+
+        $location = new Location([
+            'id' => 111,
+            'contentInfo' => $contentInfo,
+        ]);
+
+        $permissionResolver->canRemoveContent($contentInfo, $location)->willReturn(false);
+
+        $this->canRemoveLocation($location)->shouldReturn(false);
+    }
+
+    function it_tells_if_a_location_can_be_removed(
+        UiPermissionResolver $permissionResolver
+    ) {
+        $contentInfo = new ContentInfo(['id' => 110]);
+
+        $location = new Location([
+            'id' => 111,
+            'contentInfo' => $contentInfo,
+        ]);
+
+        $permissionResolver->canRemoveContent($contentInfo, $location)->willReturn(true);
+
+        $this->canRemoveLocation($location)->shouldReturn(true);
     }
 
     function it_loads_ui_locations_with_user_access_flags(

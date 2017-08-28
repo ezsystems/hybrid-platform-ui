@@ -12,6 +12,7 @@ use EzSystems\HybridPlatformUi\Mapper\Form\LocationMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\TranslationMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\VersionMapper;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\LocationSwap;
+use EzSystems\HybridPlatformUiBundle\Form\Locations\LocationTrash;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\Ordering;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\Actions as LocationActions;
 use EzSystems\HybridPlatformUiBundle\Form\Translations\Actions as TranslationActions;
@@ -95,6 +96,8 @@ class UiFormFactory
      * Create form to be used for actions on locations tab.
      *
      * @param Location[] $locations
+     *
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createLocationsActionForm(array $locations = [])
     {
@@ -111,6 +114,22 @@ class UiFormFactory
     public function createLocationsContentSwapForm()
     {
         return $this->formFactory->create(LocationSwap::class);
+    }
+
+    /**
+     * Create a form to be used for trashing contents location.
+     *
+     * @param bool $disabled whether or not the form is disabled
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createLocationContentTrashForm($disabled = false)
+    {
+        return $this->formFactory->create(
+            LocationTrash::class,
+            null,
+            ['disabled' => $disabled]
+        );
     }
 
     /**
@@ -133,6 +152,8 @@ class UiFormFactory
      * Create form to be used for actions on translations tab.
      *
      * @param Language[] $translations
+     *
+     * @return \Symfony\Component\Form\FormInterface
      */
     public function createTranslationsActionForm(array $translations = [])
     {

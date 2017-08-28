@@ -6,7 +6,7 @@ class Search implements Component
 {
     public function renderToString()
     {
-        return '<button class="ez-button" disabled>Search</button>';
+        return '<button class="ez-button ez-button-action" disabled>Search</button>';
     }
 
     public function jsonSerialize()

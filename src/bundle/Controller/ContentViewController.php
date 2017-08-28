@@ -8,9 +8,11 @@
  */
 namespace EzSystems\HybridPlatformUiBundle\Controller;
 
+use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use EzSystems\HybridPlatformUi\Form\UiFormFactory;
 use EzSystems\HybridPlatformUi\Repository\UiFieldGroupService;
+use EzSystems\HybridPlatformUi\Repository\UiLocationService;
 use EzSystems\HybridPlatformUi\Repository\UiSectionService;
 use EzSystems\HybridPlatformUi\Repository\UiTranslationService;
 use EzSystems\HybridPlatformUi\Repository\UiUserService;
@@ -21,6 +23,31 @@ use EzSystems\HybridPlatformUi\View\Content\Relations\ReverseRelationParameterSu
 
 class ContentViewController extends TabController
 {
+    /**
+     * @var UiFormFactory
+     */
+    private $formFactory;
+
+    /**
+     * @var UiLocationService
+     */
+    private $uiLocationService;
+
+    /**
+     * @var LocationService
+     */
+    private $locationService;
+
+    public function __construct(
+        UiFormFactory $formFactory,
+        UiLocationService $uiLocationService,
+        LocationService $locationService
+    ) {
+        $this->formFactory = $formFactory;
+        $this->uiLocationService = $uiLocationService;
+        $this->locationService = $locationService;
+    }
+
     public function locationViewAction(
         ContentView $view,
         ContentTypeParameterSupplier $contentTypeParameterSupplier,
@@ -28,6 +55,18 @@ class ContentViewController extends TabController
     ) {
         $contentTypeParameterSupplier->supply($view);
         $locationParameterSupplier->supply($view);
+        $location = $view->getLocation();
+
+        $trashDisabled = !$this->uiLocationService->canRemoveLocation($location);
+
+        $trashLocationForm = $this->formFactory->createLocationContentTrashForm(
+            $trashDisabled
+        );
+
+        $view->addParameters([
+            'trashLocationForm' => $trashLocationForm->createView(),
+            'childCount' => $this->locationService->getLocationChildCount($location),
+        ]);
 
         return $view;
     }

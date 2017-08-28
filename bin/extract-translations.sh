@@ -11,6 +11,6 @@ echo '# Extracting translations from vendor/ezsystems/hybrid-platform-ui';
 cd vendor/ezsystems/hybrid-platform-ui;
 
 echo '# Clean file references';
-sed -i .bak "s|>.*/hybrid-platform-ui/|>|g" ./src/bundle/Resources/translations/*.xlf
+sed -i.bak "s|>.*/hybrid-platform-ui/|>|g" ./src/bundle/Resources/translations/*.xlf
 
 echo 'Translation extraction done';
