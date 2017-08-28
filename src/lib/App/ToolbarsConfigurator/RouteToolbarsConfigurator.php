@@ -19,6 +19,7 @@ class RouteToolbarsConfigurator implements ToolbarsConfigurator
 
     protected $routesConfiguration = [
         'ez_urlalias' => ['discovery' => 1],
+        '_ez_content_view' => ['discovery' => 1],
     ];
 
     public function __construct(RequestStack $requestStack)
