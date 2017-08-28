@@ -115,6 +115,18 @@ class UiLocationService
     }
 
     /**
+     * Checks if a given location is root location.
+     *
+     * @param Location $location
+     *
+     * @return bool true if the location is root
+     */
+    private function isRootLocation(Location $location)
+    {
+        return $location->depth == 1;
+    }
+
+    /**
      * Checks if a given location can be removed.
      *
      * @param Location $location
@@ -123,13 +135,25 @@ class UiLocationService
      */
     public function canRemoveLocation(Location $location)
     {
-        if ($location->contentId == 1) {
+        if ($this->isRootLocation($location)) {
             return false;
         }
 
         return $allowedToRemove = $this->permissionResolver->canRemoveContent(
             $location->getContentInfo(), $location
         );
+    }
+
+    /**
+     * Checks if a given location can be moved.
+     *
+     * @param Location $location
+     *
+     * @return bool true if the location can be moved
+     */
+    public function canMoveLocation(Location $location)
+    {
+        return !$this->isRootLocation($location);
     }
 
     /**
@@ -169,6 +193,36 @@ class UiLocationService
             );
         }
         $this->locationService->swapLocation($currentLocation, $newLocation);
+
+        return $this->locationService->loadLocation($currentLocation->id);
+    }
+
+    /**
+     * Moves locations.
+     * Returns the current location reloaded with the correct content.
+     *
+     * @param Location $currentLocation
+     * @param mixed $newParentLocationId
+     *
+     * @return Location
+     *
+     * @throws InvalidArgumentException
+     */
+    public function moveLocation(Location $currentLocation, $newParentLocationId)
+    {
+        $newParentLocation = $this->locationService->loadLocation($newParentLocationId);
+
+        $newParentContentType = $this->contentTypeService->loadContentType(
+            $newParentLocation->getContentInfo()->contentTypeId
+        );
+
+        if (!$newParentContentType->isContainer) {
+            throw new InvalidArgumentException(
+                '$newParentLocation',
+                'Cannot move location to a parent that is not a container'
+            );
+        }
+        $this->locationService->moveSubtree($currentLocation, $newParentLocation);
 
         return $this->locationService->loadLocation($currentLocation->id);
     }

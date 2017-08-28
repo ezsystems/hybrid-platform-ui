@@ -28,6 +28,11 @@ ez_hybrid_platform_ui_location_trash_location:
     defaults:
         _controller: EzSystemsHybridPlatformUiBundle:ActionBar:trashLocation
     methods: [POST]
+ez_hybrid_platform_ui_location_move_location:
+    path: /content/{contentId}/location/{locationId}/move
+    defaults:
+        _controller: EzSystemsHybridPlatformUiBundle:ActionBar:moveLocation
+    methods: [POST]
 ez_hybrid_platform_ui_location_sort_order:
     path: /content/{contentId}/locations/{locationId}/sortorder
     defaults:

@@ -11,6 +11,7 @@ use EzSystems\HybridPlatformUi\Mapper\Form\Location\OrderingMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\LocationMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\TranslationMapper;
 use EzSystems\HybridPlatformUi\Mapper\Form\VersionMapper;
+use EzSystems\HybridPlatformUiBundle\Form\Locations\LocationMove;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\LocationSwap;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\LocationTrash;
 use EzSystems\HybridPlatformUiBundle\Form\Locations\Ordering;
@@ -127,6 +128,22 @@ class UiFormFactory
     {
         return $this->formFactory->create(
             LocationTrash::class,
+            null,
+            ['disabled' => $disabled]
+        );
+    }
+
+    /**
+     * Create a form to be used for moving contents location.
+     *
+     * @param bool $disabled whether or not the form is disabled
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createLocationContentMoveForm($disabled = false)
+    {
+        return $this->formFactory->create(
+            LocationMove::class,
             null,
             ['disabled' => $disabled]
         );
