@@ -112,6 +112,29 @@
                     })
                 }}
             {{ form_end(moveLocationForm) }}
+
+            {{
+                form_start(copyLocationForm, {
+                    "action": path("ez_hybrid_platform_ui_location_copy_location",
+                    {'contentId': content.id, 'locationId': locationId})
+                })
+            }}
+                {{ form_widget(copyLocationForm.newParentLocationId) }}
+                {{
+                    form_widget(copyLocationForm.copy, {
+                        'label': 'actionbar.copy'|trans()|desc('Copy'),
+                        'attr': {
+                            'class': 'ez-button ez-button-action ez-js-run-universal-discovery',
+                            'data-ud-title': 'actionbar.copy.selectbox.title'|trans()|desc('Select a new location to copy your content item'),
+                            'data-ud-confirm-label': 'actionbar.copy.selectbox.confirmlabel'|trans()|desc('Copy'),
+                            'data-ud-starting-location-id': location.parentLocationId,
+                            'data-ud-container': true,
+                            'data-ud-confirm-fill': '#' ~ copyLocationForm.newParentLocationId.vars.id,
+                            'data-ud-confirm-fill-with': 'location.id',
+                        }
+                    })
+                }}
+            {{ form_end(copyLocationForm) }}
         {% endblock %}
     </ez-toolbar>
     {% endblock %}

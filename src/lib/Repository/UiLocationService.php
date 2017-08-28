@@ -6,6 +6,7 @@
  */
 namespace EzSystems\HybridPlatformUi\Repository;
 
+use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\TrashService;
@@ -33,6 +34,11 @@ class UiLocationService
     private $trashService;
 
     /**
+     * @var ContentService
+     */
+    private $contentService;
+
+    /**
      * @var PathService
      */
     private $pathService;
@@ -49,6 +55,7 @@ class UiLocationService
 
     public function __construct(
         LocationService $locationService,
+        ContentService $contentService,
         TrashService $trashService,
         PathService $pathService,
         UiPermissionResolver $permissionResolver,
@@ -56,6 +63,7 @@ class UiLocationService
     ) {
         $this->locationService = $locationService;
         $this->trashService = $trashService;
+        $this->contentService = $contentService;
         $this->pathService = $pathService;
         $this->permissionResolver = $permissionResolver;
         $this->contentTypeService = $contentTypeService;
@@ -225,6 +233,43 @@ class UiLocationService
         $this->locationService->moveSubtree($currentLocation, $newParentLocation);
 
         return $this->locationService->loadLocation($currentLocation->id);
+    }
+
+    /**
+     * Copies a location item.
+     * Returns the newly copied location.
+     *
+     * @param Location $currentLocation
+     * @param mixed $newParentLocationId
+     *
+     * @return Location
+     *
+     * @throws InvalidArgumentException
+     */
+    public function copyLocation(Location $currentLocation, $newParentLocationId)
+    {
+        $newParentLocation = $this->locationService->loadLocation($newParentLocationId);
+
+        $newParentContentType = $this->contentTypeService->loadContentType(
+            $newParentLocation->getContentInfo()->contentTypeId
+        );
+
+        if (!$newParentContentType->isContainer) {
+            throw new InvalidArgumentException(
+                '$newParentLocation',
+                'Cannot copy location to a parent that is not a container'
+            );
+        }
+
+        $locationCreateStruct = $this->locationService->newLocationCreateStruct($newParentLocationId);
+
+        // Copying only the current item, not the subtree
+        $copiedContent = $this->contentService->copyContent(
+            $currentLocation->contentInfo,
+            $locationCreateStruct
+        );
+
+        return $this->locationService->loadLocation($copiedContent->contentInfo->mainLocationId);
     }
 
     private function buildUiLocations(array $locations)
