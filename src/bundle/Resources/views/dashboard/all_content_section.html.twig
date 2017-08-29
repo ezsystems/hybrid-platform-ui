@@ -1,0 +1,26 @@
+<section class='ez-tabs ez-dashboard-tabs'>
+    <h3>{{ ('dashboard.section.' ~ identifier)|trans|desc('Everyone') }}</h3>
+
+    <ul class="ez-tabs-list">
+        {% for tab_name, tab in tabs %}
+            <li class="ez-tabs-label{% if loop.first %} is-tab-selected{% endif %}">
+                {% set display_name = tab_name|split('_')|join(' ')|capitalize %}
+                <a href="#ez-dashboard-{{ identifier }}-tab-{{ tab_name }}">{{ ('dashboard.tab.' ~ tab_name)|trans|desc(display_name) }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% for tab_name, tab in tabs %}
+        <ez-asynchronous-block class="ez-tabs-panel{% if loop.first %} is-tab-selected{% endif %}" id="ez-dashboard-{{ identifier }}-tab-{{ tab_name }}" url="{{ url('ez_hybrid_platform_ui_dashboard_view_tab', {
+            'sectionIdentifier': identifier,
+            'tabIdentifier': tab_name,
+        }) }}">
+            {% if loop.first %}
+                {{ render(controller('EzSystemsHybridPlatformUiBundle:Dashboard:viewTab', {
+                    'sectionIdentifier': identifier,
+                    'tabIdentifier': tab_name,
+                }))|raw }}
+            {% endif %}
+        </ez-asynchronous-block>
+    {% endfor %}
+</section>

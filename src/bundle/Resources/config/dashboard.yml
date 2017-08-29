@@ -52,3 +52,34 @@ services:
               section: my_content
               identifier: my_media
               order: 20
+
+    EzSystems\HybridPlatformUi\Dashboard\Section\AllContent:
+        calls:
+            - [setTemplate, ['EzSystemsHybridPlatformUiBundle:dashboard:all_content_section.html.twig']]
+            - [setParameter, ['identifier', 'all_content']]
+        tags:
+            - name: ezplatform.ui.dashboard.section
+              identifier: all_content
+              order: 10
+
+    EzSystems\HybridPlatformUi\Dashboard\Tab\AllContent:
+        calls:
+            - [setTemplate, ['EzSystemsHybridPlatformUiBundle:dashboard:all_content_tab.html.twig']]
+            - [setParameter, ['section_identifier', 'all_content']]
+            - [setParameter, ['identifier', 'all_content']]
+        tags:
+            - name: ezplatform.ui.dashboard.tab
+              section: all_content
+              identifier: all_content
+              order: 1
+
+    EzSystems\HybridPlatformUi\Dashboard\Tab\AllMedia:
+        calls:
+            - [setTemplate, ['EzSystemsHybridPlatformUiBundle:dashboard:all_content_tab.html.twig']]
+            - [setParameter, ['section_identifier', 'all_content']]
+            - [setParameter, ['identifier', 'all_media']]
+        tags:
+            - name: ezplatform.ui.dashboard.tab
+              section: all_content
+              identifier: all_media
+              order: 10
