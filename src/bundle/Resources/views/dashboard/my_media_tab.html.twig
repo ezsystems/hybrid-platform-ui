@@ -1,0 +1,34 @@
+{% if data|length %}
+    <table class="ez-table-data">
+        <thead>
+        <tr>
+            <th>{{ 'dashboard.table.name'|trans|desc('Name') }}</th>
+            <th>{{ 'dashboard.table.content_type'|trans|desc('Content Type') }}</th>
+            <th>{{ 'dashboard.table.last_saved'|trans|desc('Last Saved') }}</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in data %}
+            <tr>
+                <td><a href="{{ url('_ez_content_view', { 'contentId': row.contentId }) }}">{{ row.name }}</a></td>
+                <td>{{ row.type }}</td>
+                <td>{{ row.modified|date('M d, Y h:iA') }}</td>
+                <td><a href="{{ url('ez_content_edit', {
+                        'contentId': row.contentId,
+                        'versionNo': row.version,
+                        'language': row.language
+                    }) }}" class="ez-button">{{ 'dashboard.button.edit'|trans|desc('Edit') }}</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if pages_urls|length > 1 %}
+        <ez-pagination
+                current-page="{{ current_page }}"
+                pages-urls='{{ pages_urls|json_encode(constant('JSON_FORCE_OBJECT')) }}'
+        ></ez-pagination>
+    {% endif %}
+{% else %}
+    <p class="ez-table-empty">{{ 'dashboard.tab.my_media.empty'|trans|desc('No content items. Media items you create will appear here') }}</p>
+{% endif %}

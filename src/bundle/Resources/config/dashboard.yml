@@ -6,3 +6,49 @@ services:
 
     EzSystems\HybridPlatformUi\Dashboard\:
         resource: '../../../lib/Dashboard/*'
+
+    EzSystems\HybridPlatformUi\Dashboard\Section\MyContent:
+        calls:
+            - [setTemplate, ['EzSystemsHybridPlatformUiBundle:dashboard:my_content_section.html.twig']]
+            - [setParameter, ['identifier', 'my_content']]
+        tags:
+            - name: ezplatform.ui.dashboard.section
+              identifier: my_content
+              order: 1
+
+    EzSystems\HybridPlatformUi\Dashboard\Tab\MyDrafts:
+        calls:
+            - [setTemplate, ['EzSystemsHybridPlatformUiBundle:dashboard:my_drafts_tab.html.twig']]
+            - [setParameter, ['section_identifier', 'my_content']]
+            - [setParameter, ['identifier', 'my_drafts']]
+        tags:
+            - name: ezplatform.ui.dashboard.tab
+              section: my_content
+              identifier: my_drafts
+              order: 1
+
+    EzSystems\HybridPlatformUi\Dashboard\Tab\MyContent:
+        calls:
+            - [setTemplate, ['EzSystemsHybridPlatformUiBundle:dashboard:my_content_tab.html.twig']]
+            - [setParameter, ['section_identifier', 'my_content']]
+            - [setParameter, ['identifier', 'my_content']]
+        arguments:
+            $permissionResolver: '@=service("ezpublish.api.repository").getPermissionResolver()'
+        tags:
+            - name: ezplatform.ui.dashboard.tab
+              section: my_content
+              identifier: my_content
+              order: 10
+
+    EzSystems\HybridPlatformUi\Dashboard\Tab\MyMedia:
+        calls:
+            - [setTemplate, ['EzSystemsHybridPlatformUiBundle:dashboard:my_content_tab.html.twig']]
+            - [setParameter, ['section_identifier', 'my_content']]
+            - [setParameter, ['identifier', 'my_media']]
+        arguments:
+            $permissionResolver: '@=service("ezpublish.api.repository").getPermissionResolver()'
+        tags:
+            - name: ezplatform.ui.dashboard.tab
+              section: my_content
+              identifier: my_media
+              order: 20
