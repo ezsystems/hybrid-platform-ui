@@ -19,12 +19,17 @@ services:
 
     EzSystems\HybridPlatformUi\:
         resource: '../../../lib/*'
-        exclude: '../../../lib/{Components,NavigationHub,Repository/Values,Http/Response}'
+        exclude: '../../../lib/{Dashboard,Components,NavigationHub,Repository/Values,Http/Response}'
 
     EzSystems\HybridPlatformUiBundle\Controller\:
         resource: '../../Controller'
         public: true
         tags: ['controller.service_arguments']
+
+    EzSystems\HybridPlatformUiBundle\Controller\DashboardController:
+        public: true
+        arguments:
+            $dashboard: '@EzSystems\HybridPlatformUi\Dashboard\Dashboard'
 
     EzSystems\HybridPlatformUi\EventSubscriber\:
         resource: '../../../lib/EventSubscriber'
