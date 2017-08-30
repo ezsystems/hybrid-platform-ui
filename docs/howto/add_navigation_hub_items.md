@@ -12,12 +12,12 @@ A zone is visible when one of its links is visible for the current page.
 
 To define a new zone, create a new service tagged with the `ezplatform.ui.zone` service tag,
 using the `EzSystems\HybridPlatformUi\NavigationHub\Zone` class (or a subclass of it). You
-may use`"%ezsystems.platformui.navigationhub.zone.class%"` instead of the class.
+may use`'%ezsystems.platformui.navigationhub.zone.class%'` instead of the class.
 
 ```yaml
 service:
     my_bundle.platform_ui_navigationhub.zones.my_feature:
-        class: "%ezsystems.platformui.navigationhub.zone.class%"
+        class: '%ezsystems.platformui.navigationhub.zone.class%'
         # Recommended as we don't intend to get this service from the container
         public: false
         arguments:
@@ -57,9 +57,9 @@ when browsing and operating inside that location's subtree (included).
 ```yaml
 services:
     my_bundle.platform_ui_navigationhub.link.contentstructure:
-        class: "%ezsystems.platformui.navigationhub.link.subtree.class%"
+        class: '%ezsystems.platformui.navigationhub.link.subtree.class%'
         arguments:
-            - "@router"
+            - '@router'
             - "Blog"
             - "content"
             - 123
@@ -88,9 +88,9 @@ The following service defines the section link in the admin zone:
 ```yaml
 services:
     ezsystems.platformui.navigationhub.link.admin.dashboard:
-        class: "%ezsystems.platformui.navigationhub.link.route.class%"
+        class: '%ezsystems.platformui.navigationhub.link.route.class%'
         arguments:
-            - "@router"
+            - '@router'
             - "admin_sectionlist"
             - "Sections"
             - "admin"
