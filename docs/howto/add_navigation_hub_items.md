@@ -62,7 +62,7 @@ services:
             - '@router'
             - "Blog"
             - "content"
-            - 123
+            - {locationId: 123}
         tags:
             - {name: ezplatform.ui.link}
         public: false
@@ -73,7 +73,7 @@ services:
 |`router`|The router service (`@router`)|
 |`name`|The human readable name of the link, as displayed in the UI|
 |`zoneIdentifier`|The zone this links should be visible for. In the example above, the link is visible inside the "content" zone|
-|`location`|The parameters used to load the Location. The key indicates the parameter. Possible keys: `locationId`|
+|`route_parameters`|The parameters used to load the Location. The key indicates the parameter. Possible keys: `locationId`|
 
 ### Route links
 A route link will link to any defined route, with any given set of parameters.
@@ -95,7 +95,6 @@ services:
             - "Sections"
             - "admin"
         calls:
-            # @todo implement the setter ;)
             - [setRoutePrefix, ["admin_section"]]
         tags:
             - {name: ezplatform.ui.link}
@@ -105,9 +104,9 @@ services:
 |Argument|Description|
 |--------|-----------|
 |`router`|The router service (`@router`)|
+|`route_name`|The Symfony route name used to generate the link and match requests|
 |`name`|The human readable name of the link, as displayed in the UI|
 |`zoneIdentifier`|The zone this links should be visible for. In the example above, the link is visible inside the "admin" zone|
-|`route_name`|The route used to generate the link and match requests|
 |`route_parameters`|An array of route parameters that will be used to generate the link and match requests|
 
 A setter method `setRoutePrefix` can be used to define a route prefix used to match requests.
