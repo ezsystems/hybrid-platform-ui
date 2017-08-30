@@ -10,7 +10,7 @@
         "symfony/symfony": "~2.8 | ~3.0",
         "friendsofsymfony/jsrouting-bundle": "^1.6",
         "ezsystems/hybrid-platform-ui-assets": "^0.4",
-        "ezsystems/hybrid-platform-ui-core-components": "^0.1@dev",
+        "ezsystems/hybrid-platform-ui-core-components": "dev-master as 0.1",
         "composer/installers": "~1.4",
         "jms/translation-bundle": "^1.3"
     },
