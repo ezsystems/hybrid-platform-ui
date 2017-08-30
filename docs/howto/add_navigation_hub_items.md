@@ -62,7 +62,7 @@ services:
             - '@router'
             - "Blog"
             - "content"
-            - 123
+            - {locationId: 123}
         tags:
             - {name: ezplatform.ui.link}
         public: false
