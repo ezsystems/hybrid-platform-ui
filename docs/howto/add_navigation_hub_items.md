@@ -87,7 +87,7 @@ The following service defines the section link in the admin zone:
 
 ```yaml
 services:
-    ezsystems.platformui.navigationhub.link.admin.dashboard:
+    my_bundle.platformui.navigationhub.link.admin.dashboard:
         class: '%ezsystems.platformui.navigationhub.link.route.class%'
         arguments:
             - '@router'
