@@ -10,7 +10,8 @@
     box-sizing: border-box;
 
     text-decoration: none;
-    padding: 0.5em 1em;
+    padding: 0 1em;
+    line-height: 2.4em;
     border-radius: 4px;
     color: var(--ez-color-text-base-inverted);
     background: var(--ez-color-neutral);

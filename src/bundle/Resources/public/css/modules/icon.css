@@ -1,0 +1,23 @@
+.ez-icon {
+    display: inline-block;
+    vertical-align: text-bottom;
+    width: 1.5em;
+    height: 1.5em;
+    fill: currentColor;
+}
+
+.ez-icon-x2 {
+    font-size: 2em;
+}
+
+.ez-icon-x3 {
+    font-size: 3em;
+}
+
+.ez-icon-x4 {
+    font-size: 4em;
+}
+
+.ez-icon-x5 {
+    font-size: 5em;
+}
