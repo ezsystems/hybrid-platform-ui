@@ -6,3 +6,4 @@ bin/phpspec
 bin/security-checker
 .php_cs.cache
 /src/bundle/Resources/translations/*.bak
+node_modules
