@@ -33,7 +33,10 @@
                     }
                 })
             }}
-            <button type="button" value="#{{ dialogId }}" class="ez-button ez-button-negative ez-js-open-modal ez-js-activable-element" disabled>
+            <button type="button" value="#{{ dialogId }}" class="ez-button ez-button-negative ez-js-open-modal ez-js-activable-element">
+                <svg class="ez-icon ez-icon-trash">
+                    <use xlink:href="{{ asset('bundles/ezsystemshybridplatformui/img/icons.svg') }}#trash"></use>
+                </svg>
                 {{ 'locationview.locations.delete.locations'|trans()|desc('Delete selected locations') }}
             </button>
         </div>
