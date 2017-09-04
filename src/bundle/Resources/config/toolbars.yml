@@ -20,6 +20,7 @@ services:
     ezsystems.platformui.component.browse:
         class: EzSystems\HybridPlatformUi\Components\Browse
         arguments:
+            - '@templating'
             - '@=service("request_stack").getMasterRequest()'
         tags:
             - {name: ezplatform.ui.toolbar_item, toolbar: "discovery"}
