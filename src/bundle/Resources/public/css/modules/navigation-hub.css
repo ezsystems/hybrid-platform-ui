@@ -42,7 +42,13 @@ ez-navigation-hub .ez-logo img {
 }
 
 ez-navigation-hub .is-active-zone {
+    transition: all ease 0.3s;
     background: var(--ez-color-ground-hub-selected);
+}
+
+ez-navigation-hub .is-active-zone .ez-icon {
+    transition: all ease 0.3s;
+    color: var(--ez-color-primary);
 }
 
 ez-navigation-hub .ez-zone-list a {

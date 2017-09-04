@@ -11,9 +11,17 @@ class Zone
 
     public $identifier;
 
-    public function __construct($name, $identifier)
+    /**
+     * The icon identifier in the icon sprite.
+     *
+     * @var string
+     */
+    public $icon;
+
+    public function __construct($name, $identifier, $icon)
     {
         $this->name = $name;
         $this->identifier = $identifier;
+        $this->icon = $icon;
     }
 }

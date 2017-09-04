@@ -23,6 +23,7 @@ service:
         arguments:
             - "My feature"
             - "my_feature"
+            - "icon-identifier"
         tags:
             - {name: ezplatform.ui.zone}
 ``` 
@@ -31,6 +32,7 @@ service:
 |--------|-----------|
 |name|The human readable name of the zone, as displayed in the UI|
 |identifier|The zone's identifier, a simple string. It will be used when defining links to refer to the zone|
+|icon|The identifier of an icon in the admin icon sprite|
 
 Once the service has been defined, the new Zone should show up in the UI after refreshing.
 
