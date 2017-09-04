@@ -86,6 +86,7 @@
 
                 <button type="button" value="#{{ sendToTrashDialogId }}" class="ez-button ez-button-action ez-js-open-modal"
                     {% if trashLocationForm.trash.vars.disabled %}disabled{% endif %}>
+                    {{ ez_ui_icon('trash-send') }}
                     {{ 'actionbar.trash'|trans|desc('Send to Trash')}}
                 </button>
             {{ form_end(trashLocationForm) }}
@@ -100,6 +101,7 @@
                 {{
                     form_widget(moveLocationForm.move, {
                         'label': 'actionbar.move'|trans()|desc('Move'),
+                        'icon': 'move',
                         'attr': {
                             'class': 'ez-button ez-button-action ez-js-run-universal-discovery',
                             'data-ud-title': 'actionbar.move.selectbox.title'|trans()|desc('Select a new location to move your content item'),
@@ -123,6 +125,7 @@
                 {{
                     form_widget(copyLocationForm.copy, {
                         'label': 'actionbar.copy'|trans()|desc('Copy'),
+                        'icon': 'copy',
                         'attr': {
                             'class': 'ez-button ez-button-action ez-js-run-universal-discovery',
                             'data-ud-title': 'actionbar.copy.selectbox.title'|trans()|desc('Select a new location to copy your content item'),
