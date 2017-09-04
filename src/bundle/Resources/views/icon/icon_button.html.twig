@@ -1,0 +1,20 @@
+{% extends 'form_div_layout.html.twig' %}
+
+{%- block button_widget -%}
+    {%- if label is empty -%}
+        {%- if label_format is not empty -%}
+            {% set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+            }) %}
+        {%- else -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+    {%- endif -%}
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>
+        {%- if icon is defined -%}
+            {{ ez_ui_icon(icon) }}
+        {%- endif -%}
+        {{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}
+    </button>
+{%- endblock button_widget -%}
