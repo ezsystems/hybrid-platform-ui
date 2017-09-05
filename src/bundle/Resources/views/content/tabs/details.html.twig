@@ -78,7 +78,12 @@
     </tbody>
 </table>
 
-{{ form_start(orderingForm, {'action': path('ez_hybrid_platform_ui_location_sort_order', {'locationId': location.id, 'contentId': contentInfo.id})}) }}
+{{
+    form_start(orderingForm, {
+        'attr': {'class': 'ez-js-auto-submit'},
+        'action': path('ez_hybrid_platform_ui_location_sort_order', {'locationId': location.id, 'contentId': contentInfo.id})
+    })
+}}
 
 <div class="ez-list-toolbar">
     <h2 class="ez-list-toolbar-label">{{ 'locationview.details.sub.items.sorting.order'|trans()|desc('Sub-items sorting order') }}</h2>
