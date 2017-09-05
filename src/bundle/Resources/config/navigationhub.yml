@@ -14,6 +14,7 @@ services:
         arguments:
             - "Content"
             - "content"
+            - "global-content"
         tags:
             - {name: ezplatform.ui.zone}
 
@@ -22,6 +23,7 @@ services:
         arguments:
             - "Page"
             - "page"
+            - "global-page"
         tags:
             - {name: ezplatform.ui.zone}
 
@@ -30,6 +32,7 @@ services:
         arguments:
             - "Performances"
             - "performances"
+            - "global-performance"
         tags:
             - {name: ezplatform.ui.zone}
 
@@ -38,6 +41,7 @@ services:
         arguments:
             - "Admin Panel"
             - "admin"
+            - "panel"
         tags:
             - {name: ezplatform.ui.zone}
 

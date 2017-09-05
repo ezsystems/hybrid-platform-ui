@@ -23,6 +23,7 @@
             {{
                 form_widget(actionsForm.add, {
                     'label': 'locationview.locations.add.location'|trans()|desc('Add Location'),
+                    'icon': 'create',
                     'attr': {
                         'class': 'ez-button ez-button-secondary ez-js-run-universal-discovery',
                         'data-ud-title': 'select.location.to.create.new.location'|trans()|desc('Select the location where you want to create new location'),
@@ -33,7 +34,8 @@
                     }
                 })
             }}
-            <button type="button" value="#{{ dialogId }}" class="ez-button ez-button-negative ez-js-open-modal ez-js-activable-element" disabled>
+            <button type="button" value="#{{ dialogId }}" class="ez-button ez-button-negative ez-js-open-modal ez-js-activable-element">
+                {{ ez_ui_icon('trash') }}
                 {{ 'locationview.locations.delete.locations'|trans()|desc('Delete selected locations') }}
             </button>
         </div>
@@ -85,7 +87,13 @@
 <p>
     {{ 'locationview.locations.swap.with.another'|trans()|desc('Swap the content item at this location with another') }}
 
-    {{ form_widget(swapLocationsForm.swap, {'label': 'locationview.locations.select.content.item'|trans()|desc('Select content item'), 'attr': {'class': 'ez-button ez-button-ghost'}}) }}
+    {{
+        form_widget(swapLocationsForm.swap, {
+            'label': 'locationview.locations.select.content.item'|trans()|desc('Select content item'),
+            'icon': 'swap',
+            'attr': {'class': 'ez-button ez-button-ghost'}
+        })
+    }}
     {{ form_widget(swapLocationsForm.new_location_id, {'attr': {'placeholder': 'locationview.locations.swap.location.id'|trans()|desc('Location ID')}}) }}
 </p>
 {{ form_end(swapLocationsForm) }}

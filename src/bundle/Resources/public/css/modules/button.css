@@ -10,7 +10,8 @@
     box-sizing: border-box;
 
     text-decoration: none;
-    padding: 0.5em 1em;
+    padding: 0 1em;
+    line-height: 2.4em;
     border-radius: 4px;
     color: var(--ez-color-text-base-inverted);
     background: var(--ez-color-neutral);
@@ -19,6 +20,7 @@
 
 .ez-button[disabled], .ez-button[data-disabled] {
     opacity: 0.3;
+    cursor: not-allowed;
 }
 
 .ez-button:focus,
@@ -88,8 +90,15 @@
     text-align: center;
     background: transparent;
     border-color: transparent;
+    line-height: 1;
+    padding: 1em 0.5em;
 }
 
 .ez-button-action:hover:not([disabled]) {
     background: rgba(0, 0, 0, 0.2);
+}
+
+.ez-button-action .ez-icon {
+    display: block;
+    margin: 0 auto 0.3em auto;
 }

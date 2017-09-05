@@ -2,6 +2,7 @@
 
 namespace EzSystems\HybridPlatformUi\Components;
 
+use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class Browse implements Component
@@ -11,8 +12,14 @@ class Browse implements Component
      */
     protected $request;
 
-    public function __construct(Request $request = null)
+    /**
+     * @var \Symfony\Component\Templating\EngineInterface
+     */
+    protected $templating;
+
+    public function __construct(EngineInterface $templating, Request $request = null)
     {
+        $this->templating = $templating;
         $this->request = $request;
     }
 
@@ -27,13 +34,10 @@ class Browse implements Component
 
     public function renderToString()
     {
-        $selected = $this->getLocationId();
-        // should be rendered with a twig template
-        return '<ez-browse
-            class="ez-button  ez-button-action"
-            ' . ($selected ? 'selected-location-id="' . $selected . '"' : '') . '>
-                Browse
-            </ez-browse>';
+        return $this->templating->render(
+            'EzSystemsHybridPlatformUiBundle:components:browse.html.twig',
+            ['selectedLocationId' => $this->getLocationId()]
+        );
     }
 
     public function jsonSerialize()

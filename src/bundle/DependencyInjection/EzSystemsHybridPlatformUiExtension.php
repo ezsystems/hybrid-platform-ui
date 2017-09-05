@@ -37,6 +37,15 @@ class EzSystemsHybridPlatformUiExtension extends Extension implements PrependExt
         $this->prependViewsConfiguration($container);
         $this->prependFosJsRoutingConfiguration($container);
         $this->prependLayoutConfiguration($container);
+        $this->prependFormConfiguration($container);
+    }
+
+    private function prependFormConfiguration(ContainerBuilder $container)
+    {
+        $configFile = __DIR__ . '/../Resources/config/form.yml';
+        $config = Yaml::parse(file_get_contents($configFile));
+        $container->prependExtensionConfig('twig', $config);
+        $container->addResource(new FileResource($configFile));
     }
 
     private function prependViewsConfiguration(ContainerBuilder $container)

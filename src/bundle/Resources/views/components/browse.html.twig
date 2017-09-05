@@ -1,0 +1,6 @@
+<ez-browse
+    class="ez-button ez-button-action"
+    {% if selectedLocationId %} selected-location-id="{{ selectedLocationId }}"{% endif %}>
+    {{ ez_ui_icon('browse') }}
+    {{ 'browse'|trans({}, 'bar')|desc('Browse') }}
+</ez-browse>

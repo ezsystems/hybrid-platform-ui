@@ -5,7 +5,10 @@
         </li>
     {% for zone in zones %}
         <li{% if activeZone == zone.identifier %} class="{{ activeZoneClass }}"{% endif %} data-zone-identifier="{{ zone.identifier }}">
-            <a href="#">{{ zone.name }}</a>
+            <a href="#">
+                {{ ez_ui_icon(zone.icon) }}
+                {{ zone.name }}
+            </a>
         </li>
     {% endfor %}
     </ul>

@@ -21,6 +21,7 @@
                     value="#{{ draftDialogId }}"
                     disabled
                     class="ez-button ez-button-negative ez-js-open-modal ez-js-activable-element">
+                    {{ ez_ui_icon('trash') }}
                     {{ 'locationview.versions.delete'|trans()|desc('Delete') }}
                 </button>
             </div>
@@ -73,6 +74,7 @@
                 {{
                     form_widget(archivedActionsForm.new_draft, {
                         'label': 'locationview.versions.new.draft.selected.version'|trans()|desc('New draft based on selected version'),
+                        'icon': 'create',
                         'attr': {
                             'class': 'ez-button ez-button-secondary ez-js-activable-element ez-js-activable-element-single-selection',
                             'disabled': true
@@ -83,6 +85,7 @@
                     value="#{{ archivedDialogId }}"
                     disabled
                     class="ez-button ez-button-negative ez-js-open-modal ez-js-activable-element">
+                    {{ ez_ui_icon('trash') }}
                     {{ 'locationview.versions.delete'|trans()|desc('Delete') }}
                 </button>
             </div>
