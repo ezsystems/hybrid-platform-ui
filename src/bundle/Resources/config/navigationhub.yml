@@ -28,8 +28,8 @@ services:
     ezsystems.platformui.navigationhub.zones.performances:
         class: "%ezsystems.platformui.navigationhub.zone.class%"
         arguments:
-            - "Performances"
-            - "performances"
+            - "Performance"
+            - "performance"
         tags:
             - {name: ezplatform.ui.zone}
 
