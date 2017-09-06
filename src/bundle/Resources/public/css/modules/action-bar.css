@@ -1,0 +1,4 @@
+.ez-action-bar {
+    background: var(--ez-color-action-bar);
+    color: var(--ez-color-text-base-inverted);
+}

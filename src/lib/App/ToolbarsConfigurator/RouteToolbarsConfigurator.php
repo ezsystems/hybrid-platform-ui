@@ -17,9 +17,11 @@ class RouteToolbarsConfigurator implements ToolbarsConfigurator
      */
     private $requestStack;
 
+    // Adding discovery to 1 allows to make the toolbar visible: see EZP-27322
     protected $routesConfiguration = [
         'ez_urlalias' => ['discovery' => 1],
         '_ez_content_view' => ['discovery' => 1],
+        'ez_hybrid_platform_ui_trash_view' => ['discovery' => 1],
     ];
 
     public function __construct(RequestStack $requestStack)

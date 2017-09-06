@@ -1,0 +1,25 @@
+.ez-trash-view {
+    display: flex;
+    flex: 1 0;
+}
+
+.ez-trash-view .ez-trash-view-main {
+    padding: 1em 2em 1em 2em;
+    flex: 1 0;
+}
+
+.ez-trash-view .ez-action-bar {
+    flex: 0 0 var(--ez-toolbar-width);
+}
+
+.ez-trash-view .ez-trash-ancestor-trash {
+    font-style: italic;
+    color: var(--ez-color-text-base-pale);
+}
+
+.ez-trash-view .ez-trash-empty {
+    font-style: italic;
+    color: var(--ez-color-text-base-pale);
+    font-size: 0.8em;
+    padding: 1em 0 1em 0;
+}

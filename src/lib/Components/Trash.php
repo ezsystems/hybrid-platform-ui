@@ -2,13 +2,23 @@
 
 namespace EzSystems\HybridPlatformUi\Components;
 
+use Symfony\Component\Templating\EngineInterface;
+
 class Trash implements Component
 {
+    /**
+     * @var \Twig_Environment
+     */
+    protected $templating;
+
+    public function __construct(EngineInterface $templating)
+    {
+        $this->templating = $templating;
+    }
+
     public function renderToString()
     {
-        return '<button class="ez-button  ez-button-action" disabled>
-            Trash
-        </button>';
+        return $this->templating->render('EzSystemsHybridPlatformUiBundle:components:trash.html.twig');
     }
 
     public function jsonSerialize()
