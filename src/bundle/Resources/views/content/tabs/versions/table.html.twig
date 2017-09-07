@@ -41,9 +41,13 @@
             <td>
                 {{ version.modificationDate|localizeddate('medium', 'short', app.request.locale) }}
             </td>
-            {% if isDraft is defined %}
+            {% if isDraft is defined and version.canEdit %}
                 <td>
-                    <a href="#" class="ez-button" data-disabled>Edit</a>
+                    <a href="{{ path('ez_content_edit', {
+                        'contentId': version.contentInfo.id,
+                        'versionNo': version.versionNo,
+                        'language': version.initialLanguageCode})
+                    }}" class="ez-button">{{ 'locationview.versions.edit_button'|trans|desc('Edit') }}</a>
                 </td>
             {% endif %}
         </tr>

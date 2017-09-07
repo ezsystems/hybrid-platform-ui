@@ -31,6 +31,10 @@ class UiVersionInfo extends VersionInfo
      */
     protected $translations;
 
+    protected $canEdit = false;
+
+    protected $canRemove = false;
+
     public function __construct(APIVersionInfo $versionInfo, array $properties = [])
     {
         parent::__construct(get_object_vars($versionInfo) + $properties);

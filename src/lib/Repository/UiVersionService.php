@@ -8,6 +8,7 @@ namespace EzSystems\HybridPlatformUi\Repository;
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\VersionInfo;
+use EzSystems\HybridPlatformUi\Repository\Permission\UiPermissionResolver;
 use EzSystems\HybridPlatformUi\Repository\Values\Content\UiVersionInfo;
 
 /**
@@ -30,14 +31,21 @@ class UiVersionService
      */
     private $uiTranslationService;
 
+    /**
+     * @var UiPermissionResolver
+     */
+    private $permissionResolver;
+
     public function __construct(
         ContentService $contentService,
         UiUserService $uiUserService,
-        UiTranslationService $uiTranslationService
+        UiTranslationService $uiTranslationService,
+        UiPermissionResolver $permissionResolver
     ) {
         $this->contentService = $contentService;
         $this->uiUserService = $uiUserService;
         $this->uiTranslationService = $uiTranslationService;
+        $this->permissionResolver = $permissionResolver;
     }
 
     /**
@@ -90,6 +98,8 @@ class UiVersionService
                 $properties = [
                     'author' => $this->uiUserService->findUserById($versionInfo->creatorId),
                     'translations' => $this->uiTranslationService->loadTranslations($versionInfo),
+                    'canEdit' => $versionInfo->status === VersionInfo::STATUS_DRAFT
+                        && $this->permissionResolver->canEditVersion($versionInfo),
                 ];
 
                 return new UiVersionInfo($versionInfo, $properties);
