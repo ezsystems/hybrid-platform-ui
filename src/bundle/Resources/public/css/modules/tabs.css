@@ -27,3 +27,26 @@
     background: var(--ez-color-ground-base);
     font-weight: bold;
 }
+
+.ez-dashboard-tabs {
+    background: var(--ez-color-ground-base);
+    width: 90%;
+    margin: 0 auto;
+    padding: 1em;
+    border-radius: 5px;
+}
+
+.ez-dashboard-tabs .ez-tabs-label.is-tab-selected a {
+    color: var(--ez-color-text-base-inverted);
+    background: var(--ez-color-ground-secondary);
+}
+
+.ez-dashboard-tabs h3 {
+    margin-top: 0;
+}
+
+.ez-dashboard-tabs .ez-tabs-list {
+    background: var(--ez-color-ground-base);
+    border-bottom: 5px solid var(--ez-color-ground-secondary);
+    margin-bottom: 1em;
+}

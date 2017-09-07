@@ -65,7 +65,7 @@ services:
         class: "%ezsystems.platformui.navigationhub.link.route.class%"
         arguments:
             - "@router"
-            - "admin_dashboard"
+            - "ez_hybrid_platform_ui_dashboard"
             - "Dashboard"
             - "admin"
         tags:
