@@ -1,3 +1,5 @@
 <ez-server-side-content>
-    <h1>Dashboard</h1>
+    {% for section in dashboard.getSections() %}
+        {{ section.render()|raw }}
+    {% endfor %}
 </ez-server-side-content>

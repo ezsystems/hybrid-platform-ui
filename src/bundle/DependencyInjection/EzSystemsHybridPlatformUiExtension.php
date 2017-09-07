@@ -30,6 +30,7 @@ class EzSystemsHybridPlatformUiExtension extends Extension implements PrependExt
         $loader->load('components.yml');
         $loader->load('pjax.yml');
         $loader->load('repository.yml');
+        $loader->load('dashboard.yml');
     }
 
     public function prepend(ContainerBuilder $container)
@@ -37,6 +38,7 @@ class EzSystemsHybridPlatformUiExtension extends Extension implements PrependExt
         $this->prependViewsConfiguration($container);
         $this->prependFosJsRoutingConfiguration($container);
         $this->prependLayoutConfiguration($container);
+        $this->prependRouterConfiguration($container);
     }
 
     private function prependViewsConfiguration(ContainerBuilder $container)
@@ -60,5 +62,20 @@ class EzSystemsHybridPlatformUiExtension extends Extension implements PrependExt
         $config = Yaml::parse(file_get_contents($configFile));
         $container->prependExtensionConfig('ezpublish', $config);
         $container->addResource(new FileResource($configFile));
+    }
+
+    private function prependRouterConfiguration(ContainerBuilder $container)
+    {
+        $config = [
+            'router' => [
+                'default_router' => [
+                    'non_siteaccess_aware_routes' => [
+                        'ez_hybrid_platform_ui_dashboard_view_tab',
+                    ],
+                ],
+            ],
+        ];
+
+        $container->prependExtensionConfig('ezpublish', $config);
     }
 }
