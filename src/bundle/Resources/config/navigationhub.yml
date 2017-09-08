@@ -15,7 +15,8 @@ services:
             - "Content"
             - "content"
         tags:
-            - {name: ezplatform.ui.zone}
+            - name: ezplatform.ui.zone
+              priority: 100
 
     ezsystems.platformui.navigationhub.zones.page:
         class: "%ezsystems.platformui.navigationhub.zone.class%"
@@ -23,7 +24,8 @@ services:
             - "Page"
             - "page"
         tags:
-            - {name: ezplatform.ui.zone}
+            - name: ezplatform.ui.zone
+              priority: 200
 
     ezsystems.platformui.navigationhub.zones.performances:
         class: "%ezsystems.platformui.navigationhub.zone.class%"
@@ -31,7 +33,8 @@ services:
             - "Performance"
             - "performance"
         tags:
-            - {name: ezplatform.ui.zone}
+            - name: ezplatform.ui.zone
+              priority: 300
 
     ezsystems.platformui.navigationhub.zones.admin:
         class: "%ezsystems.platformui.navigationhub.zone.class%"
@@ -39,7 +42,8 @@ services:
             - "Admin Panel"
             - "admin"
         tags:
-            - {name: ezplatform.ui.zone}
+            - name: ezplatform.ui.zone
+              priority: 400
 
     ezsystems.platformui.navigationhub.link.contentstructure:
         class: "%ezsystems.platformui.navigationhub.link.subtree.class%"
@@ -49,7 +53,8 @@ services:
             - "content"
             - {locationId: 2}
         tags:
-            - {name: ezplatform.ui.link}
+            - name: ezplatform.ui.link
+              priority: 100
 
     ezsystems.platformui.navigationhub.link.medialibrary:
         class: "%ezsystems.platformui.navigationhub.link.subtree.class%"
@@ -59,7 +64,8 @@ services:
             - "content"
             - {locationId: 43}
         tags:
-            - {name: ezplatform.ui.link}
+            - name: ezplatform.ui.link
+              priority: 200
 
     ezsystems.platformui.navigationhub.link.admin.dashboard:
         class: "%ezsystems.platformui.navigationhub.link.route.class%"
@@ -69,7 +75,8 @@ services:
             - "Dashboard"
             - "admin"
         tags:
-            - {name: ezplatform.ui.link}
+            - name: ezplatform.ui.link
+              priority: 100
 
     ezsystems.platformui.navigationhub.link.admin.section:
         class: "%ezsystems.platformui.navigationhub.link.route.class%"
@@ -81,7 +88,8 @@ services:
         calls:
             - [setRoutePrefix, ["admin_section"]]
         tags:
-            - {name: ezplatform.ui.link}
+            - name: ezplatform.ui.link
+              priority: 200
 
     ezsystems.platformui.navigationhub.link.admin.languages:
         class: "%ezsystems.platformui.navigationhub.link.route.class%"
@@ -93,7 +101,8 @@ services:
         calls:
             - [setRoutePrefix, ["admin_language"]]
         tags:
-            - {name: ezplatform.ui.link}
+            - name: ezplatform.ui.link
+              priority: 300
 
     ezsystems.platformui.navigationhub.link.admin.content_types:
         class: "%ezsystems.platformui.navigationhub.link.route.class%"
@@ -105,7 +114,8 @@ services:
         calls:
             - [setRoutePrefix, ["admin_contenttype"]]
         tags:
-            - {name: ezplatform.ui.link}
+            - name: ezplatform.ui.link
+              priority: 400
 
     ezsystems.platformui.navigationhub.link.admin.roles:
         class: "%ezsystems.platformui.navigationhub.link.route.class%"
@@ -117,7 +127,8 @@ services:
         calls:
             - [setRoutePrefix, ["admin_role"]]
         tags:
-            - {name: ezplatform.ui.link}
+            - name: ezplatform.ui.link
+              priority: 500
 
     ezsystems.platformui.navigationhub.link.admin.system_info:
         class: "%ezsystems.platformui.navigationhub.link.route.class%"
@@ -127,4 +138,5 @@ services:
             - "System info"
             - "admin"
         tags:
-            - {name: ezplatform.ui.link}
+            - name: ezplatform.ui.link
+              priority: 600

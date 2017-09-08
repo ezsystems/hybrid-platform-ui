@@ -113,3 +113,18 @@ A setter method `setRoutePrefix` can be used to define a route prefix used to ma
 If given, a Request's route with the same prefix will match (example: `admin_sectionedit` matches the
 `admin_section` prefix).
 
+## Position
+Order of both, links and zones, can be set. It's implemented in a *Symfony way* as a `priority` parameter of service definition tag:
+
+```yaml
+services:
+    ezsystems.platformui.navigationhub.link.admin.dashboard:
+        # ...
+        tags:
+            - name: ezplatform.ui.link
+              priority: 100
+```
+
+Lower `priority` values will make links appear first, those with the same `priority` value will appear in an order of definition, higher values obviously later.
+Good practice is to make default values multiplier of `10` or `100`, so end-user will be able to inject own links (or zones) between default ones (ie. by setting `priority` to `50`).
+Default value of omitted `priority` parameter is `0`. Negative values are accepted as well.

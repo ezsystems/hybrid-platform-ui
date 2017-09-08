@@ -24,14 +24,23 @@ class NavigationHubPass implements CompilerPassInterface
 
     private function processNavigationHubTag(ContainerBuilder $container, $tag, $index)
     {
-        $items = [];
+        $unsorted = [];
         $services = $container->findTaggedServiceIds($tag);
-        foreach (array_keys($services) as $serviceId) {
-            $items[] = new Reference($serviceId);
+        foreach ($services as $serviceId => $tags) {
+            foreach ($tags as $tag) {
+                $priority = isset($tag['priority']) ? $tag['priority'] : 0;
+            }
+            $unsorted[$priority][] = new Reference($serviceId);
+        }
+
+        $sorted = [];
+        ksort($unsorted);
+        foreach ($unsorted as $items) {
+            $sorted = array_merge($sorted, $items);
         }
 
         $container
             ->findDefinition(NavigationHub::class)
-            ->replaceArgument($index, $items);
+            ->replaceArgument($index, $sorted);
     }
 }
