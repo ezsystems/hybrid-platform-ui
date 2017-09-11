@@ -5,6 +5,7 @@
  */
 namespace EzSystems\HybridPlatformUi\View;
 
+use eZ\Publish\Core\MVC\Symfony\View\ContentView;
 use eZ\Publish\Core\MVC\Symfony\View\View;
 use EzSystems\HybridPlatformUi\Components\App;
 use EzSystems\HybridPlatformUi\Components\MainContent;
@@ -38,6 +39,18 @@ class AppConfigCoreViewMainContentMapper implements CoreViewMainContentMapper
                 'template' => $view->getTemplateIdentifier(),
                 'parameters' => $view->getParameters(),
             ],
+            'title' => $this->getTitle($view),
         ]);
+    }
+
+    private function getTitle(View $view)
+    {
+        if ($view instanceof ContentView) {
+            return $view->getContent()->getName();
+        } else {
+            if ($view->hasParameter('title')) {
+                return $view->getParameter('title');
+            }
+        }
     }
 }

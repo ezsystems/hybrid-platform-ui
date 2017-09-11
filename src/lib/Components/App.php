@@ -98,6 +98,7 @@ class App implements Component
                     'toolbars' => $this->toolbars,
                     'mainContent' => $this->mainContent,
                     'appTagName' => self::TAG_NAME,
+                    'title' => $this->title,
                 ]
             );
         }
